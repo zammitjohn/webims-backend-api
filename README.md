@@ -1,22 +1,16 @@
 Introduction
 ============
 
-[![Build Status](https://img.shields.io/travis/ColorlibHQ/AdminLTE/master.svg)](https://travis-ci.org/ColorlibHQ/AdminLTE)
-[![npm version](https://img.shields.io/npm/v/admin-lte/latest.svg)](https://www.npmjs.com/package/admin-lte)
-[![Packagist](https://img.shields.io/packagist/v/almasaeed2010/adminlte.svg)](https://packagist.org/packages/almasaeed2010/adminlte)
-[![CDNJS](https://img.shields.io/cdnjs/v/admin-lte.svg)](https://cdnjs.com/libraries/admin-lte)
-
 **RIMS** is based on AdminLTE. AdminLTE is a fully responsive administration template. Based on **[Bootstrap 4](https://getbootstrap.com)** framework.
 Highly customizable and easy to use. Fits many screen resolutions from small mobile devices to large desktops.
 
 #### Download:
 
-Download from [Github releases](https://github.com/ColorlibHQ/AdminLTE/releases).
+Download from [Github releases](https://github.com/zammitjohn/RIMS/releases).
 
 Documentation
 -------------
-Visit the [online documentation](https://adminlte.io/docs/3.0/) for the most
-updated guide. Information will be added on a weekly basis.
+None yet :(
 
 Browser Support
 ---------------
@@ -31,23 +25,10 @@ Contribution
 Contribution are always **welcome and recommended**! Here is how:
 
 - Fork the repository ([here is the guide](https://help.github.com/articles/fork-a-repo/)).
-- Clone to your machine ```git clone https://github.com/YOUR_USERNAME/AdminLTE.git```
+- Clone to your machine ```git clone https://github.com/YOUR_USERNAME/RIMS.git```
 - Create a new branch
 - Make your changes
 - Create a pull request
-
-#### Compile dist files
-To compile the dist files you need nodejs/npm, clone/download the repo then:
-
-1. `npm install` (install npm deps)
-2. _Optional:_ `npm run dev` (developer mode, autocompile with browsersync support for live demo)
-3. `npm run production` (compile css/js files)
-
-#### Contribution Requirements:
-- When you contribute, you agree to give a non-exclusive license to AdminLTE.io to use that contribution in any context as we (AdminLTE.io) see appropriate.
-- If you use content provided by another party, it must be appropriately licensed using an [open source](http://opensource.org/licenses) license.
-- Contributions are only accepted through Github pull requests.
-- Finally, contributed code must work in all supported browsers (see above for browser support).
 
 License
 -------
@@ -56,12 +37,11 @@ reserves the right to change the license of future releases.
 
 Legacy Releases
 ---------------
-- [AdminLTE 2](https://github.com/ColorlibHQ/AdminLTE/releases/tag/v2.4.18)
-- [AdminLTE 1](https://github.com/ColorlibHQ/AdminLTE/releases/tag/1.3.1)
+- [RIMS 1.0](https://github.com/zammitjohn/RIMS/releases/tag/1.0)
 
 Change log
 ----------
-Visit the [releases](https://github.com/ColorlibHQ/AdminLTE/releases) page to view the changelog
+Visit the [releases](https://github.com/zammitjohn/RIMS/releases) page to view the changelog
 
 Image Credits
 -------------
