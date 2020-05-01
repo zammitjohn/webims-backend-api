@@ -37,7 +37,7 @@ reserves the right to change the license of future releases.
 
 Legacy Releases
 ---------------
-- [RIMS 1.0](https://github.com/zammitjohn/RIMS/releases/tag/1.0)
+- [RIMS 1.0](https://github.com/zammitjohn/RIMS/releases/tag/v1.0)
 
 Change log
 ----------
