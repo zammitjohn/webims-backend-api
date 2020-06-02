@@ -38,17 +38,27 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input2">Description</label>
+                <label for="input2">Type</label>
+                <select id="type" class="form-control">
+                  <option value="1">General</option>
+                  <option value="2">Spares</option>
+                  <option value="3">Repeaters</option>
+                  <option value="4">Returns</option>
+                </select>
+              </div>              
+
+              <div class="form-group">
+                <label for="input3">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
               
               <div class="form-group">
-                <label for="input3">Quantity</label>
+                <label for="input4">Quantity</label>
                 <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
               </div>
               
               <div class="form-group">
-              <label for="input4">Technology</label>
+              <label for="input5">Technology</label>
                 <div class="container-fluid">
                     <label class="form-check-label">
                       <input type="checkbox" id="isGSM">
@@ -70,7 +80,7 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input5">Miscellaneous</label>
+                <label for="input6">Miscellaneous</label>
                 <div class="container-fluid">
                   <label class="form-check-label">
                     <input type="checkbox" id="ancillary">
@@ -154,6 +164,7 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       $('#SKU').val(data['SKU']);
+      $('#type').val(data['type']);
       $('#description').val(data['description']);
       $('#qty').val(data['qty']);
       if (data['isGSM'] == 1) {
@@ -232,6 +243,7 @@ function UpdateItem() {
       data: {
         id: <?php echo $_GET['id']; ?>,
         SKU: $("#SKU").val(),
+        type: $("#type").val(),
         description: $("#description").val(),
         qty: $("#qty").val(),
         isGSM: isGSMval,

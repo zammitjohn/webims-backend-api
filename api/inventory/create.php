@@ -13,6 +13,7 @@ $item = new Inventory($db);
  
 // set item property values
 $item->SKU = $_POST['SKU'];
+$item->type = $_POST['type'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->isGSM = $_POST['isGSM'];
@@ -32,6 +33,7 @@ if($item->create()){
         "message" => "Successfully created!",
         "id" => $item->id,
         "SKU" => $item->SKU,
+        "type" => $item->type,
         "description" => $item->description,
 		"qty" => $item->qty,
         "isGSM" => $item->isGSM,

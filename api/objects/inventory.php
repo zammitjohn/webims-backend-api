@@ -8,6 +8,7 @@ class Inventory{
     // object properties
     public $id;
     public $SKU;
+    public $type;
     public $description;
     public $qty;
     public $isGSM;
@@ -31,13 +32,27 @@ class Inventory{
             return false;
         }
     
-        // select all query
-        $query = "SELECT
-                    *
-                FROM
-                    " . $this->table_name . " 
-                ORDER BY
-                    id DESC";
+        // different SQL query according to API call
+        if (is_null($this->type)){
+            // select all query
+           $query = "SELECT
+                       *
+                   FROM
+                       " . $this->table_name . " 
+                   ORDER BY
+                       id DESC";
+
+       } else {
+           // select all query for particular type
+           $query = "SELECT
+                       *
+                   FROM
+                       " . $this->table_name . "
+                   WHERE
+                       type= '".$this->type."' 
+                   ORDER BY 
+                       id DESC";
+       }
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -85,9 +100,9 @@ class Inventory{
         
         // query to insert record
         $query = "INSERT INTO  ". $this->table_name ." 
-                        (`SKU`, `description`, `qty`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
+                        (`SKU`, `type`, `description`, `qty`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
                   VALUES
-                        ('".$this->SKU."', '".$this->description."', '".$this->qty."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";
+                        ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -112,7 +127,7 @@ class Inventory{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    SKU='".$this->SKU."', description='".$this->description."', qty='".$this->qty."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', notes='".$this->notes."'
+                    SKU='".$this->SKU."', type='".$this->type."', description='".$this->description."', qty='".$this->qty."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', notes='".$this->notes."'
                 WHERE
                     id='".$this->id."'";
     

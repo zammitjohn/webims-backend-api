@@ -10,12 +10,16 @@ $db = $database->getConnection();
 // prepare inventory item object
 $item = new Inventory($db);
 
+// set type property of inventory item type to be shown 
+if (isset($_GET['type'])) {
+    $item->type = $_GET['type'];
+}
+
 // API Key - sessionId
 $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
  
 // query inventory item
 $stmt = $item->read();
-
 if ($stmt != false){
     $num = $stmt->rowCount();
 
@@ -31,6 +35,7 @@ if ($stmt != false){
             $inventory_item=array(
                 "id" => $id,
                 "SKU" => $SKU,
+                "type" => $type,
                 "description" => $description,
                 "qty" => $qty,
                 "isGSM" => $isGSM,

@@ -134,7 +134,31 @@ to get the desired effect
                   <i class="fas fa-circle nav-icon"></i>
                   <p>All items</p>
                 </a>
-              </li> 
+              </li>
+              <li class="nav-item">
+                <a href="/rims/inventory/type.php?id=1" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>General</p>
+                </a>
+              </li>               
+              <li class="nav-item">
+                <a href="/rims/inventory/type.php?id=2" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Spares</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/rims/inventory/type.php?id=3" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Repeaters</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/rims/inventory/type.php?id=4" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>Returns</p>
+                </a>
+              </li>                                      
               <li class="nav-item">
                 <a href="/rims/inventory/register.php" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
@@ -169,7 +193,7 @@ to get the desired effect
             </ul>
           </li>          
 
-          <li class="nav-header">COLLECTIONS</li>
+          <li class="nav-header">PROJECTS</li>
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

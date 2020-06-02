@@ -27,6 +27,7 @@ if ($stmt != false){
         $item_arr=array(
             "id" => $row['id'],
             "SKU" => $row['SKU'],
+            "type" => $row['type'],
             "description" => $row['description'],
             "qty" => $row['qty'],
             "isGSM" => $row['isGSM'],

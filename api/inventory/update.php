@@ -13,6 +13,7 @@ $item = new Inventory($db);
 // set inventory item property values
 $item->id = $_POST['id'];
 $item->SKU = $_POST['SKU'];
+$item->type = $_POST['type'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->isGSM = $_POST['isGSM'];

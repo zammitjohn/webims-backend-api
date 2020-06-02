@@ -9,8 +9,8 @@ $content = '
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="#">Inventory</a></li>
-          <li class="breadcrumb-item active">All items</li>
+          <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
+          <li class="breadcrumb-item active">inventorytype.placeholder.text</li>
         </ol>
       </div>
     </div>
@@ -24,40 +24,38 @@ $content = '
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">All items</h3>
+          <h3 class="card-title">inventorytype.placeholder.text</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
           <table id="table1" class="table table-bordered table-striped">
             <thead>
-            <tr>
-              <th>SKU</th>
-              <th>Type</th>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>2G</th>
-              <th>3G</th>
-              <th>4G</th>
-              <th>Ancillary</th>
-              <th>Check</th>
-              <th>Notes</th>
-            </tr>
+              <tr>
+                <th>SKU</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>2G</th>
+                <th>3G</th>
+                <th>4G</th>
+                <th>Ancillary</th>
+                <th>Check</th>
+                <th>Notes</th>
+              </tr>
             </thead>
             <tbody>
             </tbody>
             <tfoot>
-            <tr>
-              <th>SKU</th>
-              <th>Type</th>
-              <th>Description</th>
-              <th>Quantity</th>
-              <th>2G</th>
-              <th>3G</th>
-              <th>4G</th>
-              <th>Ancillary</th>
-              <th>Check</th>
-              <th>Notes</th>
-            </tr>
+              <tr>
+                <th>SKU</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>2G</th>
+                <th>3G</th>
+                <th>4G</th>
+                <th>Ancillary</th>
+                <th>Check</th>
+                <th>Notes</th>
+              </tr>
             </tfoot>
           </table>
         </div>
@@ -77,17 +75,17 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-$('#table1').DataTable({
+$(function () {
+  $('#table1').DataTable({
     autoWidth: false,
     responsive: true,
     ajax: {
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/inventory/read.php",
+        url: "../api/inventory/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
         dataSrc: ''
     },
     columns: [
         { data: 'SKU' },
-        { data: 'Type' },        
         { data: 'description' },
         { data: 'qty' },
         { data: 'isGSM' },
@@ -97,43 +95,37 @@ $('#table1').DataTable({
         { data: 'toCheck' },
         { data: 'notes' }		
     ],
-    // https://datatables.net/forums/discussion/42564/combining-a-url-with-id-from-a-column
     columnDefs: [ 
       { targets: [0], // first column
         "render": function (data, type, row, meta) {
         return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
         }  
       },
-
-      { targets: [1], // type column
-          "render": function (data, type, row, meta) {
-          return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(row.type) + '</a>';
-          }  
-      },
     
-      { targets: [4, 5, 6, 7, 8], // columns with bools
+      { targets: [3, 4, 5, 6, 7], // columns with bools
         "render": function (data, type, row, meta) {
         return ((data == 1) ? "Yes" : "No");
         }  
       }
     ]
+  });
+
 });
 
-// Function to convert type ids to correspnding type to be shown in table
-function typeIdtoText(id){
-var inventoryType;
-  if (id == '1') {
-    inventoryType = "General";
-  } else if (id == '2') {
-    inventoryType = "Spares";
-  } else if (id == '3') {
-    inventoryType = "Repeaters";
-  } else if (id == '4') {
-    inventoryType = "Returns";
+//customize page according to type
+var inventorytype;
+if ((<?php echo $_GET['id']; ?>) == '1') {
+    inventorytype = "General";
+  } else if ((<?php echo $_GET['id']; ?>) == '2') {
+    inventorytype = "Spares";
+  } else if ((<?php echo $_GET['id']; ?>) == '3') {
+    inventorytype = "Repeaters";
+  } else if ((<?php echo $_GET['id']; ?>) == '4') {
+    inventorytype = "Returns";
   } else {
-    inventoryType = "undefined";
-  }
-return inventoryType;
+    inventorytype = "undefined";
 }
+$("h3.card-title").html(inventorytype);
+$("li.breadcrumb-item.active").html(inventorytype);
 
 </script>
