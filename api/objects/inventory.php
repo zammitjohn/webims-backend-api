@@ -168,7 +168,7 @@ class Inventory{
             FROM
                 " . $this->table_name . " 
             WHERE
-                SKU='".$this->SKU."'";
+                SKU='".$this->SKU."' AND type='".$this->type."'"; 
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -177,7 +177,8 @@ class Inventory{
         $stmt->execute();
 
         if($stmt->rowCount() > 0){
-            return true;
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return $row['id']; // return item id of matching item
         }
         else{
             return false;
