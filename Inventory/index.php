@@ -25,6 +25,11 @@ $content = '
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">All items</h3>
+          <div class="card-tools">
+            <a href="import.html" class="btn btn-tool btn-sm">
+              <i class="fas fa-upload"></i>
+            </a>
+          </div>          
         </div>
         <!-- /.card-header -->
         <div class="card-body">
