@@ -321,7 +321,7 @@ to get the desired effect
   <div class="content-wrapper">
     <!-- Main content -->
 
-    <!-- account settings modal-->
+    <!-- account settings modal -->
     <div class="modal fade accent-danger" id="modal-xl">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
