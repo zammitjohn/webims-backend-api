@@ -16,6 +16,9 @@ $item->SKU = $_POST['SKU'];
 $item->type = $_POST['type'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
+$item->qtyIn = $_POST['qtyIn'];
+$item->qtyOut = $_POST['qtyOut'];
+$item->supplier = $_POST['supplier'];
 $item->isGSM = $_POST['isGSM'];
 $item->isUMTS = $_POST['isUMTS'];
 $item->isLTE = $_POST['isLTE'];
@@ -27,7 +30,7 @@ $item->notes = $_POST['notes'];
 $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
  
 // create the inventory item
-if($item->update()){
+if($item->update(false)){
     $item_arr=array(
         "status" => true,
         "message" => "Successfully updated!"

@@ -40,12 +40,10 @@ $content = '
               <th>Type</th>
               <th>Description</th>
               <th>Quantity</th>
-              <th>2G</th>
-              <th>3G</th>
-              <th>4G</th>
-              <th>Ancillary</th>
-              <th>Check</th>
-              <th>Notes</th>
+              <th>Provisional In</th>
+              <th>Provisional Out</th>
+              <th>Supplier</th>
+              <th>Date Modified</th>
             </tr>
             </thead>
             <tbody>
@@ -56,12 +54,10 @@ $content = '
               <th>Type</th>
               <th>Description</th>
               <th>Quantity</th>
-              <th>2G</th>
-              <th>3G</th>
-              <th>4G</th>
-              <th>Ancillary</th>
-              <th>Check</th>
-              <th>Notes</th>
+              <th>Provisional In</th>
+              <th>Provisional Out</th>
+              <th>Supplier</th>
+              <th>Date Modified</th>
             </tr>
             </tfoot>
           </table>
@@ -70,7 +66,7 @@ $content = '
       </div>
       <!-- /.card -->
 
-      <!-- account settings modal -->
+      <!-- data import modal -->
       <div class="modal fade" id="modal-import">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -81,7 +77,7 @@ $content = '
               </button>
             </div>
             <div class="modal-body">
-              <p>Import CSV File Data into Inventory Database</p>
+              <p>Import CSV file data to Inventory</p>
               
               <form id="upload_csv" method="post" enctype="multipart/form-data">
                 <div class="input-group mb-3">
@@ -128,15 +124,13 @@ $('#table1').DataTable({
     },
     columns: [
         { data: 'SKU' },
-        { data: 'Type' },        
+        { data: 'type' },        
         { data: 'description' },
         { data: 'qty' },
-        { data: 'isGSM' },
-        { data: 'isUMTS' },
-        { data: 'isLTE' },
-        { data: 'ancillary' },
-        { data: 'toCheck' },
-        { data: 'notes' }		
+        { data: 'qtyIn' },
+        { data: 'qtyOut' },
+        { data: 'supplier' },
+        { data: 'lastChange' }
     ],
     // https://datatables.net/forums/discussion/42564/combining-a-url-with-id-from-a-column
     columnDefs: [ 
@@ -148,14 +142,8 @@ $('#table1').DataTable({
 
       { targets: [1], // type column
           "render": function (data, type, row, meta) {
-          return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(row.type) + '</a>';
+          return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(data) + '</a>';
           }  
-      },
-    
-      { targets: [4, 5, 6, 7, 8], // columns with bools
-        "render": function (data, type, row, meta) {
-        return ((data == 1) ? "Yes" : "No");
-        }  
       }
     ]
 });

@@ -31,7 +31,6 @@ $content = '
           <!-- form start -->
           <form role="form">
             <div class="card-body">
-              
               <div class="form-group">
                 <label for="input1">SKU</label>
                 <input type="text" maxlength="255" class="form-control" id="SKU" placeholder="Enter SKU">
@@ -51,14 +50,35 @@ $content = '
                 <label for="input3">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
-              
+
               <div class="form-group">
-                <label for="input4">Quantity</label>
-                <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
+                <label for="input4">Supplier</label>
+                <input type="text" maxlength="255" class="form-control" id="supplier" placeholder="Enter supplier">
+              </div>              
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="input5">Quantity</label>
+                    <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label for="input6">Provisional In</label>
+                    <input type="number" min="0" max="9999" class="form-control" id="qtyIn" placeholder="Enter quantity">
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <div class="form-group">
+                  <label for="input7">Provisional Out</label>
+                  <input type="number" min="0" max="9999" class="form-control" id="qtyOut" placeholder="Enter quantity">
+                  </div>
+                </div>
               </div>
-              
+   
               <div class="form-group">
-              <label for="input5">Technology</label>
+                <label for="input8">Technology</label>
                 <div class="container-fluid">
                     <label class="form-check-label">
                       <input type="checkbox" id="isGSM">
@@ -80,7 +100,7 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input6">Miscellaneous</label>
+                <label for="input9">Miscellaneous</label>
                 <div class="container-fluid">
                   <label class="form-check-label">
                     <input type="checkbox" id="ancillary">
@@ -167,6 +187,9 @@ $(document).ready(function() {
       $('#type').val(data['type']);
       $('#description').val(data['description']);
       $('#qty').val(data['qty']);
+      $('#qtyIn').val(data['qtyIn']);
+      $('#qtyOut').val(data['qtyOut']);
+      $('#supplier').val(data['supplier']);
       if (data['isGSM'] == 1) {
         $(isGSM).prop("checked", true);
       };
@@ -246,6 +269,9 @@ function UpdateItem() {
         type: $("#type").val(),
         description: $("#description").val(),
         qty: $("#qty").val(),
+        qtyIn: $("#qtyIn").val(),
+        qtyOut: $("#qtyOut").val(),
+        supplier: $("#supplier").val(),
         isGSM: isGSMval,
         isUMTS: isUMTSval,
         isLTE: isLTEval,

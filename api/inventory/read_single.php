@@ -30,12 +30,16 @@ if ($stmt != false){
             "type" => $row['type'],
             "description" => $row['description'],
             "qty" => $row['qty'],
+            "qtyIn" => $row['qtyIn'],
+            "qtyOut" => $row['qtyOut'],
+            "supplier" => $row['supplier'],
             "isGSM" => $row['isGSM'],
             "isUMTS" => $row['isUMTS'],
             "isLTE" => $row['isLTE'],
             "ancillary" => $row['ancillary'],
             "toCheck" => $row['toCheck'],
-            "notes" => $row['notes']
+            "notes" => $row['notes'],
+            "lastChange" => $row['lastChange']
         );
     }
     // make it json format

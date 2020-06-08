@@ -20,9 +20,9 @@ if($_FILES["file"]["size"] > 0) {
 
             // Get Data from CSV and clean unspecified values
             if (!empty($getData[1])) {               
-                $data_Type = $getData[1];
+                $data_type = $getData[1];
             } else {
-                $data_Type = "";
+                $data_type = "";
             }
 
             if (!empty($getData[2])) {
@@ -32,45 +32,66 @@ if($_FILES["file"]["size"] > 0) {
             }
 
             if (!empty($getData[3])) {
-                $data_Description = $getData[3];  
+                $data_description = $getData[3];  
             } else {
-                $data_Description = ""; 
+                $data_description = ""; 
             }
 
             if (!empty($getData[4])) {
-                $data_Quantity = $getData[4];  
+                $data_qty = $getData[4];  
             } else {
-                $data_Quantity = ""; 
+                $data_qty = ""; 
+            }
+
+            if (!empty($getData[6])) {
+                $data_qtyIn = $getData[6];  
+            } else {
+                $data_qtyIn = ""; 
+            }
+
+            if (!empty($getData[7])) {
+                $data_qtyOut = $getData[7];  
+            } else {
+                $data_qtyOut = ""; 
+            }
+
+            if (!empty($getData[8])) {
+                $data_supplier = $getData[8];  
+            } else {
+                $data_supplier = ""; 
             }
             
-            // Overwrite var data_Type with correct terminology
-            if (stristr($data_Type,"return")) {
-                $data_Type = 4; // Returns
-            } else if (stristr($data_Type,"repeater")) {
-                $data_Type = 3; // Repeaters
-            } else if (stristr($data_Type,"spare")) {
-                $data_Type = 2; // Spares
+            // Overwrite var data_type with correct terminology
+            if (stristr($data_type,"return")) {
+                $data_type = 4; // Returns
+            } else if (stristr($data_type,"repeater")) {
+                $data_type = 3; // Repeaters
+            } else if (stristr($data_type,"spare")) {
+                $data_type = 2; // Spares
             } else {
-                $data_Type = 1; // General
+                $data_type = 1; // General
             }
             
             // prepare inventory item object
             $item = new Inventory($db);
             $item->SKU = $data_SKU;
-            $item->type = $data_Type;
-            $item->description = $data_Description;
-            $item->qty = $data_Quantity;
+            $item->type = $data_type;
+            $item->description = $data_description;
+            $item->qty = $data_qty;
+            $item->qtyIn = $data_qtyIn;
+            $item->qtyOut = $data_qtyOut;
+            $item->supplier = $data_supplier;
             $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die(); // API Key - sessionId
 
             // check if SKU already exists
-            if($existingId = $item->isAlreadyExist()){
+            if ($existingId = $item->isAlreadyExist()) {
                 $item->id = $existingId;
-                if($item->update()){ // update inventory item
+                if ($item->update(true)) { // update inventory item
                     $updated_counter++;
                     $status = true;
                 }
             } else {
-                if($item->create()){ // create inventory item
+                if ($item->create()) { // create inventory item
                     $created_counter++;
                     $status = true;
                 }

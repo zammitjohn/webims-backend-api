@@ -34,12 +34,10 @@ $content = '
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>2G</th>
-                <th>3G</th>
-                <th>4G</th>
-                <th>Ancillary</th>
-                <th>Check</th>
-                <th>Notes</th>
+                <th>Provisional In</th>
+                <th>Provisional Out</th>
+                <th>Supplier</th>
+                <th>Date Modified</th>
               </tr>
             </thead>
             <tbody>
@@ -49,12 +47,10 @@ $content = '
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>2G</th>
-                <th>3G</th>
-                <th>4G</th>
-                <th>Ancillary</th>
-                <th>Check</th>
-                <th>Notes</th>
+                <th>Provisional In</th>
+                <th>Provisional Out</th>
+                <th>Supplier</th>
+                <th>Date Modified</th>
               </tr>
             </tfoot>
           </table>
@@ -85,26 +81,18 @@ $(function () {
         dataSrc: ''
     },
     columns: [
-        { data: 'SKU' },
+        { data: 'SKU' },     
         { data: 'description' },
         { data: 'qty' },
-        { data: 'isGSM' },
-        { data: 'isUMTS' },
-        { data: 'isLTE' },
-        { data: 'ancillary' },
-        { data: 'toCheck' },
-        { data: 'notes' }		
+        { data: 'qtyIn' },
+        { data: 'qtyOut' },
+        { data: 'supplier' },
+        { data: 'lastChange' }
     ],
     columnDefs: [ 
       { targets: [0], // first column
         "render": function (data, type, row, meta) {
         return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-        }  
-      },
-    
-      { targets: [3, 4, 5, 6, 7], // columns with bools
-        "render": function (data, type, row, meta) {
-        return ((data == 1) ? "Yes" : "No");
         }  
       }
     ]

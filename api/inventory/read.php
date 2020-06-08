@@ -38,12 +38,16 @@ if ($stmt != false){
                 "type" => $type,
                 "description" => $description,
                 "qty" => $qty,
+                "qtyIn" => $qtyIn,
+                "qtyOut" => $qtyOut,
+                "supplier" => $supplier,
                 "isGSM" => $isGSM,
                 "isUMTS" => $isUMTS,
                 "isLTE" => $isLTE,
                 "ancillary" => $ancillary,
                 "toCheck" => $toCheck,
-                "notes" => $notes
+                "notes" => $notes,
+                "lastChange" => $lastChange
             );
             array_push($item_arr["Inventory"], $inventory_item);
         }

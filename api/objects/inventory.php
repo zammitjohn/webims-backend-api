@@ -11,6 +11,9 @@ class Inventory{
     public $type;
     public $description;
     public $qty;
+    public $qtyIn;
+    public $qtyOut;
+    public $supplier;
     public $isGSM;
     public $isUMTS;
     public $isLTE;
@@ -100,9 +103,9 @@ class Inventory{
         
         // query to insert record
         $query = "INSERT INTO  ". $this->table_name ." 
-                        (`SKU`, `type`, `description`, `qty`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
+                        (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
                   VALUES
-                        ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";
+                        ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -117,20 +120,31 @@ class Inventory{
     }
 
     // update item 
-    function update(){
+    function update(bool $fromImport){
     
         if(!($this->keyExists())){
             return false;
         }
 
-        // query to insert record
-        $query = "UPDATE
-                    " . $this->table_name . "
-                SET
-                    SKU='".$this->SKU."', type='".$this->type."', description='".$this->description."', qty='".$this->qty."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', notes='".$this->notes."'
-                WHERE
-                    id='".$this->id."'";
-    
+        if ($fromImport) { // method called from import function
+            // query to insert record
+            $query = "UPDATE
+                        " . $this->table_name . "
+                    SET
+                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."'
+                    WHERE
+                        id='".$this->id."'";            
+
+        } else { // method called from API service
+            // query to insert record
+            $query = "UPDATE
+                        " . $this->table_name . "
+                    SET
+                        SKU='".$this->SKU."', type='".$this->type."', description='".$this->description."', qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."', supplier='".$this->supplier."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', notes='".$this->notes."'
+                    WHERE
+                        id='".$this->id."'";
+        }
+
         // prepare query
         $stmt = $this->conn->prepare($query);
         // execute query
