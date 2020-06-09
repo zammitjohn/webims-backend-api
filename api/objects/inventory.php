@@ -21,7 +21,7 @@ class Inventory{
 	public $toCheck;
     public $notes;
     public $sessionId;
-	
+    public $inventoryDate;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -90,7 +90,7 @@ class Inventory{
     }
 
     // create item
-    function create(){
+    function create(bool $fromImport){
     
         if(!($this->keyExists())){
             return false;
@@ -101,12 +101,19 @@ class Inventory{
             return false;
         }
         
+        if ($fromImport) { // method called from import function
         // query to insert record
-        $query = "INSERT INTO  ". $this->table_name ." 
-                        (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
-                  VALUES
-                        ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";
-    
+            $query = "INSERT INTO  ". $this->table_name ." 
+                            (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`, `inventoryDate`)
+                    VALUES
+                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."', '".$this->inventoryDate."')";
+        } else { // method called from API service
+            $query = "INSERT INTO  ". $this->table_name ." 
+                            (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
+                    VALUES
+                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";  
+        }
+        
         // prepare query
         $stmt = $this->conn->prepare($query);
     
@@ -131,7 +138,7 @@ class Inventory{
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."'
+                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."', inventoryDate='".$this->inventoryDate."'
                     WHERE
                         id='".$this->id."'";            
 

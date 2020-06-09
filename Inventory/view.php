@@ -295,7 +295,7 @@ function UpdateItem() {
 
 function Remove() {
   var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want to delete the item? This will delete all associated registrations! Items from collections will not be deleted.");
+  var result = confirm("Are you sure you want to delete the item? This will delete all associated registrations! Items from Projects will not be deleted.");
   if (result == true) {
     $.ajax({
       type: "POST",

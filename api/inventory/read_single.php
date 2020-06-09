@@ -39,6 +39,7 @@ if ($stmt != false){
             "ancillary" => $row['ancillary'],
             "toCheck" => $row['toCheck'],
             "notes" => $row['notes'],
+            "inventoryDate" => $row['inventoryDate'],
             "lastChange" => $row['lastChange']
         );
     }

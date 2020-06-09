@@ -47,6 +47,7 @@ if ($stmt != false){
                 "ancillary" => $ancillary,
                 "toCheck" => $toCheck,
                 "notes" => $notes,
+                "inventoryDate" => $inventoryDate,                
                 "lastChange" => $lastChange
             );
             array_push($item_arr["Inventory"], $inventory_item);

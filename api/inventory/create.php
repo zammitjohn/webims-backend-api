@@ -30,7 +30,7 @@ $item->notes = $_POST['notes'];
 $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
 
 // create the item
-if($item->create()){
+if($item->create(false)){
     $item_arr=array(
         "status" => true,
         "message" => "Successfully created!",

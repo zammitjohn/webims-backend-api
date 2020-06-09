@@ -30,27 +30,27 @@ $content = '
         <div class="card-body">
           <table id="table1" class="table table-bordered table-striped">
             <thead>
-              <tr>
+              <tr>          
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Provisional In</th>
                 <th>Provisional Out</th>
                 <th>Supplier</th>
-                <th>Date Modified</th>
+                <th>Inventory Date</th>                
               </tr>
             </thead>
             <tbody>
             </tbody>
             <tfoot>
-              <tr>
+              <tr>          
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Provisional In</th>
                 <th>Provisional Out</th>
                 <th>Supplier</th>
-                <th>Date Modified</th>
+                <th>Inventory Date</th>                
               </tr>
             </tfoot>
           </table>
@@ -75,6 +75,7 @@ $(function () {
   $('#table1').DataTable({
     autoWidth: false,
     responsive: true,
+    order: [[ 6, "desc" ]],
     ajax: {
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
         url: "../api/inventory/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
@@ -87,9 +88,9 @@ $(function () {
         { data: 'qtyIn' },
         { data: 'qtyOut' },
         { data: 'supplier' },
-        { data: 'lastChange' }
+        { data: 'inventoryDate' },        
     ],
-    columnDefs: [ 
+    columnDefs: [
       { targets: [0], // first column
         "render": function (data, type, row, meta) {
         return '<a href="view.php?id=' + row.id + '">' + data + '</a>';

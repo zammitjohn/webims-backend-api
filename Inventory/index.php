@@ -35,7 +35,7 @@ $content = '
         <div class="card-body">
           <table id="table1" class="table table-bordered table-striped">
             <thead>
-            <tr>
+            <tr>          
               <th>SKU</th>
               <th>Type</th>
               <th>Description</th>
@@ -43,7 +43,7 @@ $content = '
               <th>Provisional In</th>
               <th>Provisional Out</th>
               <th>Supplier</th>
-              <th>Date Modified</th>
+              <th>Inventory Date</th>               
             </tr>
             </thead>
             <tbody>
@@ -57,7 +57,7 @@ $content = '
               <th>Provisional In</th>
               <th>Provisional Out</th>
               <th>Supplier</th>
-              <th>Date Modified</th>
+              <th>Inventory Date</th>              
             </tr>
             </tfoot>
           </table>
@@ -77,7 +77,7 @@ $content = '
               </button>
             </div>
             <div class="modal-body">
-              <p>Import CSV file data to Inventory</p>
+              <p>Select CSV data file to import</p>
               
               <form id="upload_csv" method="post" enctype="multipart/form-data">
                 <div class="input-group mb-3">
@@ -117,6 +117,7 @@ include('../master.php');
 $('#table1').DataTable({
     autoWidth: false,
     responsive: true,
+    order: [[ 7, "desc" ]],
     ajax: {
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
         url: "../api/inventory/read.php",
@@ -130,10 +131,10 @@ $('#table1').DataTable({
         { data: 'qtyIn' },
         { data: 'qtyOut' },
         { data: 'supplier' },
-        { data: 'lastChange' }
+        { data: 'inventoryDate' },        
     ],
     // https://datatables.net/forums/discussion/42564/combining-a-url-with-id-from-a-column
-    columnDefs: [ 
+    columnDefs: [
       { targets: [0], // first column
         "render": function (data, type, row, meta) {
         return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
@@ -165,7 +166,8 @@ var inventoryType;
 return inventoryType;
 }
 
-$('#upload_csv').on("submit", function(e){  
+$('#upload_csv').on("submit", function(e){
+  Pace.restart();
   e.preventDefault(); //form will not submitted  
   $.ajax({
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },

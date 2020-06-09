@@ -19,44 +19,50 @@ if($_FILES["file"]["size"] > 0) {
         if (stristr($getData[1],"VNETWORK") or stristr($getData[1],"INDOOR_REPEATER")) {
 
             // Get Data from CSV and clean unspecified values
+            if (!empty($getData[0])) {               
+                $data_date = date('Y-m-d', strtotime(str_replace('/', '-', trim($getData[0]))));
+            } else {
+                $data_date = "";
+            }
+
             if (!empty($getData[1])) {               
-                $data_type = $getData[1];
+                $data_type = trim($getData[1]);
             } else {
                 $data_type = "";
             }
 
             if (!empty($getData[2])) {
-                $data_SKU = $getData[2]; 
+                $data_SKU = trim($getData[2]); 
             } else {
                 $data_SKU = ""; 
             }
 
             if (!empty($getData[3])) {
-                $data_description = $getData[3];  
+                $data_description = trim($getData[3]);  
             } else {
                 $data_description = ""; 
             }
 
             if (!empty($getData[4])) {
-                $data_qty = $getData[4];  
+                $data_qty = trim($getData[4]);  
             } else {
                 $data_qty = ""; 
             }
 
             if (!empty($getData[6])) {
-                $data_qtyIn = $getData[6];  
+                $data_qtyIn = trim($getData[6]);  
             } else {
                 $data_qtyIn = ""; 
             }
 
             if (!empty($getData[7])) {
-                $data_qtyOut = $getData[7];  
+                $data_qtyOut = trim($getData[7]);  
             } else {
                 $data_qtyOut = ""; 
             }
 
             if (!empty($getData[8])) {
-                $data_supplier = $getData[8];  
+                $data_supplier = trim($getData[8]);  
             } else {
                 $data_supplier = ""; 
             }
@@ -81,6 +87,7 @@ if($_FILES["file"]["size"] > 0) {
             $item->qtyIn = $data_qtyIn;
             $item->qtyOut = $data_qtyOut;
             $item->supplier = $data_supplier;
+            $item->inventoryDate = $data_date;
             $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die(); // API Key - sessionId
 
             // check if SKU already exists
@@ -91,7 +98,7 @@ if($_FILES["file"]["size"] > 0) {
                     $status = true;
                 }
             } else {
-                if ($item->create()) { // create inventory item
+                if ($item->create(true)) { // create inventory item
                     $created_counter++;
                     $status = true;
                 }
