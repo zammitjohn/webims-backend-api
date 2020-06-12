@@ -10,6 +10,8 @@ $db = $database->getConnection();
 $status = false;
 $created_counter = 0;
 $updated_counter = 0;
+$conflict_counter = 0;
+$modifiedItemIDs = []; // to keep track of modified inventory item IDs
 
 $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
@@ -18,7 +20,7 @@ if($_FILES["file"]["size"] > 0) {
 
         if (stristr($getData[1],"VNETWORK") or stristr($getData[1],"INDOOR_REPEATER")) {
 
-            // Get Data from CSV and clean unspecified values
+            // Get data from CSV and clean values
             if (!empty($getData[0])) {               
                 $data_date = date('Y-m-d', strtotime(str_replace('/', '-', trim($getData[0]))));
             } else {
@@ -91,16 +93,31 @@ if($_FILES["file"]["size"] > 0) {
             $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die(); // API Key - sessionId
 
             // check if SKU already exists
-            if ($existingId = $item->isAlreadyExist()) {
+            if ($existingId = $item->isAlreadyExist()) { // update existing inventory item
                 $item->id = $existingId;
-                if ($item->update(true)) { // update inventory item
+
+                // check if item was already modified
+                if (in_array($item->id, $modifiedItemIDs)) {
+                    $quantities = $item->getQuantities(); // get quantities and add
+                    $item->qty = (intval($item->qty) + intval($quantities['quantityTotal']));
+                    $item->qtyIn = (intval($item->qtyIn) + intval($quantities['quantityIN']));
+                    $item->qtyOut = (intval($item->qtyOut) + intval($quantities['quantityOUT']));
+
+                    if ($item->update(true)) { // update inventory item with quantities added up
+                        $conflict_counter++;
+                        $status = true;
+                    }
+
+                } else if ($item->update(true)) { // update inventory item
                     $updated_counter++;
                     $status = true;
+                    array_push($modifiedItemIDs, $item->id); // push ID to modifiedItemIDs
                 }
             } else {
                 if ($item->create(true)) { // create inventory item
                     $created_counter++;
                     $status = true;
+                    array_push($modifiedItemIDs, $item->id); // push ID to modifiedItemIDs
                 }
             }
 
@@ -113,7 +130,8 @@ if($_FILES["file"]["size"] > 0) {
 $result_arr=array(
     "status" => $status,
     "created_count" => $created_counter,
-    "updated_count" => $updated_counter
+    "updated_count" => $updated_counter,
+    "conflict_count" => $conflict_counter
 );
 
 print_r(json_encode($result_arr));

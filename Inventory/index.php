@@ -92,9 +92,7 @@ $content = '
               </form>
               
             </div>
-            <div class="modal-footer justify-content-between">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+
           </div>
           <!-- /.modal-content -->
         </div>
@@ -114,7 +112,7 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-$('#table1').DataTable({
+var table = $('#table1').DataTable({
     autoWidth: false,
     responsive: true,
     order: [[ 7, "desc" ]],
@@ -167,8 +165,9 @@ return inventoryType;
 }
 
 $('#upload_csv').on("submit", function(e){
-  Pace.restart();
-  e.preventDefault(); //form will not submitted  
+  $('#modal-import').modal('toggle'); // hide modal
+  toastr.info('Importing data'); // show toast
+  e.preventDefault(); //form will not submitted
   $.ajax({
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
       url:"../functions/import.php",  
@@ -180,14 +179,19 @@ $('#upload_csv').on("submit", function(e){
       dataType: 'json',
       success: function(data) {
           if(data['status'] == false) {  
-              alert("No data imported");  
+              toastr.error('No data imported');
           } else {  
-              alert("Created: " + data['created_count'] + " items. Matched: " + data['updated_count'] + " items.");
-              location.reload();
-          }  
+              toastr.success("Created: " + data['created_count'] + " items. Matched: " + data['updated_count'] + " items.");
+
+              if (data['conflict_count']){
+                toastr.warning(data['conflict_count'] + " conflicts merged.");
+              }
+
+              table.ajax.reload(); // reload table
+          }
       },
       error: function(data) {
-        alert("Import failed");  
+        toastr.error("Import failed");  
       }
   })  
 });  
@@ -196,12 +200,11 @@ $('#file').on('change',function(){ // validate file type to import
   var regex = new RegExp("(.*?)\.(csv)$");
   var fileName = $(this).val(); // get the file name
   if (!(regex.test(fileName.toLowerCase()))) {
-    alert('Please select correct file format');
+    toastr.error('Please select correct file format');
     $(this).next('.custom-file-label').html("");  // replace the file input label
   } else { // Show file name in dialog https://stackoverflow.com/questions/48613992/bootstrap-4-file-input-doesnt-show-the-file-name
     var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
     $(this).next('.custom-file-label').html(cleanFileName);  // replace the file input label
   }
 })
-
 </script>

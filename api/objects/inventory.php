@@ -206,6 +206,28 @@ class Inventory{
         }
     }
 
+
+    function getQuantities(){ // method called from import function
+        $query = "SELECT `qty`, `qtyIn`, `qtyOut` 
+            FROM
+                " . $this->table_name . " 
+            WHERE 
+                id = '".$this->id."'";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return array(
+            'quantityIN' => $row['qtyIn'],
+            'quantityOUT' => $row['qtyOut'],
+            'quantityTotal' => $row['qty']
+        );
+    }
+
     function keyExists(){
         $query = "SELECT *
             FROM
