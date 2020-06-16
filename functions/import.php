@@ -98,21 +98,16 @@ if($_FILES["file"]["size"] > 0) {
 
                 // check if item was already modified
                 if (in_array($item->id, $modifiedItemIDs)) {
-                    $quantities = $item->getQuantities(); // get quantities and add
-                    $item->qty = (intval($item->qty) + intval($quantities['quantityTotal']));
-                    $item->qtyIn = (intval($item->qtyIn) + intval($quantities['quantityIN']));
-                    $item->qtyOut = (intval($item->qtyOut) + intval($quantities['quantityOUT']));
-
-                    if ($item->update(true)) { // update inventory item with quantities added up
+                    if ($item->updateQuantities()) { // update inventory item with quantities to add up
                         $conflict_counter++;
                         $status = true;
                     }
-
                 } else if ($item->update(true)) { // update inventory item
                     $updated_counter++;
                     $status = true;
                     array_push($modifiedItemIDs, $item->id); // push ID to modifiedItemIDs
                 }
+
             } else {
                 if ($item->create(true)) { // create inventory item
                     $created_counter++;

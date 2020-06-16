@@ -161,6 +161,30 @@ class Inventory{
         return false;
     }
 
+    // update item quantities
+    function updateQuantities(){  // method called from import function
+    
+        if(!($this->keyExists())){
+            return false;
+        }
+       
+        // query to update record quantities
+        $query = "UPDATE 
+                    " . $this->table_name . "
+                SET 
+                    qty= qty + '".$this->qty."', qtyIn= qtyIn + '".$this->qtyIn."', qtyOut= qtyOut + '".$this->qtyOut."'     
+                WHERE 
+                    id='".$this->id."'";         
+    
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
+
     // delete item
     function delete(){
 
@@ -204,28 +228,6 @@ class Inventory{
         else{
             return false;
         }
-    }
-
-
-    function getQuantities(){ // method called from import function
-        $query = "SELECT `qty`, `qtyIn`, `qtyOut` 
-            FROM
-                " . $this->table_name . " 
-            WHERE 
-                id = '".$this->id."'";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // execute query
-        $stmt->execute();
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return array(
-            'quantityIN' => $row['qtyIn'],
-            'quantityOUT' => $row['qtyOut'],
-            'quantityTotal' => $row['qty']
-        );
     }
 
     function keyExists(){
