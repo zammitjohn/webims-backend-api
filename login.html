@@ -30,22 +30,20 @@
 
   <div class="card">
     <div class="card-body register-card-body">
-      <p class="login-box-msg">Log in to your account</p>
+      <p class="login-box-msg">Log in to your Vodafone account</p>
 
       <!-- form start -->
       <form role="form" id="loginForm">
         <div class="form-group">
-          <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+          <input type="username" name="username" class="form-control" id="username" placeholder="Username">
         </div>
         <div class="form-group">
           <input type="password" name="password" class="form-control" id="password" placeholder="Password">
         </div>
       
         <div class="row">
-          <div class="col-8">
-            <a href="signup.html" class="text-center"><b>Sign Up</b></a>
-          </div>
-          <div class="col-4">
+          <p class="login-box-msg"><small><b>Your credentials are not stored on RIMS.</b> Verification of credentials is performed using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol">LDAP</a> authentication.</small></p>
+          <div class="col-6 mx-auto">
             <button type="submit" class="btn btn-default btn-block">Sign in</button>
           </div>
         </div>
@@ -84,7 +82,7 @@ $(document).ready(function () {
         url: 'api/users/login.php',
         dataType: 'json',
         data: {
-          email: $("#email").val(),
+          username: $("#username").val(),
           password: $("#password").val()
         },
         error: function(data) {
@@ -95,7 +93,6 @@ $(document).ready(function () {
             localStorage.setItem('id', data['id']);
             localStorage.setItem('firstname', data['firstname']);
             localStorage.setItem('lastname', data['lastname']);
-            localStorage.setItem('email', data['email']);
             localStorage.setItem('sessionId', data['sessionId']);
             window.location.href = 'index.php';
           } else {
@@ -107,9 +104,8 @@ $(document).ready(function () {
   });
   $('#loginForm').validate({
     rules: {
-      email: {
-        required: true,
-        email: true,
+      username: {
+        required: true
       },
       password: {
         required: true,
@@ -117,9 +113,8 @@ $(document).ready(function () {
       }
     },
     messages: {
-      email: {
-        required: "Please enter a email address",
-        email: "Please enter a vaild email address"
+      username: {
+        required: "Please enter a username",
       },
       password: {
         required: "Please provide a password",

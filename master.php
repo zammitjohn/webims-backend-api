@@ -69,12 +69,12 @@ to get the desired effect
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
         <span class="dropdown-item dropdown-header">uname.placeholder.text</span>
         <div class="dropdown-divider"></div>
-        <a href="#" class="dropdown-item" data-toggle="modal" data-target="#modal-xl">
-          <i class="fas fa-cog mr-2"></i> Account Settings
-        </a>
-        <div class="dropdown-divider"></div>
         <a onclick="clearSession()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
           <i class="fas fa-sign-out-alt mr-2"></i> Sign out
+        </a>
+        <div class="dropdown-divider"></div>
+        <a onclick="deleteAccount()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
+          <i class="fas fa-trash-alt mr-2"></i> Delete Account
         </a>
       </div>
     </ul>
@@ -87,7 +87,7 @@ to get the desired effect
     <!-- Brand Logo -->
     <a href="../" class="brand-link navbar-danger">
       <img src="../dist/img/vf-logo.png" alt="Vodafone" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
+           style="opacity: .9">
       <span class="brand-text font-weight-light"><b>RIMS</b></span>
     </a>
 
@@ -99,7 +99,7 @@ to get the desired effect
           <img src="../dist/img/generic-user.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block" data-toggle="modal" data-target="#modal-xl">uname.placeholder.text</a>
+          <a href="#" class="d-block">uname.placeholder.text</a>
         </div>
       </div>
 
@@ -323,97 +323,8 @@ to get the desired effect
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
-
-    <!-- account settings modal -->
-    <div class="modal fade accent-danger" id="modal-xl">
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Account Settings</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-              <ul class="nav nav-tabs" id="custom-content-below-tab" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" id="custom-content-below-profile-tab" data-toggle="pill" href="#custom-content-below-profile" role="tab" aria-controls="custom-content-below-profile" aria-selected="true">Profile</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="custom-content-below-password-tab" data-toggle="pill" href="#custom-content-below-password" role="tab" aria-controls="custom-content-below-password" aria-selected="false">Password</a>
-                </li>
-              </ul>
-              <div class="tab-content" id="custom-content-below-tabContent">
-                <div class="tab-pane fade active show" id="custom-content-below-profile" role="tabpanel" aria-labelledby="custom-content-below-profile-tab">
-                  
-                  <div class="card-body">
-                    <form role="form" id="profileForm">              
-                      <div class="form-group">
-                        <label for="input1">First name</label>
-                        <input type="text" name="firstname" class="form-control" id="firstname" placeholder="First name">
-                      </div>
-                      <div class="form-group">
-                        <label for="input2">Last name</label>
-                        <input type="text" name="lastname" class="form-control" id="lastname" placeholder="Last name">
-                      </div>
-                      <div class="form-group">
-                        <label for="input3">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Email">
-                      </div>
-                      <div class="row">
-                        <div class="col-8">
-                        </div>
-                        <div class="col-4">
-                          <button type="submit" class="btn btn-default btn-block">Update</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane fade" id="custom-content-below-password" role="tabpanel" aria-labelledby="custom-content-below-password-tab">
-
-                  <div class="card-body">
-                    <form role="form" id="passwordForm">   
-                      <div class="form-group">
-                        <label for="input4">Current password</label>
-                        <input type="password" name="password_current" class="form-control" id="password_current" placeholder="Current password">
-                      </div>           
-                      <div class="form-group">
-                        <label for="input5">New password</label>
-                        <input type="password" name="password" class="form-control" id="password" placeholder="New password">
-                      </div>
-                      <div class="form-group">
-                        <input type="password" name="password_confirm" class="form-control" id="password_confirm" placeholder="Confirm new password">
-                      </div>
-                      <div class="row">
-                        <div class="col-8">
-                        </div>
-                        <div class="col-4">
-                          <button type="submit" class="btn btn-default btn-block">Update</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-
-                </div>
-              </div>              
-
-            </div>
-            <div class="card-footer">
-              <button type="button" class="btn btn-danger" onClick="deleteAccount()">Delete account</button>
-              <button type="button" class="btn btn-default" onClick="window.location.reload()">Save changes</button>
-            </div>
-          </div>
-          <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-      </div>
-      <!-- /.modal -->
-
-      <!-- page content -->
+    
+      <!-- page content ->
       <?php echo $content; ?>
       <!-- /.content -->
 
@@ -494,135 +405,10 @@ function clearSession(){
   localStorage.removeItem('id');
   localStorage.removeItem('firstname');
   localStorage.removeItem('lastname');
-  localStorage.removeItem('email');
   localStorage.removeItem('sessionId');
   window.location.href = '../login.html';
 }
 </script>
-
-<!-- Load modal content only when modal shown -->
-<script>
-$('#modal-xl').on('shown.bs.modal', function (e) {
-
-// Populate user profile from local storage
-$('#firstname').val(localStorage.getItem('firstname'));
-$('#lastname').val(localStorage.getItem('lastname'));
-$('#email').val(localStorage.getItem('email'));
-
-$('#profileForm').validate({
-  rules: {
-    email: {
-      required: true,
-      email: true,
-    }
-  },
-  messages: {
-    email: {
-      required: "Please enter a email address",
-      email: "Please enter a vaild email address"
-    }
-  },
-  errorElement: 'span',
-  errorPlacement: function (error, element) {
-    error.addClass('invalid-feedback');
-    element.closest('.form-group').append(error);
-  },
-  highlight: function (element, errorClass, validClass) {
-    $(element).addClass('is-invalid');
-  },
-  unhighlight: function (element, errorClass, validClass) {
-    $(element).removeClass('is-invalid');
-  },
-  submitHandler: function(form) {
-    $.ajax({
-        type: "POST",
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: '../api/users/update_profile.php',
-        dataType: 'json',
-        data: {
-          email: $("#email").val(),
-          firstname: $("#firstname").val(),
-          lastname: $("#lastname").val(),
-          sessionId: (localStorage.getItem('sessionId'))
-        },
-        error: function(data) {
-          alert(data.responseText);
-        },
-        success: function(data) {
-          if (data['status'] == true) {
-            alert(data['message']);
-
-            // update local storage details!
-            localStorage.setItem('firstname', data['firstname']);
-            localStorage.setItem('lastname', data['lastname']);
-            localStorage.setItem('email', data['email']);
-
-          } else {
-            alert(data['message']);
-          }
-        }
-      });
-    }
-});
-
-$('#passwordForm').validate({
-  rules: {
-    password_current: {
-      required: true,
-      minlength: 5
-    },
-    password: {
-      required: true,
-      minlength: 5,
-      notEqualTo: "#password_current"
-    },
-    password_confirm: {
-      equalTo: "#password"
-    },
-  },
-  messages: {
-    password: {
-      required: "Please provide a password",
-      minlength: "Your password must be at least 5 characters long"
-    },
-  },
-  errorElement: 'span',
-  errorPlacement: function (error, element) {
-    error.addClass('invalid-feedback');
-    element.closest('.form-group').append(error);
-  },
-  highlight: function (element, errorClass, validClass) {
-    $(element).addClass('is-invalid');
-  },
-  unhighlight: function (element, errorClass, validClass) {
-    $(element).removeClass('is-invalid');
-  },
-  submitHandler: function(form) {
-    $.ajax({
-        type: "POST",
-        url: '../api/users/update_password.php',
-        dataType: 'json',
-        data: {
-          email: (localStorage.getItem('email')),
-          password: $("#password_current").val(),
-          password_new: $("#password").val(),
-        },
-        error: function(data) {
-          alert(data.responseText);
-        },
-        success: function(data) {
-          if (data['status'] == true) {
-            alert(data['message']);
-          } else {
-            alert(data['message']);
-          }
-        }
-      });
-  }
-});
-})
-</script>
-
 
 <!-- Remove session info from localstorage -->
 <script>
