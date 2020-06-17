@@ -22,7 +22,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../dist/img/vf-logo-lg.png">
+  <link rel="icon" type="image/png" href="../dist/img/vf-logo-inv.png">
 
   <!-- Check session status before loading body -->
   <script>
@@ -42,7 +42,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed accent-danger">
+<body class="hold-transition sidebar-mini layout-footer-fixed accent-danger">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -425,7 +425,7 @@ to get the desired effect
   <strong>Developed by John Zammit.</strong> Copyright &copy; <?php echo date('Y'); ?> <a href="https://vodafone.com.mt">Vodafone Malta</a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.0 (Pre-release)
+      <b>Version</b> 1.5
     </div>
   </footer>
   
