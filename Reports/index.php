@@ -81,34 +81,37 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-$('#table1').DataTable({
-    autoWidth: false,
-    responsive: true,
-    ajax: {
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/reports/read.php",
-        dataSrc: ''
-    },
-    columns: [
-        { data: 'id' },
-        { data: 'ticketNo' },
-        { data: 'name' },
-        { data: 'reportNo' },
-        { data: 'dateRequested' },
-        { data: 'dateLeavingRBS' },
-        { data: 'dateDispatched' },
-        { data: 'dateReturned' },
-        { data: 'AWB' },
-        { data: 'AWBreturn' },
-        { data: 'RMA' },
-        { data: 'notes' }
-    ],
-    columnDefs: [ 
-      { targets: [0],
-        "render": function (data, type, row, meta) {
-        return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-        }  
-      }
-    ]
+$(function () {
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+  $('#table1').DataTable({
+      autoWidth: false,
+      responsive: true,
+      ajax: {
+          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+          url: "../api/reports/read.php",
+          dataSrc: ''
+      },
+      columns: [
+          { data: 'id' },
+          { data: 'ticketNo' },
+          { data: 'name' },
+          { data: 'reportNo' },
+          { data: 'dateRequested' },
+          { data: 'dateLeavingRBS' },
+          { data: 'dateDispatched' },
+          { data: 'dateReturned' },
+          { data: 'AWB' },
+          { data: 'AWBreturn' },
+          { data: 'RMA' },
+          { data: 'notes' }
+      ],
+      columnDefs: [ 
+        { targets: [0],
+          "render": function (data, type, row, meta) {
+          return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+          }  
+        }
+      ]
+  });
 });
 </script>

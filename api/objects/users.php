@@ -32,7 +32,6 @@ class Users{
         
         // execute query
         $stmt->execute();
-
         if($stmt->rowCount() > 0){
             return true;
         }
@@ -80,8 +79,11 @@ class Users{
             $stmt = $this->conn->prepare($query);
             
             // execute query
-            if($stmt->execute()){
+            $stmt->execute();
+            if ($stmt->rowCount() > 0) {
                 $this->id = $this->conn->lastInsertId();
+            } else {
+                return false; // failed to create new user
             }
         }
 
@@ -97,9 +99,14 @@ class Users{
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
+
         // execute query
         $stmt->execute();
-        return $stmt;
+        if ($stmt->rowCount() > 0) {
+            return $stmt;
+        } else {
+            return false; // failed to login user
+        }        
     }
 
     function createSessionId(){

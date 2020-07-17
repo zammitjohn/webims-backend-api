@@ -102,7 +102,8 @@ class Spares{
         $stmt = $this->conn->prepare($query);
     
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
             return true;
         }
@@ -127,8 +128,10 @@ class Spares{
 
         // prepare query
         $stmt = $this->conn->prepare($query);
+
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             return true;
         }
         return false;
@@ -151,7 +154,8 @@ class Spares{
         $stmt = $this->conn->prepare($query);
         
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             return true;
         }
         return false;

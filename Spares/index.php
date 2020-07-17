@@ -68,6 +68,7 @@ include('../master.php');
 <!-- page script -->
 <script>
 $(function () {
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
   $('#table1').DataTable({
       autoWidth: false,
       responsive: true,

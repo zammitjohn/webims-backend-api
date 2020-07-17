@@ -42,9 +42,9 @@ $content = '
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
                 <th>Description</th>
-                <th>Quantity</th>
+                <th>Ordered</th>
+                <th>Stock</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -114,9 +114,9 @@ $content = '
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
                 <th>Description</th>
-                <th>Quantity</th>
+                <th>Ordered</th>
+                <th>Stock</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -150,9 +150,9 @@ $content = '
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
                 <th>Description</th>
-                <th>Quantity</th>
+                <th>Ordered</th>
+                <th>Stock</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -186,9 +186,9 @@ $content = '
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
                 <th>Description</th>
-                <th>Quantity</th>
+                <th>Ordered</th>
+                <th>Stock</th>
                 <th>Notes</th>
               </tr>
             </thead>
@@ -222,6 +222,7 @@ include('../master.php');
 <!-- page script -->
 <script>
 $(function () {
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
   for (var $y = 1; $y <= 5; $y++) { // pool
     $('#table' + $y).DataTable({
         autoWidth: false,

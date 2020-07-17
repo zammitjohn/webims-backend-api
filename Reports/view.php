@@ -36,7 +36,7 @@ $content = '
               <div class="form-group">
                 <label for="input1">Inventory SKU</label>
                 <select id="SKU" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>
               
@@ -58,21 +58,21 @@ $content = '
               <div class="form-group">
                 <label for="input5">Requested by</label>
                 <select id="requestedBy" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label for="input6">Serial Number (Faulty)</label>
                 <select id="faultySN" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>
               
               <div class="form-group">
                 <label for="input7">Serial Number (Replacement)</label>
                 <select id="replacementSN" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>       
 
@@ -176,13 +176,13 @@ $(document).ready(function() {
             url: "../api/reports/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
-              $('#SKU').val( (data['inventoryId'] == null) ? "NULL" : (data['inventoryId']) ); // JSON: null -> form/SQL: NULL
+              $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
               $('#ticketNo').val(data['ticketNo']);
               $('#name').val(data['name']);
               $('#reportNo').val(data['reportNo']);
-              $('#requestedBy').val( (data['requestedBy'] == null) ? "NULL" : (data['requestedBy']) ); // JSON: null -> form/SQL: NULL
-              var faultySN = ( (data['faultySN'] == null) ? "NULL" : (data['faultySN']) ); // JSON: null -> form/SQL: NULL
-              var replacementSN = ( (data['replacementSN'] == null) ? "NULL" : (data['replacementSN']) ); // JSON: null -> form/SQL: NULL
+              $('#requestedBy').val( (data['requestedBy'] == null) ? "" : (data['requestedBy']) ); // JSON: null -> form/SQL: ""
+              var faultySN = ( (data['faultySN'] == null) ? "" : (data['faultySN']) ); // JSON: null -> form/SQL: ""
+              var replacementSN = ( (data['replacementSN'] == null) ? "" : (data['replacementSN']) ); // JSON: null -> form/SQL: ""
               $('#dateRequested').val(data['dateRequested']);
               $('#dateLeavingRBS').val(data['dateLeavingRBS']);
               $('#dateDispatched').val(data['dateDispatched']);
@@ -206,9 +206,7 @@ $(document).ready(function() {
     }
   });
 
-
 });
-
 
 function UpdateItem() {
   $.ajax({
@@ -238,11 +236,9 @@ function UpdateItem() {
       alert(result.responseText);
     },
     success: function(result) {
-      if (result['status'] == true) {
-        alert("Successfully updated item!");
+      alert(result.message);
+      if (result.status == true) {
         window.location.href = document.referrer;
-      } else {
-        alert(result['message']);
       }
     }
   });
@@ -264,17 +260,14 @@ function Remove() {
         alert(result.responseText);
       },
       success: function(result) {
-        if (result['status'] == true) {
-          alert("Successfully removed item!");
+        alert(result.message);
+        if (result.status) {
           window.location.href = document.referrer;
-        } else {
-          alert(result['message']);
         }
       }
     });
   }
 }
-
 
 function populateSerialNumbers(faultySN, replacementSN) {
   document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!

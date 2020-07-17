@@ -20,7 +20,7 @@ $ldaprdn = 'vf-root' . "\\" . $username;
 ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 
-// Bind to LDAP directory
+// Bind to LDAP directory: establishes the authentication state for the session
 $bind = @ldap_bind($ldap, $ldaprdn, $password);
 
 if ($bind) { // user found in directory 
@@ -54,7 +54,7 @@ if ($bind) { // user found in directory
         } else {
             $user_arr=array(
                 "status" => false,
-                "message" => "Failed to add user to database!"
+                "message" => "Login failed!"
             );
         }
 

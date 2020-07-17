@@ -70,7 +70,7 @@ to get the desired effect
         <span class="dropdown-item dropdown-header">uname.placeholder.text</span>
         <div class="dropdown-divider"></div>
         <a onclick="clearSession()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
-          <i class="fas fa-sign-out-alt mr-2"></i> Sign out
+          <i class="fas fa-sign-out-alt mr-2"></i> Log out
         </a>
         <div class="dropdown-divider"></div>
         <a onclick="deleteAccount()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
@@ -388,11 +388,9 @@ $.ajax({
   headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
   url: '../api/users/validate_session.php',
   dataType: 'json',
-  error: function(data) {
-      alert(data.responseText);
-    },
   success: function(data) {
     if (data['valid'] == false) {
+      alert(data.message);
       clearSession();
     }
   }

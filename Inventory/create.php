@@ -182,11 +182,9 @@ function AddItem() {
       alert(result.responseText);
     },
     success: function(result) {
-      if (result['status'] == true) {
-        alert("Successfully added item!");
+      alert(result.message);
+      if (result.status == true) {
         window.location.href = '/rims/inventory';
-      } else {
-        alert(result['message']);
       }
     }
   });

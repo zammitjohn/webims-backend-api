@@ -101,24 +101,31 @@ class Inventory{
             return false;
         }
         
-        if ($fromImport) { // method called from import function
         // query to insert record
-            $query = "INSERT INTO  ". $this->table_name ." 
+        if ($fromImport) { // method called from import function
+            $query = "INSERT INTO  
+                        ". $this->table_name ." 
                             (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`, `inventoryDate`)
                     VALUES
-                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."', '".$this->inventoryDate."')";
+                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', 
+                            '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', 
+                            '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."', '".$this->inventoryDate."')";
         } else { // method called from API service
-            $query = "INSERT INTO  ". $this->table_name ." 
+            $query = "INSERT INTO
+                    ". $this->table_name ." 
                             (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
                     VALUES
-                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";  
+                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."',
+                             '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."',
+                              '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";  
         }
         
         // prepare query
         $stmt = $this->conn->prepare($query);
     
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
             return true;
         }
@@ -147,15 +154,21 @@ class Inventory{
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        SKU='".$this->SKU."', type='".$this->type."', description='".$this->description."', qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."', supplier='".$this->supplier."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', notes='".$this->notes."'
+                        SKU='".$this->SKU."', type='".$this->type."', description='".$this->description."', 
+                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."', 
+                        supplier='".$this->supplier."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', 
+                        isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', 
+                        notes='".$this->notes."'
                     WHERE
                         id='".$this->id."'";
         }
 
         // prepare query
         $stmt = $this->conn->prepare($query);
+
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){        
             return true;
         }
         return false;
@@ -178,6 +191,7 @@ class Inventory{
     
         // prepare query
         $stmt = $this->conn->prepare($query);
+
         // execute query
         if($stmt->execute()){
             return true;
@@ -202,7 +216,8 @@ class Inventory{
         $stmt = $this->conn->prepare($query);
         
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             return true;
         }
         return false;

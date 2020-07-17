@@ -88,7 +88,7 @@ $(document).ready(function() {
       var id = urlParams.get('id'); // inventoryId
       if (id != null) {
         $('#SKU').val(id);
-        document.getElementById("SKU").disabled=true; // disable field
+        document.getElementById("SKU").disabled = true; // disable field
       }
 
     }
@@ -111,11 +111,9 @@ function Register() {
       alert(result.responseText);
     },
     success: function(result) {
-      if (result['status'] == true) {
-        alert("Successfully added item!");
+      alert(result.message);
+      if (result.status == true) {
         window.location.href = '../inventory/view.php?id=' + $("#SKU").val();
-      } else {
-        alert(result['message']);
       }
     }
   });

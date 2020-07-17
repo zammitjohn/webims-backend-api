@@ -283,11 +283,9 @@ function UpdateItem() {
         alert(result.responseText);
       },
       success: function(result) {
-        if (result['status'] == true) {
-          alert("Successfully updated item!");
+        alert(result.message);
+        if (result.status == true) {
           window.location.href = '../inventory';
-        } else {
-          alert(result['message']);
         }
       }
   });
@@ -309,11 +307,9 @@ function Remove() {
         alert(result.responseText);
       },
       success: function(result) {
-        if (result['status'] == true) {
-          alert("Successfully removed item!");
+        alert(result.message);
+        if (result.status == true) {
           window.location.href = '../inventory';
-        } else {
-          alert(result['message']);
         }
       }
     });
@@ -335,11 +331,9 @@ function Deregister(id) {
         alert(result.responseText);
       },
       success: function(result) {
-        if (result['status'] == true) {
-          alert("Successfully removed item!");
+        alert(result.message);
+        if (result.status = true) {
           location.reload();
-        } else {
-          alert(result['message']);
         }
       }
     });

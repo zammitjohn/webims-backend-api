@@ -112,39 +112,42 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-var table = $('#table1').DataTable({
-    autoWidth: false,
-    responsive: true,
-    order: [[ 7, "desc" ]],
-    ajax: {
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/inventory/read.php",
-        dataSrc: ''
-    },
-    columns: [
-        { data: 'SKU' },
-        { data: 'type' },        
-        { data: 'description' },
-        { data: 'qty' },
-        { data: 'qtyIn' },
-        { data: 'qtyOut' },
-        { data: 'supplier' },
-        { data: 'inventoryDate' },        
-    ],
-    // https://datatables.net/forums/discussion/42564/combining-a-url-with-id-from-a-column
-    columnDefs: [
-      { targets: [0], // first column
-        "render": function (data, type, row, meta) {
-        return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-        }  
+$(function () {
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+  var table = $('#table1').DataTable({
+      autoWidth: false,
+      responsive: true,
+      order: [[ 7, "desc" ]],
+      ajax: {
+          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+          url: "../api/inventory/read.php",
+          dataSrc: ''
       },
-
-      { targets: [1], // type column
+      columns: [
+          { data: 'SKU' },
+          { data: 'type' },        
+          { data: 'description' },
+          { data: 'qty' },
+          { data: 'qtyIn' },
+          { data: 'qtyOut' },
+          { data: 'supplier' },
+          { data: 'inventoryDate' },        
+      ],
+      // https://datatables.net/forums/discussion/42564/combining-a-url-with-id-from-a-column
+      columnDefs: [
+        { targets: [0], // first column
           "render": function (data, type, row, meta) {
-          return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(data) + '</a>';
+          return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
           }  
-      }
-    ]
+        },
+
+        { targets: [1], // type column
+            "render": function (data, type, row, meta) {
+            return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(data) + '</a>';
+            }  
+        }
+      ]
+  });
 });
 
 // Function to convert type ids to correspnding type to be shown in table
@@ -186,8 +189,7 @@ $('#upload_csv').on("submit", function(e){
               if (data['conflict_count']){
                 toastr.warning(data['conflict_count'] + " conflicts merged.");
               }
-
-              table.ajax.reload(); // reload table
+              $('#table1').DataTable().ajax.reload(); // reload table
           }
       },
       error: function(data) {

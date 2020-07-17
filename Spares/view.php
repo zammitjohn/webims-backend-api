@@ -151,12 +151,10 @@ function UpdateItem() {
     error: function(result) {
       alert(result.responseText);
     },
-    success: function(result) {
-      if (result['status'] == true) {
-        alert("Successfully updated item!");
+  success: function(result) {
+      alert(result.message);
+      if (result.status) {
         window.location.href = document.referrer;
-      } else {
-        alert(result['message']);
       }
     }
   });
@@ -178,11 +176,9 @@ function Remove() {
         alert(result.responseText);
       },
       success: function(result) {
-        if (result['status'] == true) {
-          alert("Successfully removed item!");
+        alert(result.message);
+        if (result.status) {
           window.location.href = document.referrer;
-        } else {
-          alert(result['message']);
         }
       }
     });

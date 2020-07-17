@@ -49,7 +49,6 @@ class reports{
     
         // execute query
         $stmt->execute();
-    
         return $stmt;
     }
 
@@ -84,23 +83,30 @@ class reports{
         }    
         
         // query to insert record
-        $query = "INSERT INTO  ". $this->table_name ." 
-                        (`inventoryId`, `ticketNo`, `name`, `reportNo`, `requestedBy`, `faultySN`, `replacementSN`, `dateRequested`, `dateLeavingRBS`, `dateDispatched`, `dateReturned`, `AWB`, `AWBreturn`, `RMA`, `notes` )
-                VALUES
-                        ($this->inventoryId, '".$this->ticketNo."', '".$this->name."', '".$this->reportNo."', $this->requestedBy, $this->faultySN, $this->replacementSN, '".$this->dateRequested."', '".$this->dateLeavingRBS."', '".$this->dateDispatched."', '".$this->dateReturned."', '".$this->AWB."', '".$this->AWBreturn."', '".$this->RMA."', '".$this->notes."')";
+        $query = "INSERT INTO  
+                ". $this->table_name ."
+                SET
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
+                    faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
+                    dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
+                    dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
-    
+
+        // bind values
+        $stmt = $this->bindValues($stmt);
+
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
             return true;
         }
 
         return false;
     }
-
+      
     // update item 
     function update(){
 
@@ -112,14 +118,23 @@ class reports{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=$this->inventoryId, ticketNo='".$this->ticketNo."', name='".$this->name."', reportNo='".$this->reportNo."',  requestedBy=$this->requestedBy, faultySN=$this->faultySN, replacementSN=$this->replacementSN, dateRequested='".$this->dateRequested."', dateLeavingRBS='".$this->dateLeavingRBS."', dateDispatched='".$this->dateDispatched."', dateReturned='".$this->dateReturned."', AWB='".$this->AWB."', AWBreturn='".$this->AWBreturn."', RMA='".$this->RMA."', notes='".$this->notes."'
+                inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
+                faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
+                dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
+                dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes                
+                
                 WHERE
                     id='".$this->id."'";
     
         // prepare query
         $stmt = $this->conn->prepare($query);
+
+        // bind values
+        $stmt = $this->bindValues($stmt);        
+
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             return true;
         }
         return false;
@@ -142,7 +157,8 @@ class reports{
         $stmt = $this->conn->prepare($query);
         
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
             return true;
         }
         return false;
@@ -164,6 +180,90 @@ class reports{
         else{
             return false;
         }        
+    }
+
+    function bindValues($stmt){
+
+        if (!isset($this->inventoryId)) {
+            echo "I will print when var does not exist / set to NULL.";
+        }
+
+        if ($this->inventoryId == ""){
+            $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':inventoryId', $this->inventoryId);
+        }
+        if ($this->ticketNo == ""){
+            $stmt->bindValue(':ticketNo', $this->ticketNo, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':ticketNo', $this->ticketNo);
+        }
+        if ($this->name == ""){
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':name', $this->name);
+        }
+        if ($this->reportNo == ""){
+            $stmt->bindValue(':reportNo', $this->reportNo, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':reportNo', $this->reportNo);
+        }                   
+        if ($this->requestedBy == ""){
+            $stmt->bindValue(':requestedBy', $this->requestedBy, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':requestedBy', $this->requestedBy);
+        }        
+        if ($this->faultySN == ""){
+            $stmt->bindValue(':faultySN', $this->faultySN, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':faultySN', $this->faultySN);
+        }        
+        if ($this->replacementSN == ""){
+            $stmt->bindValue(':replacementSN', $this->replacementSN, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':replacementSN', $this->replacementSN);
+        }        
+        if ($this->dateRequested == ""){
+            $stmt->bindValue(':dateRequested', $this->dateRequested, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':dateRequested', $this->dateRequested);
+        }        
+        if ($this->dateLeavingRBS == ""){
+            $stmt->bindValue(':dateLeavingRBS', $this->dateLeavingRBS, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':dateLeavingRBS', $this->dateLeavingRBS);
+        }        
+        if ($this->dateDispatched == ""){
+            $stmt->bindValue(':dateDispatched', $this->dateDispatched, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':dateDispatched', $this->dateDispatched);
+        }      
+        if ($this->dateReturned == ""){
+            $stmt->bindValue(':dateReturned', $this->dateReturned, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':dateReturned', $this->dateReturned);
+        }
+        if ($this->AWB == ""){
+            $stmt->bindValue(':AWB', $this->AWB, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':AWB', $this->AWB);
+        }
+        if ($this->AWBreturn == ""){
+            $stmt->bindValue(':AWBreturn', $this->AWBreturn, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':AWBreturn', $this->AWBreturn);
+        }
+        if ($this->RMA == ""){
+            $stmt->bindValue(':RMA', $this->RMA, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':RMA', $this->RMA);
+        }
+        if ($this->notes == ""){
+            $stmt->bindValue(':notes', $this->notes, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':notes', $this->notes);
+        }
+        return $stmt;
     }
 
 }

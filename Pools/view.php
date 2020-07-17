@@ -165,11 +165,9 @@ function UpdateItem() {
       alert(result.responseText);
     },
     success: function(result) {
-      if (result['status'] == true) {
-        alert("Successfully updated item!");
+      alert(result.message);
+      if (result.status == true) {
         window.location.href = document.referrer;
-      } else {
-        alert(result['message']);
       }
     }
   });
@@ -191,11 +189,9 @@ function Remove() {
         alert(result.responseText);
       },
       success: function(result) {
-        if (result['status'] == true) {
-          alert("Successfully removed item!");
+        alert(result.message);
+        if (result.status) {
           window.location.href = document.referrer;
-        } else {
-          alert(result['message']);
         }
       }
     });

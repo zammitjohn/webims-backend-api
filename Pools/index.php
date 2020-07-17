@@ -42,9 +42,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -78,9 +78,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -114,9 +114,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -150,9 +150,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -186,9 +186,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -234,9 +234,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -270,9 +270,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -306,9 +306,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -342,9 +342,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -378,9 +378,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -426,9 +426,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -462,9 +462,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -496,11 +496,11 @@ $content = '
           <div class="card-body">
             <table id="table3_3" class="table table-bordered table-striped">
               <thead>
-                <tr>
+                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -534,9 +534,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -570,9 +570,9 @@ $content = '
               <thead>
                 <tr>
                   <th>Name</th>
-                  <th>Type</th>
                   <th>Description</th>
-                  <th>Quantity</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
                   <th>Notes</th>
                 </tr>
               </thead>
@@ -609,6 +609,7 @@ include('../master.php');
 <!-- page script -->
 <script>
 $(function () {
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
   for (var $x = 1; $x <= 3; $x++) { // technology
     for (var $y = 1; $y <= 5; $y++) { // pool
       $('#table' + $x + '_' + $y).DataTable({

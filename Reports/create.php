@@ -35,7 +35,7 @@ $content = '
               <div class="form-group">
                 <label for="input1">Inventory SKU</label>
                 <select id="SKU" class="form-control" onchange="populateSerialNumbers()">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>
               
@@ -57,21 +57,21 @@ $content = '
               <div class="form-group">
                 <label for="input5">Requested by</label>
                 <select id="requestedBy" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>              
 
               <div class="form-group">
                 <label for="input6">Serial Number (Faulty)</label>
                 <select id="faultySN" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>
               
               <div class="form-group">
                 <label for="input7">Serial Number (Replacement)</label>
                 <select id="replacementSN" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>       
 
@@ -209,11 +209,9 @@ function AddItem() {
       alert(result.responseText);
     },
     success: function(result) {
-      if (result['status'] == true) {
-        alert("Successfully added item!");
+      alert(result.message);
+      if (result.status == true) {
         window.location.href = '/rims/reports';
-      } else {
-        alert(result['message']);
       }
     }
   });
