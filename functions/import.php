@@ -48,19 +48,19 @@ if($_FILES["file"]["size"] > 0) {
             if (!empty($getData[4])) {
                 $data_qty = trim($getData[4]);  
             } else {
-                $data_qty = ""; 
+                $data_qty = "0"; 
             }
 
             if (!empty($getData[6])) {
                 $data_qtyIn = trim($getData[6]);  
             } else {
-                $data_qtyIn = ""; 
+                $data_qtyIn = "0"; 
             }
 
             if (!empty($getData[7])) {
                 $data_qtyOut = trim($getData[7]);  
             } else {
-                $data_qtyOut = ""; 
+                $data_qtyOut = "0"; 
             }
 
             if (!empty($getData[8])) {
