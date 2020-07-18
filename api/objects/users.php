@@ -42,10 +42,6 @@ class Users{
 
     // read all users
     function read(){
-
-        if(!($this->keyExists())){
-            return false;
-        }
     
         // select all query
         $query = "SELECT
@@ -128,7 +124,7 @@ class Users{
         $stmt->execute();                    
     }
 
-    function keyExists(){
+    function validKey(){
         $query = "SELECT *
             FROM
                 " . $this->table_name . " 
@@ -144,7 +140,7 @@ class Users{
         else{
             return false;
         }        
-    }
+    }    
 
     function checkifUserExists(){
         $query = "SELECT *

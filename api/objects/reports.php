@@ -22,7 +22,6 @@ class reports{
     public $AWBreturn;
     public $RMA;
     public $notes;
-    public $sessionId;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -31,10 +30,6 @@ class reports{
 
     // read reports
     function read(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
     
         // select all query
         $query = "SELECT
@@ -55,10 +50,6 @@ class reports{
     // get single item data
     function read_single(){
 
-        if(!($this->keyExists())){
-            return false;
-        }    
-    
         // select all query
         $query = "SELECT
                     *
@@ -77,24 +68,18 @@ class reports{
 
     // create item
     function create(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
         
         // query to insert record
         $query = "INSERT INTO  
-                ". $this->table_name ."
+                    ". $this->table_name ."
                 SET
                     inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes";
     
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
-
-        // bind values
         $stmt = $this->bindValues($stmt);
 
         // execute query
@@ -108,30 +93,24 @@ class reports{
     }
       
     // update item 
-    function update(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
+    function update(){ 
     
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
-                faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
-                dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
-                dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes                
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
+                    faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
+                    dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
+                    dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes                
                 
                 WHERE
                     id='".$this->id."'";
     
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
-
-        // bind values
-        $stmt = $this->bindValues($stmt);        
-
+        $stmt = $this->bindValues($stmt);
+        
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
@@ -142,10 +121,6 @@ class reports{
 
     // delete item
     function delete(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
         
         // query to delete record
         $query = "DELETE FROM
@@ -164,30 +139,7 @@ class reports{
         return false;
     }
 
-    function keyExists(){
-        $query = "SELECT *
-            FROM
-                users 
-            WHERE
-                sessionId='".$this->sessionId."'";
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
-        }
-        else{
-            return false;
-        }        
-    }
-
     function bindValues($stmt){
-
-        if (!isset($this->inventoryId)) {
-            echo "I will print when var does not exist / set to NULL.";
-        }
-
         if ($this->inventoryId == ""){
             $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
         } else {

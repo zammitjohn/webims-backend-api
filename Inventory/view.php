@@ -237,11 +237,11 @@ $(document).ready(function() {
 });
 
 function UpdateItem() {
-  var isGSMval = 0;
-  var isUMTSval = 0;
-  var isLTEval = 0;
-  var ancillaryval = 0;
-  var toCheckval = 0;
+  var isGSMval = "";
+  var isUMTSval = "";
+  var isLTEval = "";
+  var ancillaryval = "";
+  var toCheckval = "";
 
   if ($('#isGSM').is(":checked"))
     isGSMval = 1;

@@ -3,6 +3,7 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/registry.php';
+include_once '../objects/users.php';
 
 // get database connection
 $database = new Database();
@@ -16,12 +17,19 @@ $item->inventoryId = $_POST['inventoryId'];
 $item->serialNumber = $_POST['serialNumber'];
 $item->datePurchased = $_POST['datePurchased'];
 
-// API Key - sessionId
-$item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    // prepare users object
+    $user = new Users($db);
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
 
 // create the item
 if($item->create()){
-    $item_arr=array(
+    $output_arr=array(
         "status" => true,
         "message" => "Successfully created!",
         "id" => $item->id,
@@ -31,9 +39,9 @@ if($item->create()){
     );
 }
 else{
-    $item_arr=array(
+    $output_arr=array(
         "status" => false,
         "message" => "Failed to create!"
     );
 }
-print_r(json_encode($item_arr));
+print_r(json_encode($output_arr));

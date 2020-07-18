@@ -2,6 +2,7 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/spares.php';
+include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
@@ -15,8 +16,15 @@ if (isset($_GET['type'])) {
     $item->type = $_GET['type'];
 }
 
-// API Key - sessionId
-$item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    // prepare users object
+    $user = new Users($db);
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
 
 // query spares item
 $stmt = $item->read();
@@ -27,8 +35,8 @@ if ($stmt != false){
     if($num>0){
     
         // sapres item array
-        $item_arr=array();
-        $item_arr["Spares"]=array();
+        $output_arr=array();
+        $output_arr["Spares"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
@@ -41,10 +49,10 @@ if ($stmt != false){
                 "qty" => $qty,
                 "notes" => $notes
             );
-            array_push($item_arr["Spares"], $spares_item);
+            array_push($output_arr["Spares"], $spares_item);
         }
     
-        echo json_encode($item_arr["Spares"]);
+        echo json_encode($output_arr["Spares"]);
     }
     else{
         echo json_encode(array());

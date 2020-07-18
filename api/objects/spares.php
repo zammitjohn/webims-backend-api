@@ -13,7 +13,6 @@ class Spares{
     public $description;
     public $qty;
     public $notes;
-    public $sessionId;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -22,10 +21,6 @@ class Spares{
 
     // read spares
     function read(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
     
         // different SQL query according to API call
         if (is_null($this->type)){
@@ -58,11 +53,7 @@ class Spares{
     }
 
     // get single item data
-    function read_single(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
+    function read_single(){ 
     
         // select all query
         $query = "SELECT
@@ -81,25 +72,18 @@ class Spares{
     }
 
     // create item
-    function create(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
-    
-		// check if name already exists
-        if($this->isAlreadyExist()){
-            return false;
-        }
+    function create(){ 
         
         // query to insert record
-        $query = "INSERT INTO  ". $this->table_name ." 
-                        (`inventoryId`, `type`, `name`, `description`, `qty`, `notes`)
-                VALUES
-                        ($this->inventoryId, '".$this->type."', '".$this->name."', '".$this->description."', '".$this->qty."', '".$this->notes."')";
+        $query = "INSERT INTO  
+                    ". $this->table_name ."
+                SET
+                    inventoryId=:inventoryId, type=:type, name=:name, description=:description, qty=:qty, 
+                    notes=:notes";                        
 
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
+        $stmt = $this->bindValues($stmt);
     
         // execute query
         $stmt->execute();
@@ -113,21 +97,19 @@ class Spares{
 
     // update item 
     function update(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
     
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=$this->inventoryId, type='".$this->type."', name='".$this->name."', description='".$this->description."', qty='".$this->qty."', notes='".$this->notes."'
+                    inventoryId=:inventoryId, type=:type, name=:name, description=:description, qty=:qty, 
+                    notes=:notes                          
                 WHERE
                     id='".$this->id."'";            
 
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
+        $stmt = $this->bindValues($stmt);
 
         // execute query
         $stmt->execute();
@@ -139,10 +121,6 @@ class Spares{
 
      // delete item
      function delete(){
-
-        if(!($this->keyExists())){
-            return false;
-        }    
         
         // query to delete record
         $query = "DELETE FROM
@@ -161,43 +139,38 @@ class Spares{
         return false;
     }
 
-    function isAlreadyExist(){
-        $query = "SELECT *
-            FROM
-                " . $this->table_name . " 
-            WHERE
-                name='".$this->name."'";
-
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-
-        // execute query
-        $stmt->execute();
-
-        if($stmt->rowCount() > 0){
-            return true;
+    function bindValues($stmt){
+        if ($this->inventoryId == ""){
+            $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':inventoryId', $this->inventoryId);
         }
-        else{
-            return false;
+        if ($this->type == ""){
+            $stmt->bindValue(':type', $this->type, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':type', $this->type);
         }
-    }
-
-    function keyExists(){
-        $query = "SELECT *
-            FROM
-                users 
-            WHERE
-                sessionId='".$this->sessionId."'";
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
+        if ($this->name == ""){
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':name', $this->name);
         }
-        else{
-            return false;
+        if ($this->description == ""){
+            $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':description', $this->description);
+        }                   
+        if ($this->qty == ""){
+            $stmt->bindValue(':qty', $this->qty, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':qty', $this->qty);
         }        
+        if ($this->notes == ""){
+            $stmt->bindValue(':notes', $this->notes, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':notes', $this->notes);
+        }
+        return $stmt;
     }
     
 }

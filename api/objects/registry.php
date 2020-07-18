@@ -10,7 +10,6 @@ class Registry{
     public $inventoryId;
     public $serialNumber;
     public $datePurchased;
-    public $sessionId;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -19,10 +18,6 @@ class Registry{
 
     // list registry items with particular 'inventoryId'
     function read(){
-
-        if(!($this->keyExists())){
-            return false;
-        }             
     
         // select all query
         $query = "SELECT
@@ -42,23 +37,20 @@ class Registry{
 
     // create item
     function create(){     
-        
-        if(!($this->keyExists())){
-            return false;
-        }             
 
         if($this->isAlreadyExist()){
             return false;
         }
 
         // query to insert record
-        $query = "INSERT INTO  ". $this->table_name ." 
-                        (`inventoryId`, `serialNumber`, `datePurchased`)
-                  VALUES
-                        ('".$this->inventoryId."', '".$this->serialNumber."', '".$this->datePurchased."')";
+        $query = "INSERT INTO
+                    ". $this->table_name ." 
+                SET
+                    inventoryId=:inventoryId, serialNumber=:serialNumber, datePurchased=:datePurchased"; 
     
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
+        $stmt = $this->bindValues($stmt);
     
         // execute query
         $stmt->execute();
@@ -72,10 +64,6 @@ class Registry{
 
     // delete item
     function delete(){
-
-        if(!($this->keyExists())){
-            return false;
-        }             
         
         // query to delete record
         $query = "DELETE FROM
@@ -116,21 +104,23 @@ class Registry{
         }
     }
 
-    function keyExists(){
-        $query = "SELECT *
-            FROM
-                users 
-            WHERE
-                sessionId='".$this->sessionId."'";
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
+    function bindValues($stmt){
+        if ($this->inventoryId == ""){
+            $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':inventoryId', $this->inventoryId);
         }
-        else{
-            return false;
-        }        
-    }
+        if ($this->serialNumber == ""){
+            $stmt->bindValue(':serialNumber', $this->serialNumber, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':serialNumber', $this->serialNumber);
+        }
+        if ($this->datePurchased == ""){
+            $stmt->bindValue(':datePurchased', $this->datePurchased, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':datePurchased', $this->datePurchased);
+        }
+        return $stmt;
+    }    
+
 }

@@ -18,9 +18,8 @@ class Inventory{
     public $isUMTS;
     public $isLTE;
     public $ancillary;
-	public $toCheck;
+    public $toCheck;
     public $notes;
-    public $sessionId;
     public $inventoryDate;
  
     // constructor with $db as database connection
@@ -30,10 +29,6 @@ class Inventory{
 
     // read all inventory
     function read(){
-
-        if(!($this->keyExists())){
-            return false;
-        }
     
         // different SQL query according to API call
         if (is_null($this->type)){
@@ -69,10 +64,6 @@ class Inventory{
     // get single item data
     function read_single(){
 
-        if(!($this->keyExists())){
-            return false;
-        }        
-    
         // select all query
         $query = "SELECT
                     *
@@ -92,10 +83,6 @@ class Inventory{
     // create item
     function create(bool $fromImport){
     
-        if(!($this->keyExists())){
-            return false;
-        }
-
 		// check if SKU already exists
         if($this->isAlreadyExist()){
             return false;
@@ -105,66 +92,67 @@ class Inventory{
         if ($fromImport) { // method called from import function
             $query = "INSERT INTO  
                         ". $this->table_name ." 
-                            (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`, `inventoryDate`)
+                            (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `inventoryDate`)
                     VALUES
                             ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', 
-                            '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."', 
-                            '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."', '".$this->inventoryDate."')";
+                            '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->inventoryDate."')";
+
+            // prepare query
+            $stmt = $this->conn->prepare($query);
+
         } else { // method called from API service
             $query = "INSERT INTO
-                    ". $this->table_name ." 
-                            (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `isGSM`, `isUMTS`, `isLTE`, `ancillary`, `toCheck`, `notes`)
-                    VALUES
-                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', '".$this->qtyIn."',
-                             '".$this->qtyOut."', '".$this->supplier."', '".$this->isGSM."', '".$this->isUMTS."',
-                              '".$this->isLTE."', '".$this->ancillary."', '".$this->toCheck."', '".$this->notes."')";  
+                        ". $this->table_name ." 
+                    SET
+                        SKU=:SKU, type=:type, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        qtyOut=:qtyOut, supplier=:supplier, isGSM=:isGSM, isUMTS=:isUMTS, isLTE=:isLTE, 
+                        ancillary=:ancillary, toCheck=:toCheck, notes=:notes";
+            
+            // prepare and bind query
+            $stmt = $this->conn->prepare($query);
+            $stmt = $this->bindValues($stmt);                        
         }
-        
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-    
+          
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
             return true;
         }
-
         return false;
     }
 
     // update item 
     function update(bool $fromImport){
-    
-        if(!($this->keyExists())){
-            return false;
-        }
 
+        // query to insert record      
         if ($fromImport) { // method called from import function
             // query to insert record
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."', inventoryDate='".$this->inventoryDate."'
+                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', 
+                        qtyOut='".$this->qtyOut."', inventoryDate='".$this->inventoryDate."'
                     WHERE
-                        id='".$this->id."'";            
+                        id='".$this->id."'"; 
 
+            // prepare query
+            $stmt = $this->conn->prepare($query);
+                        
         } else { // method called from API service
-            // query to insert record
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        SKU='".$this->SKU."', type='".$this->type."', description='".$this->description."', 
-                        qty='".$this->qty."', qtyIn='".$this->qtyIn."', qtyOut='".$this->qtyOut."', 
-                        supplier='".$this->supplier."', isGSM='".$this->isGSM."', isUMTS='".$this->isUMTS."', 
-                        isLTE='".$this->isLTE."', ancillary='".$this->ancillary."', toCheck='".$this->toCheck."', 
-                        notes='".$this->notes."'
+                        SKU=:SKU, type=:type, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        qtyOut=:qtyOut, supplier=:supplier, isGSM=:isGSM, isUMTS=:isUMTS, isLTE=:isLTE,
+                        ancillary=:ancillary, toCheck=:toCheck, notes=:notes
                     WHERE
                         id='".$this->id."'";
-        }
-
-        // prepare query
-        $stmt = $this->conn->prepare($query);
+            
+            // prepare and bind query
+            $stmt = $this->conn->prepare($query);
+            $stmt = $this->bindValues($stmt);
+        }  
 
         // execute query
         $stmt->execute();
@@ -176,16 +164,13 @@ class Inventory{
 
     // update item quantities
     function updateQuantities(){  // method called from import function
-    
-        if(!($this->keyExists())){
-            return false;
-        }
        
         // query to update record quantities
         $query = "UPDATE 
                     " . $this->table_name . "
                 SET 
-                    qty= qty + '".$this->qty."', qtyIn= qtyIn + '".$this->qtyIn."', qtyOut= qtyOut + '".$this->qtyOut."'     
+                    qty= qty + '".$this->qty."', qtyIn= qtyIn + '".$this->qtyIn."', 
+                    qtyOut= qtyOut + '".$this->qtyOut."'     
                 WHERE 
                     id='".$this->id."'";         
     
@@ -201,10 +186,6 @@ class Inventory{
 
     // delete item
     function delete(){
-
-        if(!($this->keyExists())){
-            return false;
-        }
         
         // query to delete record
         $query = "DELETE FROM
@@ -245,22 +226,73 @@ class Inventory{
         }
     }
 
-    function keyExists(){
-        $query = "SELECT *
-            FROM
-                users 
-            WHERE
-                sessionId='".$this->sessionId."'";
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
+    function bindValues($stmt){
+        if ($this->SKU == ""){
+            $stmt->bindValue(':SKU', $this->SKU, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':SKU', $this->SKU);
         }
-        else{
-            return false;
-        }        
-    }
+        if ($this->type == ""){
+            $stmt->bindValue(':type', $this->type, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':type', $this->type);
+        }
+        if ($this->description == ""){
+            $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':description', $this->description);
+        }
+        if ($this->qty == ""){
+            $stmt->bindValue(':qty', $this->qty, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':qty', $this->qty);
+        }
+        if ($this->qtyIn == ""){
+            $stmt->bindValue(':qtyIn', $this->qtyIn, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':qtyIn', $this->qtyIn);
+        }
+        if ($this->qtyOut == ""){
+            $stmt->bindValue(':qtyOut', $this->qtyOut, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':qtyOut', $this->qtyOut);
+        }
+        if ($this->supplier == ""){
+            $stmt->bindValue(':supplier', $this->supplier, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':supplier', $this->supplier);
+        }
+        if ($this->isGSM == ""){
+            $stmt->bindValue(':isGSM', $this->isGSM, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':isGSM', $this->isGSM);
+        }
+        if ($this->isUMTS == ""){
+            $stmt->bindValue(':isUMTS', $this->isUMTS, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':isUMTS', $this->isUMTS);
+        }
+        if ($this->isLTE == ""){
+            $stmt->bindValue(':isLTE', $this->isLTE, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':isLTE', $this->isLTE);
+        }
+        if ($this->ancillary == ""){
+            $stmt->bindValue(':ancillary', $this->ancillary, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':ancillary', $this->ancillary);
+        }
+        if ($this->toCheck == ""){
+            $stmt->bindValue(':toCheck', $this->toCheck, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':toCheck', $this->toCheck);
+        }
+        if ($this->notes == ""){
+            $stmt->bindValue(':notes', $this->notes, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':notes', $this->notes);
+        }
+        return $stmt;
+    }    
 
 }

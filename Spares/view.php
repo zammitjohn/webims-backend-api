@@ -35,7 +35,7 @@ $content = '
               <div class="form-group">
                 <label for="input1">Inventory SKU</label>
                 <select id="SKU" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>       
 
@@ -116,7 +116,7 @@ $(document).ready(function() {
         url: "../api/spares/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
         dataType: 'json',
         success: function(data) {
-          $('#SKU').val( (data['inventoryId'] == null) ? "NULL" : (data['inventoryId']) ); // JSON: null -> form/SQL: NULL
+          $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
           $('#type').val(data['type']);
           $('#name').val(data['name']);
           $('#description').val(data['description']);

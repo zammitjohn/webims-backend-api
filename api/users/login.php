@@ -41,7 +41,7 @@ if ($bind) { // user found in directory
             // get retrieved row
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             // create array
-            $user_arr=array(
+            $output_arr=array(
                 "status" => true,
                 "message" => "Login successful!",
                 "id" => $row['id'],
@@ -52,7 +52,7 @@ if ($bind) { // user found in directory
                 "created" => $row['created']
             );
         } else {
-            $user_arr=array(
+            $output_arr=array(
                 "status" => false,
                 "message" => "Login failed!"
             );
@@ -62,11 +62,11 @@ if ($bind) { // user found in directory
     @ldap_close($ldap);
 
 } else { // user not found in directory
-    $user_arr=array(
+    $output_arr=array(
         "status" => false,
         "message" => "Invalid username or password!"
     );
 }
 
-print_r(json_encode($user_arr));
+print_r(json_encode($output_arr));
 ?>

@@ -246,7 +246,7 @@ function UpdateItem() {
 
 function Remove() {
   var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want delete the item?");
+  var result = confirm("Are you sure you want delete the report?");
   if (result == true) {
     $.ajax({
       type: "POST",

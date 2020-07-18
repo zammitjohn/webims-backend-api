@@ -34,7 +34,7 @@ $content = '
             <div class="form-group">
               <label for="input1">SKU</label>
               <select id="SKU" class="form-control">
-                <option value="NULL">None</option>
+                <option value="">None</option>
               </select>
             </div>
             

@@ -10,23 +10,27 @@ $db = $database->getConnection();
 // prepare users object
 $user = new Users($db);
 
-// API Key - sessionId
-$user->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
-
-// query users
-$stmt = $user->keyExists();
-
-if($stmt){
-    $user_arr=array(
-        "valid" => true,
-        "message" => "Session Valid!"
-    );
-}
-else{
-    $user_arr=array(
+// check if key was specified
+if ($_SERVER['HTTP_AUTH_KEY'] == "null"){
+    $output_arr=array(
         "valid" => false,
-        "message" => "Session Timed Out!"
+        "message" => "You need to login to access RIMS!"
     );
-}
+} else { // check if key is correct
 
-print_r(json_encode($user_arr));
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+
+    if($user->validKey()){
+        $output_arr=array(
+            "valid" => true,
+            "message" => "Session Valid!"
+        );
+    }
+    else{
+        $output_arr=array(
+            "valid" => false,
+            "message" => "Session Timed Out!"
+        );
+    }
+}
+print_r(json_encode($output_arr));

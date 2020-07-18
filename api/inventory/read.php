@@ -2,6 +2,7 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/inventory.php';
+include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
@@ -15,8 +16,15 @@ if (isset($_GET['type'])) {
     $item->type = $_GET['type'];
 }
 
-// API Key - sessionId
-$item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    // prepare users object
+    $user = new Users($db);
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
  
 // query inventory item
 $stmt = $item->read();
@@ -27,8 +35,8 @@ if ($stmt != false){
     if($num>0){
     
         // inventory item array
-        $item_arr=array();
-        $item_arr["Inventory"]=array();
+        $output_arr=array();
+        $output_arr["Inventory"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
@@ -50,10 +58,10 @@ if ($stmt != false){
                 "inventoryDate" => $inventoryDate,                
                 "lastChange" => $lastChange
             );
-            array_push($item_arr["Inventory"], $inventory_item);
+            array_push($output_arr["Inventory"], $inventory_item);
         }
     
-        echo json_encode($item_arr["Inventory"]);
+        echo json_encode($output_arr["Inventory"]);
     }
     else{
         echo json_encode(array());

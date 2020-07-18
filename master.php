@@ -22,15 +22,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../dist/img/vf-logo-inv.png">
-
-  <!-- Check session status before loading body -->
-  <script>
-  if (!localStorage.getItem('sessionId')){ 
-    window.location.href = '../login.html';
-  }
-  </script>  
-  
+  <link rel="icon" type="image/png" href="../dist/img/vf-logo-inv.png">  
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -336,7 +328,7 @@ to get the desired effect
   <strong>Developed by John Zammit.</strong> Copyright &copy; <?php echo date('Y'); ?> <a href="https://vodafone.com.mt">Vodafone Malta</a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.5
+      <b>Version</b> 1.5.3
     </div>
   </footer>
   

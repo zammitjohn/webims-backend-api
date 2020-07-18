@@ -15,8 +15,6 @@ class Pools{
     public $qtyOrdered;
     public $qtyStock;
     public $notes;
-    public $sessionId;
-	
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -25,10 +23,6 @@ class Pools{
 
     // read pools
     function read(){
-
-        if(!($this->keyExists())){
-            return false;
-        }        
     
         // select all query for particular tech and pool
         $query = "SELECT
@@ -51,10 +45,6 @@ class Pools{
     // get single item data
     function read_single(){
 
-        if(!($this->keyExists())){
-            return false;
-        }        
-    
         // select all query
         $query = "SELECT
                     *
@@ -72,20 +62,18 @@ class Pools{
     }
 
     // create item
-    function create(){
-
-        if(!($this->keyExists())){
-            return false;
-        }        
+    function create(){    
         
         // query to insert record
-        $query = "INSERT INTO  ". $this->table_name ." 
-                        (`inventoryId`, `tech`, `pool`, `name`, `description`, `qtyOrdered`, `qtyStock`, `notes`)
-                VALUES
-                        ($this->inventoryId, '".$this->tech."', '".$this->pool."', '".$this->name."', '".$this->description."', '".$this->qtyOrdered."', '".$this->qtyStock."', '".$this->notes."')";
+        $query = "INSERT INTO
+                    ". $this->table_name ." 
+                SET
+                    inventoryId=:inventoryId, tech=:tech, pool=:pool, name=:name, description=:description, 
+                    qtyOrdered=:qtyOrdered, qtyStock=:qtyStock, notes=:notes";
 
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
+        $stmt = $this->bindValues($stmt);  
     
         // execute query
         $stmt->execute();
@@ -98,22 +86,19 @@ class Pools{
 
     // update item 
     function update(){
-
-        if(!($this->keyExists())){
-            return false;
-        }        
-    
-        // query to update record, inventoryId = NULL in query if "NULL"
+       
+       // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=$this->inventoryId, tech='".$this->tech."', pool='".$this->pool."', name='".$this->name."', description='".$this->description."', qtyOrdered='".$this->qtyOrdered."', qtyStock='".$this->qtyStock."', notes='".$this->notes."'
+                    inventoryId=:inventoryId, tech=:tech, pool=:pool, name=:name, description=:description, 
+                    qtyOrdered=:qtyOrdered, qtyStock=:qtyStock, notes=:notes            
                 WHERE
-                    id='".$this->id."'";
+                    id='".$this->id."'";                    
     
-    
-        // prepare query
+        // prepare and bind query
         $stmt = $this->conn->prepare($query);
+        $stmt = $this->bindValues($stmt);  
 
         // execute query
         $stmt->execute();
@@ -124,11 +109,7 @@ class Pools{
     }
 
      // delete item
-     function delete(){
-
-        if(!($this->keyExists())){
-            return false;
-        }        
+     function delete(){     
         
         // query to delete record
         $query = "DELETE FROM
@@ -147,21 +128,48 @@ class Pools{
         return false;
     }
 
-    function keyExists(){
-        $query = "SELECT *
-            FROM
-                users 
-            WHERE
-                sessionId='".$this->sessionId."'";
-        // prepare query statement
-        $stmt = $this->conn->prepare($query);
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
+    function bindValues($stmt){
+        if ($this->inventoryId == ""){
+            $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':inventoryId', $this->inventoryId);
         }
-        else{
-            return false;
-        }        
+        if ($this->tech == ""){
+            $stmt->bindValue(':tech', $this->tech, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':tech', $this->tech);
+        }
+        if ($this->pool == ""){
+            $stmt->bindValue(':pool', $this->pool, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':pool', $this->pool);
+        }
+        if ($this->name == ""){
+            $stmt->bindValue(':name', $this->name, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':name', $this->name);
+        }
+        if ($this->description == ""){
+            $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':description', $this->description);
+        }
+        if ($this->qtyOrdered == ""){
+            $stmt->bindValue(':qtyOrdered', $this->qtyOrdered, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':qtyOrdered', $this->qtyOrdered);
+        }
+        if ($this->qtyStock == ""){
+            $stmt->bindValue(':qtyStock', $this->qtyStock, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':qtyStock', $this->qtyStock);
+        }
+        if ($this->notes == ""){
+            $stmt->bindValue(':notes', $this->notes, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':notes', $this->notes);
+        }
+        return $stmt;
     }
+    
 }

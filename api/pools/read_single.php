@@ -2,6 +2,7 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/pools.php';
+include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
@@ -13,8 +14,15 @@ $item = new Pools($db);
 // set ID property of pools item to be edited
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-// API Key - sessionId
-$item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    // prepare users object
+    $user = new Users($db);
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
 
 // read the details of pools item to be edited
 $stmt = $item->read_single();
@@ -24,7 +32,7 @@ if ($stmt != false){
         // get retrieved row
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         // create array
-        $item_arr=array(
+        $output_arr=array(
             "id" => $row['id'],
             "inventoryId" => $row['inventoryId'],
             "tech" => $row['tech'],
@@ -37,5 +45,5 @@ if ($stmt != false){
         );
     }
     // make it json format
-    print_r(json_encode($item_arr));
+    print_r(json_encode($output_arr));
 }

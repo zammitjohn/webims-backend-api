@@ -14,20 +14,25 @@ $user = new users($db);
 // set users property values
 $user->id = $_POST['id'];
 
-// API Key - sessionId
-$user->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
  
 // remove the user
 if($user->delete()){
-    $user_arr=array(
+    $output_arr=array(
         "status" => true,
         "message" => "Successfully deleted!"
     );
 }
 else{
-    $user_arr=array(
+    $output_arr=array(
         "status" => false,
         "message" => "Failed to delete!"
     );
 }
-print_r(json_encode($user_arr));
+print_r(json_encode($output_arr));

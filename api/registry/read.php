@@ -2,6 +2,7 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/registry.php';
+include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
@@ -13,8 +14,15 @@ $item = new Registry($db);
 // inventoryId of registry item to list
 $item->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
 
-// API Key - sessionId
-$item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die();
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    // prepare users object
+    $user = new Users($db);
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
 
 // query registry item
 $stmt = $item->read();
@@ -26,8 +34,8 @@ if ($stmt != false){
     if($num>0){
     
         // registry item array
-        $item_arr=array();
-        $item_arr["Registry"]=array();
+        $output_arr=array();
+        $output_arr["Registry"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
@@ -37,10 +45,10 @@ if ($stmt != false){
                 "serialNumber" => $serialNumber,
                 "datePurchased" => $datePurchased,
             );
-            array_push($item_arr["Registry"], $registry_item);
+            array_push($output_arr["Registry"], $registry_item);
         }
     
-        echo json_encode($item_arr["Registry"]);
+        echo json_encode($output_arr["Registry"]);
     }
     else{
         echo json_encode(array());

@@ -35,7 +35,7 @@ $content = '
               <div class="form-group">
                 <label for="input1">Inventory SKU</label>
                 <select id="SKU" class="form-control">
-                  <option value="NULL">None</option>
+                  <option value="">None</option>
                 </select>
               </div>  
 
@@ -124,7 +124,7 @@ $(document).ready(function() {
         url: "../api/pools/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
         dataType: 'json',
         success: function(data) {
-          $('#SKU').val( (data['inventoryId'] == null) ? "NULL" : (data['inventoryId']) ); // JSON: null -> form/SQL: NULL
+          $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
           $('#tech').val(data['tech']);
           $('#pool').val(data['pool']);
           $('#name').val(data['name']);
