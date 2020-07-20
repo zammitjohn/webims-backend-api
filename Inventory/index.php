@@ -117,7 +117,7 @@ $(function () {
   var table = $('#table1').DataTable({
       autoWidth: false,
       responsive: true,
-      order: [[ 7, "desc" ]],
+      order:[],
       ajax: {
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
           url: "../api/inventory/read.php",

@@ -328,7 +328,7 @@ to get the desired effect
   <strong>Developed by John Zammit.</strong> Copyright &copy; <?php echo date('Y'); ?> <a href="https://vodafone.com.mt">Vodafone Malta</a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.5.3
+      <b>Version</b> 1.5.4
     </div>
   </footer>
   
@@ -377,6 +377,7 @@ $("span.dropdown-item.dropdown-header").html(name);
 <script>
 $.ajax({
   type: "GET",
+  cache: false, // due to agressive caching on IE 11
   headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
   url: '../api/users/validate_session.php',
   dataType: 'json',

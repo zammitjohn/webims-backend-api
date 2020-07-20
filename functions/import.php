@@ -2,6 +2,7 @@
 // include database and object files
 include_once '../api/config/database.php';
 include_once '../api/objects/inventory.php';
+include_once '../api/objects/users.php';
 
 // get database connection
 $database = new Database();
@@ -12,6 +13,16 @@ $created_counter = 0;
 $updated_counter = 0;
 $conflict_counter = 0;
 $modifiedItemIDs = []; // to keep track of modified inventory item IDs
+
+// API Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    // prepare users object
+    $user = new Users($db);
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->validKey() ? : die(); // if key is not valid, die!
+} else {
+    die(); // if key hasn't been specified, die!
+}
 
 $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
@@ -90,7 +101,6 @@ if($_FILES["file"]["size"] > 0) {
             $item->qtyOut = $data_qtyOut;
             $item->supplier = $data_supplier;
             $item->inventoryDate = $data_date;
-            $item->sessionId = isset($_SERVER['HTTP_AUTH_KEY']) ? $_SERVER['HTTP_AUTH_KEY'] : die(); // API Key - sessionId
 
             // check if SKU already exists
             if ($existingId = $item->isAlreadyExist()) { // update existing inventory item
