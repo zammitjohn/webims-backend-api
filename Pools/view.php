@@ -106,6 +106,7 @@ include('../master.php');
 $(document).ready(function() {
   $.ajax({
     type: "GET",
+    cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/inventory/read.php",
     dataType: 'json',
@@ -120,6 +121,7 @@ $(document).ready(function() {
       // populate form
       $.ajax({
         type: "GET",
+        cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
         url: "../api/pools/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
         dataType: 'json',

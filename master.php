@@ -377,7 +377,7 @@ $("span.dropdown-item.dropdown-header").html(name);
 <script>
 $.ajax({
   type: "GET",
-  cache: false, // due to agressive caching on IE 11
+  cache: false, // due to aggressive caching on IE 11
   headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
   url: '../api/users/validate_session.php',
   dataType: 'json',

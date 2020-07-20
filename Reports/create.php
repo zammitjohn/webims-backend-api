@@ -138,6 +138,7 @@ include('../master.php');
 $(document).ready(function() {
   $.ajax({
     type: "GET",
+    cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/inventory/read.php",
     dataType: 'json',
@@ -167,6 +168,7 @@ $(document).ready(function() {
   // populate requestedBy dropdown
   $.ajax({
     type: "GET",
+    cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/users/read.php",
     dataType: 'json',
@@ -223,6 +225,7 @@ function populateSerialNumbers() {
 
   $.ajax({
     type: "GET",
+    cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/registry/read.php" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',

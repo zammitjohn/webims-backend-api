@@ -179,6 +179,7 @@ $(document).ready(function() {
   // load fields
   $.ajax({
     type: "GET",
+    cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/inventory/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
@@ -215,7 +216,8 @@ $(document).ready(function() {
 
   // load registry table
   $.ajax({
-    type: 'GET',
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/registry/read.php" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',

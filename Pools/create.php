@@ -105,6 +105,7 @@ include('../master.php');
 $(document).ready(function() {
   $.ajax({
     type: "GET",
+    cache: false, // due to aggressive caching on IE 11
 	  headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "../api/inventory/read.php",
     dataType: 'json',

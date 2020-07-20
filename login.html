@@ -11,8 +11,6 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
@@ -72,6 +70,10 @@
 
 <script>
 $(document).ready(function () {
+
+  if (window.document.documentMode) { // IE alert
+    alert("RIMS is not designed to work with Internet Explorer. Please use a modern browser like Google Chrome or Microsoft Edge.")
+  }
 
   if (localStorage.getItem('sessionId')){ 
     window.location.href = 'index.php';
