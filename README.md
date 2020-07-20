@@ -16,8 +16,8 @@ None yet :(
 Configuration
 ---------------
 1. Deploy DB using rims_db.sql from the corresponding release
-2. Setup and connect DB in [config](api\config\database.php)
-3. Modify LDAP server connection in [login.php](api\users\login.php)    
+2. Setup and connect DB in [database.php](api/config/database.php)
+3. Modify LDAP server connection in [login.php](api/users/login.php)    
 
 Browser Support
 ---------------
