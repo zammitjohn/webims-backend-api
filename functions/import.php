@@ -14,14 +14,12 @@ $updated_counter = 0;
 $conflict_counter = 0;
 $modifiedItemIDs = []; // to keep track of modified inventory item IDs
 
-// API Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    // prepare users object
-    $user = new Users($db);
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $user->validKey() ? : die(); // if key is not valid, die!
-} else {
-    die(); // if key hasn't been specified, die!
+// API AUTH Key check
+$user = new Users($db); // prepare users object
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+if (!$user->validKey()){
+    header("HTTP/1.1 401 Unauthorized");
+    die();
 }
 
 $filename=$_FILES["file"]["tmp_name"];

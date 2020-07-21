@@ -11,7 +11,7 @@ $db = $database->getConnection();
 $user = new Users($db);
 
 // check if key was specified
-if ($_SERVER['HTTP_AUTH_KEY'] == "null"){
+if (!isset($_SERVER['HTTP_AUTH_KEY']) or $_SERVER['HTTP_AUTH_KEY'] == "null"){
     $output_arr=array(
         "valid" => false,
         "message" => "You need to login to access RIMS!"

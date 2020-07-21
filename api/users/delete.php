@@ -14,12 +14,11 @@ $user = new users($db);
 // set users property values
 $user->id = $_POST['id'];
 
-// API Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $user->validKey() ? : die(); // if key is not valid, die!
-} else {
-    die(); // if key hasn't been specified, die!
+// API AUTH Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+if (!$user->validKey()){
+    header("HTTP/1.1 401 Unauthorized");
+    die();
 }
  
 // remove the user

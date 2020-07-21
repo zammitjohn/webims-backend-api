@@ -164,7 +164,7 @@ function UpdateItem() {
       notes: $("#notes").val()
     },
     error: function(result) {
-      alert(result.responseText);
+      alert(result.statusText);
     },
     success: function(result) {
       alert(result.message);
@@ -188,7 +188,7 @@ function Remove() {
         id: id
       },
       error: function(result) {
-        alert(result.responseText);
+        alert(result.statusText);
       },
       success: function(result) {
         alert(result.message);

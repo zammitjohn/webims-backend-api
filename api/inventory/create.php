@@ -27,14 +27,12 @@ $item->ancillary = $_POST['ancillary'];
 $item->toCheck = $_POST['toCheck'];
 $item->notes = $_POST['notes'];
 
-// API Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    // prepare users object
-    $user = new Users($db);
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $user->validKey() ? : die(); // if key is not valid, die!
-} else {
-    die(); // if key hasn't been specified, die!
+// API AUTH Key check
+$user = new Users($db); // prepare users object
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+if (!$user->validKey()){
+    header("HTTP/1.1 401 Unauthorized");
+    die();
 }
 
 // create the item

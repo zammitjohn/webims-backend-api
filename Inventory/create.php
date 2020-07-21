@@ -179,7 +179,7 @@ function AddItem() {
       notes: $("#notes").val()
     },
     error: function(result) {
-      alert(result.responseText);
+      alert(result.statusText);
     },
     success: function(result) {
       alert(result.message);

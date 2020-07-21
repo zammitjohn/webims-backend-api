@@ -10,12 +10,11 @@ $db = $database->getConnection();
 // prepare users object
 $user = new Users($db);
 
-// API Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $user->validKey() ? : die(); // if key is not valid, die!
-} else {
-    die(); // if key hasn't been specified, die!
+// API AUTH Key check
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+if (!$user->validKey()){
+    header("HTTP/1.1 401 Unauthorized");
+    die();
 }
 
 // query users
