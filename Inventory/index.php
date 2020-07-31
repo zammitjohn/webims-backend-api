@@ -107,6 +107,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
+$title = "Inventory";
 include('../master.php');
 ?>
 

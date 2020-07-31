@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>RIMS</title>
+  <title><?php echo "RIMS | ". $title; ?></title>
   <!-- pace-progress -->
   <link rel="stylesheet" href="../plugins/pace-progress/themes/red/pace-theme-minimal.css">
   <!-- Font Awesome -->

@@ -24,10 +24,7 @@ $content = '
       <div class="col-12">
         <!-- general form elements -->
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Create report</h3>
-          </div>
-          <!-- /.card-header -->
+
           <!-- form start -->
           <form role="form">
             <div class="card-body">
@@ -130,6 +127,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
+$title = "New report";
 include('../master.php');
 ?>
 

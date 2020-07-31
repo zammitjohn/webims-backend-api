@@ -76,6 +76,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
+$title = "Fault Reports";
 include('../master.php');
 ?>
 

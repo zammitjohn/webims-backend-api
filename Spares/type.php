@@ -60,6 +60,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
+$title = "Spares";
 include('../master.php');
 ?>
 

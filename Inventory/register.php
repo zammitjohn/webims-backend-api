@@ -10,7 +10,7 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
-          <li class="breadcrumb-item active">Register inventory item</li>
+          <li class="breadcrumb-item active">Register item</li>
         </ol>
       </div>
     </div>
@@ -24,10 +24,6 @@ $content = '
       <div class="col-12">
         <!-- general form elements -->
         <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Register item</h3>
-          </div>
-          <!-- /.card-header -->
     
           <div class="card-body">
 
@@ -63,6 +59,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
+$title = "Register item";
 include('../master.php');
 ?>
 

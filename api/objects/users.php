@@ -84,7 +84,7 @@ class Users{
         }
 
         // create sessionId for user
-        $this->createSessionId();
+        $this->createSession();
         
         $query = "SELECT
                     `id`, `username`, `firstname`, `lastname`, `created` , `sessionId`
@@ -105,7 +105,7 @@ class Users{
         }        
     }
 
-    function createSessionId(){
+    function createSession(){
         // generates cryptographically secure pseudo-random UUID hash, used as a sessionId
         $bytes = random_bytes(10);
         $hash = (bin2hex($bytes));
@@ -113,7 +113,7 @@ class Users{
         $query = "UPDATE
                     ".$this->table_name." 
                 SET
-                    sessionId = '".$hash."'
+                    sessionId = '".$hash."',  lastLogin = now() 
                 WHERE
                     username = '".$this->username."'";       
 
@@ -129,7 +129,10 @@ class Users{
             FROM
                 " . $this->table_name . " 
             WHERE
-                sessionId='".$this->sessionId."'";
+                sessionId='".$this->sessionId."'
+            AND 
+                lastLogin >= now() - INTERVAL 1 DAY";
+
         // prepare query statement
         $stmt = $this->conn->prepare($query);
         // execute query

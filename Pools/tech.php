@@ -216,6 +216,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
+$title = "Buffer Pools";
 include('../master.php');
 ?>
 
