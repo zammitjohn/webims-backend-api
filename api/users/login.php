@@ -15,8 +15,8 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 
 // New LAPD connection
-$ldap = ldap_connect("ldap://ECMTDC023VW.internal.vodafone.com",389);
-$ldaprdn = 'vf-root' . "\\" . $username;
+$ldap = ldap_connect('ldap://mt-wi-dc1.telco.mt:389 ldap://mt-wi-dc2.telco.mt:389');
+$ldaprdn = 'telco' . "\\" . $username;
 ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 
@@ -26,11 +26,12 @@ $bind = @ldap_bind($ldap, $ldaprdn, $password);
 if ($bind) { // user found in directory 
     // narrow down search
     $filter="(sAMAccountName=$username)";
-    $result = ldap_search($ldap,"DC=internal,DC=vodafone,DC=com",$filter);
+    $result = ldap_search($ldap,"DC=telco,DC=mt",$filter);
     $info = ldap_get_entries($ldap, $result);
     for ($i=0; $i<$info["count"]; $i++) {
 
         // getting values from result
+        //var_dump($info[$i]);
         $user->username = $info[$i]["samaccountname"][0];
         $user->firstname = $info[$i]["givenname"][0];
         $user->lastname = $info[$i]["sn"][0];
