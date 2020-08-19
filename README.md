@@ -31,7 +31,7 @@ Contribution
 Contribution are always **welcome and recommended**! Here is how:
 
 - Fork the repository ([here is the guide](https://help.github.com/articles/fork-a-repo/)).
-- Clone to your machine ```git clone https://github.com/YOUR_USERNAME/RIMS.git```
+- Clone to your machine ```git clone https://github.com/zammitjohn/RIMS.git```
 - Create a new branch
 - Make your changes
 - Create a pull request
