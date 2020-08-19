@@ -11,7 +11,7 @@ Download from [Github releases](https://github.com/zammitjohn/RIMS/releases).
 
 Documentation
 -------------
-None yet :(
+- [API Reference](docs/api.md)
 
 Configuration
 ---------------

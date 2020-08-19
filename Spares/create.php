@@ -113,6 +113,9 @@ $(document).ready(function() {
       if (id != null) {
         $('#SKU').val(id);
         document.getElementById("SKU").disabled=true; // disable field
+
+        // populate 'name' field to 'SKU'
+        $('#name').val($("#SKU :selected").text());        
       }
     }
 

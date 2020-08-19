@@ -60,14 +60,14 @@ $content = '
               </div>
 
               <div class="form-group">
-                <label for="input6">Serial Number (Faulty)</label>
+                <label for="input6">Serial Number (Faulty)</label> <div class="addSN" style="display:inline-block;"> </div>
                 <select id="faultySN" class="form-control">
                   <option value="">None</option>
                 </select>
               </div>
               
               <div class="form-group">
-                <label for="input7">Serial Number (Replacement)</label>
+                <label for="input7">Serial Number (Replacement)</label> <div class="addSN" style="display:inline-block;"> </div>
                 <select id="replacementSN" class="form-control">
                   <option value="">None</option>
                 </select>
@@ -193,8 +193,10 @@ $(document).ready(function() {
               $('#RMA').val(data['RMA']);
               $('#notes').val(data['notes']);
 
-              // populate serial number dropdown with options and actual value from DB
-              populateSerialNumbers(faultySN, replacementSN);
+              document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
+              if ($('#SKU').val() != ""){
+                populateSerialNumbers(faultySN, replacementSN); // populate serial number dropdown with options and actual value from DB
+              }
             },
             error: function(result) {
               console.log(result);
@@ -271,7 +273,7 @@ function Remove() {
 }
 
 function populateSerialNumbers(faultySN, replacementSN) {
-  document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
+  $('.addSN').append('<a href="../inventory/register.php?id=' +  $("#SKU").val() + '" ><b>+Add</b></a>');
 
   $.ajax({
     type: "GET",

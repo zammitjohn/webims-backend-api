@@ -155,7 +155,7 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <input type="Button" class="btn btn-primary" onClick="addTo(4)" value="Register"></input>
+            <input type="Button" class="btn btn-primary" onClick="addTo(4)" value="Add"></input>
           </div>
         </div>
         <!-- /.card -->

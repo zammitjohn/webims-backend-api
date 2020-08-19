@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
+  <style>
+    .highlight-row {
+      background-color: yellow !important;
+    }
+  </style>
+
   <title><?php echo "RIMS | ". $title; ?></title>
   <!-- pace-progress -->
   <link rel="stylesheet" href="../plugins/pace-progress/themes/red/pace-theme-minimal.css">
@@ -36,7 +42,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-danger">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed accent-danger">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -327,10 +333,10 @@ to get the desired effect
 
   <!-- Main Footer -->
   <footer class="main-footer">
-  <strong>Developed by John Zammit.</strong> Copyright &copy; <?php echo date('Y'); ?> <a href="https://vodafone.com.mt">Vodafone Malta</a>.
+  <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.5.4
+      <b>Version</b> 1.5.5
     </div>
   </footer>
   
@@ -387,7 +393,7 @@ $.ajax({
   dataType: 'json',
   success: function(data) {
     if (data['valid'] == false) {
-      alert(data.message);
+      //alert(data.message);
       clearSession();
     }
   }

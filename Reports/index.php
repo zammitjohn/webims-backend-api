@@ -32,17 +32,10 @@ $content = '
             <thead>
               <tr>
                 <th>Report ID</th>
-                <th>Ticket#</th>
+                <th>Ticket</th>
                 <th>Name</th>                
-                <th>Fault Report#</th>
-                <th>Date Requested</th>
-                <th>Date Leaving</th>
-                <th>Date Dispatched</th>
-                <th>Date Returned</th>
-                <th>AWB</th>
-                <th>AWB Returned</th>
+                <th>Fault Report</th>
                 <th>RMA</th>
-                <th>Notes</th>
               </tr>
             </thead>
             <tbody>
@@ -50,17 +43,10 @@ $content = '
             <tfoot>
               <tr>
                 <th>Report ID</th>
-                <th>Ticket#</th>
+                <th>Ticket</th>
                 <th>Name</th>                
-                <th>Fault Report#</th>
-                <th>Date Requested</th>
-                <th>Date Leaving</th>
-                <th>Date Dispatched</th>
-                <th>Date Returned</th>
-                <th>AWB</th>
-                <th>AWB Returned</th>
+                <th>Fault Report</th>
                 <th>RMA</th>
-                <th>Notes</th>
               </tr>
             </tfoot>
           </table>
@@ -87,6 +73,7 @@ $(function () {
   $('#table1').DataTable({
       autoWidth: false,
       responsive: true,
+      order:[],
       ajax: {
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
           url: "../api/reports/read.php",
@@ -97,22 +84,22 @@ $(function () {
           { data: 'ticketNo' },
           { data: 'name' },
           { data: 'reportNo' },
-          { data: 'dateRequested' },
-          { data: 'dateLeavingRBS' },
-          { data: 'dateDispatched' },
-          { data: 'dateReturned' },
-          { data: 'AWB' },
-          { data: 'AWBreturn' },
-          { data: 'RMA' },
-          { data: 'notes' }
+          { data: 'RMA' }
       ],
       columnDefs: [ 
         { targets: [0],
           "render": function (data, type, row, meta) {
-          return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+          return '<a href="view.php?id=' + row.id + '"> #' + data + '</a>';
           }  
         }
-      ]
+      ],
+
+      "createdRow": function(row, data, dataIndex) {
+        if ((data.dateReturned != null) || (data.replacementSN != null)) {        
+          $(row).addClass('highlight-row');
+        }
+      },
+
   });
 });
 </script>
