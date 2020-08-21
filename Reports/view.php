@@ -118,6 +118,15 @@ $content = '
             <div class="card-footer">
               <input type="Button" class="btn btn-primary" onClick="UpdateItem()" value="Update"></input>
               <input type="Button" class="btn btn-danger" onClick="Remove()" value="Delete"></input>
+              <div class="btn-group">
+              <button type="button" class="btn btn-default">Export as...</button>
+                <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                  <span class="sr-only">Toggle Dropdown</span>
+                  <div class="dropdown-menu" role="menu">
+                    <a class="dropdown-item" id="nokia_report">Nokia Hardware Failure Report</a>
+                  </div>
+                </button>
+            </div>
             </div>
           </form>
         </div>
@@ -297,5 +306,30 @@ function populateSerialNumbers(faultySN, replacementSN) {
 
   });
 }
+
+$('#nokia_report').on('click', function () {
+  toastr.info("Report will open in a separate window");
+  $.ajax({
+  type: 'POST',
+  url: '../functions/nokia/report.php',
+  data: {
+    reportNo: $("#reportNo").val(),
+    faultySN:  $("#faultySN option:selected").text(),
+    replacementSN: $("#replacementSN option:selected").text(),
+    SKU: $("#SKU option:selected").text(),
+    name: $("#name").val()
+  },
+  dataType : 'html',
+  success: function(response) {
+
+    //open a new window note:this is a popup so it may be blocked by your browser
+    var newWindow = window.open("", "new window", "width=1000, height=700");
+
+    //write the data to the document of the newWindow and close
+    newWindow.document.write(response);
+    newWindow.document.close();
+  }
+  });
+});
 
 </script>

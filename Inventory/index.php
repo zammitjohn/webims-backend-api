@@ -155,13 +155,13 @@ $(function () {
 function typeIdtoText(id){
 var inventoryType;
   if (id == '1') {
-    inventoryType = "General";
+    inventoryType = "General (VNetworks)";
   } else if (id == '2') {
-    inventoryType = "Spares";
+    inventoryType = "Spares (VNetworks_Spare)";
   } else if (id == '3') {
-    inventoryType = "Repeaters";
+    inventoryType = "Repeaters (Indoor_Repeater)";
   } else if (id == '4') {
-    inventoryType = "Returns";
+    inventoryType = "Returns (VNetworks_Return)";
   } else {
     inventoryType = "undefined";
   }

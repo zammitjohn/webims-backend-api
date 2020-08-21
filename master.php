@@ -42,7 +42,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed accent-danger">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-danger">
 <div class="wrapper">
 
   <!-- Navbar -->

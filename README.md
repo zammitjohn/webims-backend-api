@@ -43,12 +43,7 @@ reserves the right to change the license of future releases.
 
 Latest Release
 ---------------
-- [RIMS 1.5.4](https://github.com/zammitjohn/RIMS/releases/tag/v1.5.4)
-
-Legacy Releases
----------------
-- [RIMS 1.0](https://github.com/zammitjohn/RIMS/releases/tag/v1.0)
-- [RIMS 1.5](https://github.com/zammitjohn/RIMS/releases/tag/v1.5)
+- [RIMS 1.5.5](https://github.com/zammitjohn/RIMS/releases/tag/v1.5.5)
 
 Change log
 ----------
