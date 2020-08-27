@@ -41,10 +41,6 @@ License
 AdminLTE is an open source project by [AdminLTE.io](https://adminlte.io) that is licensed under [MIT](http://opensource.org/licenses/MIT). AdminLTE.io
 reserves the right to change the license of future releases.
 
-Latest Release
----------------
-- [RIMS 1.5.5](https://github.com/zammitjohn/RIMS/releases/tag/v1.5.5)
-
 Change log
 ----------
 Visit the [releases](https://github.com/zammitjohn/RIMS/releases) page to view the changelog
