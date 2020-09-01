@@ -2,8 +2,8 @@
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/inventory.php';
-include_once '../objects/users.php';
+include_once '../tables/inventory.php';
+include_once '../tables/users.php';
 
 // get database connection
 $database = new Database();

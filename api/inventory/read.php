@@ -1,8 +1,8 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/inventory.php';
-include_once '../objects/users.php';
+include_once '../tables/inventory.php';
+include_once '../tables/users.php';
  
 // get database connection
 $database = new Database();
@@ -41,20 +41,15 @@ if ($stmt != false){
             $inventory_item=array(
                 "id" => $id,
                 "SKU" => $SKU,
-                "type" => $type,
+                "type_id" => $type_id,
+                "type_name" => $type_name,
+                "type_altname" => $type_altname,
                 "description" => $description,
                 "qty" => $qty,
                 "qtyIn" => $qtyIn,
                 "qtyOut" => $qtyOut,
                 "supplier" => $supplier,
-                "isGSM" => $isGSM,
-                "isUMTS" => $isUMTS,
-                "isLTE" => $isLTE,
-                "ancillary" => $ancillary,
-                "toCheck" => $toCheck,
-                "notes" => $notes,
-                "inventoryDate" => $inventoryDate,                
-                "lastChange" => $lastChange
+                "inventoryDate" => $inventoryDate
             );
             array_push($output_arr["Inventory"], $inventory_item);
         }

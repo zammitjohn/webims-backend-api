@@ -72,51 +72,57 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-$(function () {
-  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  $('#table1').DataTable({
-    autoWidth: false,
-    responsive: true,
-    order:[],
-    ajax: {
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/inventory/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
-        dataSrc: ''
-    },
-    columns: [
-        { data: 'SKU' },     
-        { data: 'description' },
-        { data: 'qty' },
-        { data: 'qtyIn' },
-        { data: 'qtyOut' },
-        { data: 'supplier' },
-        { data: 'inventoryDate' },        
-    ],
-    columnDefs: [
-      { targets: [0], // first column
-        "render": function (data, type, row, meta) {
-        return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-        }  
+
+$(document).ready(function() {
+  // load type
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/inventory/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    dataType: 'json',
+    success: function(data) {
+
+      for (var property in data) {
+        $("h3.card-title").html(data[property].name + " " + "(" + data[property].alt_name + ")");
+        $("li.breadcrumb-item.active").html(data[property].name);
       }
-    ]
+
+      // load table contents
+      $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+      $('#table1').DataTable({
+        autoWidth: false,
+        responsive: true,
+        order:[],
+        ajax: {
+            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            url: "../api/inventory/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
+            dataSrc: ''
+        },
+        columns: [
+            { data: 'SKU' },     
+            { data: 'description' },
+            { data: 'qty' },
+            { data: 'qtyIn' },
+            { data: 'qtyOut' },
+            { data: 'supplier' },
+            { data: 'inventoryDate' },        
+        ],
+        columnDefs: [
+          { targets: [0], // first column
+            "render": function (data, type, row, meta) {
+            return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+            }  
+          }
+        ]
+      });
+
+
+    },
+    error: function(data) {
+      console.log(data);
+    },
   });
 
 });
-
-//customize page according to type
-var inventorytype;
-if ((<?php echo $_GET['id']; ?>) == '1') {
-    inventorytype = "General";
-  } else if ((<?php echo $_GET['id']; ?>) == '2') {
-    inventorytype = "Spares";
-  } else if ((<?php echo $_GET['id']; ?>) == '3') {
-    inventorytype = "Repeaters";
-  } else if ((<?php echo $_GET['id']; ?>) == '4') {
-    inventorytype = "Returns";
-  } else {
-    inventorytype = "undefined";
-}
-$("h3.card-title").html(inventorytype);
-$("li.breadcrumb-item.active").html(inventorytype);
-
 </script>

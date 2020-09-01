@@ -1,19 +1,19 @@
 <?php
 // include database and object files
-include_once '../config/database.php';
-include_once '../tables/spares.php';
-include_once '../tables/users.php';
+include_once '../../config/database.php';
+include_once '../../tables/inventory_types.php';
+include_once '../../tables/users.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare spares item object
-$item = new Spares($db);
- 
-// set type property of spares item type to be shown 
-if (isset($_GET['type'])) {
-    $item->type = $_GET['type'];
+// prepare inventory type property object
+$property = new Inventory_Types($db);
+
+// set type property of inventory type property to be shown 
+if (isset($_GET['id'])) {
+    $property->id = $_GET['id'];
 }
 
 // API AUTH Key check
@@ -23,34 +23,30 @@ if (!$user->validKey()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }
-
-// query spares item
-$stmt = $item->read();
+ 
+// query inventory type property
+$stmt = $property->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 
     // check if more than 0 record found
     if($num>0){
     
-        // sapres item array
+        // inventory type property array
         $output_arr=array();
-        $output_arr["Spares"]=array();
+        $output_arr["Inventory_Types"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $spares_item=array(
+            $inventory_type_property=array(
                 "id" => $id,
-                "inventoryId" => $inventoryId,
-                "type" => $type,
                 "name" => $name,
-                "description" => $description,
-                "qty" => $qty,
-                "notes" => $notes
+                "alt_name" => $alt_name,
             );
-            array_push($output_arr["Spares"], $spares_item);
+            array_push($output_arr["Inventory_Types"], $inventory_type_property);
         }
     
-        echo json_encode($output_arr["Spares"]);
+        echo json_encode($output_arr["Inventory_Types"]);
     }
     else{
         echo json_encode(array());

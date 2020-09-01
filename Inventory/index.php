@@ -144,29 +144,12 @@ $(function () {
 
         { targets: [1], // type column
             "render": function (data, type, row, meta) {
-            return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(data) + '</a>';
+            return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
             }  
         }
       ]
   });
 });
-
-// Function to convert type ids to correspnding type to be shown in table
-function typeIdtoText(id){
-var inventoryType;
-  if (id == '1') {
-    inventoryType = "General (VNetworks)";
-  } else if (id == '2') {
-    inventoryType = "Spares (VNetworks_Spare)";
-  } else if (id == '3') {
-    inventoryType = "Repeaters (Indoor_Repeater)";
-  } else if (id == '4') {
-    inventoryType = "Returns (VNetworks_Return)";
-  } else {
-    inventoryType = "undefined";
-  }
-return inventoryType;
-}
 
 $('#upload_csv').on("submit", function(e){
   $('#modal-import').modal('toggle'); // hide modal

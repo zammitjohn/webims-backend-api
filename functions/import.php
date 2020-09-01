@@ -1,8 +1,8 @@
 <?php
 // include database and object files
 include_once '../api/config/database.php';
-include_once '../api/objects/inventory.php';
-include_once '../api/objects/users.php';
+include_once '../api/tables/inventory.php';
+include_once '../api/tables/users.php';
 
 // get database connection
 $database = new Database();

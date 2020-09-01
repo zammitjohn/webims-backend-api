@@ -37,10 +37,6 @@ $content = '
               <div class="form-group">
                 <label for="input2">Type</label>
                 <select id="type" class="form-control">
-                  <option value="1">General</option>
-                  <option value="2">Spares</option>
-                  <option value="3">Repeaters</option>
-                  <option value="4">Returns</option>
                 </select>
               </div>              
 
@@ -134,6 +130,28 @@ include('../master.php');
 ?>
 
 <script>
+$(document).ready(function() {
+  // load type field
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/inventory/types/read.php",
+    dataType: 'json',
+    success: function(data) {
+      var dropdowndata = "";
+      for (var property in data) {
+        dropdowndata += "<option value = '" + data[property].id + "'>" + data[property].name + "</option>";
+      }
+      // append dropdowndata to SKU dropdown
+      $("#type").append(dropdowndata);
+    },
+    error: function(data) {
+      console.log(data);
+    },
+  });
+});
+
 function AddItem() {
   var isGSMval = "";
   var isUMTSval = "";

@@ -125,7 +125,7 @@ to get the desired effect
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id="inventory_tree">
               <li class="nav-item">
                 <a href="/rims/inventory/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
@@ -133,41 +133,17 @@ to get the desired effect
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/rims/inventory" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>All items</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/inventory/type.php?id=1" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>General</p>
-                </a>
-              </li>               
-              <li class="nav-item">
-                <a href="/rims/inventory/type.php?id=2" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>Spares</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/inventory/type.php?id=3" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>Repeaters</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/inventory/type.php?id=4" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>Returns</p>
-                </a>
-              </li>                                      
-              <li class="nav-item">
                 <a href="/rims/inventory/register.php" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
                   <p>Register item</p>
                 </a>
-              </li>          
+              </li> 
+              <li class="nav-item">
+                <a href="/rims/inventory" class="nav-link">
+                  <i class="fas fa-circle nav-icon"></i>
+                  <p>All items</p>
+                </a>
+              </li>                                              
             </ul>
           </li>
 
@@ -336,7 +312,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.5.5
+      <b>Version</b> 1.5.6
     </div>
   </footer>
   
@@ -371,7 +347,7 @@ to get the desired effect
 <!-- User Feedback Script -->
 <script>
 function userFeedback() {
-  url = "mailto:john.zammit@vodafone.com?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('id')) + "%0D%0ADescription%3A%20"
+  url = "mailto:?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('id')) + "%0D%0ADescription%3A%20"
   window.open(url);
 }
 </script>
@@ -399,6 +375,33 @@ $.ajax({
   }
 });
 </script>
+
+
+<!-- Load inventory nav treeview  -->
+<script>
+$(document).ready(function() {
+  // load type field
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/inventory/types/read.php",
+    dataType: 'json',
+    success: function(data) {
+      var treeviewdata = "";
+      for (var property in data) {
+        treeviewdata += '<li class="nav-item"> <a href="/rims/inventory/type.php?id=' + data[property].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[property].name + '</p></a></li>';
+      }
+      // append dropdowndata to SKU dropdown
+      $("#inventory_tree").append(treeviewdata);
+    },
+    error: function(data) {
+      console.log(data);
+    },
+  });
+});
+</script>
+
 
 <!-- Remove session info from localstorage -->
 <script>

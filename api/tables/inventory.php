@@ -32,24 +32,33 @@ class Inventory{
     
         // different SQL query according to API call
         if (is_null($this->type)){
-            // select all query
-           $query = "SELECT
-                       *
-                   FROM
-                       " . $this->table_name . " 
-                   ORDER BY
-                       id DESC";
-
+            // select query
+            $query = "SELECT 
+                inventory.id, inventory.SKU, inventory_types.id AS type_id, 
+                inventory_types.name AS type_name, inventory_types.alt_name AS type_altname,
+                inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
+                inventory.supplier, inventory.inventoryDate
+            FROM 
+                inventory JOIN inventory_types
+            ON 
+                inventory.type = inventory_types.id
+            ORDER BY 
+                `inventory`.`id`  DESC";
        } else {
            // select all query for particular type
-           $query = "SELECT
-                       *
-                   FROM
-                       " . $this->table_name . "
-                   WHERE
-                       type= '".$this->type."' 
-                   ORDER BY 
-                       id DESC";
+            $query = "SELECT 
+                inventory.id, inventory.SKU, inventory_types.id AS type_id, 
+                inventory_types.name AS type_name, inventory_types.alt_name AS type_altname,
+                inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
+                inventory.supplier, inventory.inventoryDate
+            FROM 
+                inventory JOIN inventory_types
+            ON 
+                inventory.type = inventory_types.id
+            WHERE
+                inventory.type = '".$this->type."'
+            ORDER BY 
+                `inventory`.`id`  DESC";
        }
     
         // prepare query statement

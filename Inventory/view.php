@@ -36,10 +36,6 @@ $content = '
               <div class="form-group">
                 <label for="input2">Type</label>
                 <select id="type" class="form-control">
-                  <option value="1">General</option>
-                  <option value="2">Spares</option>
-                  <option value="3">Repeaters</option>
-                  <option value="4">Returns</option>
                 </select>
               </div>              
 
@@ -172,42 +168,65 @@ include('../master.php');
 ?>
 
 <script>
-$(document).ready(function() {
 
-  // load fields
+$(document).ready(function() {
+  // load type field
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    url: "../api/inventory/types/read.php",
     dataType: 'json',
     success: function(data) {
-      $('#SKU').val(data['SKU']);
-      $('#type').val(data['type']);
-      $('#description').val(data['description']);
-      $('#qty').val(data['qty']);
-      $('#qtyIn').val(data['qtyIn']);
-      $('#qtyOut').val(data['qtyOut']);
-      $('#supplier').val(data['supplier']);
-      if (data['isGSM'] == 1) {
-        $(isGSM).prop("checked", true);
-      };
-      if (data['isUMTS'] == 1) {
-        $(isUMTS).prop("checked", true);
-      };
-      if (data['isLTE'] == 1) {
-        $(isLTE).prop("checked", true);
-      };
-      if (data['ancillary'] == 1) {
-        $(ancillary).prop("checked", true);
-      };
-      if (data['toCheck'] == 1) {
-        $(toCheck).prop("checked", true);
-      };
-      $('#notes').val(data['notes']);
+      var dropdowndata = "";
+      for (var property in data) {
+        dropdowndata += "<option value = '" + data[property].id + "'>" + data[property].name + "</option>";
+      }
+      // append dropdowndata to SKU dropdown
+      $("#type").append(dropdowndata);
+
+
+        // load other fields
+        $.ajax({
+          type: "GET",
+          cache: false, // due to aggressive caching on IE 11
+          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+          url: "../api/inventory/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+          dataType: 'json',
+          success: function(data) {
+            $('#SKU').val(data['SKU']);
+            $('#type').val(data['type']);
+            $('#description').val(data['description']);
+            $('#qty').val(data['qty']);
+            $('#qtyIn').val(data['qtyIn']);
+            $('#qtyOut').val(data['qtyOut']);
+            $('#supplier').val(data['supplier']);
+            if (data['isGSM'] == 1) {
+              $(isGSM).prop("checked", true);
+            };
+            if (data['isUMTS'] == 1) {
+              $(isUMTS).prop("checked", true);
+            };
+            if (data['isLTE'] == 1) {
+              $(isLTE).prop("checked", true);
+            };
+            if (data['ancillary'] == 1) {
+              $(ancillary).prop("checked", true);
+            };
+            if (data['toCheck'] == 1) {
+              $(toCheck).prop("checked", true);
+            };
+            $('#notes').val(data['notes']);
+          },
+          error: function(result) {
+            console.log(result);
+          },
+        });
+
+      
     },
-    error: function(result) {
-      console.log(result);
+    error: function(data) {
+      console.log(data);
     },
   });
 
@@ -232,7 +251,6 @@ $(document).ready(function() {
       $(tableData).appendTo($("#table1"));
     }
   });
-
 
 });
 
