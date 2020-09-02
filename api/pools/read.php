@@ -40,7 +40,8 @@ if ($stmt != false){
             extract($row);
             $pools_item=array(
                 "id" => $id,
-                "tech" => $tech,
+                "tech_id" => $tech_id,
+                "tech_name" => $tech_name,
                 "pool" => $pool,
                 "name" => $name,
                 "description" => $description,

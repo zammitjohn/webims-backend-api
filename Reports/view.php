@@ -155,8 +155,8 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
-      for (var user in data) {
-        dropdowndata += "<option value = '" + data[user].id + "'>" + data[user].SKU + "</option>";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].SKU + "</option>";
       }
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);
@@ -171,8 +171,8 @@ $(document).ready(function() {
         dataType: 'json',
         success: function(data) {
           var dropdowndata = "";
-          for (var user in data) {
-            dropdowndata += "<option value = '" + data[user].id + "'>" + data[user].firstname + " " + data[user].lastname + "</option>";
+          for (var element in data) {
+            dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].firstname + " " + data[element].lastname + "</option>";
           }
           // append dropdowndata to SKU dropdown
           $("#requestedBy").append(dropdowndata);
@@ -292,8 +292,8 @@ function populateSerialNumbers(faultySN, replacementSN) {
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
-      for (var user in data) {
-        dropdowndata += "<option value = '" + data[user].id + "'>" + "#" + data[user].id + ": " + data[user].serialNumber + "</option>";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</option>";
       }
       // append dropdowndata to serial numbers dropdown
       $("#faultySN").append(dropdowndata);

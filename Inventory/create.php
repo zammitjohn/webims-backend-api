@@ -140,8 +140,8 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
-      for (var property in data) {
-        dropdowndata += "<option value = '" + data[property].id + "'>" + data[property].name + "</option>";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
       }
       // append dropdowndata to SKU dropdown
       $("#type").append(dropdowndata);

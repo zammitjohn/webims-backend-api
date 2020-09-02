@@ -83,9 +83,9 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
 
-      for (var property in data) {
-        $("h3.card-title").html(data[property].name + " " + "(" + data[property].alt_name + ")");
-        $("li.breadcrumb-item.active").html(data[property].name);
+      for (var element in data) {
+        $("h3.card-title").html(data[element].name + " " + "(" + data[element].alt_name + ")");
+        $("li.breadcrumb-item.active").html(data[element].name);
       }
 
       // load table contents

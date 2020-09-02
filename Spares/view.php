@@ -102,8 +102,8 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
-      for (var user in data) {
-        dropdowndata += "<option value = '" + data[user].id + "'>" + data[user].SKU + "</option>";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].SKU + "</option>";
       }
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);

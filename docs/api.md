@@ -24,9 +24,17 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Inventory Types
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                                                            | **Response**     | **URL**                                   |
-|-----------------|------------|-----------------------|-------------------------------------------------------------------------------------------|------------------|-------------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | type\*\*\*\*\*\*                                                                          | id name alt_name | \$host\$/rims/api/inventory/type/read.php |
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response**     | **URL**                                   |
+|-----------------|------------|-----------------------|----------------|------------------|-------------------------------------------|
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name alt_name | \$host\$/rims/api/inventory/type/read.php |
+
+
+## Pools Types
+
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                               |
+|-----------------|------------|-----------------------|----------------|--------------|---------------------------------------|
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name      | \$host\$/rims/api/pools/type/read.php |
+
 
 
 ## Pools
@@ -36,7 +44,7 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 | **create**      | POST       | Auth-Key Content-Type | inventoryId\*\* tech pool name description qtyOrdered qtyStock notes    | status message id\* inventoryId\* tech\* pool\* name\* description\* qtyOrdered\* qtyStock\* notes\* | \$host\$/rims/api/pools/create.php      |
 | **delete**      | POST       | Auth-Key Content-Type | id                                                                      | status message                                                                                       | \$host\$/rims/api/pools/delete.php      |
 | **read_single** | GET        | Auth-Key Content-Type | id                                                                      | id inventoryId tech pool name description qtyOrdered qtyStock notes                                  | \$host\$/rims/api/pools/read_single.php |
-| **read**        | GET        | Auth-Key Content-Type | tech pool                                                               | id tech pool name description qtyOrdered qtyStock notes                                              | \$host\$/rims/api/pools/read.php        |
+| **read**        | GET        | Auth-Key Content-Type | tech pool                                                               | id tech_id tech_name pool name description qtyOrdered qtyStock notes                                 | \$host\$/rims/api/pools/read.php        |
 | **update**      | POST       | Auth-Key Content-Type | id inventoryId\*\* tech pool name description qtyOrdered qtyStock notes | status message                                                                                       | \$host\$/rims/api/pools/update.php      |
 
 ## Registry

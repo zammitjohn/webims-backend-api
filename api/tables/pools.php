@@ -24,15 +24,17 @@ class Pools{
     // read pools
     function read(){
     
-        // select all query for particular tech and pool
-        $query = "SELECT
-                    *
-                FROM
-                    " . $this->table_name . "
+        // select query for particular tech and pool
+        $query = "SELECT 
+			        pools.id, pools_types.id AS tech_id, pools_types.name AS tech_name, pools.pool, pools.name, pools.description, pools.qtyOrdered, pools.qtyStock, pools.notes
+                FROM 
+                    pools JOIN pools_types
+                ON 
+                    pools.tech = pools_types.id
                 WHERE
-                    tech= '".$this->tech."' AND pool= '".$this->pool."'
-                ORDER BY 
-                    id DESC";
+                    pools_types.id= '".$this->tech."' AND pools.pool= '".$this->pool."'
+		        ORDER BY 
+			        `pools`.`id`  DESC";          
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

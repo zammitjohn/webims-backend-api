@@ -179,8 +179,8 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
-      for (var property in data) {
-        dropdowndata += "<option value = '" + data[property].id + "'>" + data[property].name + "</option>";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
       }
       // append dropdowndata to SKU dropdown
       $("#type").append(dropdowndata);
@@ -240,12 +240,12 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       var tableData = "";
-      for (var user in data) {
+      for (var element in data) {
         tableData += "<tr>" +
-          "<td>" + "#" + data[user].id + "</td>" +
-          "<td>" + data[user].serialNumber + "</td>" +
-          "<td>" + data[user].datePurchased + "</td>" +
-          "<td><button type='button' onClick=Deregister('" + data[user].id + "') class='btn btn-block btn-danger'>Delete</button></td>" +
+          "<td>" + "#" + data[element].id + "</td>" +
+          "<td>" + data[element].serialNumber + "</td>" +
+          "<td>" + data[element].datePurchased + "</td>" +
+          "<td><button type='button' onClick=Deregister('" + data[element].id + "') class='btn btn-block btn-danger'>Delete</button></td>" +
           "</tr>";
       }
       $(tableData).appendTo($("#table1"));

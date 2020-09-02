@@ -44,9 +44,6 @@ $content = '
               <div class="form-group">
                 <label for="input3">Tech: </label>
                 <select id="tech">
-                  <option value="1">GSM</option>
-                  <option value="2">UMTS</option>
-                  <option value="3">LTE</option>
                 </select>
                 <label for="input4">Pool: </label>
                 <select id="pool">
@@ -109,8 +106,8 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
-      for (var user in data) {
-        dropdowndata += "<option value = '" + data[user].id + "'>" + data[user].SKU + "</option>";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].SKU + "</option>";
       }
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);
@@ -125,11 +122,34 @@ $(document).ready(function() {
         // populate 'name' field to 'SKU'
         $('#name').val($("#SKU :selected").text());
       }
+    },
+    error: function(data) {
+      console.log(data);
     }
 
   });
-});
 
+  // populate tech dropdown
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/pools/types/read.php",
+    dataType: 'json',
+    success: function(data) {
+      var dropdowndata = "";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
+      }
+      // append dropdowndata to SKU dropdown
+      $("#tech").append(dropdowndata);
+    },
+    error: function(data) {
+      console.log(data);
+    }
+  });
+
+});
 
 function AddItem() {
   $.ajax({

@@ -254,7 +254,7 @@ to get the desired effect
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id="pools_tree">
               <li class="nav-item">
                 <a href="/rims/pools/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
@@ -265,25 +265,6 @@ to get the desired effect
                 <a href="/rims/pools" class="nav-link">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>All pools</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/pools/tech.php?id=1" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>GSM Pools</p>
-                </a>
-              </li>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/pools/tech.php?id=2" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>UMTS Pools</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/pools/tech.php?id=3" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>LTE Pools</p>
                 </a>
               </li>
             </ul>
@@ -380,7 +361,10 @@ $.ajax({
 <!-- Load inventory nav treeview  -->
 <script>
 $(document).ready(function() {
-  // load type field
+  // load side bar tree view
+  var treeviewdata = "";
+
+  // load inventory side bar tree
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
@@ -388,17 +372,38 @@ $(document).ready(function() {
     url: "../api/inventory/types/read.php",
     dataType: 'json',
     success: function(data) {
-      var treeviewdata = "";
-      for (var property in data) {
-        treeviewdata += '<li class="nav-item"> <a href="/rims/inventory/type.php?id=' + data[property].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[property].name + '</p></a></li>';
+      for (var element in data) {
+        treeviewdata += '<li class="nav-item"> <a href="/rims/inventory/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
       }
       // append dropdowndata to SKU dropdown
       $("#inventory_tree").append(treeviewdata);
+
+      // load pools side bar tree
+      treeviewdata = "";
+      $.ajax({
+        type: "GET",
+        cache: false, // due to aggressive caching on IE 11
+        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        url: "../api/pools/types/read.php",
+        dataType: 'json',
+        success: function(data) {
+          for (var element in data) {
+            treeviewdata += '<li class="nav-item"> <a href="/rims/pools/tech.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+          }
+          // append dropdowndata to SKU dropdown
+          $("#pools_tree").append(treeviewdata);
+        },
+        error: function(data) {
+          console.log(data);
+        },
+      });
+
     },
     error: function(data) {
       console.log(data);
     },
   });
+
 });
 </script>
 

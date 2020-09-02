@@ -22,192 +22,7 @@ $content = '
   <div class="row">
     <div class="col-12">
 
-      <div class="container-fluid">
-        <div class="row-sm-12">
-          <div class="col-sm-12">
-            <h4>pooltech.placeholder.text</h4>
-          </div>
-        </div>    
-    
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Pool 1</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="table1" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Pool 2</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="table2" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Pool 3</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="table3" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-      
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Pool 4</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="table4" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->
-
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Pool 5</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-          </div>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="table5" class="table table-bordered table-striped">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Ordered</th>
-                <th>Stock</th>
-                <th>Notes</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
-      </div>
-      <!-- /.card -->      
+    <div id=table_div></div>   
       
     </div>
     <!-- /.col -->
@@ -220,51 +35,107 @@ $title = "Buffer Pools";
 include('../master.php');
 ?>
 
-<!-- page script -->
 <script>
 $(function () {
-  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  for (var $y = 1; $y <= 5; $y++) { // pool
-    $('#table' + $y).DataTable({
-        autoWidth: false,
-        responsive: true,
-        searching: false,
-        ajax: {
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/pools/read.php" + "?tech=" + (<?php echo $_GET['id']; ?>) + '&pool=' + $y,
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'name' },
-            { data: 'description' },
-            { data: 'qtyOrdered' },
-            { data: 'qtyStock' },
-            { data: 'notes' }		
-        ],
-        columnDefs: [ 
-          { targets: [0],
-            "render": function (data, type, row, meta) {
-            return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-            }  
-          }
-        ]        
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/pools/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    dataType: 'json',
+    success: function(data) {
+      var html;
+      
+      for (var element in data) { // loop tech
 
-    });
-  }
+      //customize page according to type
+      $("h4").html(data[element].name);
+      $("li.breadcrumb-item.active").html(data[element].name);
+
+      html = `
+      <div class="container-fluid">
+        <div class="row-sm-12">
+          <div class="col-sm-12">
+            <h4>` + data[element].name + `</h4>
+          </div>
+        </div>
+      </div> 
+      `;
+      $("#table_div").append(html); // insert header
+
+       for (var $p = 1; $p <= 5; $p++) { // pool
+        html = `
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Pool ` + $p + `</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
+                  <th>Notes</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->      
+        `;
+        $("#table_div").append(html); // insert table
+
+        // populate latest created table
+        $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+        $("table:last").DataTable({
+          autoWidth: false,
+          responsive: true,
+          searching: false,
+          ajax: {
+              headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+              url: "../api/pools/read.php" + "?tech=" + data[element].id + "&pool=" + $p,
+              dataSrc: ''
+          },
+          columns: [
+              { data: 'name' },
+              { data: 'description' },
+              { data: 'qtyOrdered' },
+              { data: 'qtyStock' },
+              { data: 'notes' }		
+          ],
+          columnDefs: [ 
+            { targets: [0],
+              "render": function (data, type, row, meta) {
+              return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+              }  
+            }
+          ]
+        });
+      
+      } 
+    }
+    },
+    error: function(data) {
+      console.log(data);
+    },
+  });
 });
-
-//customize page according to type
-var spareType;
-if ((<?php echo $_GET['id']; ?>) == '1') {
-    spareType = "GSM Pools";
-  } else if ((<?php echo $_GET['id']; ?>) == '2') {
-    spareType = "UMTS Pools";
-  } else if ((<?php echo $_GET['id']; ?>) == '3') {
-    spareType = "LTE Pools";
-  } else {
-    spareType = "undefined";
-}
-$("h4").html(spareType);
-$("li.breadcrumb-item.active").html(spareType);
-
 </script>

@@ -21,580 +21,7 @@ $content = '
 <section class="content">
   <div class="row">
     <div class="col-12">
-
-      <div class="container-fluid">
-        <div class="row-sm-12">
-          <div class="col-sm-12">
-            <h4><a href="tech.php?id=1">GSM Pools</a></h4>
-          </div>
-        </div>    
-    
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 1</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table1_1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 2</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table1_2" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 3</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table1_3" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 4</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table1_4" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 5</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table1_5" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-      </div>
-      <!-- /.container-fluid -->
-        
-      <hr>
-
-      <div class="container-fluid">
-        <div class="row-sm-12">
-          <div class="col-sm-12">
-            <h4><a href="tech.php?id=2">UMTS Pools</a></h4>
-          </div>
-        </div>    
-    
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 1</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table2_1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 2</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table2_2" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 3</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table2_3" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-        
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 4</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table2_4" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 5</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table2_5" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->    
-      
-      </div>
-      <!-- /.container-fluid -->
-
-      <hr>
-
-      <div class="container-fluid">
-        <div class="row-sm-12">
-          <div class="col-sm-12">
-            <h4><a href="tech.php?id=3">LTE Pools</a></h4>
-          </div>
-        </div>    
-    
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 1</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table3_1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 2</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table3_2" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 3</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table3_3" class="table table-bordered table-striped">
-              <thead>
-                 <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-        
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 4</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table3_4" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Pool 5</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body">
-            <table id="table3_5" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->          
-      
-      </div>
-      <!-- /.container-fluid -->
+    <div id=table_div></div>
 
     </div>
     <!-- /.col -->
@@ -610,16 +37,76 @@ include('../master.php');
 <!-- page script -->
 <script>
 $(function () {
-  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  for (var $x = 1; $x <= 3; $x++) { // technology
-    for (var $y = 1; $y <= 5; $y++) { // pool
-      $('#table' + $x + '_' + $y).DataTable({
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/pools/types/read.php",
+    dataType: 'json',
+    success: function(data) {
+      var html;
+
+      for (var element in data) { // loop tech
+      html = `
+      <div class="container-fluid">
+        <div class="row-sm-12">
+          <div class="col-sm-12">
+            <h4><a href="tech.php?id=` + data[element].id + `">` + data[element].name + `</a></h4>
+          </div>
+        </div>
+      </div> 
+      `;
+      $("#table_div").append(html); // insert header
+
+       for (var $p = 1; $p <= 5; $p++) { // pool
+        html = `
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Pool ` + $p + `</h3>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Ordered</th>
+                  <th>Stock</th>
+                  <th>Notes</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->      
+        `;
+        $("#table_div").append(html); // insert table
+
+        // populate latest created table
+        $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+        $("table:last").DataTable({
           autoWidth: false,
           responsive: true,
           searching: false,
           ajax: {
               headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "../api/pools/read.php" + "?tech=" + $x + "&pool=" + $y,
+              url: "../api/pools/read.php" + "?tech=" + data[element].id + "&pool=" + $p,
               dataSrc: ''
           },
           columns: [
@@ -636,9 +123,14 @@ $(function () {
               }  
             }
           ]
-
-      });
+        });
+      
+      } 
     }
-  }
+    },
+    error: function(data) {
+      console.log(data);
+    },
+  });
 });
 </script>
