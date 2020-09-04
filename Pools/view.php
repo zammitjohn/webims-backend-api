@@ -113,7 +113,6 @@ $(document).ready(function() {
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);
 
-
       // populate tech dropdown
       $.ajax({
         type: "GET",
@@ -128,30 +127,30 @@ $(document).ready(function() {
           }
           // append dropdowndata to SKU dropdown
           $("#tech").append(dropdowndata);
-        }
-      });
 
-      // populate form
-      $.ajax({
-        type: "GET",
-        cache: false, // due to aggressive caching on IE 11
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/pools/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
-        dataType: 'json',
-        success: function(data) {
-          $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
-          $('#tech').val(data['tech']);
-          $('#pool').val(data['pool']);
-          $('#name').val(data['name']);
-          $('#description').val(data['description']);
-          $('#qtyOrdered').val(data['qtyOrdered']);
-          $('#qtyStock').val(data['qtyStock']);
-          $('#notes').val(data['notes']);
-        },
-        error: function(result) {
-          console.log(result);
-        },
-      });
+          // populate form
+          $.ajax({
+            type: "GET",
+            cache: false, // due to aggressive caching on IE 11
+            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            url: "../api/pools/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+            dataType: 'json',
+            success: function(data) {
+              $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
+              $('#tech').val(data['tech']);
+              $('#pool').val(data['pool']);
+              $('#name').val(data['name']);
+              $('#description').val(data['description']);
+              $('#qtyOrdered').val(data['qtyOrdered']);
+              $('#qtyStock').val(data['qtyStock']);
+              $('#notes').val(data['notes']);
+            },
+            error: function(result) {
+              console.log(result);
+            },
+          });
+        }
+      });          
 
     }
 

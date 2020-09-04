@@ -66,55 +66,51 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-$(function () {
-  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  $('#table1').DataTable({
-      autoWidth: false,
-      responsive: true,
-      ajax: {
-          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/spares/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
-          dataSrc: ''
-      },
-      columns: [
-          { data: 'name' },
-          { data: 'description' },
-          { data: 'qty' },
-          { data: 'notes' }		
-      ],
-      columnDefs: [ 
-        { targets: [0],
-          "render": function (data, type, row, meta) {
-          return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-          }  
-        }
-      ]
+$(document).ready(function() {
+  // load type
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/spares/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    dataType: 'json',
+    success: function(data) {
 
+      for (var element in data) {
+        $("h3.card-title").html(data[element].name);
+        $("li.breadcrumb-item.active").html(data[element].name);
+      }
+
+      // load table contents
+      $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+      $('#table1').DataTable({
+          autoWidth: false,
+          responsive: true,
+          ajax: {
+              headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+              url: "../api/spares/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
+              dataSrc: ''
+          },
+          columns: [
+              { data: 'name' },
+              { data: 'description' },
+              { data: 'qty' },
+              { data: 'notes' }		
+          ],
+          columnDefs: [ 
+            { targets: [0],
+              "render": function (data, type, row, meta) {
+              return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+              }  
+            }
+          ]
+
+      });
+    },
+    error: function(data) {
+      console.log(data);
+    }
   });
+
 });
-
-//customize page according to type
-var spareType;
-if ((<?php echo $_GET['id']; ?>) == '1') {
-    spareType = "Common";
-  } else if ((<?php echo $_GET['id']; ?>) == '2') {
-    spareType = "Radio Modules";
-  } else if ((<?php echo $_GET['id']; ?>) == '3') {
-    spareType = "NSN Power";
-  } else if ((<?php echo $_GET['id']; ?>) == '4') {
-    spareType = "Cable and Fibres";
-  } else if ((<?php echo $_GET['id']; ?>) == '5') {
-    spareType = "SFPs";
-  } else if ((<?php echo $_GET['id']; ?>) == '6') {
-    spareType = "GSM Equipment";
-  } else if ((<?php echo $_GET['id']; ?>) == '7') {
-    spareType = "UMTS Equipment";
-  } else if ((<?php echo $_GET['id']; ?>) == '8') {
-    spareType = "LTE Equipment";
-  } else {
-    spareType = "undefined";
-}
-$("h3.card-title").html(spareType);
-$("li.breadcrumb-item.active").html(spareType);
-
 </script>

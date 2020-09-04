@@ -28,7 +28,7 @@ class Pools{
         $query = "SELECT 
 			        pools.id, pools_types.id AS tech_id, pools_types.name AS tech_name, pools.pool, pools.name, pools.description, pools.qtyOrdered, pools.qtyStock, pools.notes
                 FROM 
-                    pools JOIN pools_types
+                    " . $this->table_name . " JOIN pools_types
                 ON 
                     pools.tech = pools_types.id
                 WHERE

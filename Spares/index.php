@@ -92,39 +92,14 @@ $(function () {
           }  
         },
 
-        { targets: [1],
-          "render": function (data, type, row, meta) {
-          return '<a href="type.php?id=' + row.type + '">' + typeIdtoText(data) + '</a>';
-          }  
+        { targets: [1], // type column
+            "render": function (data, type, row, meta) {
+            return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + '</a>';
+            }  
         }
       ] 
 
   });
 });
-
-// Function to convert type ids to correspnding type to be shown in table
-function typeIdtoText(id){
-var spareType;
-  if (id == '1') {
-    spareType = "Common";
-  } else if (id == '2') {
-    spareType = "Radio Modules";
-  } else if (id == '3') {
-    spareType = "NSN Power";
-  } else if (id == '4') {
-    spareType = "Cable and Fibres";
-  } else if (id == '5') {
-    spareType = "SFPs";
-  } else if (id == '6') {
-    spareType = "GSM Equipment";
-  } else if (id == '7') {
-    spareType = "UMTS Equipment";
-  } else if (id == '8') {
-    spareType = "LTE Equipment";
-  } else {
-    spareType = "undefined";
-  }
-return spareType;
-}
 
 </script>

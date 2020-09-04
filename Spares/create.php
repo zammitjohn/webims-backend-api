@@ -39,14 +39,6 @@ $content = '
               <div class="form-group">
                 <label for="input2">Type</label>
                 <select id="type" class="form-control">
-                  <option value="1">Common</option>
-                  <option value="2">Radio Modules</option>
-                  <option value="3">NSN Power</option>
-                  <option value="4">Cables and Fibres</option>
-                  <option value="5">SFPs</option>
-                  <option value="6">GSM Equipment</option>
-                  <option value="7">UMTS Equipment</option>
-                  <option value="8">LTE Equipment</option>
                 </select>
               </div>
               
@@ -117,9 +109,31 @@ $(document).ready(function() {
         // populate 'name' field to 'SKU'
         $('#name').val($("#SKU :selected").text());        
       }
+
+      // populate type dropdown
+      $.ajax({
+        type: "GET",
+        cache: false, // due to aggressive caching on IE 11
+        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        url: "../api/spares/types/read.php",
+        dataType: 'json',
+        success: function(data) {
+          var dropdowndata = "";
+          for (var element in data) {
+            dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
+          }
+          // append dropdowndata to SKU dropdown
+          $("#type").append(dropdowndata);
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
+
     }
 
   });
+
 });
 
   

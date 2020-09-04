@@ -122,31 +122,33 @@ $(document).ready(function() {
         // populate 'name' field to 'SKU'
         $('#name').val($("#SKU :selected").text());
       }
+
+      // populate tech dropdown
+      $.ajax({
+        type: "GET",
+        cache: false, // due to aggressive caching on IE 11
+        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        url: "../api/pools/types/read.php",
+        dataType: 'json',
+        success: function(data) {
+          var dropdowndata = "";
+          for (var element in data) {
+            dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
+          }
+          // append dropdowndata to SKU dropdown
+          $("#tech").append(dropdowndata);
+        },
+        error: function(data) {
+          console.log(data);
+        }
+      });
+
+
     },
     error: function(data) {
       console.log(data);
     }
 
-  });
-
-  // populate tech dropdown
-  $.ajax({
-    type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/pools/types/read.php",
-    dataType: 'json',
-    success: function(data) {
-      var dropdowndata = "";
-      for (var element in data) {
-        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
-      }
-      // append dropdowndata to SKU dropdown
-      $("#tech").append(dropdowndata);
-    },
-    error: function(data) {
-      console.log(data);
-    }
   });
 
 });

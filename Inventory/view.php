@@ -185,8 +185,7 @@ $(document).ready(function() {
       // append dropdowndata to SKU dropdown
       $("#type").append(dropdowndata);
 
-
-        // load other fields
+        // populate form
         $.ajax({
           type: "GET",
           cache: false, // due to aggressive caching on IE 11

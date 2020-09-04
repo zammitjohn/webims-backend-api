@@ -40,8 +40,8 @@ if ($stmt != false){
             extract($row);
             $spares_item=array(
                 "id" => $id,
-                "inventoryId" => $inventoryId,
-                "type" => $type,
+                "type_id" => $type_id,
+                "type_name" => $type_name,
                 "name" => $name,
                 "description" => $description,
                 "qty" => $qty,

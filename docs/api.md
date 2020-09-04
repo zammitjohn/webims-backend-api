@@ -36,6 +36,12 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 | **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name      | \$host\$/rims/api/pools/type/read.php |
 
 
+## Spares Types
+
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
+|-----------------|------------|-----------------------|----------------|--------------|----------------------------------------|
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name      | \$host\$/rims/api/spares/type/read.php |
+
 
 ## Pools
 
@@ -72,7 +78,7 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 | **create**      | POST       | Auth-Key Content-Type | inventoryId\*\* type\*\*\* name description qty notes                                     | status message id\* inventoryId\* type\* name\* description\* qty\* notes\* | \$host\$/rims/api/spares/create.php      |
 | **delete**      | POST       | Auth-Key Content-Type | id                                                                                        | status message                                                              | \$host\$/rims/api/spares/delete.php      |
 | **read_single** | GET        | Auth-Key Content-Type | id                                                                                        | id inventoryId type name description qty notes                              | \$host\$/rims/api/spares/read_single.php |
-| **read**        | GET        | Auth-Key Content-Type | type\*\*\*\*\*\*                                                                          | id inventoryId type name description qty notes                              | \$host\$/rims/api/spares/read.php        |
+| **read**        | GET        | Auth-Key Content-Type | type\*\*\*\*\*\*                                                                          | id inventoryId type_id type_name name description qty notes                 | \$host\$/rims/api/spares/read.php        |
 | **update**      | POST       | Auth-Key Content-Type | id inventoryId\*\* tech\*\*\*\* pool\*\*\*\*\* name description qtyOrdered qtyStock notes | status message                                                              | \$host\$/rims/api/spares/update.php      |
 
 

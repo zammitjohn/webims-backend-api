@@ -24,24 +24,28 @@ class Spares{
     
         // different SQL query according to API call
         if (is_null($this->type)){
-             // select all query
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name . " 
-                    ORDER BY
-                        id DESC";
- 
-        } else {
-            // select all query for particular type
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name . "
-                    WHERE
-                        type= '".$this->type."' 
+             // select query
+            $query = "SELECT 
+                        spares.id, spares.name, spares_types.id AS type_id, spares_types.name AS type_name, spares.description, spares.qty, spares.notes
+                    FROM 
+                    " . $this->table_name . " JOIN spares_types
+                    ON 
+                        spares.type = spares_types.id
                     ORDER BY 
-                        id DESC";
+                        `spares`.`id`  DESC";                          
+
+        } else {
+            // select query for particular type
+            $query = "SELECT 
+                        spares.id, spares.name, spares_types.id AS type_id, spares_types.name AS type_name, spares.description, spares.qty, spares.notes
+                    FROM 
+                    " . $this->table_name . " JOIN spares_types
+                    ON 
+                        spares.type = spares_types.id
+                    WHERE
+			            spares_types.id= '".$this->type."'                        
+                    ORDER BY 
+                        `spares`.`id`  DESC";   
         }
 
         // prepare query statement

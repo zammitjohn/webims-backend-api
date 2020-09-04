@@ -182,7 +182,7 @@ to get the desired effect
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+            <ul class="nav nav-treeview" id="spares_tree">
               <li class="nav-item">
                 <a href="/rims/spares/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
@@ -193,54 +193,6 @@ to get the desired effect
                 <a href="/rims/spares" class="nav-link">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>All spares</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=1" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Common</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=2" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Radio Modules</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=3" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>NSN Power</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=4" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Cables and Fibres</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=5" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>SPFs</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=6" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>GSM Equipment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=7" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>UMTS Equipment</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares/type.php?id=8" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>LTE Equipment</p>
                 </a>
               </li>
             </ul>
@@ -392,6 +344,27 @@ $(document).ready(function() {
           }
           // append dropdowndata to SKU dropdown
           $("#pools_tree").append(treeviewdata);
+
+          // load spares side bar tree
+          treeviewdata = "";
+          $.ajax({
+            type: "GET",
+            cache: false, // due to aggressive caching on IE 11
+            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            url: "../api/spares/types/read.php",
+            dataType: 'json',
+            success: function(data) {
+              for (var element in data) {
+                treeviewdata += '<li class="nav-item"> <a href="/rims/spares/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+              }
+              // append dropdowndata to SKU dropdown
+              $("#spares_tree").append(treeviewdata);
+            },
+            error: function(data) {
+              console.log(data);
+            },
+          });
+          
         },
         error: function(data) {
           console.log(data);

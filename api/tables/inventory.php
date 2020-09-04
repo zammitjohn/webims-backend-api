@@ -39,7 +39,7 @@ class Inventory{
                 inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
                 inventory.supplier, inventory.inventoryDate
             FROM 
-                inventory JOIN inventory_types
+                " . $this->table_name . " JOIN inventory_types
             ON 
                 inventory.type = inventory_types.id
             ORDER BY 
@@ -52,7 +52,7 @@ class Inventory{
                 inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
                 inventory.supplier, inventory.inventoryDate
             FROM 
-                inventory JOIN inventory_types
+                " . $this->table_name . " JOIN inventory_types
             ON 
                 inventory.type = inventory_types.id
             WHERE
