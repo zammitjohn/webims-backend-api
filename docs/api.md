@@ -33,7 +33,7 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 | **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                               |
 |-----------------|------------|-----------------------|----------------|--------------|---------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name      | \$host\$/rims/api/pools/type/read.php |
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name qty  | \$host\$/rims/api/pools/type/read.php |
 
 
 ## Spares Types

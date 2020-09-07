@@ -47,11 +47,6 @@ $content = '
                 </select>
                 <label for="input4">Pool: </label>
                 <select id="pool">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
                 </select>
               </div>
 
@@ -95,9 +90,12 @@ include('../master.php');
 ?>
 
 <script>
+$("#tech").change(function () {
+  loadPools($("#tech").val());
+});
 
-// populate inventoryId dropdown
 $(document).ready(function() {
+  // populate inventoryId dropdown
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
@@ -137,6 +135,7 @@ $(document).ready(function() {
           }
           // append dropdowndata to SKU dropdown
           $("#tech").append(dropdowndata);
+          loadPools($("#tech").val());
         },
         error: function(data) {
           console.log(data);
@@ -178,6 +177,31 @@ function AddItem() {
         window.location.href = '/rims/pools';
       }
     }
+  });
+}
+
+function loadPools(id) {
+  $("#pool").empty();
+  // load pool field
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/pools/types/read.php?id=" + id,
+    dataType: 'json',
+    success: function(data) {
+      var dropdowndata = "";
+      for (var element in data) {
+        for (var $p = 1; $p <= data[element].qty; $p++) {
+          dropdowndata += "<option value = '" + $p + "'>" + "#" + $p + "</option>";
+        }
+      }
+      // append dropdowndata to SKU dropdown
+      $("#pool").append(dropdowndata);
+    },
+    error: function(data) {
+      console.log(data);
+    },
   });
 }
 </script>

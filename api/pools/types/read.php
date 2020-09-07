@@ -40,7 +40,8 @@ if ($stmt != false){
             extract($row);
             $inventory_type_property=array(
                 "id" => $id,
-                "name" => $name
+                "name" => $name,
+                "qty" => $qty
             );
             array_push($output_arr["Pools_Types"], $inventory_type_property);
         }

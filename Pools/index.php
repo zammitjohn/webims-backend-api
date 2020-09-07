@@ -58,7 +58,7 @@ $(function () {
       `;
       $("#table_div").append(html); // insert header
 
-       for (var $p = 1; $p <= 5; $p++) { // pool
+       for (var $p = 1; $p <= data[element].qty; $p++) { // pool
         html = `
         <div class="card">
           <div class="card-header">

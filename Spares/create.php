@@ -82,9 +82,8 @@ include('../master.php');
 ?>
 
 <script>
-
-// populate inventoryId dropdown
 $(document).ready(function() {
+  // populate inventoryId dropdown
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11

@@ -47,11 +47,6 @@ $content = '
                 </select>
                 <label for="input4">Pool: </label>
                 <select id="pool">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
                 </select>
               </div>
 
@@ -96,9 +91,8 @@ include('../master.php');
 ?>
 
 <script>
-
-// populate inventoryId dropdown
 $(document).ready(function() {
+  // populate inventoryId dropdown
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
@@ -138,7 +132,33 @@ $(document).ready(function() {
             success: function(data) {
               $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
               $('#tech').val(data['tech']);
-              $('#pool').val(data['pool']);
+
+
+              $.ajax({
+                type: "GET",
+                cache: false, // due to aggressive caching on IE 11
+                headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+                url: "../api/pools/types/read.php?id=" + data['tech'],
+                dataType: 'json',
+                success: function(list) {
+                  var dropdowndata = "";
+                  for (var element in list) {
+                    for (var $p = 1; $p <= list[element].qty; $p++) {
+                      dropdowndata += "<option value = '" + $p + "'>" + "#" + $p + "</option>";
+                    }
+                  }
+                  
+                  $("#tech").prop('disabled', true); // disable tech field
+                  $("#pool").append(dropdowndata); // append dropdowndata to pool dropdown
+                  $('#pool').val(data['pool']); // select correct pool
+                
+                },
+                error: function(data) {
+                  console.log(data);
+                },
+              });
+
+              
               $('#name').val(data['name']);
               $('#description').val(data['description']);
               $('#qtyOrdered').val(data['qtyOrdered']);
@@ -211,5 +231,4 @@ function Remove() {
     });
   }
 }
-
 </script>
