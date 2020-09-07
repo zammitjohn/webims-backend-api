@@ -18,40 +18,36 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 | **create**      | POST       | Auth-Key Content-Type | SKU type description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id\* SKU\* type\* description\* qty\* qtyIn\* qtyOut\* supplier\* isGSM\* isUMTS\* isLTE\* ancillary\* toCheck\* notes\* | \$host\$/rims/api/inventory/create.php      |
 | **delete**      | POST       | Auth-Key Content-Type | id                                                                                        | status message                                                                                                                          | \$host\$/rims/api/inventory/delete.php      |
 | **read_single** | GET        | Auth-Key Content-Type | id                                                                                        | id SKU type description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                   | \$host\$/rims/api/inventory/read_single.php |
-| **read**        | GET        | Auth-Key Content-Type | type\*\*\*\*\*\*                                                                          | id SKU type_id type_name type_altname description qty qtyIn qtyOut supplier inventoryDate                                               | \$host\$/rims/api/inventory/read.php        |
+| **read**        | GET        | Auth-Key Content-Type | type\*\*\*                                                                                | id SKU type_id type_name type_altname description qty qtyIn qtyOut supplier inventoryDate                                               | \$host\$/rims/api/inventory/read.php        |
 | **update**      | POST       | Auth-Key Content-Type | id description qty isGSM isUMTS isLTE ancillary toCheck notes                             | status message                                                                                                                          | \$host\$/rims/api/inventory/update.php      |
-
 
 ## Inventory Types
 
 | **Action**      | **Method** | **Headers**           | **Parameters** | **Response**     | **URL**                                   |
 |-----------------|------------|-----------------------|----------------|------------------|-------------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name alt_name | \$host\$/rims/api/inventory/type/read.php |
-
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name alt_name | \$host\$/rims/api/inventory/type/read.php |
 
 ## Pools Types
 
 | **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                               |
 |-----------------|------------|-----------------------|----------------|--------------|---------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name qty  | \$host\$/rims/api/pools/type/read.php |
-
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name qty  | \$host\$/rims/api/pools/type/read.php |
 
 ## Spares Types
 
 | **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
 |-----------------|------------|-----------------------|----------------|--------------|----------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*\*\*\* | id name      | \$host\$/rims/api/spares/type/read.php |
-
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name      | \$host\$/rims/api/spares/type/read.php |
 
 ## Pools
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                                          | **Response**                                                                                         | **URL**                                 |
-|-----------------|------------|-----------------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------|
-| **create**      | POST       | Auth-Key Content-Type | inventoryId\*\* tech pool name description qtyOrdered qtyStock notes    | status message id\* inventoryId\* tech\* pool\* name\* description\* qtyOrdered\* qtyStock\* notes\* | \$host\$/rims/api/pools/create.php      |
-| **delete**      | POST       | Auth-Key Content-Type | id                                                                      | status message                                                                                       | \$host\$/rims/api/pools/delete.php      |
-| **read_single** | GET        | Auth-Key Content-Type | id                                                                      | id inventoryId tech pool name description qtyOrdered qtyStock notes                                  | \$host\$/rims/api/pools/read_single.php |
-| **read**        | GET        | Auth-Key Content-Type | tech pool                                                               | id tech_id tech_name pool name description qtyOrdered qtyStock notes                                 | \$host\$/rims/api/pools/read.php        |
-| **update**      | POST       | Auth-Key Content-Type | id inventoryId\*\* tech pool name description qtyOrdered qtyStock notes | status message                                                                                       | \$host\$/rims/api/pools/update.php      |
+| **Action**      | **Method** | **Headers**           | **Parameters**                                                              | **Response**                                                                                         | **URL**                                 |
+|-----------------|------------|-----------------------|-----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|-----------------------------------------|
+| **create**      | POST       | Auth-Key Content-Type | inventoryId\*\* tech\*\* pool name description qtyOrdered qtyStock notes    | status message id\* inventoryId\* tech\* pool\* name\* description\* qtyOrdered\* qtyStock\* notes\* | \$host\$/rims/api/pools/create.php      |
+| **delete**      | POST       | Auth-Key Content-Type | id                                                                          | status message                                                                                       | \$host\$/rims/api/pools/delete.php      |
+| **read_single** | GET        | Auth-Key Content-Type | id                                                                          | id inventoryId tech pool name description qtyOrdered qtyStock notes                                  | \$host\$/rims/api/pools/read_single.php |
+| **read**        | GET        | Auth-Key Content-Type | tech\*\* pool                                                               | id tech_id tech_name pool name description qtyOrdered qtyStock notes                                 | \$host\$/rims/api/pools/read.php        |
+| **update**      | POST       | Auth-Key Content-Type | id inventoryId\*\* tech\*\* pool name description qtyOrdered qtyStock notes | status message                                                                                       | \$host\$/rims/api/pools/update.php      |
 
 ## Registry
 
@@ -73,26 +69,17 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Spares
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                                                            | **Response**                                                                | **URL**                                  |
-|-----------------|------------|-----------------------|-------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|------------------------------------------|
-| **create**      | POST       | Auth-Key Content-Type | inventoryId\*\* type\*\*\* name description qty notes                                     | status message id\* inventoryId\* type\* name\* description\* qty\* notes\* | \$host\$/rims/api/spares/create.php      |
-| **delete**      | POST       | Auth-Key Content-Type | id                                                                                        | status message                                                              | \$host\$/rims/api/spares/delete.php      |
-| **read_single** | GET        | Auth-Key Content-Type | id                                                                                        | id inventoryId type name description qty notes                              | \$host\$/rims/api/spares/read_single.php |
-| **read**        | GET        | Auth-Key Content-Type | type\*\*\*\*\*\*                                                                          | id inventoryId type_id type_name name description qty notes                 | \$host\$/rims/api/spares/read.php        |
-| **update**      | POST       | Auth-Key Content-Type | id inventoryId\*\* tech\*\*\*\* pool\*\*\*\*\* name description qtyOrdered qtyStock notes | status message                                                              | \$host\$/rims/api/spares/update.php      |
+| **Action**      | **Method** | **Headers**           | **Parameters**                                         | **Response**                                                                | **URL**                                  |
+|-----------------|------------|-----------------------|--------------------------------------------------------|-----------------------------------------------------------------------------|------------------------------------------|
+| **create**      | POST       | Auth-Key Content-Type | inventoryId\*\* type\*\* name description qty notes    | status message id\* inventoryId\* type\* name\* description\* qty\* notes\* | \$host\$/rims/api/spares/create.php      |
+| **delete**      | POST       | Auth-Key Content-Type | id                                                     | status message                                                              | \$host\$/rims/api/spares/delete.php      |
+| **read_single** | GET        | Auth-Key Content-Type | id                                                     | id inventoryId type name description qty notes                              | \$host\$/rims/api/spares/read_single.php |
+| **read**        | GET        | Auth-Key Content-Type | type\*\*                                               | id inventoryId type_id type_name name description qty notes                 | \$host\$/rims/api/spares/read.php        |
+| **update**      | POST       | Auth-Key Content-Type | id inventoryId\*\* type\*\* name description qty notes | status message                                                              | \$host\$/rims/api/spares/update.php      |
 
 
 \* included in response only if query is successful.
 
 \*\* referenced id.
 
-\*\*\* accepted values: 1,2,3,4,5,6,7,8: Common, Radio Modules, NSN Power,
-Cables and Fibres, SFPs, GSM Equipment, UMTS Equipment, LTE Equipment
-respectively.
-
-\*\*\*\* accepted values: 1,2,3; GSM, UMTS and LTE respectively.
-
-\*\*\*\*\* accepted values: 1,2,3,4,5: Pool 1, Pool 2, ... , Pool 5
-respectively.
-
-\*\*\*\*\*\* optional parameter.
+\*\*\* optional parameter.
