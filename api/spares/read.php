@@ -1,8 +1,8 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../tables/spares.php';
-include_once '../tables/users.php';
+include_once '../objects/spares.php';
+include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();

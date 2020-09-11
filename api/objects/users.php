@@ -10,8 +10,12 @@ class Users{
     public $username;
     public $firstname;
     public $lastname;
-    public $created;
     public $sessionId;
+    // actions
+    public $action_isCreate;
+    public $action_isUpdate;
+    public $action_isDelete;
+    public $action_isImport;
 
     // constructor with $db as database connection
     public function __construct($db){
@@ -125,14 +129,55 @@ class Users{
     }
 
     function validKey(){
-        $query = "SELECT *
-            FROM
-                " . $this->table_name . " 
-            WHERE
-                sessionId='".$this->sessionId."'
-            AND 
-                lastLogin >= now() - INTERVAL 1 DAY";
 
+        if(isset($this->action_isCreate)){
+
+            $query = "SELECT *
+                    FROM
+                        " . $this->table_name . " 
+                    WHERE
+                        sessionId='".$this->sessionId."'
+                    AND 
+                        canCreate='".$this->action_isCreate."'";
+
+        }elseif(isset($this->action_isUpdate)){
+
+            $query = "SELECT *
+                    FROM
+                        " . $this->table_name . " 
+                    WHERE
+                        sessionId='".$this->sessionId."'
+                    AND 
+                        canUpdate='".$this->action_isUpdate."'";
+
+        }elseif(isset($this->action_isDelete)){
+
+            $query = "SELECT *
+                    FROM
+                        " . $this->table_name . " 
+                    WHERE
+                        sessionId='".$this->sessionId."'
+                    AND 
+                        canDelete='".$this->action_isDelete."'";
+
+        }elseif(isset($this->action_isImport)){
+
+            $query = "SELECT *
+                    FROM
+                        " . $this->table_name . " 
+                    WHERE
+                        sessionId='".$this->sessionId."'
+                    AND 
+                        canImport='".$this->action_isImport."'";          
+
+        }else{
+            $query = "SELECT *
+                    FROM
+                        " . $this->table_name . " 
+                    WHERE
+                        sessionId='".$this->sessionId."'";
+        }
+    
         // prepare query statement
         $stmt = $this->conn->prepare($query);
         // execute query

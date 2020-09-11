@@ -23,21 +23,21 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Inventory Types
 
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response**     | **URL**                                   |
-|-----------------|------------|-----------------------|----------------|------------------|-------------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name alt_name | \$host\$/rims/api/inventory/type/read.php |
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response**     | **URL**                                    |
+|-----------------|------------|-----------------------|----------------|------------------|--------------------------------------------|
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name alt_name | \$host\$/rims/api/inventory/types/read.php |
 
 ## Pools Types
 
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                               |
-|-----------------|------------|-----------------------|----------------|--------------|---------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name qty  | \$host\$/rims/api/pools/type/read.php |
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
+|-----------------|------------|-----------------------|----------------|--------------|----------------------------------------|
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name qty  | \$host\$/rims/api/pools/types/read.php |
 
 ## Spares Types
 
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
-|-----------------|------------|-----------------------|----------------|--------------|----------------------------------------|
-| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name      | \$host\$/rims/api/spares/type/read.php |
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                 |
+|-----------------|------------|-----------------------|----------------|--------------|-----------------------------------------|
+| **read**        | GET        | Auth-Key Content-Type | id\*\*\*       | id name      | \$host\$/rims/api/spares/types/read.php |
 
 ## Pools
 

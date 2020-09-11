@@ -96,7 +96,7 @@ $(function () {
         </div>
         <!-- /.card -->      
         `;
-        $("#table_div").append(html); // insert table
+        $("#table_div").append(html); // insert tables
 
         // populate latest created table
         $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them

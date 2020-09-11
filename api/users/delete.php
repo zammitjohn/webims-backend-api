@@ -2,7 +2,7 @@
  
 // include database and object files
 include_once '../config/database.php';
-include_once '../tables/users.php';
+include_once '../objects/users.php';
 
 // get database connection
 $database = new Database();
@@ -15,7 +15,10 @@ $user = new users($db);
 $user->id = $_POST['id'];
 
 // API AUTH Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    $user->action_isDelete = true;
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+}
 if (!$user->validKey()){
     header("HTTP/1.1 401 Unauthorized");
     die();

@@ -1,8 +1,8 @@
 <?php
 // include database and object files
 include_once '../api/config/database.php';
-include_once '../api/tables/inventory.php';
-include_once '../api/tables/users.php';
+include_once '../api/objects/inventory.php';
+include_once '../api/objects/users.php';
 
 // get database connection
 $database = new Database();
@@ -16,7 +16,10 @@ $modifiedItemIDs = []; // to keep track of modified inventory item IDs
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object
-if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
+    $user->action_isImport = true;
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+}
 if (!$user->validKey()){
     header("HTTP/1.1 401 Unauthorized");
     die();
