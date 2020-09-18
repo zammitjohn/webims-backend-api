@@ -26,7 +26,7 @@ $content = '
         <div class="card-header">
           <h3 class="card-title">All items</h3>
           <div class="card-tools">
-            <a href="#" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-import">
+            <a href="#" class="btn btn-tool btn-sm button_action_import" data-toggle="modal" data-target="#modal-import">
               <i class="fas fa-upload"></i>
             </a>
           </div>          

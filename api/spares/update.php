@@ -22,11 +22,11 @@ $item->notes = $_POST['notes'];
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object
-iif (isset($_SERVER['HTTP_AUTH_KEY'])){
+if (isset($_SERVER['HTTP_AUTH_KEY'])){
     $user->action_isUpdate = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
-if (!$user->validKey()){
+if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }

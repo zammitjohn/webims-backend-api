@@ -116,8 +116,8 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary" onClick="UpdateItem()" value="Update"></input>
-              <input type="Button" class="btn btn-danger" onClick="Remove()" value="Delete"></input>
+              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
+              <input type="Button" class="btn btn-danger button_action_delete" onClick="Remove()" value="Delete"></input>
               <div class="btn-group">
               <button type="button" class="btn btn-default">Export as...</button>
                 <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">

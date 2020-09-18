@@ -111,11 +111,11 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary" onClick="UpdateItem()" value="Update"></input>
-              <input type="Button" class="btn btn-danger" onClick="Remove()" value="Delete"></input>
+              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
+              <input type="Button" class="btn btn-danger button_action_delete" onClick="Remove()" value="Delete"></input>
               <div class="btn-group">
-                <button type="button" class="btn btn-default">Add to...</button>
-                  <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                <button type="button" class="btn btn-default button_action_create">Add to...</button>
+                  <button type="button" class="btn btn-default dropdown-toggle dropdown-icon button_action_create" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                     <div class="dropdown-menu" role="menu">
                       <a class="dropdown-item" onClick=addTo(1);>Spares</a>
@@ -151,7 +151,7 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <input type="Button" class="btn btn-primary" onClick="addTo(4)" value="Add"></input>
+            <input type="Button" class="btn btn-primary button_action_create" onClick="addTo(4)" value="Add"></input>
           </div>
         </div>
         <!-- /.card -->

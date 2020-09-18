@@ -73,7 +73,7 @@ $content = '
             <!-- /.card-body -->
             
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary" onClick="AddItem()" value="Submit"></input>
+              <input type="Button" class="btn btn-primary button_action_create" onClick="AddItem()" value="Submit"></input>
             </div>
           </form>
         </div>

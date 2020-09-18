@@ -10,7 +10,7 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../pools">Buffer Pools</a></li>
-          <li class="breadcrumb-item active">pooltech.placeholder.text</li>
+          <li class="breadcrumb-item active"></li>
         </ol>
       </div>
     </div>

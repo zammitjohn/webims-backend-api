@@ -83,6 +83,7 @@ $(document).ready(function () {
     submitHandler: function () {
       $.ajax({
         type: "POST",
+        cache: false, // due to aggressive caching on IE 11
         url: 'api/users/login.php',
         dataType: 'json',
         data: {
@@ -94,9 +95,7 @@ $(document).ready(function () {
         },
         success: function(data) {
           if (data['status'] == true) {
-            localStorage.setItem('id', data['id']);
-            localStorage.setItem('firstname', data['firstname']);
-            localStorage.setItem('lastname', data['lastname']);
+            localStorage.setItem('userid', data['id']);
             localStorage.setItem('sessionId', data['sessionId']);
             window.location.href = 'index.php';
           } else {

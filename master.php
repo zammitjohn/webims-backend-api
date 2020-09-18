@@ -67,7 +67,7 @@ to get the desired effect
         <i class="far fa-user"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-item dropdown-header">uname.placeholder.text</span>
+        <span class="dropdown-item dropdown-header"></span>
         <div class="dropdown-divider"></div>
         <a onclick="clearSession()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
           <i class="fas fa-sign-out-alt mr-2"></i> Log out
@@ -99,7 +99,7 @@ to get the desired effect
           <img src="../dist/img/generic-user.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">uname.placeholder.text</a>
+          <a href="#" class="d-block"></a>
         </div>
       </div>
 
@@ -280,37 +280,11 @@ to get the desired effect
 <!-- User Feedback Script -->
 <script>
 function userFeedback() {
-  url = "mailto:?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('id')) + "%0D%0ADescription%3A%20"
+  url = "mailto:?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('userid')) + "%0D%0ADescription%3A%20"
   window.open(url);
 }
 </script>
 
-<!-- Populate uname.placeholder.text fields from localstorage -->
-<script>
-var name = (localStorage.getItem('firstname') + " " + localStorage.getItem('lastname'));
-$("a.d-block").html(name);
-$("span.dropdown-item.dropdown-header").html(name);
-</script>
-
-<!-- Validate sessionId -->
-<script>
-$.ajax({
-  type: "GET",
-  cache: false, // due to aggressive caching on IE 11
-  headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-  url: '../api/users/validate_session.php',
-  dataType: 'json',
-  success: function(data) {
-    if (data['valid'] == false) {
-      //alert(data.message);
-      clearSession();
-    }
-  }
-});
-</script>
-
-
-<!-- Load inventory nav treeview  -->
 <script>
 $(document).ready(function() {
   // load side bar tree view
@@ -377,16 +351,49 @@ $(document).ready(function() {
     },
   });
 
+
+  // Validate session characteristics
+  $.ajax({
+  type: "GET",
+  cache: false, // due to aggressive caching on IE 11
+  headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+  url: '../api/users/validate_session.php',
+  dataType: 'json',
+  success: function(data) {
+    if (data['status'] == false) {
+      //alert(data.message);
+      clearSession();
+    } else {
+      // populate name text fields
+      var name = (data['firstname'] + " " + data['lastname']);
+      $("a.d-block").html(name);
+      $("span.dropdown-item.dropdown-header").html(name);
+
+      // ...and disable/hide buttons accordingly
+      if (data['canUpdate'] == false) {
+        $(".button_action_update").prop("disabled",true);
+      }
+      if (data['canCreate'] == false) {
+        $(".button_action_create").prop("disabled",true);
+      }
+      if (data['canImport'] == false) {
+        $(".button_action_import").hide();
+      }
+      if (data['canDelete'] == false) {
+        $(".button_action_delete").prop("disabled",true);
+      }
+
+    }
+  }
+  });
+
 });
 </script>
-
 
 <!-- Remove session info from localstorage -->
 <script>
 function clearSession(){
-  localStorage.removeItem('id');
-  localStorage.removeItem('firstname');
-  localStorage.removeItem('lastname');
+  localStorage.removeItem('userid');
   localStorage.removeItem('sessionId');
   window.location.href = '../login.html';
 }
@@ -403,7 +410,7 @@ function deleteAccount(){
       url: '../api/users/delete.php',
       dataType: 'json',
       data: {
-        id: (localStorage.getItem('id'))
+        id: (localStorage.getItem('userid'))
       },
       error: function(data) {
         alert(data.responseText);

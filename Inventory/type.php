@@ -10,7 +10,7 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
-          <li class="breadcrumb-item active">inventorytype.placeholder.text</li>
+          <li class="breadcrumb-item active"></li>
         </ol>
       </div>
     </div>
@@ -24,7 +24,7 @@ $content = '
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">inventorytype.placeholder.text</h3>
+          <h3 class="card-title"></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">

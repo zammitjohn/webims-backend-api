@@ -20,7 +20,7 @@ if (isset($_SERVER['HTTP_AUTH_KEY'])){
     $user->action_isImport = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
-if (!$user->validKey()){
+if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }

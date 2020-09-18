@@ -47,7 +47,7 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <input type="Button" class="btn btn-primary" onClick="Register()" value="Submit"></input>
+            <input type="Button" class="btn btn-primary button_action_create" onClick="Register()" value="Submit"></input>
           </div>
    
         </div>

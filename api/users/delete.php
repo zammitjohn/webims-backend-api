@@ -16,10 +16,10 @@ $user->id = $_POST['id'];
 
 // API AUTH Key check
 if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    $user->action_isDelete = true;
+    //$user->action_isDelete = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
-if (!$user->validKey()){
+if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }

@@ -63,6 +63,27 @@ class Users{
     
         return $stmt;
     }
+
+    // validate session parameters
+    function validateSession(){
+    
+        // select query
+        $query = "SELECT 
+                    `firstname`, `lastname`, `canUpdate`, `canCreate`, `canImport`, `canDelete`
+                FROM
+                    " . $this->table_name . " 
+                WHERE
+                    sessionId='".$this->sessionId."'
+                AND 
+                    lastLogin >= now() - INTERVAL 1 DAY";
+    
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // execute query
+        $stmt->execute();
+        return $stmt;
+    }
     
     // login user
     function login(){
@@ -128,10 +149,9 @@ class Users{
         $stmt->execute();                    
     }
 
-    function validKey(){
-
-        if(isset($this->action_isCreate)){
-
+    // action check
+    function validAction(){
+        if (isset($this->action_isCreate)) {
             $query = "SELECT *
                     FROM
                         " . $this->table_name . " 
@@ -140,8 +160,7 @@ class Users{
                     AND 
                         canCreate='".$this->action_isCreate."'";
 
-        }elseif(isset($this->action_isUpdate)){
-
+        } elseif (isset($this->action_isUpdate)) {
             $query = "SELECT *
                     FROM
                         " . $this->table_name . " 
@@ -150,8 +169,7 @@ class Users{
                     AND 
                         canUpdate='".$this->action_isUpdate."'";
 
-        }elseif(isset($this->action_isDelete)){
-
+        } elseif (isset($this->action_isDelete)) {
             $query = "SELECT *
                     FROM
                         " . $this->table_name . " 
@@ -160,8 +178,7 @@ class Users{
                     AND 
                         canDelete='".$this->action_isDelete."'";
 
-        }elseif(isset($this->action_isImport)){
-
+        } elseif (isset($this->action_isImport)) {
             $query = "SELECT *
                     FROM
                         " . $this->table_name . " 
@@ -170,7 +187,7 @@ class Users{
                     AND 
                         canImport='".$this->action_isImport."'";          
 
-        }else{
+        } else { //read action, no check required
             $query = "SELECT *
                     FROM
                         " . $this->table_name . " 

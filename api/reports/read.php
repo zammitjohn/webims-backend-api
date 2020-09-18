@@ -14,7 +14,7 @@ $item = new Reports($db);
 // API AUTH Key check
 $user = new Users($db); // prepare users object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
-if (!$user->validKey()){
+if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }
