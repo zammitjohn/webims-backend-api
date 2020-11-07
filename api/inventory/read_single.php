@@ -34,6 +34,7 @@ if ($stmt != false){
             "id" => $row['id'],
             "SKU" => $row['SKU'],
             "type" => $row['type'],
+            "category" => $row['category'],
             "description" => $row['description'],
             "qty" => $row['qty'],
             "qtyIn" => $row['qtyIn'],

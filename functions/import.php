@@ -95,6 +95,7 @@ if($_FILES["file"]["size"] > 0) {
             // prepare inventory item object
             $item = new Inventory($db);
             $item->SKU = $data_SKU;
+            $item->category = 1;
             $item->type = $data_type;
             $item->description = $data_description;
             $item->qty = $data_qty;

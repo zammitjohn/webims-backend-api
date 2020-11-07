@@ -15,6 +15,7 @@ $item = new Inventory($db);
 // set item property values
 $item->SKU = $_POST['SKU'];
 $item->type = $_POST['type'];
+$item->category = $_POST['category'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->qtyIn = $_POST['qtyIn'];
@@ -46,6 +47,7 @@ if($item->create(false)){
         "id" => $item->id,
         "SKU" => $item->SKU,
         "type" => $item->type,
+        "category" => $item->category,
         "description" => $item->description,
 		"qty" => $item->qty,
         "qtyIn" => $item->qtyIn,

@@ -76,7 +76,7 @@ $(document).ready(function() {
     success: function(data) {
       var dropdowndata = "";
       for (var element in data) {
-        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].SKU + "</option>";
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].SKU + " (" + data[element].category_name + ") " + "</option>";
       }
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);

@@ -35,44 +35,47 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input2">Type</label>
-                <select id="type" class="form-control">
+                <label for="input2">Category: </label>
+                <select id="category">
                 </select>
-              </div>              
+                <label for="input3">Type: </label>
+                <select id="type">
+                </select>
+              </div>            
 
               <div class="form-group">
-                <label for="input3">Description</label>
+                <label for="input4">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
 
               <div class="form-group">
-                <label for="input4">Supplier</label>
+                <label for="input5">Supplier</label>
                 <input type="text" maxlength="255" class="form-control" id="supplier" placeholder="Enter supplier">
               </div>              
 
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="input5">Quantity</label>
+                    <label for="input6">Quantity</label>
                     <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <label for="input6">Provisional In</label>
+                    <label for="input7">Provisional In</label>
                     <input type="number" min="0" max="9999" class="form-control" id="qtyIn" placeholder="Enter quantity">
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                  <label for="input7">Provisional Out</label>
+                  <label for="input8">Provisional Out</label>
                   <input type="number" min="0" max="9999" class="form-control" id="qtyOut" placeholder="Enter quantity">
                   </div>
                 </div>
               </div>
    
               <div class="form-group">
-                <label for="input8">Technology</label>
+                <label for="input9">Technology</label>
                 <div class="container-fluid">
                     <label class="form-check-label">
                       <input type="checkbox" id="isGSM">
@@ -94,7 +97,7 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input9">Miscellaneous</label>
+                <label for="input10">Miscellaneous</label>
                 <div class="container-fluid">
                   <label class="form-check-label">
                     <input type="checkbox" id="ancillary">
@@ -130,13 +133,17 @@ include('../master.php');
 ?>
 
 <script>
+$("#category").change(function () {
+  loadTypes($("#category").val());
+});
+
 $(document).ready(function() {
   // load type field
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/types/read.php",
+    url: "../api/inventory/categories/read.php",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -144,7 +151,8 @@ $(document).ready(function() {
         dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
       }
       // append dropdowndata to SKU dropdown
-      $("#type").append(dropdowndata);
+      $("#category").append(dropdowndata);
+      loadTypes($("#category").val());
     },
     error: function(data) {
       console.log(data);
@@ -182,6 +190,7 @@ function AddItem() {
     data: {
       SKU: $("#SKU").val(),
       type: $("#type").val(),
+      category: $("#category").val(),
       description: $("#description").val(),
       qty: $("#qty").val(),
       qtyIn: $("#qtyIn").val(),
@@ -203,6 +212,29 @@ function AddItem() {
         window.location.href = '/rims/inventory';
       }
     }
+  });
+}
+
+function loadTypes(category) {
+  $("#type").empty();
+  // load type field
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/inventory/types/read.php?category=" + category,
+    dataType: 'json',
+    success: function(data) {
+      var dropdowndata = "";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
+      }
+      // append dropdowndata to SKU dropdown
+      $("#type").append(dropdowndata);
+    },
+    error: function(data) {
+      console.log(data);
+    },
   });
 }
 </script>

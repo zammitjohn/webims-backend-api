@@ -37,6 +37,7 @@ $content = '
             <thead>
             <tr>          
               <th>SKU</th>
+              <th>Category</th>
               <th>Type</th>
               <th>Description</th>
               <th>Quantity</th>
@@ -51,6 +52,7 @@ $content = '
             <tfoot>
             <tr>
               <th>SKU</th>
+              <th>Category</th>
               <th>Type</th>
               <th>Description</th>
               <th>Quantity</th>
@@ -126,6 +128,7 @@ $(function () {
       },
       columns: [
           { data: 'SKU' },
+          { data: 'category' },  
           { data: 'type' },        
           { data: 'description' },
           { data: 'qty' },
@@ -142,7 +145,13 @@ $(function () {
           }  
         },
 
-        { targets: [1], // type column
+        { targets: [1], // category column
+            "render": function (data, type, row, meta) {
+            return '<a href="category.php?id=' + row.category_id + '">' + row.category_name + '</a>';
+            }  
+        },
+
+        { targets: [2], // type column
             "render": function (data, type, row, meta) {
             return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
             }  

@@ -245,7 +245,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.5.6
+      <b>Version</b> 1.6
     </div>
   </footer>
   
@@ -295,60 +295,69 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/types/read.php",
+    url: "../api/inventory/categories/read.php",
     dataType: 'json',
     success: function(data) {
       for (var element in data) {
-        treeviewdata += '<li class="nav-item"> <a href="/rims/inventory/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+        treeviewdata += '<li class="nav-item has-treeview" id="inventory_category_type_tree_' + data[element].id + '"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' + data[element].name + '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/category.php?id=' + data[element].id + '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul></li>';
       }
       // append dropdowndata to SKU dropdown
       $("#inventory_tree").append(treeviewdata);
 
-      // load pools side bar tree
+
       treeviewdata = "";
       $.ajax({
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/pools/types/read.php",
+        url: "../api/inventory/types/read.php",
         dataType: 'json',
         success: function(data) {
           for (var element in data) {
-            treeviewdata += '<li class="nav-item"> <a href="/rims/pools/tech.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+            treeviewdata = '<ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li></ul>';
+            $("#inventory_category_type_tree_" + data[element].type_category).append(treeviewdata);
           }
-          // append dropdowndata to SKU dropdown
-          $("#pools_tree").append(treeviewdata);
+ 
 
-          // load spares side bar tree
-          treeviewdata = "";
-          $.ajax({
-            type: "GET",
-            cache: false, // due to aggressive caching on IE 11
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/spares/types/read.php",
-            dataType: 'json',
-            success: function(data) {
-              for (var element in data) {
-                treeviewdata += '<li class="nav-item"> <a href="/rims/spares/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+        // load pools side bar tree
+        treeviewdata = "";
+        $.ajax({
+          type: "GET",
+          cache: false, // due to aggressive caching on IE 11
+          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+          url: "../api/pools/types/read.php",
+          dataType: 'json',
+          success: function(data) {
+            for (var element in data) {
+              treeviewdata += '<li class="nav-item"> <a href="/rims/pools/tech.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+            }
+            // append dropdowndata to SKU dropdown
+            $("#pools_tree").append(treeviewdata);
+
+            // load spares side bar tree
+            treeviewdata = "";
+            $.ajax({
+              type: "GET",
+              cache: false, // due to aggressive caching on IE 11
+              headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+              url: "../api/spares/types/read.php",
+              dataType: 'json',
+              success: function(data) {
+                for (var element in data) {
+                  treeviewdata += '<li class="nav-item"> <a href="/rims/spares/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+                }
+                // append dropdowndata to SKU dropdown
+                $("#spares_tree").append(treeviewdata);
               }
-              // append dropdowndata to SKU dropdown
-              $("#spares_tree").append(treeviewdata);
-            },
-            error: function(data) {
-              console.log(data);
-            },
-          });
-          
-        },
-        error: function(data) {
-          console.log(data);
-        },
-      });
-
+            });
+          }
+        });
+      }
+    });
     },
     error: function(data) {
       console.log(data);
-    },
+    }
   });
 
 

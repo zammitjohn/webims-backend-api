@@ -15,6 +15,9 @@ $item = new Inventory($db);
 if (isset($_GET['type'])) {
     $item->type = $_GET['type'];
 }
+if (isset($_GET['category'])) {
+    $item->category = $_GET['category'];
+}
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object
@@ -44,6 +47,8 @@ if ($stmt != false){
                 "type_id" => $type_id,
                 "type_name" => $type_name,
                 "type_altname" => $type_altname,
+                "category_id" => $category_id,
+                "category_name" => $category_name,
                 "description" => $description,
                 "qty" => $qty,
                 "qtyIn" => $qtyIn,

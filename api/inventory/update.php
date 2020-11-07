@@ -15,6 +15,7 @@ $item = new Inventory($db);
 $item->id = $_POST['id'];
 $item->SKU = $_POST['SKU'];
 $item->type = $_POST['type'];
+$item->category = $_POST['category'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->qtyIn = $_POST['qtyIn'];

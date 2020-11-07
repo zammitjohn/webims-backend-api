@@ -7,6 +7,7 @@ class Inventory_Types{
  
     // object properties
     public $id;
+    public $category;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -15,23 +16,31 @@ class Inventory_Types{
 
     // read spares
     function read(){
-    
+        
+        // select query
+        $query = "SELECT 
+            inventory_types.id, inventory_types.type_category, inventory_categories.name AS category_name, 
+            inventory_types.name, inventory_types.alt_name
+            
+            FROM
+                " . $this->table_name . "
+
+                JOIN
+                    inventory_categories
+                ON
+                    inventory_types.type_category = inventory_categories.id";
+
         // different SQL query according to API call
-        if (is_null($this->id)){
-             // select all query
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name;
- 
-        } else {
-            // select all query for particular type
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name . "
+        if ($this->id) {
+            // select query for particular type
+            $query .= "
                     WHERE
-                        id= '".$this->id."'";
+                        inventory_types.id = '".$this->id."'";
+        } elseif ($this->category) {
+            // select query for particular category
+            $query .= "
+                    WHERE
+                        inventory_types.type_category= '".$this->category."'";
         }
 
         // prepare query statement

@@ -34,44 +34,47 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input2">Type</label>
-                <select id="type" class="form-control">
+                <label for="input2">Category: </label>
+                <select id="category">
                 </select>
-              </div>              
+                <label for="input3">Type: </label>
+                <select id="type">
+                </select>
+              </div>           
 
               <div class="form-group">
-                <label for="input3">Description</label>
+                <label for="input4">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
 
               <div class="form-group">
-                <label for="input4">Supplier</label>
+                <label for="input5">Supplier</label>
                 <input type="text" maxlength="255" class="form-control" id="supplier" placeholder="Enter supplier">
               </div>              
 
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="input5">Quantity</label>
+                    <label for="input6">Quantity</label>
                     <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <label for="input6">Provisional In</label>
+                    <label for="input7">Provisional In</label>
                     <input type="number" min="0" max="9999" class="form-control" id="qtyIn" placeholder="Enter quantity">
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                  <label for="input7">Provisional Out</label>
+                  <label for="input8">Provisional Out</label>
                   <input type="number" min="0" max="9999" class="form-control" id="qtyOut" placeholder="Enter quantity">
                   </div>
                 </div>
               </div>
    
               <div class="form-group">
-                <label for="input8">Technology</label>
+                <label for="input9">Technology</label>
                 <div class="container-fluid">
                     <label class="form-check-label">
                       <input type="checkbox" id="isGSM">
@@ -93,7 +96,7 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input9">Miscellaneous</label>
+                <label for="input10">Miscellaneous</label>
                 <div class="container-fluid">
                   <label class="form-check-label">
                     <input type="checkbox" id="ancillary">
@@ -170,12 +173,12 @@ include('../master.php');
 <script>
 
 $(document).ready(function() {
-  // load type field
+  // populate category dropdown
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/types/read.php",
+    url: "../api/inventory/categories/read.php",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -183,44 +186,69 @@ $(document).ready(function() {
         dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
       }
       // append dropdowndata to SKU dropdown
-      $("#type").append(dropdowndata);
+      $("#category").append(dropdowndata);
 
-        // populate form
-        $.ajax({
-          type: "GET",
-          cache: false, // due to aggressive caching on IE 11
-          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/inventory/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
-          dataType: 'json',
-          success: function(data) {
-            $('#SKU').val(data['SKU']);
-            $('#type').val(data['type']);
-            $('#description').val(data['description']);
-            $('#qty').val(data['qty']);
-            $('#qtyIn').val(data['qtyIn']);
-            $('#qtyOut').val(data['qtyOut']);
-            $('#supplier').val(data['supplier']);
-            if (data['isGSM'] == 1) {
-              $(isGSM).prop("checked", true);
-            };
-            if (data['isUMTS'] == 1) {
-              $(isUMTS).prop("checked", true);
-            };
-            if (data['isLTE'] == 1) {
-              $(isLTE).prop("checked", true);
-            };
-            if (data['ancillary'] == 1) {
-              $(ancillary).prop("checked", true);
-            };
-            if (data['toCheck'] == 1) {
-              $(toCheck).prop("checked", true);
-            };
-            $('#notes').val(data['notes']);
-          },
-          error: function(result) {
-            console.log(result);
-          },
-        });
+
+      // populate form
+      $.ajax({
+        type: "GET",
+        cache: false, // due to aggressive caching on IE 11
+        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        url: "../api/inventory/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+        dataType: 'json',
+        success: function(data) {
+          $('#SKU').val(data['SKU']);
+          $('#category').val(data['category']);
+
+          // populate type dropdown
+          $.ajax({
+            type: "GET",
+            cache: false, // due to aggressive caching on IE 11
+            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            url: "../api/inventory/types/read.php?category=" + data['category'],
+            dataType: 'json',
+            success: function(list) {
+              var dropdowndata = "";
+              for (var element in list) {
+                dropdowndata += "<option value = '" + list[element].id + "'>" + list[element].name + "</option>";
+              }
+            
+              $("#category").prop('disabled', true); // disable category field
+              $("#type").append(dropdowndata); // append dropdowndata to type dropdown
+              $("#type").val(data['type']); // select correct type              
+            
+            },
+            error: function(list) {
+              console.log(list);
+            },
+          });
+
+          $('#description').val(data['description']);
+          $('#qty').val(data['qty']);
+          $('#qtyIn').val(data['qtyIn']);
+          $('#qtyOut').val(data['qtyOut']);
+          $('#supplier').val(data['supplier']);
+          if (data['isGSM'] == 1) {
+            $(isGSM).prop("checked", true);
+          };
+          if (data['isUMTS'] == 1) {
+            $(isUMTS).prop("checked", true);
+          };
+          if (data['isLTE'] == 1) {
+            $(isLTE).prop("checked", true);
+          };
+          if (data['ancillary'] == 1) {
+            $(ancillary).prop("checked", true);
+          };
+          if (data['toCheck'] == 1) {
+            $(toCheck).prop("checked", true);
+          };
+          $('#notes').val(data['notes']);
+        },
+        error: function(result) {
+          console.log(result);
+        },
+      });
 
       
     },
@@ -284,6 +312,7 @@ function UpdateItem() {
         id: <?php echo $_GET['id']; ?>,
         SKU: $("#SKU").val(),
         type: $("#type").val(),
+        category: $("#category").val(),
         description: $("#description").val(),
         qty: $("#qty").val(),
         qtyIn: $("#qtyIn").val(),

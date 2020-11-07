@@ -15,21 +15,29 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Inventory
 
-| **Action**      | **Method** | **Headers**           | **Body Parameters**                                                                       | **Response**                                                                                                                            | **URL**                                     |
-|-----------------|------------|-----------------------|-------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | SKU type description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id\* SKU\* type\* description\* qty\* qtyIn\* qtyOut\* supplier\* isGSM\* isUMTS\* isLTE\* ancillary\* toCheck\* notes\* | \$host\$/rims/api/inventory/create.php      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                                        | status message                                                                                                                          | \$host\$/rims/api/inventory/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                                        | id SKU type description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                   | \$host\$/rims/api/inventory/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | type\*\*\*                                                                                | id SKU type_id type_name type_altname description qty qtyIn qtyOut supplier inventoryDate                                               | \$host\$/rims/api/inventory/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | id description qty isGSM isUMTS isLTE ancillary toCheck notes                             | status message                                                                                                                          | \$host\$/rims/api/inventory/update.php      |
+| **Action**      | **Method** | **Headers**           | **Body Parameters**                                                                                            | **Response**                                                                                                                                                | **URL**                                     |
+|-----------------|------------|-----------------------|----------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+| **create**      | `POST`     | Auth-Key Content-Type | SKU type\*\*\* category\*\*\* description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id\* SKU\* type\* category\* description\* qty\* qtyIn\* qtyOut\* supplier\* isGSM\* isUMTS\* isLTE\* ancillary\* toCheck\* notes\*          | \$host\$/rims/api/inventory/create.php      |
+| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                                                             | status message                                                                                                                                              | \$host\$/rims/api/inventory/delete.php      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                                                             | id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                              | \$host\$/rims/api/inventory/read_single.php |
+| **read**        | `GET`      | Auth-Key Content-Type | type\*\*\* or category\*\*\*                                                                                   | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut supplier inventoryDate                                         | \$host\$/rims/api/inventory/read.php        |
+| **update**      | `POST`     | Auth-Key Content-Type | id description qty isGSM isUMTS isLTE ancillary toCheck notes                                                  | status message                                                                                                                                              | \$host\$/rims/api/inventory/update.php      |
+
+---
+
+## Inventory Categories
+
+| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                         |
+|-----------------|------------|-----------------------|----------------|--------------|-------------------------------------------------|
+| **read**        | `GET`      | Auth-Key Content-Type | id\*\*\*       | id name      | \$host\$/rims/api/inventory/categories/read.php |
 
 ---
 
 ## Inventory Types
 
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response**     | **URL**                                    |
-|-----------------|------------|-----------------------|----------------|------------------|--------------------------------------------|
-| **read**        | `GET`      | Auth-Key Content-Type | id\*\*\*       | id name alt_name | \$host\$/rims/api/inventory/types/read.php |
+| **Action**      | **Method** | **Headers**           | **Parameters**             | **Response**                                 | **URL**                                    |
+|-----------------|------------|-----------------------|----------------------------|----------------------------------------------|--------------------------------------------|
+| **read**        | `GET`      | Auth-Key Content-Type | id\*\*\* or category\*\*\* | id name alt_name type_category category_name | \$host\$/rims/api/inventory/types/read.php |
 
 ---
 

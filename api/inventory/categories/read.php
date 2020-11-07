@@ -1,22 +1,19 @@
 <?php
 // include database and object files
 include_once '../../config/database.php';
-include_once '../../objects/inventory_types.php';
+include_once '../../objects/inventory_categories.php';
 include_once '../../objects/users.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory type property object
-$property = new Inventory_Types($db);
+// prepare inventory category property object
+$property = new Inventory_Categories($db);
 
-// set type property of inventory type property to be shown 
+// set type property of inventory category property to be shown 
 if (isset($_GET['id'])) {
     $property->id = $_GET['id'];
-}
-if (isset($_GET['category'])) {
-    $property->category = $_GET['category'];
 }
 
 // API AUTH Key check
@@ -27,7 +24,7 @@ if (!$user->validAction()){
     die();
 }
  
-// query inventory type property
+// query inventory category property
 $stmt = $property->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
@@ -35,23 +32,20 @@ if ($stmt != false){
     // check if more than 0 record found
     if($num>0){
     
-        // inventory type property array
+        // inventory category property array
         $output_arr=array();
-        $output_arr["Inventory_Types"]=array();
+        $output_arr["Inventory_Categories"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $inventory_type_property=array(
+            $inventory_category_property=array(
                 "id" => $id,
-                "name" => $name,
-                "alt_name" => $alt_name,
-                "type_category" => $type_category,
-                "category_name" => $category_name
+                "name" => $name
             );
-            array_push($output_arr["Inventory_Types"], $inventory_type_property);
+            array_push($output_arr["Inventory_Categories"], $inventory_category_property);
         }
     
-        echo json_encode($output_arr["Inventory_Types"]);
+        echo json_encode($output_arr["Inventory_Categories"]);
     }
     else{
         echo json_encode(array());

@@ -9,6 +9,7 @@ class Inventory{
     public $id;
     public $SKU;
     public $type;
+    public $category;
     public $description;
     public $qty;
     public $qtyIn;
@@ -29,37 +30,48 @@ class Inventory{
 
     // read all inventory
     function read(){
-    
+
+        // select query
+        $query = "SELECT 
+            inventory.id, inventory.SKU, inventory_types.id AS type_id, 
+            inventory_types.name AS type_name, inventory_types.alt_name AS type_altname, 
+            inventory_categories.id AS category_id, inventory_categories.name AS category_name,
+            inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
+            inventory.supplier, inventory.inventoryDate
+        FROM 
+            " . $this->table_name . "
+            JOIN 
+                inventory_types
+            ON 
+                inventory.type = inventory_types.id
+            JOIN 
+                inventory_categories
+            ON 
+                inventory.category = inventory_categories.id";
+
         // different SQL query according to API call
-        if (is_null($this->type)){
-            // select query
-            $query = "SELECT 
-                inventory.id, inventory.SKU, inventory_types.id AS type_id, 
-                inventory_types.name AS type_name, inventory_types.alt_name AS type_altname,
-                inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-                inventory.supplier, inventory.inventoryDate
-            FROM 
-                " . $this->table_name . " JOIN inventory_types
-            ON 
-                inventory.type = inventory_types.id
-            ORDER BY 
-                `inventory`.`id`  DESC";
-       } else {
-           // select all query for particular type
-            $query = "SELECT 
-                inventory.id, inventory.SKU, inventory_types.id AS type_id, 
-                inventory_types.name AS type_name, inventory_types.alt_name AS type_altname,
-                inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-                inventory.supplier, inventory.inventoryDate
-            FROM 
-                " . $this->table_name . " JOIN inventory_types
-            ON 
-                inventory.type = inventory_types.id
+        if ($this->type){
+           // concatenate select query for particular type
+            $query .= "
             WHERE
                 inventory.type = '".$this->type."'
             ORDER BY 
+                `inventory`.`id`  DESC";            
+
+        } elseif ($this->category){
+           // concatenate select query for particular category
+            $query .= "
+            WHERE
+                inventory.category = '".$this->category."'
+            ORDER BY 
+                `inventory`.`id`  DESC";      
+
+        } else {
+            // select query
+            $query .= "
+            ORDER BY 
                 `inventory`.`id`  DESC";
-       }
+        }
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -101,9 +113,9 @@ class Inventory{
         if ($fromImport) { // method called from import function
             $query = "INSERT INTO  
                         ". $this->table_name ." 
-                            (`SKU`, `type`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `inventoryDate`)
+                            (`SKU`, `type`, `category`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `inventoryDate`)
                     VALUES
-                            ('".$this->SKU."', '".$this->type."', '".$this->description."','".$this->qty."', 
+                            ('".$this->SKU."', '".$this->type."', '".$this->category."', '".$this->description."','".$this->qty."', 
                             '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->inventoryDate."')";
 
             // prepare query
@@ -113,7 +125,7 @@ class Inventory{
             $query = "INSERT INTO
                         ". $this->table_name ." 
                     SET
-                        SKU=:SKU, type=:type, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        SKU=:SKU, type=:type, category=:category, description=:description, qty=:qty, qtyIn=:qtyIn, 
                         qtyOut=:qtyOut, supplier=:supplier, isGSM=:isGSM, isUMTS=:isUMTS, isLTE=:isLTE, 
                         ancillary=:ancillary, toCheck=:toCheck, notes=:notes";
             
@@ -153,7 +165,7 @@ class Inventory{
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        SKU=:SKU, type=:type, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        SKU=:SKU, type=:type, category=:category, description=:description, qty=:qty, qtyIn=:qtyIn, 
                         qtyOut=:qtyOut, supplier=:supplier, isGSM=:isGSM, isUMTS=:isUMTS, isLTE=:isLTE,
                         ancillary=:ancillary, toCheck=:toCheck, notes=:notes
                     WHERE
@@ -219,7 +231,7 @@ class Inventory{
             FROM
                 " . $this->table_name . " 
             WHERE
-                SKU='".$this->SKU."' AND type='".$this->type."'"; 
+                SKU='".$this->SKU."' AND type='".$this->type."' AND category='".$this->category."'"; 
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -247,6 +259,11 @@ class Inventory{
         } else {
             $stmt->bindValue(':type', $this->type);
         }
+        if ($this->category == ""){
+            $stmt->bindValue(':category', $this->category, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':category', $this->category);
+        }        
         if ($this->description == ""){
             $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);
         } else {

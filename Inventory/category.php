@@ -32,6 +32,7 @@ $content = '
             <thead>
               <tr>          
                 <th>SKU</th>
+                <th>Type</th>
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Provisional In</th>
@@ -45,6 +46,7 @@ $content = '
             <tfoot>
               <tr>          
                 <th>SKU</th>
+                <th>Type</th>
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Provisional In</th>
@@ -79,14 +81,13 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    url: "../api/inventory/categories/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
 
       for (var element in data) {
-        $("h3.card-title").html(data[element].name + " " + "(" + data[element].alt_name + ")");
-        $("li.breadcrumb-item.active").html('<a href="category.php?id=' + data[element].type_category + '">' + data[element].category_name + '<a>');
-        $("li.breadcrumb-item.active").append(' / ' + data[element].name);
+        $("h3.card-title").html(data[element].name);
+        $("li.breadcrumb-item.active").html(data[element].name);
       }
 
       // load table contents
@@ -97,11 +98,12 @@ $(document).ready(function() {
         order:[],
         ajax: {
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/inventory/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
+            url: "../api/inventory/read.php" + "?category=" + <?php echo $_GET['id']; ?>,
             dataSrc: ''
         },
         columns: [
-            { data: 'SKU' },     
+            { data: 'SKU' },
+            { data: 'type' },
             { data: 'description' },
             { data: 'qty' },
             { data: 'qtyIn' },
@@ -114,7 +116,15 @@ $(document).ready(function() {
             "render": function (data, type, row, meta) {
             return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
             }  
-          }
+          },
+
+
+          { targets: [1], // type column
+            "render": function (data, type, row, meta) {
+            return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
+            }  
+        }
+
         ]
       });
 
