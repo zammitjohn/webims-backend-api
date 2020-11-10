@@ -43,73 +43,78 @@ $content = '
 
               <div class="form-group">
                 <label for="input3">Name</label>
-                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter name">
-              </div>              
+                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter hardware type / location">
+              </div>
               
               <div class="form-group">
-                <label for="input4">Fault Report Number</label>
+                <label for="input4">Description</label>
+                <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter fault description">
+              </div>                    
+              
+              <div class="form-group">
+                <label for="input5">Fault Report Number</label>
                 <input type="text" maxlength="255" class="form-control" id="reportNo" placeholder="Enter fault report#">
               </div>
               
               <div class="form-group">
-                <label for="input5">Requested by</label>
+                <label for="input6">Requested by</label>
                 <select id="requestedBy" class="form-control">
                   <option value="">None</option>
                 </select>
               </div>              
 
               <div class="form-group">
-                <label for="input6">Serial Number (Faulty)</label>
+                <label for="input7">Serial Number (Faulty)</label>
                 <select id="faultySN" class="form-control">
                   <option value="">None</option>
                 </select>
               </div>
               
               <div class="form-group">
-                <label for="input7">Serial Number (Replacement)</label>
+                <label for="input8">Serial Number (Replacement)</label>
                 <select id="replacementSN" class="form-control">
                   <option value="">None</option>
                 </select>
               </div>       
 
               <div class="form-group">
-                <label for="input8">Date Requested by RBS</label>
+                <label for="input9">Date Requested by RBS</label>
                 <input type="date" class="form-control" id="dateRequested">
               </div>
 
               <div class="form-group">
-                <label for="input9">Date Leaving RBS</label>
+                <label for="input10">Date Leaving RBS</label>
                 <input type="date" class="form-control" id="dateLeavingRBS">
               </div>     
 
               <div class="form-group">
-                <label for="input10">Date Dispatched</label>
+                <label for="input11">Date Dispatched</label>
                 <input type="date" class="form-control" id="dateDispatched">
               </div>              
 
               <div class="form-group">
-                <label for="input11">Date Returned</label>
+                <label for="input12">Date Returned</label>
                 <input type="date" class="form-control" id="dateReturned">
               </div>
 
               <div class="form-group">
-                <label for="input12">AWB</label>
+                <label for="input13">AWB</label>
                 <input type="text" maxlength="255" class="form-control" id="AWB" placeholder="Enter AWB">
               </div>
               
               <div class="form-group">
-                <label for="input13">AWB Returned</label>
+                <label for="input14">AWB Returned</label>
                 <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter AWB returned">
               </div>
               
               <div class="form-group">
-                <label for="input14">RMA</label>
+                <label for="input15">RMA</label>
                 <input type="text" maxlength="255" class="form-control" id="RMA" placeholder="Enter RMA">
               </div>              
 
               <div class="form-group">
-                <label for="input15">Miscellaneous</label>
-                <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Notes">
+                <label for="input16">Comments</label>
+                <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Enter additional information">
               </div>
             
             </div>
@@ -128,6 +133,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "New report";
+$ROOT = '../';
 include('../master.php');
 ?>
 
@@ -175,8 +181,9 @@ $(document).ready(function() {
       for (var element in data) {
         dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].firstname + " " + data[element].lastname + "</option>";
       }
-      // append dropdowndata to SKU dropdown
+      // append dropdowndata to requestedBy dropdown
       $("#requestedBy").append(dropdowndata);
+      $("#requestedBy").val(localStorage.getItem('userId')); // set requestedBy to current userId
     }
   });
 
@@ -192,6 +199,7 @@ function AddItem() {
       inventoryId: $("#SKU").val(),
       ticketNo: $("#ticketNo").val(),
       name: $("#name").val(),
+      description: $("#description").val(),
       reportNo: $("#reportNo").val(),
       requestedBy: $("#requestedBy").val(),
       faultySN: $("#faultySN").val(),

@@ -49,11 +49,11 @@ class Users{
     
         // select all query
         $query = "SELECT
-                    `id`, `firstname`, `lastname`
+                    `id`, `firstname`, `lastname`, `lastLogin`
                 FROM
                     " . $this->table_name . " 
                 ORDER BY
-                    id DESC";
+                    lastLogin DESC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);

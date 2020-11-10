@@ -63,6 +63,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Fault Reports";
+$ROOT = '../';
 include('../master.php');
 ?>
 

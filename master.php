@@ -13,24 +13,24 @@
 
   <title><?php echo "RIMS | ". $title; ?></title>
   <!-- pace-progress -->
-  <link rel="stylesheet" href="../plugins/pace-progress/themes/red/pace-theme-minimal.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/pace-progress/themes/red/pace-theme-minimal.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
-  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <!-- Toastr -->
-  <link rel="stylesheet" href="../plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/toastr/toastr.min.css">
   <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="../dist/img/vf-logo-inv.png">  
+  <link rel="icon" type="image/png" href="<?php echo $ROOT; ?>dist/img/vf-logo-inv.png">  
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -85,8 +85,8 @@ to get the desired effect
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar elevation-4 sidebar-dark-danger">
     <!-- Brand Logo -->
-    <a href="../" class="brand-link navbar-danger">
-      <img src="../dist/img/vf-logo.png" alt="Vodafone" class="brand-image img-circle elevation-3"
+    <a href="<?php echo $ROOT; ?>" class="brand-link navbar-danger">
+      <img src="<?php echo $ROOT; ?>dist/img/vf-logo.png" alt="Vodafone" class="brand-image img-circle elevation-3"
            style="opacity: .9">
       <span class="brand-text font-weight-light"><b>RIMS</b></span>
     </a>
@@ -96,7 +96,7 @@ to get the desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../dist/img/generic-user.png" class="img-circle elevation-2" alt="User Image">
+          <img src="<?php echo $ROOT; ?>dist/img/generic-user.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"></a>
@@ -109,11 +109,12 @@ to get the desired effect
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="<?php echo $ROOT; ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
+              <span class="right badge badge-danger">New</span>
             </a>
           </li>
 
@@ -245,7 +246,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 1.6
+      <b>Version</b> 2.0
     </div>
   </footer>
   
@@ -255,25 +256,25 @@ to get the desired effect
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/jquery/jquery.min.js"></script>
 <!-- jquery-validation -->
-<script src="../plugins/jquery-validation/jquery.validate.min.js"></script>
-<script src="../plugins/jquery-validation/additional-methods.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/jquery-validation/additional-methods.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
+<script src="<?php echo $ROOT; ?>dist/js/adminlte.min.js"></script>
 <!-- pace-progress -->
-<script src="../plugins/pace-progress/pace.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/pace-progress/pace.min.js"></script>
 <!-- DataTables -->
-<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- Toastr -->
-<script src="../plugins/toastr/toastr.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/toastr/toastr.min.js"></script>
 <!-- overlayScrollbars -->
-<script src="../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<script src="<?php echo $ROOT; ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 </body>
 </html>
 
@@ -295,13 +296,13 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/categories/read.php",
+    url: "<?php echo $ROOT; ?>api/inventory/categories/read.php",
     dataType: 'json',
     success: function(data) {
       for (var element in data) {
         treeviewdata += '<li class="nav-item has-treeview" id="inventory_category_type_tree_' + data[element].id + '"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' + data[element].name + '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/category.php?id=' + data[element].id + '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul></li>';
       }
-      // append dropdowndata to SKU dropdown
+      // append treeviewdata to side bar tree view
       $("#inventory_tree").append(treeviewdata);
 
 
@@ -310,7 +311,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/inventory/types/read.php",
+        url: "<?php echo $ROOT; ?>api/inventory/types/read.php",
         dataType: 'json',
         success: function(data) {
           for (var element in data) {
@@ -325,13 +326,13 @@ $(document).ready(function() {
           type: "GET",
           cache: false, // due to aggressive caching on IE 11
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/pools/types/read.php",
+          url: "<?php echo $ROOT; ?>api/pools/types/read.php",
           dataType: 'json',
           success: function(data) {
             for (var element in data) {
               treeviewdata += '<li class="nav-item"> <a href="/rims/pools/tech.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
             }
-            // append dropdowndata to SKU dropdown
+            // append treeviewdata to side bar tree view
             $("#pools_tree").append(treeviewdata);
 
             // load spares side bar tree
@@ -340,13 +341,13 @@ $(document).ready(function() {
               type: "GET",
               cache: false, // due to aggressive caching on IE 11
               headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "../api/spares/types/read.php",
+              url: "<?php echo $ROOT; ?>api/spares/types/read.php",
               dataType: 'json',
               success: function(data) {
                 for (var element in data) {
                   treeviewdata += '<li class="nav-item"> <a href="/rims/spares/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
                 }
-                // append dropdowndata to SKU dropdown
+                // append treeviewdata to side bar tree view
                 $("#spares_tree").append(treeviewdata);
               }
             });
@@ -366,7 +367,7 @@ $(document).ready(function() {
   type: "GET",
   cache: false, // due to aggressive caching on IE 11
   headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-  url: '../api/users/validate_session.php',
+  url: '<?php echo $ROOT; ?>api/users/validate_session.php',
   dataType: 'json',
   success: function(data) {
     if (data['status'] == false) {
@@ -404,7 +405,7 @@ $(document).ready(function() {
 function clearSession(){
   localStorage.removeItem('userid');
   localStorage.removeItem('sessionId');
-  window.location.href = '../login.html';
+  window.location.href = '<?php echo $ROOT; ?>login.html';
 }
 </script>
 
@@ -416,7 +417,7 @@ function deleteAccount(){
     $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/users/delete.php',
+      url: '<?php echo $ROOT; ?>api/users/delete.php',
       dataType: 'json',
       data: {
         id: (localStorage.getItem('userid'))

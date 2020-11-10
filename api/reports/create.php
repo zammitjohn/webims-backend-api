@@ -15,6 +15,7 @@ $item = new Reports($db);
 $item->inventoryId = $_POST['inventoryId'];
 $item->ticketNo = $_POST['ticketNo'];
 $item->name = $_POST['name'];
+$item->description = $_POST['description'];
 $item->reportNo = $_POST['reportNo'];
 $item->requestedBy = $_POST['requestedBy'];
 $item->faultySN = $_POST['faultySN'];
@@ -48,6 +49,7 @@ if($item->create()){
         "inventoryId" => $item->inventoryId,
         "ticketNo" => $item->ticketNo,
         "name" => $item->name,
+        "description" => $item->description,
 		"reportNo" => $item->reportNo,
         "requestedBy" => $item->requestedBy,
         "faultySN" => $item->faultySN,

@@ -40,7 +40,8 @@ if ($stmt != false){
             extract($row);
             $inventory_category_property=array(
                 "id" => $id,
-                "name" => $name
+                "name" => $name,
+                "supportImport" => $supportImport
             );
             array_push($output_arr["Inventory_Categories"], $inventory_category_property);
         }

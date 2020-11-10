@@ -86,6 +86,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Add item";
+$ROOT = '../';
 include('../master.php');
 ?>
 

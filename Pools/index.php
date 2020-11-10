@@ -31,6 +31,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Buffer Pools";
+$ROOT = '../';
 include('../master.php');
 ?>
 

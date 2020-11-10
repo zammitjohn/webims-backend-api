@@ -60,6 +60,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Register item";
+$ROOT = '../';
 include('../master.php');
 ?>
 

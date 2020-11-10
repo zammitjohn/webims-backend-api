@@ -35,6 +35,7 @@ if ($stmt != false){
             "inventoryId" => $row['inventoryId'],
             "ticketNo" => $row['ticketNo'],
             "name" => $row['name'],
+            "description" => $row['description'],
             "reportNo" => $row['reportNo'],
             "requestedBy" => $row['requestedBy'],
             "faultySN" => $row['faultySN'],

@@ -61,6 +61,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Spares";
+$ROOT = '../';
 include('../master.php');
 ?>
 

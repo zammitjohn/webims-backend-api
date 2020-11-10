@@ -87,6 +87,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Pools item #" . $_GET['id'];
+$ROOT = '../';
 include('../master.php');
 ?>
 

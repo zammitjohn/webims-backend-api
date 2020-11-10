@@ -11,6 +11,11 @@ $db = $database->getConnection();
 // prepare reports item object
 $item = new Reports($db);
 
+// set type property of inventory item type to be shown 
+if (isset($_GET['requestedBy'])) {
+    $item->requestedBy = $_GET['requestedBy'];
+}
+
 // API AUTH Key check
 $user = new Users($db); // prepare users object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
@@ -38,6 +43,7 @@ if ($stmt != false){
                 "inventoryId" => $inventoryId,
                 "ticketNo" => $ticketNo,
                 "name" => $name,
+                "description" => $description,
                 "reportNo" => $reportNo,
                 "requestedBy" => $requestedBy,
                 "faultySN" => $faultySN,

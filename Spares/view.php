@@ -79,6 +79,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Spares Item #" . $_GET['id'];
+$ROOT = '../';
 include('../master.php');
 ?>
 

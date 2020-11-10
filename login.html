@@ -70,7 +70,6 @@
 
 <script>
 $(document).ready(function () {
-
   if (window.document.documentMode) { // IE alert
     alert("RIMS is not designed to work with Internet Explorer. Please use a modern browser like Google Chrome or Microsoft Edge.")
   }
@@ -113,7 +112,6 @@ $(document).ready(function () {
       },
       password: {
         required: true,
-        minlength: 5
       }
     },
     messages: {
@@ -122,7 +120,6 @@ $(document).ready(function () {
       },
       password: {
         required: "Please provide a password",
-        minlength: "Your password must be at least 5 characters long"
       }
     },
     errorElement: 'span',

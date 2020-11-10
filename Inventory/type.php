@@ -10,7 +10,8 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
-          <li class="breadcrumb-item active"></li>
+          <li class="breadcrumb-item active" id="navigator_categoryPage"></li>
+          <li class="breadcrumb-item active" id="navigator_typePage"></li>
         </ol>
       </div>
     </div>
@@ -67,6 +68,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Inventory";
+$ROOT = '../';
 include('../master.php');
 ?>
 
@@ -85,8 +87,8 @@ $(document).ready(function() {
 
       for (var element in data) {
         $("h3.card-title").html(data[element].name + " " + "(" + data[element].alt_name + ")");
-        $("li.breadcrumb-item.active").html('<a href="category.php?id=' + data[element].type_category + '">' + data[element].category_name + '<a>');
-        $("li.breadcrumb-item.active").append(' / ' + data[element].name);
+        $("#navigator_categoryPage").append('<a href="category.php?id=' + data[element].type_category + '">' + data[element].category_name + '<a>');
+        $("#navigator_typePage").append(data[element].name);
       }
 
       // load table contents

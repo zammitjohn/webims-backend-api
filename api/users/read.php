@@ -35,7 +35,8 @@ if ($stmt != false){
             $users=array(
                 "id" => $id,
                 "firstname" => $firstname,
-                "lastname" => $lastname
+                "lastname" => $lastname,
+                "lastLogin" => $lastLogin
             );
             array_push($output_arr["Users"], $users);
         }

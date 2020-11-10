@@ -10,6 +10,7 @@ class reports{
     public $inventoryId;
     public $ticketNo;
     public $name;
+    public $description;
     public $reportNo;
     public $requestedBy;
     public $faultySN;
@@ -30,14 +31,26 @@ class reports{
 
     // read reports
     function read(){
-    
-        // select all query
-        $query = "SELECT
-                    *
-                FROM
-                    " . $this->table_name . " 
-                ORDER BY
-                    id DESC";
+
+        // filter by user
+        if ($this->requestedBy) {
+            $query = "SELECT
+                        *
+                    FROM
+                        " . $this->table_name . " 
+                    WHERE
+                        requestedBy = '".$this->requestedBy."'
+                    ORDER BY 
+                        `id`  DESC";     
+        } else {    
+            // select all query
+            $query = "SELECT
+                        *
+                    FROM
+                        " . $this->table_name . " 
+                    ORDER BY
+                        id DESC";
+        }
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -73,7 +86,7 @@ class reports{
         $query = "INSERT INTO  
                     ". $this->table_name ."
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, requestedBy=:requestedBy, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes";
@@ -99,7 +112,7 @@ class reports{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, reportNo=:reportNo, requestedBy=:requestedBy, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, requestedBy=:requestedBy, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes                
@@ -154,6 +167,11 @@ class reports{
             $stmt->bindValue(':name', $this->name, PDO::PARAM_NULL);
         } else {
             $stmt->bindValue(':name', $this->name);
+        }
+        if ($this->description == ""){
+            $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':description', $this->description);
         }
         if ($this->reportNo == ""){
             $stmt->bindValue(':reportNo', $this->reportNo, PDO::PARAM_NULL);

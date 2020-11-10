@@ -167,6 +167,7 @@ $content = '
 <!-- /.content -->
 ';
 $title = "Inventory item #" . $_GET['id'];
+$ROOT = '../';
 include('../master.php');
 ?>
 
