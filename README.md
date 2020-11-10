@@ -14,7 +14,7 @@ Key features:
 RIMS is based on **[AdminLTE.io](https://adminlte.io)**, which is a fully responsive administration template based on the **[Bootstrap 4](https://getbootstrap.com)** framework.
 Highly customizable and easy to use. Fits many screen resolutions from small mobile devices to large desktops.
 
-![RIMS](dist/img/RIMS.png)
+![RIMS](dist/img/RIMS.PNG)
 
 #### Download:
 
