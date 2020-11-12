@@ -131,6 +131,7 @@ $(document).ready(function() {
   }); 
 
   // load users pane
+  usercount = 0;
   userlistdata = "";
   $.ajax({
     type: "GET",
@@ -140,7 +141,9 @@ $(document).ready(function() {
     dataType: 'json',
     success: function(data) {
       for (var element in data) {
-        userlistdata += '<li><img src="dist/img/generic-user.png" alt="User Image"><a class="users-list-name" href="#">' + data[element].firstname + ' ' + data[element].lastname + '</a><span class="users-list-date">' + data[element].lastLogin + '</span></li>';
+        usercount++;
+        if (usercount > 8) break; // limit to 8 users only
+        userlistdata += '<li><img src="dist/img/generic-user.png" alt="User Image"><a class="users-list-name" href="#">' + data[element].firstname + ' ' + data[element].lastname + '</a><span class="users-list-date">' + moment(data[element].lastLogin, "YYYY-MM-DD, h:mm:ss").fromNow() + '</span></li>';
       }
       // append userlistdata to users pane
       $("#user_list").append(userlistdata);

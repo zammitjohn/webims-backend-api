@@ -113,8 +113,8 @@ to get the desired effect
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
+                <span class="right badge badge-danger">New</span>
               </p>
-              <span class="right badge badge-danger">New</span>
             </a>
           </li>
 
@@ -273,6 +273,8 @@ to get the desired effect
 <script src="<?php echo $ROOT; ?>plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- Toastr -->
 <script src="<?php echo $ROOT; ?>plugins/toastr/toastr.min.js"></script>
+<!-- Moment -->
+<script src="<?php echo $ROOT; ?>plugins/moment/moment.min.js"></script>
 <!-- overlayScrollbars -->
 <script src="<?php echo $ROOT; ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 </body>

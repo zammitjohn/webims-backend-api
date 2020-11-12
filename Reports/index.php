@@ -34,7 +34,6 @@ $content = '
                 <th>Report ID</th>
                 <th>Ticket</th>
                 <th>Name</th>                
-                <th>Fault Report</th>
                 <th>RMA</th>
               </tr>
             </thead>
@@ -45,7 +44,6 @@ $content = '
                 <th>Report ID</th>
                 <th>Ticket</th>
                 <th>Name</th>                
-                <th>Fault Report</th>
                 <th>RMA</th>
               </tr>
             </tfoot>
@@ -84,7 +82,6 @@ $(function () {
           { data: 'id' },
           { data: 'ticketNo' },
           { data: 'name' },
-          { data: 'reportNo' },
           { data: 'RMA' }
       ],
       columnDefs: [ 
