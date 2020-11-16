@@ -114,7 +114,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/reports/read.php" + "?requestedBy=" + localStorage.getItem('userid'),
+    url: "api/reports/read.php" + "?requestedBy=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
       var tableData = "";

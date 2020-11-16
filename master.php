@@ -241,6 +241,37 @@ to get the desired effect
   </div>
   <!-- /.content-wrapper -->
 
+  <!-- Login Modal -->
+  <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <p class="login-box-msg">Log in using your corporate account</p>
+          <!-- form start -->
+          <form role="form" id="loginForm">
+            <div class="form-group">
+              <input type="username" name="username" class="form-control" id="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+              <input type="password" name="password" class="form-control" id="password" placeholder="Password" autocomplete="on">
+            </div>
+          
+            <div class="row">
+              <p class="login-box-msg">
+                <small><b>Your credentials are not stored on RIMS.</b> Verification of credentials is performed using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
+              </p>
+              <div class="col-6 mx-auto">
+                <button type="submit" class="btn btn-default btn-block">Log in</button>
+              </div>
+            </div>
+          </form>
+          <!-- /.form -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.login-modal -->
+
   <!-- Main Footer -->
   <footer class="main-footer">
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
@@ -283,7 +314,7 @@ to get the desired effect
 <!-- User Feedback Script -->
 <script>
 function userFeedback() {
-  url = "mailto:?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('userid')) + "%0D%0ADescription%3A%20"
+  url = "mailto:?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('userId')) + "%0D%0ADescription%3A%20"
   window.open(url);
 }
 </script>
@@ -363,7 +394,6 @@ $(document).ready(function() {
     }
   });
 
-
   // Validate session characteristics
   $.ajax({
   type: "GET",
@@ -374,7 +404,9 @@ $(document).ready(function() {
   success: function(data) {
     if (data['status'] == false) {
       //alert(data.message);
-      clearSession();
+      $("a.d-block").html("Log in"); // change text
+      $(".card").addClass("collapsed-card"); // hide card content
+      $('#modal-login').modal('toggle'); // toggle modal login
     } else {
       // populate name text fields
       var name = (data['firstname'] + " " + data['lastname']);
@@ -399,15 +431,73 @@ $(document).ready(function() {
   }
   });
 
+  // login form validation
+  $.validator.setDefaults({
+    submitHandler: function () {
+      $.ajax({
+        type: "POST",
+        cache: false, // due to aggressive caching on IE 11
+        url: '<?php echo $ROOT; ?>api/users/login.php',
+        dataType: 'json',
+        data: {
+          username: $("#username").val(),
+          password: $("#password").val()
+        },
+        error: function(data) {
+          alert(data['message']);
+        },
+        success: function(data) {
+          if (data['status'] == true) {
+            localStorage.setItem('userId', data['id']);
+            localStorage.setItem('sessionId', data['sessionId']);
+            location.reload();
+          } else {
+            alert(data['message']);
+            location.reload();
+          }
+        }
+      });
+    }
+  });
+  $('#loginForm').validate({
+    rules: {
+      username: {
+        required: true
+      },
+      password: {
+        required: true,
+      }
+    },
+    messages: {
+      username: {
+        required: "Please enter a username",
+      },
+      password: {
+        required: "Please provide a password",
+      }
+    },
+    errorElement: 'span',
+    errorPlacement: function (error, element) {
+      error.addClass('invalid-feedback');
+      element.closest('.form-group').append(error);
+    },
+    highlight: function (element, errorClass, validClass) {
+      $(element).addClass('is-invalid');
+    },
+    unhighlight: function (element, errorClass, validClass) {
+      $(element).removeClass('is-invalid');
+    }
+  });
+
 });
 </script>
 
 <!-- Remove session info from localstorage -->
 <script>
 function clearSession(){
-  localStorage.removeItem('userid');
+  localStorage.removeItem('userId');
   localStorage.removeItem('sessionId');
-  window.location.href = '<?php echo $ROOT; ?>login.html';
+  location.reload();
 }
 </script>
 
@@ -422,7 +512,7 @@ function deleteAccount(){
       url: '<?php echo $ROOT; ?>api/users/delete.php',
       dataType: 'json',
       data: {
-        id: (localStorage.getItem('userid'))
+        id: (localStorage.getItem('userId'))
       },
       error: function(data) {
         alert(data.responseText);
