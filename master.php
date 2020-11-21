@@ -5,15 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <style>
-    .highlight-row {
-      background-color: yellow !important;
-    }
-  </style>
-
   <title><?php echo "RIMS | ". $title; ?></title>
   <!-- pace-progress -->
-  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/pace-progress/themes/red/pace-theme-minimal.css">
+  <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/pace-progress/themes/yellow/pace-theme-minimal.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -30,7 +24,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="<?php echo $ROOT; ?>dist/img/vf-logo-inv.png">  
+  <link rel="icon" type="image/png" href="<?php echo $ROOT; ?>dist/img/logo.png">  
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -42,7 +36,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-danger">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-warning">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -83,11 +77,10 @@ to get the desired effect
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar elevation-4 sidebar-dark-danger">
+  <aside class="main-sidebar elevation-4 sidebar-light-warning">
     <!-- Brand Logo -->
-    <a href="<?php echo $ROOT; ?>" class="brand-link navbar-danger">
-      <img src="<?php echo $ROOT; ?>dist/img/vf-logo.png" alt="Vodafone" class="brand-image img-circle elevation-3"
-           style="opacity: .9">
+    <a href="<?php echo $ROOT; ?>" class="brand-link navbar-warning">
+      <img src="<?php echo $ROOT; ?>dist/img/logo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light"><b>RIMS</b></span>
     </a>
 
@@ -113,7 +106,6 @@ to get the desired effect
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
@@ -242,7 +234,7 @@ to get the desired effect
   <!-- /.content-wrapper -->
 
   <!-- Login Modal -->
-  <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false" aria-hidden="true">
+  <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="overflow-y: hidden">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">
@@ -277,7 +269,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 2.0
+      <b>Version</b> 2.0.1
     </div>
   </footer>
   
