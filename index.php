@@ -28,7 +28,7 @@ $content = '
      
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title">My Reports</h3>
+            <h3 class="card-title">My Pending Reports</h3>
 
             <div class="card-tools">
             <span class="badge badge-danger" id="report_count"></span>
@@ -73,7 +73,6 @@ $content = '
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Recent Users</h3>
-
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
@@ -114,14 +113,14 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/reports/read.php" + "?requestedBy=" + localStorage.getItem('userId'),
+    url: "api/reports/read.php" + "?userId=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
       var tableData = "";
       for (var element in data) {
         reportcount++;
         tableData += "<tr>" +
-          "<td>" + "<a href='reports/view.php?id=" + data[element].id + "'> #" + data[element].id + "</a></td>" +
+          "<td>" + "<a href='reports/view.php?id=" + data[element].id + "' class='text-muted'><i class='fas fa-search'></i> #" + data[element].id +  "</a></td>" +
           "<td>" + data[element].name + "</td>" +
           "</tr>";
       }

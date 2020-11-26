@@ -32,21 +32,15 @@ $content = '
             <thead>
               <tr>
                 <th>Report ID</th>
-                <th>Ticket</th>
-                <th>Name</th>                
+                <th>Name</th>   
+                <th>Ticket</th>             
                 <th>RMA</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
             </tbody>
-            <tfoot>
-              <tr>
-                <th>Report ID</th>
-                <th>Ticket</th>
-                <th>Name</th>                
-                <th>RMA</th>
-              </tr>
-            </tfoot>
+
           </table>
         </div>
         <!-- /.card-body -->
@@ -80,24 +74,27 @@ $(function () {
       },
       columns: [
           { data: 'id' },
-          { data: 'ticketNo' },
           { data: 'name' },
-          { data: 'RMA' }
+          { data: 'ticketNo' },
+          { data: 'RMA' },
+          { data: 'isClosed' }
       ],
       columnDefs: [ 
         { targets: [0],
           "render": function (data, type, row, meta) {
-          return '<a href="view.php?id=' + row.id + '"> #' + data + '</a>';
-          }  
+            return '<a href="view.php?id=' + data + '" class="text-muted"><i class="fas fa-search"></i> #' + data + '</a>';
+          }   
+        },
+        { targets: [4], // status column
+            "render": function (data, type, row, meta) {
+              if (data == "1") {        
+                return '<span class="badge badge-success">Closed</span>';
+              } else {
+                return '<span class="badge badge-warning">Pending</span>';
+              }
+            }  
         }
-      ],
-
-      "createdRow": function(row, data, dataIndex) {
-        if ((data.dateReturned != null) || (data.replacementSN != null)) {        
-          $(row).addClass('highlight-row');
-        }
-      },
-
+      ]
   });
 });
 </script>

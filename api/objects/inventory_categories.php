@@ -13,7 +13,7 @@ class Inventory_Categories{
         $this->conn = $db;
     }
 
-    // read spares
+    // read categories
     function read(){
     
         // different SQL query according to API call

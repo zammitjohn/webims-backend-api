@@ -29,114 +29,156 @@ $content = '
           <!-- form start -->
           <form role="form">
             <div class="card-body">
-
               <div class="form-group">
-                <label for="input1">Inventory SKU</label>
+                <h5>Inventory SKU</h5>
                 <select id="SKU" class="form-control">
                   <option value="">None</option>
                 </select>
-              </div>
-              
-              <div class="form-group">
-                <label for="input2">Ticket Number</label>
-                <input type="text" maxlength="255" class="form-control" id="ticketNo" placeholder="Enter ticket#">
-              </div>
-
-              <div class="form-group">
-                <label for="input3">Name</label>
-                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter hardware type / location">
-              </div>                      
-
-              <div class="form-group">
-                <label for="input4">Description</label>
-                <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter fault description">
               </div>   
-              
-              <div class="form-group">
-                <label for="input5">Fault Report Number</label>
-                <input type="text" maxlength="255" class="form-control" id="reportNo" placeholder="Enter fault report#">
-              </div>
-              
-              <div class="form-group">
-                <label for="input6">Requested by</label>
-                <select id="requestedBy" class="form-control">
-                  <option value="">None</option>
-                </select>
-              </div>
+              <div class="row">
 
-              <div class="form-group">
-                <label for="input7">Serial Number (Faulty)</label> <div class="addSN" style="display:inline-block;"> </div>
-                <select id="faultySN" class="form-control">
-                  <option value="">None</option>
-                </select>
-              </div>
-              
-              <div class="form-group">
-                <label for="input8">Serial Number (Replacement)</label> <div class="addSN" style="display:inline-block;"> </div>
-                <select id="replacementSN" class="form-control">
-                  <option value="">None</option>
-                </select>
-              </div>       
+                <div class="col">
+          
+                  <h5>Details</h5>
+                  <div class="form-group">
+                    <label for="input2">Name</label>
+                    <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter hardware type / location">
+                  </div>                      
 
-              <div class="form-group">
-                <label for="input9">Date Requested by RBS</label>
-                <input type="date" class="form-control" id="dateRequested">
-              </div>
+                  <div class="form-group">
+                    <label for="input3">Ticket Number</label>
+                    <input type="text" maxlength="255" class="form-control" id="ticketNo" placeholder="Enter ticket#">
+                  </div>
 
-              <div class="form-group">
-                <label for="input10">Date Leaving RBS</label>
-                <input type="date" class="form-control" id="dateLeavingRBS">
-              </div>     
+                  <div class="form-group">
+                    <label for="input4">Description</label>
+                    <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter fault description">
+                  </div>   
+                  
+                  <div class="form-group">
+                    <label for="input5">Fault Report Number</label>
+                    <input type="text" maxlength="255" class="form-control" id="reportNo" placeholder="Enter fault report#">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="input6">Requested by</label>
+                    <select id="userId" class="form-control">
+                      <option value="">None</option>
+                    </select>
+                  </div>
 
-              <div class="form-group">
-                <label for="input11">Date Dispatched</label>
-                <input type="date" class="form-control" id="dateDispatched">
-              </div>              
+                  <hr>
+                  <h5>Serial Numbers</h5>
+                  <div class="form-group">
+                    <label for="input7">Faulty</label> <div class="addSN" style="display:inline-block;"> </div>
+                    <select id="faultySN" class="form-control">
+                      <option value="">None</option>
+                    </select>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="input8">Replacement</label> <div class="addSN" style="display:inline-block;"> </div>
+                    <select id="replacementSN" class="form-control">
+                      <option value="">None</option>
+                    </select>
+                  </div>  
+                </div>
 
-              <div class="form-group">
-                <label for="input12">Date Returned</label>
-                <input type="date" class="form-control" id="dateReturned">
-              </div>
+                <div class="col">
+                  <h5>Dates</h5>
+                  <div class="form-group">
+                    <label for="input9">Date Requested by RBS</label>
+                    <input type="date" class="form-control" id="dateRequested">
+                  </div>
 
-              <div class="form-group">
-                <label for="input13">AWB</label>
-                <input type="text" maxlength="255" class="form-control" id="AWB" placeholder="Enter AWB">
-              </div>
-              
-              <div class="form-group">
-                <label for="input14">AWB Returned</label>
-                <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter AWB returned">
-              </div>
-              
-              <div class="form-group">
-                <label for="input15">RMA</label>
-                <input type="text" maxlength="255" class="form-control" id="RMA" placeholder="Enter RMA">
-              </div>              
+                  <div class="form-group">
+                    <label for="input10">Date Leaving RBS</label>
+                    <input type="date" class="form-control" id="dateLeavingRBS">
+                  </div>     
 
-              <div class="form-group">
-                <label for="input16">Comments</label>
-                <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Enter additional information">
+                  <div class="form-group">
+                    <label for="input11">Date Dispatched</label>
+                    <input type="date" class="form-control" id="dateDispatched">
+                  </div>              
+
+                  <div class="form-group">
+                    <label for="input12">Date Returned</label>
+                    <input type="date" class="form-control" id="dateReturned">
+                  </div>
+
+                  <hr>
+                  <h5>Miscellaneous</h5>
+                  <div class="form-group">
+                    <label for="input13">AWB</label>
+                    <input type="text" maxlength="255" class="form-control" id="AWB" placeholder="Enter AWB">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="input14">AWB Returned</label>
+                    <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter AWB returned">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="input15">RMA</label>
+                    <input type="text" maxlength="255" class="form-control" id="RMA" placeholder="Enter RMA">
+                  </div>              
+                </div>
               </div>
             
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
-              <input type="Button" class="btn btn-danger button_action_delete" onClick="Remove()" value="Delete"></input>
-              <div class="btn-group">
-              <button type="button" class="btn btn-default">Export as...</button>
-                <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                  <span class="sr-only">Toggle Dropdown</span>
-                  <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item" id="nokia_report">Nokia Hardware Failure Report</a>
+
+              <div class="row">
+                <div class="col-auto mr-auto">
+                  <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
+                  <div class="btn-group">
+                  <button type="button" class="btn btn-default">Export as...</button>
+                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
+                      <span class="sr-only">Toggle Dropdown</span>
+                      <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" id="nokia_report">Nokia Hardware Failure Report</a>
+                      </div>
+                    </button>
                   </div>
-                </button>
-            </div>
+                </div>
+                <div class="col-auto">
+                  <input type="Button" id="toggle-status-btn" class="btn button_action_update" onClick="ToggleStatus()" value=""></input>
+                </div>
+              </div>
             </div>
           </form>
         </div>
         <!-- /.card -->
+
+
+        <!-- COMMENTS BOX -->
+        <div class="card direct-chat direct-chat-warning">
+        <div class="card-header">
+          <h3 class="card-title">Comments</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <!-- Conversations are loaded here -->
+          <div class="direct-chat-messages">
+          </div>
+          <!--/.direct-chat-messages-->
+
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <form action="javascript:NewComment()" method="post">
+            <div class="input-group">
+              <input type="text" id="user_comment" name="message" placeholder="Write a comment..." class="form-control">
+              <span class="input-group-append">
+                <button type="button" onClick="NewComment()" class="btn btn-warning button_action_create">Post</button>
+              </span>
+            </div>
+          </form>
+        </div>
+        <!-- /.card-footer-->
       </div>
+      <!--/.comments-box -->
+
     </div>
     <!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -166,7 +208,7 @@ $(document).ready(function() {
       $("#SKU").append(dropdowndata);
 
 
-      // populate requestedBy dropdown
+      // populate userId dropdown
       $.ajax({
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
@@ -179,7 +221,7 @@ $(document).ready(function() {
             dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].firstname + " " + data[element].lastname + "</option>";
           }
           // append dropdowndata to SKU dropdown
-          $("#requestedBy").append(dropdowndata);
+          $("#userId").append(dropdowndata);
 
 
           // populate form from DB
@@ -195,7 +237,7 @@ $(document).ready(function() {
               $('#name').val(data['name']);
               $('#description').val(data['description']);
               $('#reportNo').val(data['reportNo']);
-              $('#requestedBy').val( (data['requestedBy'] == null) ? "" : (data['requestedBy']) ); // JSON: null -> form/SQL: ""
+              $('#userId').val( (data['userId'] == null) ? "" : (data['userId']) ); // JSON: null -> form/SQL: ""
               var faultySN = ( (data['faultySN'] == null) ? "" : (data['faultySN']) ); // JSON: null -> form/SQL: ""
               var replacementSN = ( (data['replacementSN'] == null) ? "" : (data['replacementSN']) ); // JSON: null -> form/SQL: ""
               $('#dateRequested').val(data['dateRequested']);
@@ -205,7 +247,15 @@ $(document).ready(function() {
               $('#AWB').val(data['AWB']);
               $('#AWBreturn').val(data['AWBreturn']);
               $('#RMA').val(data['RMA']);
-              $('#notes').val(data['notes']);
+
+              // show 'Mark as resolved' or 'Mark as pending' buttons accordingly
+              if ((data['isClosed']) == '1'){
+                $("#toggle-status-btn").addClass("btn-secondary");
+                $("#toggle-status-btn").prop('value', 'Mark as pending');
+              } else {
+                $("#toggle-status-btn").addClass("btn-success");
+                $("#toggle-status-btn").prop('value', 'Mark as closed');
+              }
 
               document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
               if ($('#SKU').val() != ""){
@@ -220,6 +270,24 @@ $(document).ready(function() {
         }
       });    
     
+    }
+  });
+
+
+  // load comments
+  messagedata = "";
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "<?php echo $ROOT; ?>api/reports/comments/read.php" + "?reportId=" + <?php echo $_GET['id']; ?>,
+    dataType: 'json',
+    success: function(data) {
+      for (var element in data) {
+        messagedata += '<div class="direct-chat-msg"> <div class="direct-chat-infos clearfix"> <span class="direct-chat-name float-left">' + data[element].firstname + ' ' + data[element].lastname + '</span> <span class="direct-chat-timestamp float-right">' + moment(data[element].timestamp, "YYYY-MM-DD, h:mm:ss").fromNow() + '</span> </div> <!-- /.direct-chat-infos --> <img class="direct-chat-img" src="../dist/img/generic-user.png" alt="message user image"> <!-- /.direct-chat-img --> <div class="direct-chat-text"><text>' + data[element].text + '</text></div> <!-- /.direct-chat-text --> </div>';
+      }
+      // append messagedata to side bar tree view
+      $(".direct-chat-messages").append(messagedata);
     }
   });
 
@@ -238,7 +306,7 @@ function UpdateItem() {
       name: $("#name").val(),
       description: $("#description").val(),
       reportNo: $("#reportNo").val(),
-      requestedBy: $("#requestedBy").val(),
+      userId: $("#userId").val(),
       faultySN: $("#faultySN").val(),
       replacementSN: $("#replacementSN").val(),
       dateRequested: $("#dateRequested").val(),
@@ -247,8 +315,7 @@ function UpdateItem() {
       dateReturned: $("#dateReturned").val(),
       AWB: $("#AWB").val(),
       AWBreturn: $("#AWBreturn").val(),
-      RMA: $("#RMA").val(),
-      notes: $("#notes").val()
+      RMA: $("#RMA").val()
     },
     error: function(result) {
       alert(result.statusText);
@@ -256,35 +323,53 @@ function UpdateItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = document.referrer;
+        window.location.href = '../reports';
       }
     }
   });
 }
 
-function Remove() {
-  var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want delete the report?");
-  if (result == true) {
-    $.ajax({
-      type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/reports/delete.php',
-      dataType: 'json',
-      data: {
-        id: id
-      },
-      error: function(result) {
-        alert(result.statusText);
-      },
-      success: function(result) {
-        alert(result.message);
-        if (result.status) {
-          window.location.href = document.referrer;
-        }
+function NewComment() {
+  $.ajax({
+    type: "POST",
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: '../api/reports/comments/create.php',
+    dataType: 'json',
+    data: {
+      reportId: <?php echo $_GET['id']; ?>,
+      userId: localStorage.getItem('userId'),
+      text: $("#user_comment").val()
+    },
+    error: function(result) {
+      alert(result.statusText);
+    },
+    success: function(result) {
+      if (result.status) {
+        location.reload();
       }
-    });
-  }
+    }
+  });
+}
+
+function ToggleStatus() {
+  var id = (<?php echo $_GET['id']; ?>);
+  $.ajax({
+    type: "POST",
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: '../api/reports/toggle_status.php',
+    dataType: 'json',
+    data: {
+      id: id
+    },
+    error: function(result) {
+      alert(result.statusText);
+    },
+    success: function(result) {
+      if (result.status) {
+        location.reload();
+      }
+    }
+  });
 }
 
 function populateSerialNumbers(faultySN, replacementSN) {
@@ -328,7 +413,7 @@ $('#nokia_report').on('click', function () {
   dataType : 'html',
   success: function(response) {
 
-    //open a new window note:this is a popup so it may be blocked by your browser
+    //open a new window note:this is a popup so it may be blocked by browser
     var newWindow = window.open("", "new window", "width=1000, height=700");
 
     //write the data to the document of the newWindow and close

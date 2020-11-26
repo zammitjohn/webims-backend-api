@@ -17,7 +17,7 @@ $item->ticketNo = $_POST['ticketNo'];
 $item->name = $_POST['name'];
 $item->description = $_POST['description'];
 $item->reportNo = $_POST['reportNo'];
-$item->requestedBy = $_POST['requestedBy'];
+$item->userId = $_POST['userId'];
 $item->faultySN = $_POST['faultySN'];
 $item->replacementSN = $_POST['replacementSN'];
 $item->dateRequested = $_POST['dateRequested'];
@@ -27,7 +27,6 @@ $item->dateReturned = $_POST['dateReturned'];
 $item->AWB = $_POST['AWB'];
 $item->AWBreturn = $_POST['AWBreturn'];
 $item->RMA = $_POST['RMA'];
-$item->notes = $_POST['notes'];
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object
@@ -51,7 +50,7 @@ if($item->create()){
         "name" => $item->name,
         "description" => $item->description,
 		"reportNo" => $item->reportNo,
-        "requestedBy" => $item->requestedBy,
+        "userId" => $item->userId,
         "faultySN" => $item->faultySN,
         "replacementSN" => $item->replacementSN,
         "dateRequested" => $item->dateRequested,
@@ -60,8 +59,7 @@ if($item->create()){
         "dateReturned" => $item->dateReturned,
         "AWB" => $item->AWB,
         "AWBreturn" => $item->AWBreturn,
-        "RMA" => $item->RMA,
-        "notes" => $item->notes
+        "RMA" => $item->RMA
     );
 }
 else{

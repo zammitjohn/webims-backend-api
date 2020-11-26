@@ -37,7 +37,7 @@ if ($stmt != false){
             "name" => $row['name'],
             "description" => $row['description'],
             "reportNo" => $row['reportNo'],
-            "requestedBy" => $row['requestedBy'],
+            "userId" => $row['userId'],
             "faultySN" => $row['faultySN'],
             "replacementSN" => $row['replacementSN'],
             "dateRequested" => $row['dateRequested'],
@@ -47,7 +47,7 @@ if ($stmt != false){
             "AWB" => $row['AWB'],
             "AWBreturn" => $row['AWBreturn'],
             "RMA" => $row['RMA'],
-            "notes" => $row['notes']
+            "isClosed" => $row['isClosed']
         );
     }
     // make it json format

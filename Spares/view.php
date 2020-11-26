@@ -164,7 +164,7 @@ function UpdateItem() {
   success: function(result) {
       alert(result.message);
       if (result.status) {
-        window.location.href = document.referrer;
+        window.location.href = '../spares';
       }
     }
   });
@@ -188,7 +188,7 @@ function Remove() {
       success: function(result) {
         alert(result.message);
         if (result.status) {
-          window.location.href = document.referrer;
+          window.location.href = '../spares';
         }
       }
     });

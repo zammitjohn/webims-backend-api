@@ -17,7 +17,7 @@ $item->id = $_POST['id'];
 // API AUTH Key check
 $user = new Users($db); // prepare users object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    $user->action_isDelete = true;
+    $user->action_isUpdate = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
 if (!$user->validAction()){
@@ -26,16 +26,16 @@ if (!$user->validAction()){
 }
  
 // remove the reports item
-if($item->delete()){
+if($item->toggle_status()){
     $output_arr=array(
         "status" => true,
-        "message" => "Successfully deleted!"
+        "message" => "Successfully updated!"
     );
 }
 else{
     $output_arr=array(
         "status" => false,
-        "message" => "Failed to delete!"
+        "message" => "Failed to update!"
     );
 }
 print_r(json_encode($output_arr));

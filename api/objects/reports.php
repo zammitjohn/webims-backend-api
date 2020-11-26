@@ -12,7 +12,7 @@ class reports{
     public $name;
     public $description;
     public $reportNo;
-    public $requestedBy;
+    public $userId;
     public $faultySN;
     public $replacementSN;
     public $dateRequested;
@@ -22,7 +22,6 @@ class reports{
     public $AWB;
     public $AWBreturn;
     public $RMA;
-    public $notes;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -33,13 +32,13 @@ class reports{
     function read(){
 
         // filter by user
-        if ($this->requestedBy) {
+        if ($this->userId) {
             $query = "SELECT
                         *
                     FROM
                         " . $this->table_name . " 
                     WHERE
-                        requestedBy = '".$this->requestedBy."'
+                        userId = '".$this->userId."' AND isClosed = '0'
                     ORDER BY 
                         `id`  DESC";     
         } else {    
@@ -60,7 +59,7 @@ class reports{
         return $stmt;
     }
 
-    // get single item data
+    // get single report data
     function read_single(){
 
         // select all query
@@ -79,17 +78,17 @@ class reports{
         return $stmt;
     }
 
-    // create item
+    // create report
     function create(){
         
         // query to insert record
         $query = "INSERT INTO  
                     ". $this->table_name ."
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, requestedBy=:requestedBy, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, userId=:userId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
-                    dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes";
+                    dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA";
     
         // prepare and bind query
         $stmt = $this->conn->prepare($query);
@@ -105,17 +104,17 @@ class reports{
         return false;
     }
       
-    // update item 
+    // update report 
     function update(){ 
     
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, requestedBy=:requestedBy, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, userId=:userId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
-                    dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA, notes=:notes                
+                    dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA                
                 
                 WHERE
                     id='".$this->id."'";
@@ -132,14 +131,17 @@ class reports{
         return false;
     }
 
-    // delete item
-    function delete(){
+    // toggle isClosed bool
+    function toggle_status(){
         
-        // query to delete record
-        $query = "DELETE FROM
+        // query to update record
+        $query = "UPDATE
                     " . $this->table_name . "
+
+                SET isClosed = !isClosed          
+                
                 WHERE
-                    id= '".$this->id."'";
+                    id='".$this->id."'";
         
         // prepare query
         $stmt = $this->conn->prepare($query);
@@ -178,10 +180,10 @@ class reports{
         } else {
             $stmt->bindValue(':reportNo', $this->reportNo);
         }                   
-        if ($this->requestedBy == ""){
-            $stmt->bindValue(':requestedBy', $this->requestedBy, PDO::PARAM_NULL);
+        if ($this->userId == ""){
+            $stmt->bindValue(':userId', $this->userId, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':requestedBy', $this->requestedBy);
+            $stmt->bindValue(':userId', $this->userId);
         }        
         if ($this->faultySN == ""){
             $stmt->bindValue(':faultySN', $this->faultySN, PDO::PARAM_NULL);
@@ -227,11 +229,6 @@ class reports{
             $stmt->bindValue(':RMA', $this->RMA, PDO::PARAM_NULL);
         } else {
             $stmt->bindValue(':RMA', $this->RMA);
-        }
-        if ($this->notes == ""){
-            $stmt->bindValue(':notes', $this->notes, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':notes', $this->notes);
         }
         return $stmt;
     }

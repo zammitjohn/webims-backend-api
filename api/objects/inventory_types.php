@@ -14,7 +14,7 @@ class Inventory_Types{
         $this->conn = $db;
     }
 
-    // read spares
+    // read types
     function read(){
         
         // select query

@@ -193,7 +193,7 @@ to get the desired effect
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-clone"></i>
+              <i class="nav-icon fas fa-coins"></i>
               <p>
                 Buffer Pools
                 <i class="fas fa-angle-left right"></i>
@@ -234,7 +234,7 @@ to get the desired effect
   <!-- /.content-wrapper -->
 
   <!-- Login Modal -->
-  <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" data-backdrop="static" data-keyboard="false" aria-hidden="true" style="overflow-y: hidden">
+  <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow-y: hidden">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-body">

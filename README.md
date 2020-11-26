@@ -11,7 +11,7 @@ Key features:
 - Convenient fault reporting options
 - LDAP integration
 
-RIMS is based on **[AdminLTE.io](https://adminlte.io)**, which is a fully responsive administration template based on the **[Bootstrap 4](https://getbootstrap.com)** framework.
+RIMS is based on **[AdminLTE.io](https://adminlte.io)**, which is a fully responsive administration template based on the **[Bootstrap](https://getbootstrap.com)** framework.
 Highly customizable and easy to use. Fits many screen resolutions from small mobile devices to large desktops.
 
 ![RIMS](dist/img/RIMS.PNG)
@@ -28,7 +28,8 @@ Configuration
 ---------------
 1. Deploy DB using rims_db.sql from the corresponding release
 2. Setup and connect DB in [database.php](api/config/database.php)
-3. Modify LDAP server connection in [login.php](api/users/login.php)    
+3. Modify LDAP server connection in [login.php](api/users/login.php)
+4. Modify branding logo in [img folder](dist/img)     
 
 Browser Support
 ---------------

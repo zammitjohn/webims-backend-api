@@ -27,33 +27,17 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Inventory Categories
 
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response**          | **URL**                                         |
-|-----------------|------------|-----------------------|----------------|-----------------------|-------------------------------------------------|
-| **read**        | `GET`      | Auth-Key Content-Type | id             | id name supportImport | \$host\$/rims/api/inventory/categories/read.php |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response**          | **URL**                                         |
+|------------|------------|-----------------------|----------------|-----------------------|-------------------------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id             | id name supportImport | \$host\$/rims/api/inventory/categories/read.php |
 
 ---
 
 ## Inventory Types
 
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response**                                 | **URL**                                    |
-|-----------------|------------|-----------------------|----------------|----------------------------------------------|--------------------------------------------|
-| **read**        | `GET`      | Auth-Key Content-Type | id or category | id name alt_name type_category category_name | \$host\$/rims/api/inventory/types/read.php |
-
----
-
-## Pools Types
-
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
-|-----------------|------------|-----------------------|----------------|--------------|----------------------------------------|
-| **read**        | `GET`      | Auth-Key Content-Type | id             | id name qty  | \$host\$/rims/api/pools/types/read.php |
-
----
-
-## Spares Types
-
-| **Action**      | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                 |
-|-----------------|------------|-----------------------|----------------|--------------|-----------------------------------------|
-| **read**        | `GET`      | Auth-Key Content-Type | id             | id name      | \$host\$/rims/api/spares/types/read.php |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response**                                 | **URL**                                    |
+|------------|------------|-----------------------|----------------|----------------------------------------------|--------------------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id or category | id name alt_name type_category category_name | \$host\$/rims/api/inventory/types/read.php |
 
 ---
 
@@ -69,6 +53,14 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ---
 
+## Pools Types
+
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
+|------------|------------|-----------------------|----------------|--------------|----------------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id             | id name qty  | \$host\$/rims/api/pools/types/read.php |
+
+---
+
 ## Registry
 
 | **Action** | **Method** | **Headers**           | **Parameters**                         | **Response**                                             | **URL**                               |
@@ -81,13 +73,22 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Reports
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                                                                                                                                     | **Response**                                                                                                                                                                                                      | **URL**                                   |
-|-----------------|------------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo requestedBy faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo requestedBy faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | \$host\$/rims/api/reports/create.php      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                                                                                                                 | status message                                                                                                                                                                                                    | \$host\$/rims/api/reports/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                                                                                                                 | id inventoryId ticketNo name description reportNo requestedBy faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes                                             | \$host\$/rims/api/reports/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | requestedBy                                                                                                                                                        | id inventoryId ticketNo name description reportNo requestedBy faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes                                             | \$host\$/rims/api/reports/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo requestedBy faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message                                                                                                                                                                                                    | \$host\$/rims/api/reports/update.php      |
+| **Action**        | **Method** | **Headers**           | **Parameters**                                                                                                                                                | **Response**                                                                                                                                                                 | **URL**                                     |
+|-------------------|------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------|
+| **create**        | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | \$host\$/rims/api/reports/create.php        |
+| **toggle_status** | `POST`     | Auth-Key Content-Type | id                                                                                                                                                            | status message                                                                                                                                                               | \$host\$/rims/api/reports/toggle_status.php |
+| **read_single**   | `GET`      | Auth-Key Content-Type | id                                                                                                                                                            | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes isClosed    | \$host\$/rims/api/reports/read_single.php   |
+| **read**          | `GET`      | Auth-Key Content-Type | userId                                                                                                                                                        | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes isClosed    | \$host\$/rims/api/reports/read.php          |
+| **update**        | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message                                                                                                                                                               | \$host\$/rims/api/reports/update.php        |
+
+---
+
+## Reports Comments
+
+| **Action** | **Method** | **Headers**           | **Parameters**       | **Response**                                         | **URL**                                       |
+|------------|------------|-----------------------|----------------------|------------------------------------------------------|-----------------------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | reportId             | id reportId userId firstname lastname text timestamp | \$host\$/rims/api/reports/comments/read.php   |
+| **create** | `POST`     | Auth-Key Content-Type | reportId userId text | status message id reportId userId text               | \$host\$/rims/api/reports/comments/create.php |
 
 ---
 
@@ -100,5 +101,13 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 | **read_single** | `GET`      | Auth-Key Content-Type | id                                             | id inventoryId type name description qty notes                | \$host\$/rims/api/spares/read_single.php |
 | **read**        | `GET`      | Auth-Key Content-Type | type                                           | id inventoryId type_id type_name name description qty notes   | \$host\$/rims/api/spares/read.php        |
 | **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type name description qty notes | status message                                                | \$host\$/rims/api/spares/update.php      |
+
+---
+
+## Spares Types
+
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                 |
+|------------|------------|-----------------------|----------------|--------------|-----------------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id             | id name      | \$host\$/rims/api/spares/types/read.php |
 
 ---

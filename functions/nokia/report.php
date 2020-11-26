@@ -3157,7 +3157,7 @@ AACrBQAAAAA=
   <td height="20" class="xl1532502" style="height:15.0pt"></td>
   <td class="xl7132502">&nbsp;</td>
   <td class="xl11432502" style="border-top:none;border-left:none"><span style="mso-spacerun:yes">&nbsp;</span>Date: <input type="date"></td>
-  <td class="xl8832502" style="border-top:none;border-left:none">e-mail address: <input type="email" placeholder="rbs@vodafone.com"></td>
+  <td class="xl8832502" style="border-top:none;border-left:none">e-mail address: <input type="email"></td>
   <td class="xl8132502" style="border-top:none">&nbsp;</td>
   <td class="xl1532502"></td>
   <td class="xl1532502"></td>

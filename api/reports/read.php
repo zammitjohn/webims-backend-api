@@ -12,8 +12,8 @@ $db = $database->getConnection();
 $item = new Reports($db);
 
 // set type property of inventory item type to be shown 
-if (isset($_GET['requestedBy'])) {
-    $item->requestedBy = $_GET['requestedBy'];
+if (isset($_GET['userId'])) {
+    $item->userId = $_GET['userId'];
 }
 
 // API AUTH Key check
@@ -45,7 +45,7 @@ if ($stmt != false){
                 "name" => $name,
                 "description" => $description,
                 "reportNo" => $reportNo,
-                "requestedBy" => $requestedBy,
+                "userId" => $userId,
                 "faultySN" => $faultySN,
                 "replacementSN" => $replacementSN,
                 "dateRequested" => $dateRequested,
@@ -55,7 +55,7 @@ if ($stmt != false){
                 "AWB" => $AWB,
                 "AWBreturn" => $AWBreturn,
                 "RMA" => $RMA,
-                "notes" => $notes
+                "isClosed" => $isClosed
             );
             array_push($output_arr["reports"], $reports_item);
         }
