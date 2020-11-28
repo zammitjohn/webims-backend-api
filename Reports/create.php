@@ -55,7 +55,7 @@ $content = '
                   </div>   
                   
                   <div class="form-group">
-                    <label for="input5">Fault Report Number</label>
+                    <label for="input5">Report Number</label>
                     <input type="text" maxlength="255" class="form-control" id="reportNo" placeholder="Enter fault report#">
                   </div>
                   
@@ -86,22 +86,22 @@ $content = '
                 <div class="col">
                   <h5>Dates</h5>
                   <div class="form-group">
-                    <label for="input9">Date Requested by RBS</label>
+                    <label for="input9">Requested by RBS</label>
                     <input type="date" class="form-control" id="dateRequested">
                   </div>
 
                   <div class="form-group">
-                    <label for="input10">Date Leaving RBS</label>
+                    <label for="input10">Leaving RBS</label>
                     <input type="date" class="form-control" id="dateLeavingRBS">
                   </div>     
 
                   <div class="form-group">
-                    <label for="input11">Date Dispatched</label>
+                    <label for="input11">Dispatched</label>
                     <input type="date" class="form-control" id="dateDispatched">
                   </div>              
 
                   <div class="form-group">
-                    <label for="input12">Date Returned</label>
+                    <label for="input12">Returned</label>
                     <input type="date" class="form-control" id="dateReturned">
                   </div>
 
@@ -113,7 +113,7 @@ $content = '
                   </div>
                   
                   <div class="form-group">
-                    <label for="input14">AWB Returned</label>
+                    <label for="input14">AWB (returned)</label>
                     <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter AWB returned">
                   </div>
                   
@@ -231,6 +231,9 @@ function AddItem() {
   });
 }
 
+$("#SKU").change(function(){
+  populateSerialNumbers();
+});
 
 function populateSerialNumbers() {
   document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!

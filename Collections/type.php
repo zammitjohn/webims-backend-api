@@ -5,11 +5,11 @@ $content = '
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Spares</h1>
+        <h1>Collections</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="../spares">Spares</a></li>
+          <li class="breadcrumb-item">Collections</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div>
@@ -39,14 +39,6 @@ $content = '
             </thead>
             <tbody>
             </tbody>
-            <tfoot>
-              <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Notes</th>
-              </tr>
-            </tfoot>
           </table>
         </div>
         <!-- /.card-body -->
@@ -60,7 +52,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Spares";
+$title = "Collections";
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -73,7 +65,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/spares/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    url: "../api/collections/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
 
@@ -89,7 +81,7 @@ $(document).ready(function() {
           responsive: true,
           ajax: {
               headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "../api/spares/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
+              url: "../api/collections/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
               dataSrc: ''
           },
           columns: [

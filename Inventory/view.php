@@ -121,7 +121,7 @@ $content = '
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon button_action_create" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                     <div class="dropdown-menu" role="menu">
-                      <a class="dropdown-item" onClick=addTo(1);>Spares</a>
+                      <a class="dropdown-item" onClick=addTo(1);>Collections</a>
                       <a class="dropdown-item" onClick=addTo(2);>Buffer Pools</a>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" onClick=addTo(3);>New fault report</a>
@@ -131,15 +131,15 @@ $content = '
             </div>
           </form>
         </div>
-        <!-- /.card -->
-
+        <!-- /.card -->   
+        
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Register item</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0" style="max-height: 300px;">
-            <table id="table1" table class="table table-hover text-nowrap">
+            <table id="registry_table" table class="table table-hover text-nowrap">
               <thead>
                 <tr>
                   <th>Registry ID</th>
@@ -158,6 +158,29 @@ $content = '
           </div>
         </div>
         <!-- /.card -->
+
+        <div id="collection_allocations" class="card" style="display:none">
+          <div class="card-header">
+            <h3 class="card-title">Collection Allocations</h3>
+          </div>
+          <!-- /.card-header --> 
+          <div class="card-body table-responsive p-0" style="max-height: 300px;">
+            <table id="collections_table" table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Collection</th>
+                  <th>Quantity</th>
+                  <th>Added by</th>
+                </tr>
+              </thead>
+              <tbody> 
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body --> 
+      </div>
+     <!-- /.card -->        
 
       </div>
     </div>
@@ -257,7 +280,28 @@ $(document).ready(function() {
       console.log(data);
     },
   });
-
+  
+  // load collection table
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "../api/collections/read.php" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
+    dataType: 'json',
+    success: function(data) {
+      var collection_table_data = "";
+      for (var element in data) {
+        $('#collection_allocations').show();
+        collection_table_data += "<tr>" +
+          "<td><a href='../collections/view.php?id=" + data[element].id + "'>" + data[element].name + "</a></td>" +
+          "<td><a href='../collections/type.php?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
+          "<td>" + data[element].qty + "</td>" +
+          "<td>" + data[element].firstname + " " + data[element].lastname + "</td>" +
+          "</tr>";
+      }
+      $(collection_table_data).appendTo($("#collections_table"));
+    }
+  });
 
   // load registry table
   $.ajax({
@@ -267,16 +311,16 @@ $(document).ready(function() {
     url: "../api/registry/read.php" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
-      var tableData = "";
+      var registry_table_data = "";
       for (var element in data) {
-        tableData += "<tr>" +
+        registry_table_data += "<tr>" +
           "<td>" + "#" + data[element].id + "</td>" +
           "<td>" + data[element].serialNumber + "</td>" +
           "<td>" + data[element].datePurchased + "</td>" +
           "<td><button type='button' onClick=Deregister('" + data[element].id + "') class='btn btn-block btn-danger'>Delete</button></td>" +
           "</tr>";
       }
-      $(tableData).appendTo($("#table1"));
+      $(registry_table_data).appendTo($("#registry_table"));
     }
   });
 
@@ -389,7 +433,7 @@ function Deregister(id) {
 
 function addTo(type) {
   if (type == 1){
-    location.href = "../spares/create.php?id=" + (<?php echo $_GET['id']; ?>);
+    location.href = "../collections/create.php?id=" + (<?php echo $_GET['id']; ?>);
   } else if (type == 2) {
     location.href = "../pools/create.php?id=" + (<?php echo $_GET['id']; ?>);
   } else if (type == 3) {

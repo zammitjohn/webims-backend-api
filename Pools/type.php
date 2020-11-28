@@ -9,7 +9,7 @@ $content = '
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="../pools">Buffer Pools</a></li>
+          <li class="breadcrumb-item">Buffer Pools</li>
           <li class="breadcrumb-item active"></li>
         </ol>
       </div>
@@ -47,7 +47,7 @@ $(function () {
     success: function(data) {
       var html;
       
-      for (var element in data) { // loop tech
+      for (var element in data) { // loop type
 
       //customize page according to type
       $("h4").html(data[element].name);
@@ -87,15 +87,6 @@ $(function () {
               </thead>
               <tbody>
               </tbody>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Ordered</th>
-                  <th>Stock</th>
-                  <th>Notes</th>
-                </tr>
-              </tfoot>
             </table>
           </div>
           <!-- /.card-body -->
@@ -112,7 +103,7 @@ $(function () {
           searching: false,
           ajax: {
               headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "../api/pools/read.php" + "?tech=" + data[element].id + "&pool=" + $p,
+              url: "../api/pools/read.php" + "?type=" + data[element].id + "&pool=" + $p,
               dataSrc: ''
           },
           columns: [

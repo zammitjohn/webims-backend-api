@@ -1,9 +1,9 @@
 <?php
-class Spares{
+class Collections{
  
     // database connection and table name
     private $conn;
-    private $table_name = "spares";
+    private $table_name = "collections";
  
     // object properties
     public $id;
@@ -13,39 +13,53 @@ class Spares{
     public $description;
     public $qty;
     public $notes;
+    public $userId;
  
     // constructor with $db as database connection
     public function __construct($db){
         $this->conn = $db;
     }
 
-    // read spares
+    // read collections
     function read(){
+
+        $query = "SELECT 
+            collections.id, collections.inventoryId, collections.name, collections_types.id AS type_id,
+            collections_types.name AS type_name, collections.description, collections.qty, collections.notes, 
+            users.firstname, users.lastname
+        FROM 
+            " . $this->table_name . " 
+            JOIN 
+                collections_types
+            ON 
+                collections.type = collections_types.id
+            LEFT JOIN 
+                users
+            ON 
+                collections.userId = users.id";               
     
         // different SQL query according to API call
-        if (is_null($this->type)){
-             // select query
-            $query = "SELECT 
-                        spares.id, spares.name, spares_types.id AS type_id, spares_types.name AS type_name, spares.description, spares.qty, spares.notes
-                    FROM 
-                    " . $this->table_name . " JOIN spares_types
-                    ON 
-                        spares.type = spares_types.id
-                    ORDER BY 
-                        `spares`.`id`  DESC";                          
+        if ($this->type) {
+            // select query for particular type
+            $query .= "
+            WHERE
+			    collections_types.id= '".$this->type."'                        
+            ORDER BY 
+                `collections`.`id`  DESC";   
+
+        } else if ($this->inventoryId){
+            // select query for particular inventoryId
+            $query .= "
+            WHERE
+                collections.inventoryId= '".$this->inventoryId."'                        
+            ORDER BY 
+                `collections`.`id`  DESC";
 
         } else {
-            // select query for particular type
-            $query = "SELECT 
-                        spares.id, spares.name, spares_types.id AS type_id, spares_types.name AS type_name, spares.description, spares.qty, spares.notes
-                    FROM 
-                    " . $this->table_name . " JOIN spares_types
-                    ON 
-                        spares.type = spares_types.id
-                    WHERE
-			            spares_types.id= '".$this->type."'                        
-                    ORDER BY 
-                        `spares`.`id`  DESC";   
+             // select query
+            $query .= "
+            ORDER BY 
+                `collections`.`id`  DESC";   
         }
 
         // prepare query statement
@@ -83,7 +97,7 @@ class Spares{
                     ". $this->table_name ."
                 SET
                     inventoryId=:inventoryId, type=:type, name=:name, description=:description, qty=:qty, 
-                    notes=:notes";                        
+                    notes=:notes, userId=:userId";
 
         // prepare and bind query
         $stmt = $this->conn->prepare($query);
@@ -101,13 +115,13 @@ class Spares{
 
     // update item 
     function update(){
-    
+
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
                     inventoryId=:inventoryId, type=:type, name=:name, description=:description, qty=:qty, 
-                    notes=:notes                          
+                    notes=:notes, userId=:userId                          
                 WHERE
                     id='".$this->id."'";            
 
@@ -174,7 +188,13 @@ class Spares{
         } else {
             $stmt->bindValue(':notes', $this->notes);
         }
+        if ($this->userId == ""){
+            $stmt->bindValue(':userId', $this->userId, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':userId', $this->userId);
+        }
         return $stmt;
     }
+    
     
 }

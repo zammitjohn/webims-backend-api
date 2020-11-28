@@ -192,7 +192,7 @@ $('#upload_csv').on("submit", function(e){
   e.preventDefault(); //form will not submitted
   $.ajax({
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url:"../functions/express_import.php",  
+      url:"import/express_import.php",  
       method:"POST",  
       data:new FormData(this),  
       contentType:false,          // The content type used when sending data to the server.  
@@ -200,7 +200,7 @@ $('#upload_csv').on("submit", function(e){
       processData:false,          // To send DOMDocument or non processed data file
       dataType: 'json',
       success: function(data) {
-          if(data['status'] == false) {  
+          if (data['status'] == false) {  
               toastr.error('No data imported');
           } else {  
               toastr.success("Created: " + data['created_count'] + " items. Matched: " + data['updated_count'] + " items.");

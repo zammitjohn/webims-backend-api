@@ -29,27 +29,14 @@ $content = '
         <div class="card">
           <div class="card-header border-transparent">
             <h3 class="card-title">My Pending Reports</h3>
-
             <div class="card-tools">
             <span class="badge badge-danger" id="report_count"></span>
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-              <button type="button" class="btn btn-tool" data-card-widget="remove">
-                <i class="fas fa-times"></i>
-              </button>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body p-0">
             <div class="table-responsive">
               <table id="table1" table class="table table-hover text-nowrap">
-                <thead>
-                  <tr>
-                    <th>Report ID</th>
-                    <th>Name</th>
-                  </tr>
-                </thead>
                 <tbody>
                 </tbody>
               </table>
@@ -64,21 +51,38 @@ $content = '
           <!-- /.card-footer -->
         </div>
         <!-- /.card -->
+
+        <div class="card">
+          <div class="card-header border-transparent">
+            <h3 class="card-title">My Collections</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table id="table2" table class="table table-hover text-nowrap">
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+            <!-- /.table-responsive -->
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-newcollection">New Collection</button> 
+            <a href="collections/create.php" class="btn btn-sm btn-info">Add Item</a>           
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
       </div>
       <!-- /.col -->
-
       <div class="col-md-4">
 
             <!-- USERS LIST -->
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Recent Users</h3>
-                <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i>
-                  </button>
-                </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -90,11 +94,38 @@ $content = '
             </div>
             <!--/.card -->
 
-
       </div>
       <!-- /.col -->
     </div>
     <!-- /.row -->
+
+    <!-- modal-newcollection start -->
+    <div class="modal fade" id="modal-newcollection">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">New Collection</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <!-- form start -->
+        <form role="form" id="new_collection">
+          <div class="modal-body">
+            <input type="text" maxlength="255" class="form-control" id="collection_name" placeholder="Enter collection name">
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="submit" class="btn btn-primary button_action_create">Submit</button>
+          </div>
+        </form>
+        <!-- /.form -->
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
   </div><!--/. container-fluid -->
 </section>
 <!-- /.content -->
@@ -106,6 +137,8 @@ include('master.php');
 
 <script>
 $(document).ready(function() {
+  localStorage.setItem('userId', '15');
+  localStorage.setItem('sessionId', 'test');
 
   // load reports table
   reportcount = 0;
@@ -149,7 +182,46 @@ $(document).ready(function() {
     }
   });
   
+  $.ajax({
+    type: "GET",
+    cache: false, // due to aggressive caching on IE 11
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "api/collections/types/read.php" + "?userId=" + localStorage.getItem('userId'),
+    dataType: 'json',
+    success: function(data) {
+      var tableData = "";
+      for (var element in data) {
+        reportcount++;
+        tableData += "<tr>" +
+          "<td>" + "<a href='collections/type.php?id=" + data[element].id + "' class='text-muted'>" + data[element].name +  "</a></td>" +
+          "</tr>";
+      }
+      $(tableData).appendTo($("#table2"));
+    }
+  });  
 
 });
+
+$('#new_collection').on("submit", function(e){
+  $('#modal-newcollection').modal('toggle'); // hide modal
+  e.preventDefault(); //form will not submitted
+  $.ajax({
+    type: "POST",
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: "api/collections/types/create.php",
+    dataType: 'json',
+    data: {
+      name: $("#collection_name").val(),
+      userId: localStorage.getItem('userId')
+    },
+    success: function(result) {
+      if (result.status == false) {
+        alert(result.message);
+      }
+      location.reload();
+    }
+  });
+
+});  
 
 </script>

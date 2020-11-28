@@ -8,10 +8,10 @@ include_once '../../objects/users.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory type property object
+// prepare pools type property object
 $property = new Pools_Types($db);
 
-// set type property of inventory type property to be shown 
+// set type property of pools type property to be shown 
 if (isset($_GET['id'])) {
     $property->id = $_GET['id'];
 }
@@ -24,7 +24,7 @@ if (!$user->validAction()){
     die();
 }
  
-// query inventory type property
+// query pools type property
 $stmt = $property->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
@@ -32,18 +32,18 @@ if ($stmt != false){
     // check if more than 0 record found
     if($num>0){
     
-        // inventory type property array
+        // pools type property array
         $output_arr=array();
         $output_arr["Pools_Types"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $inventory_type_property=array(
+            $pools_type_property=array(
                 "id" => $id,
                 "name" => $name,
                 "qty" => $qty
             );
-            array_push($output_arr["Pools_Types"], $inventory_type_property);
+            array_push($output_arr["Pools_Types"], $pools_type_property);
         }
     
         echo json_encode($output_arr["Pools_Types"]);

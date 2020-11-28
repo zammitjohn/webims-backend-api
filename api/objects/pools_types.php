@@ -13,7 +13,7 @@ class Pools_Types{
         $this->conn = $db;
     }
 
-    // read spares
+    // read collections
     function read(){
     
         // different SQL query according to API call

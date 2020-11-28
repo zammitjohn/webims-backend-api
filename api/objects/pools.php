@@ -8,7 +8,7 @@ class Pools{
     // object properties
     public $id;
     public $inventoryId;
-    public $tech;
+    public $type;
     public $pool;
     public $name;
     public $description;
@@ -24,15 +24,15 @@ class Pools{
     // read pools
     function read(){
     
-        // select query for particular tech and pool
+        // select query for particular type and pool
         $query = "SELECT 
 			        pools.id, pools_types.id AS tech_id, pools_types.name AS tech_name, pools.pool, pools.name, pools.description, pools.qtyOrdered, pools.qtyStock, pools.notes
                 FROM 
                     " . $this->table_name . " JOIN pools_types
                 ON 
-                    pools.tech = pools_types.id
+                    pools.type = pools_types.id
                 WHERE
-                    pools_types.id= '".$this->tech."' AND pools.pool= '".$this->pool."'
+                    pools_types.id= '".$this->type."' AND pools.pool= '".$this->pool."'
 		        ORDER BY 
 			        `pools`.`id`  DESC";          
 
@@ -70,7 +70,7 @@ class Pools{
         $query = "INSERT INTO
                     ". $this->table_name ." 
                 SET
-                    inventoryId=:inventoryId, tech=:tech, pool=:pool, name=:name, description=:description, 
+                    inventoryId=:inventoryId, type=:type, pool=:pool, name=:name, description=:description, 
                     qtyOrdered=:qtyOrdered, qtyStock=:qtyStock, notes=:notes";
 
         // prepare and bind query
@@ -93,7 +93,7 @@ class Pools{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=:inventoryId, tech=:tech, pool=:pool, name=:name, description=:description, 
+                    inventoryId=:inventoryId, type=:type, pool=:pool, name=:name, description=:description, 
                     qtyOrdered=:qtyOrdered, qtyStock=:qtyStock, notes=:notes            
                 WHERE
                     id='".$this->id."'";                    
@@ -136,10 +136,10 @@ class Pools{
         } else {
             $stmt->bindValue(':inventoryId', $this->inventoryId);
         }
-        if ($this->tech == ""){
-            $stmt->bindValue(':tech', $this->tech, PDO::PARAM_NULL);
+        if ($this->type == ""){
+            $stmt->bindValue(':type', $this->type, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':tech', $this->tech);
+            $stmt->bindValue(':type', $this->type);
         }
         if ($this->pool == ""){
             $stmt->bindValue(':pool', $this->pool, PDO::PARAM_NULL);

@@ -1,15 +1,15 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/spares.php';
+include_once '../objects/collections.php';
 include_once '../objects/users.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare spares item object
-$item = new Spares($db);
+// prepare collections item object
+$item = new Collections($db);
  
 // set item property values
 $item->inventoryId = $_POST['inventoryId'];
@@ -18,6 +18,7 @@ $item->name = $_POST['name'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->notes = $_POST['notes'];
+$item->userId = $_POST['userId'];
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object

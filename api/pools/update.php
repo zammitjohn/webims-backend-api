@@ -14,7 +14,7 @@ $item = new Pools($db);
 // set pools item property values
 $item->id = $_POST['id'];
 $item->inventoryId = $_POST['inventoryId'];
-$item->tech = $_POST['tech'];
+$item->type = $_POST['type'];
 $item->pool = $_POST['pool'];
 $item->name = $_POST['name'];
 $item->description = $_POST['description'];

@@ -13,7 +13,7 @@ $item = new Pools($db);
  
 // set item property values
 $item->inventoryId = $_POST['inventoryId'];
-$item->tech = $_POST['tech'];
+$item->type = $_POST['type'];
 $item->pool = $_POST['pool'];
 $item->name = $_POST['name'];
 $item->description = $_POST['description'];
@@ -39,7 +39,7 @@ if($item->create()){
         "message" => "Successfully created!",
         "id" => $item->id,
         "inventoryId" => $item->inventoryId,
-        "tech" => $item->tech,
+        "type" => $item->type,
         "pool" => $item->pool,
         "name" => $item->name,
         "description" => $item->description,

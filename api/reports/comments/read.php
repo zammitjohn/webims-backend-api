@@ -39,7 +39,6 @@ if ($stmt != false){
             $reports_comments_property=array(
                 "id" => $id,
                 "reportId" => $reportId,
-                "userId" => $userId,
                 "firstname" => $firstname,
                 "lastname" => $lastname,
                 "text" => $text,

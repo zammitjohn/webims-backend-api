@@ -1,4 +1,20 @@
 <?php
+## Page specific code
+
+if (!(is_dir("uploads/". $_GET['id']))) {
+  mkdir("uploads/". $_GET['id'], 0700);
+}
+$dir = 'uploads/' . $_GET['id'];
+$files = scandir($dir);
+
+$dropbox_content = '';
+for ($x = 2; $x < sizeof($files); $x++) {
+  $dropbox_content .= '<td><a href="uploads/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
+  $dropbox_content .= '</tr>';
+}
+
+
+## Content goes here
 $content = '
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -56,7 +72,7 @@ $content = '
                   </div>   
                   
                   <div class="form-group">
-                    <label for="input5">Fault Report Number</label>
+                    <label for="input5">Report Number</label>
                     <input type="text" maxlength="255" class="form-control" id="reportNo" placeholder="Enter fault report#">
                   </div>
                   
@@ -87,22 +103,22 @@ $content = '
                 <div class="col">
                   <h5>Dates</h5>
                   <div class="form-group">
-                    <label for="input9">Date Requested by RBS</label>
+                    <label for="input9">Requested by RBS</label>
                     <input type="date" class="form-control" id="dateRequested">
                   </div>
 
                   <div class="form-group">
-                    <label for="input10">Date Leaving RBS</label>
+                    <label for="input10">Leaving RBS</label>
                     <input type="date" class="form-control" id="dateLeavingRBS">
                   </div>     
 
                   <div class="form-group">
-                    <label for="input11">Date Dispatched</label>
+                    <label for="input11">Dispatched</label>
                     <input type="date" class="form-control" id="dateDispatched">
                   </div>              
 
                   <div class="form-group">
-                    <label for="input12">Date Returned</label>
+                    <label for="input12">Returned</label>
                     <input type="date" class="form-control" id="dateReturned">
                   </div>
 
@@ -114,7 +130,7 @@ $content = '
                   </div>
                   
                   <div class="form-group">
-                    <label for="input14">AWB Returned</label>
+                    <label for="input14">AWB (returned)</label>
                     <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter AWB returned">
                   </div>
                   
@@ -132,15 +148,6 @@ $content = '
               <div class="row">
                 <div class="col-auto mr-auto">
                   <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
-                  <div class="btn-group">
-                  <button type="button" class="btn btn-default">Export as...</button>
-                    <button type="button" class="btn btn-default dropdown-toggle dropdown-icon" data-toggle="dropdown">
-                      <span class="sr-only">Toggle Dropdown</span>
-                      <div class="dropdown-menu" role="menu">
-                        <a class="dropdown-item" id="nokia_report">Nokia Hardware Failure Report</a>
-                      </div>
-                    </button>
-                  </div>
                 </div>
                 <div class="col-auto">
                   <input type="Button" id="toggle-status-btn" class="btn button_action_update" onClick="ToggleStatus()" value=""></input>
@@ -151,37 +158,82 @@ $content = '
         </div>
         <!-- /.card -->
 
+        <div class="row">
+          <div class="col-sm-8">
 
-        <!-- COMMENTS BOX -->
-        <div class="card direct-chat direct-chat-warning">
-        <div class="card-header">
-          <h3 class="card-title">Comments</h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <!-- Conversations are loaded here -->
-          <div class="direct-chat-messages">
-          </div>
-          <!--/.direct-chat-messages-->
-
-        <!-- /.card-body -->
-        <div class="card-footer">
-          <form action="javascript:NewComment()" method="post">
-            <div class="input-group">
-              <input type="text" id="user_comment" name="message" placeholder="Write a comment..." class="form-control">
-              <span class="input-group-append">
-                <button type="button" onClick="NewComment()" class="btn btn-warning button_action_create">Post</button>
-              </span>
+            <!-- COMMENTS BOX -->
+            <div class="card direct-chat direct-chat-warning">
+              <div class="card-header">
+                <h3 class="card-title">Comments</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- Conversations are loaded here -->
+                <div class="direct-chat-messages">
+                </div>
+                <!--/.direct-chat-messages-->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <form action="javascript:NewComment()" method="post">
+                  <div class="input-group">
+                    <input type="text" id="user_comment" name="message" placeholder="Write a comment..." class="form-control">
+                    <span class="input-group-append">
+                      <button type="button" onClick="NewComment()" class="btn btn-warning button_action_create">Post</button>
+                    </span>
+                  </div>
+                </form>
+              </div>
+              <!-- /.card-footer-->
             </div>
-          </form>
-        </div>
-        <!-- /.card-footer-->
-      </div>
-      <!--/.comments-box -->
+            <!--/.comments-box -->
 
+          </div>
+          <div class="col-sm-4">
+
+            <!-- DROP BOX -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Drop Box</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table table class="table table-hover text-nowrap">
+                    <tbody>'
+                    . $dropbox_content .
+                    '</tbody>
+                  </table>
+                </div>
+                <!-- /.table-responsive -->
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer button_action_import">
+                <form id="upload_file" method="post" enctype="multipart/form-data">
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="file" name="file">
+                      <label class="custom-file-label" for="file"></label>
+                    </div>
+                    <div class="input-group-append">
+                      <button type="submit" name="upload" id="upload" class="btn btn-primary">Upload</button>
+                    </div>
+                  </div>
+                </form>                
+              </div>
+              <!-- /.card-footer-->
+            </div>
+            <!--/.drop-box -->
+
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div>  
     </div>
     <!-- /.row -->
-  </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.container-fluid -->
 </section>
 <!-- /.content -->
 ';
@@ -374,7 +426,6 @@ function ToggleStatus() {
 
 function populateSerialNumbers(faultySN, replacementSN) {
   $('.addSN').append('<a href="../inventory/register.php?id=' +  $("#SKU").val() + '" ><b>+Add</b></a>');
-
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
@@ -394,33 +445,44 @@ function populateSerialNumbers(faultySN, replacementSN) {
       $('#faultySN').val(faultySN);
       $('#replacementSN').val(replacementSN);
     }
-
   });
+
+  // handle file upload
+  $('#upload_file').on("submit", function(e){
+    var formData = new FormData(this); // Add id value with submitted file formData 
+    formData.append('reportId', <?php echo $_GET['id']; ?>);
+
+    toastr.info('Uploading file'); // show toast
+    e.preventDefault(); //form will not submitted
+    $.ajax({
+        headers: { "Auth-Key": (localStorage.getItem('sessionId'))},
+        url:"upload.php",  
+        method:"POST",  
+        data: formData,  
+        contentType:false,          // The content type used when sending data to the server.  
+        cache:false,                // To disable request pages to be cached  
+        processData:false,          // To send DOMDocument or non processed data file
+        dataType: 'json',
+        success: function(data) {
+          if (data['status'] == true) {  
+            location.reload();
+          } else {
+            toastr.error("Upload failed. " + data['message']);
+          }
+        
+        },
+        error: function(data) {
+          toastr.error("Upload failed");
+        }
+    })  
+  });  
+
+  //handle file upload form
+  $('#file').on('change',function(){ // validate file type to import
+    var fileName = $(this).val(); // get the file name
+    var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+    $(this).next('.custom-file-label').html(cleanFileName);  // replace the file input label
+  });
+
 }
-
-$('#nokia_report').on('click', function () {
-  toastr.info("Report will open in a separate window");
-  $.ajax({
-  type: 'POST',
-  url: '../functions/nokia/report.php',
-  data: {
-    reportNo: $("#reportNo").val(),
-    faultySN:  $("#faultySN option:selected").text(),
-    replacementSN: $("#replacementSN option:selected").text(),
-    SKU: $("#SKU option:selected").text(),
-    name: $("#name").val()
-  },
-  dataType : 'html',
-  success: function(response) {
-
-    //open a new window note:this is a popup so it may be blocked by browser
-    var newWindow = window.open("", "new window", "width=1000, height=700");
-
-    //write the data to the document of the newWindow and close
-    newWindow.document.write(response);
-    newWindow.document.close();
-  }
-  });
-});
-
 </script>

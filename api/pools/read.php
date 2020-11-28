@@ -11,8 +11,8 @@ $db = $database->getConnection();
 // prepare pools item object
 $item = new Pools($db);
  
-// set type property of pools item tech and pool to be shown 
-$item->tech = isset($_GET['tech']) ? $_GET['tech'] : die();
+// set type property of pools item type and pool to be shown 
+$item->type = isset($_GET['type']) ? $_GET['type'] : die();
 $item->pool = isset($_GET['pool']) ? $_GET['pool'] : die();
 
 // API AUTH Key check

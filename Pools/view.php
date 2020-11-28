@@ -9,7 +9,7 @@ $content = '
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="../pools">Buffer Pools</a></li>
+          <li class="breadcrumb-item">Buffer Pools</li>
           <li class="breadcrumb-item active">Item</li>
         </ol>
       </div>
@@ -42,8 +42,8 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input3">Tech: </label>
-                <select id="tech">
+                <label for="input3">Type: </label>
+                <select id="type">
                 </select>
                 <label for="input4">Pool: </label>
                 <select id="pool">
@@ -108,7 +108,7 @@ $(document).ready(function() {
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);
 
-      // populate tech dropdown
+      // populate type dropdown
       $.ajax({
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
@@ -121,7 +121,7 @@ $(document).ready(function() {
             dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
           }
           // append dropdowndata to SKU dropdown
-          $("#tech").append(dropdowndata);
+          $("#type").append(dropdowndata);
 
           // populate form
           $.ajax({
@@ -132,14 +132,14 @@ $(document).ready(function() {
             dataType: 'json',
             success: function(data) {
               $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
-              $('#tech').val(data['tech']);
+              $('#type').val(data['type']);
 
 
               $.ajax({
                 type: "GET",
                 cache: false, // due to aggressive caching on IE 11
                 headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-                url: "../api/pools/types/read.php?id=" + data['tech'],
+                url: "../api/pools/types/read.php?id=" + data['type'],
                 dataType: 'json',
                 success: function(list) {
                   var dropdowndata = "";
@@ -149,7 +149,7 @@ $(document).ready(function() {
                     }
                   }
                   
-                  $("#tech").prop('disabled', true); // disable tech field
+                  $("#type").prop('disabled', true); // disable type field
                   $("#pool").append(dropdowndata); // append dropdowndata to pool dropdown
                   $('#pool').val(data['pool']); // select correct pool
                 
@@ -188,7 +188,7 @@ function UpdateItem() {
     data: {
       id: <?php echo $_GET['id']; ?>,
       inventoryId: $("#SKU").val(),
-      tech: $("#tech").val(),
+      type: $("#type").val(),
       pool: $("#pool").val(),
       name: $("#name").val(),
       description: $("#description").val(),
@@ -202,7 +202,7 @@ function UpdateItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../pools';
+        window.location.href = '../pools/type.php?id=' + $("#type").val();
       }
     }
   });
@@ -226,7 +226,7 @@ function Remove() {
       success: function(result) {
         alert(result.message);
         if (result.status) {
-          window.location.href = '../pools';
+          window.location.href = '../pools/type.php?id=' + $("#type").val();
         }
       }
     });

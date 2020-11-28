@@ -1,8 +1,8 @@
 <?php
 // include database and object files
-include_once '../api/config/database.php';
-include_once '../api/objects/inventory.php';
-include_once '../api/objects/users.php';
+include_once '../../api/config/database.php';
+include_once '../../api/objects/inventory.php';
+include_once '../../api/objects/users.php';
 
 // get database connection
 $database = new Database();
@@ -87,7 +87,7 @@ if($_FILES["file"]["size"] > 0) {
             } else if (stristr($data_type,"repeater")) {
                 $data_type = 3; // Repeaters
             } else if (stristr($data_type,"spare")) {
-                $data_type = 2; // Spares
+                $data_type = 2; // Collections
             } else {
                 $data_type = 1; // General
             }

@@ -45,11 +45,11 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 | **Action**      | **Method** | **Headers**           | **Parameters**                                                      | **Response**                                                                       | **URL**                                 |
 |-----------------|------------|-----------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------|-----------------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId tech pool name description qtyOrdered qtyStock notes    | status message id inventoryId tech pool name description qtyOrdered qtyStock notes | \$host\$/rims/api/pools/create.php      |
+| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type pool name description qtyOrdered qtyStock notes    | status message id inventoryId type pool name description qtyOrdered qtyStock notes | \$host\$/rims/api/pools/create.php      |
 | **delete**      | `POST`     | Auth-Key Content-Type | id                                                                  | status message                                                                     | \$host\$/rims/api/pools/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                  | id inventoryId tech pool name description qtyOrdered qtyStock notes                | \$host\$/rims/api/pools/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | tech pool                                                           | id tech_id tech_name pool name description qtyOrdered qtyStock notes               | \$host\$/rims/api/pools/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId tech pool name description qtyOrdered qtyStock notes | status message                                                                     | \$host\$/rims/api/pools/update.php      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                  | id inventoryId type pool name description qtyOrdered qtyStock notes                | \$host\$/rims/api/pools/read_single.php |
+| **read**        | `GET`      | Auth-Key Content-Type | type pool                                                           | id tech_id tech_name pool name description qtyOrdered qtyStock notes               | \$host\$/rims/api/pools/read.php        |
+| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type pool name description qtyOrdered qtyStock notes | status message                                                                     | \$host\$/rims/api/pools/update.php      |
 
 ---
 
@@ -85,29 +85,30 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 
 ## Reports Comments
 
-| **Action** | **Method** | **Headers**           | **Parameters**       | **Response**                                         | **URL**                                       |
-|------------|------------|-----------------------|----------------------|------------------------------------------------------|-----------------------------------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | reportId             | id reportId userId firstname lastname text timestamp | \$host\$/rims/api/reports/comments/read.php   |
-| **create** | `POST`     | Auth-Key Content-Type | reportId userId text | status message id reportId userId text               | \$host\$/rims/api/reports/comments/create.php |
+| **Action** | **Method** | **Headers**           | **Parameters**       | **Response**                                  | **URL**                                       |
+|------------|------------|-----------------------|----------------------|-----------------------------------------------|-----------------------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | reportId             | id reportId firstname lastname text timestamp | \$host\$/rims/api/reports/comments/read.php   |
+| **create** | `POST`     | Auth-Key Content-Type | reportId userId text | status message id reportId userId text        | \$host\$/rims/api/reports/comments/create.php |
 
 ---
 
-## Spares
+## Collections
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                 | **Response**                                                  | **URL**                                  |
-|-----------------|------------|-----------------------|------------------------------------------------|---------------------------------------------------------------|------------------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type name description qty notes    | status message id inventoryId type name description qty notes | \$host\$/rims/api/spares/create.php      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                             | status message                                                | \$host\$/rims/api/spares/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                             | id inventoryId type name description qty notes                | \$host\$/rims/api/spares/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | type                                           | id inventoryId type_id type_name name description qty notes   | \$host\$/rims/api/spares/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type name description qty notes | status message                                                | \$host\$/rims/api/spares/update.php      |
+| **Action**      | **Method** | **Headers**           | **Parameters**                                        | **Response**                                                                   | **URL**                                       |
+|-----------------|------------|-----------------------|-------------------------------------------------------|--------------------------------------------------------------------------------|-----------------------------------------------|
+| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type name description qty notes userId    | status message id inventoryId type name description qty notes                  | \$host\$/rims/api/collections/create.php      |
+| **delete**      | `POST`     | Auth-Key Content-Type | id                                                    | status message                                                                 | \$host\$/rims/api/collections/delete.php      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                                    | id inventoryId type name description qty notes                                 | \$host\$/rims/api/collections/read_single.php |
+| **read**        | `GET`      | Auth-Key Content-Type | type inventoryId                                      | id inventoryId type_id type_name name description qty notes firstname lastname | \$host\$/rims/api/collections/read.php        |
+| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type name description qty notes userId | status message                                                                 | \$host\$/rims/api/collections/update.php      |
 
 ---
 
-## Spares Types
+## Collections Types
 
-| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                 |
-|------------|------------|-----------------------|----------------|--------------|-----------------------------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | id             | id name      | \$host\$/rims/api/spares/types/read.php |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                        |
+|------------|------------|-----------------------|----------------|--------------|------------------------------------------------|
+| **create** | `POST`     | Auth-Key Content-Type | name userId    | name         | \$host\$/rims/api/collections/types/create.php |
+| **read**   | `GET`      | Auth-Key Content-Type | id userId      | id name      | \$host\$/rims/api/collections/types/read.php   |
 
 ---

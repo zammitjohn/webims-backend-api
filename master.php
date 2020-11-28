@@ -36,7 +36,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-warning">
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-orange">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -171,21 +171,15 @@ to get the desired effect
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-cubes"></i>
               <p>
-                Spares
+                Collections
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview" id="spares_tree">
               <li class="nav-item">
-                <a href="/rims/spares/create.php" class="nav-link">
+                <a href="/rims/collections/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/spares" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>All spares</p>
                 </a>
               </li>
             </ul>
@@ -204,12 +198,6 @@ to get the desired effect
                 <a href="/rims/pools/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/rims/pools" class="nav-link">
-                  <i class="fas fa-circle nav-icon"></i>
-                  <p>All pools</p>
                 </a>
               </li>
             </ul>
@@ -269,7 +257,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 2.0.1
+      <b>Version</b> 2.1.0
     </div>
   </footer>
   
@@ -355,22 +343,22 @@ $(document).ready(function() {
           dataType: 'json',
           success: function(data) {
             for (var element in data) {
-              treeviewdata += '<li class="nav-item"> <a href="/rims/pools/tech.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+              treeviewdata += '<li class="nav-item"> <a href="/rims/pools/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
             }
             // append treeviewdata to side bar tree view
             $("#pools_tree").append(treeviewdata);
 
-            // load spares side bar tree
+            // load collections side bar tree
             treeviewdata = "";
             $.ajax({
               type: "GET",
               cache: false, // due to aggressive caching on IE 11
               headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "<?php echo $ROOT; ?>api/spares/types/read.php",
+              url: "<?php echo $ROOT; ?>api/collections/types/read.php",
               dataType: 'json',
               success: function(data) {
                 for (var element in data) {
-                  treeviewdata += '<li class="nav-item"> <a href="/rims/spares/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
+                  treeviewdata += '<li class="nav-item"> <a href="/rims/collections/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
                 }
                 // append treeviewdata to side bar tree view
                 $("#spares_tree").append(treeviewdata);

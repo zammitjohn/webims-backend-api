@@ -1,17 +1,17 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/spares.php';
+include_once '../objects/collections.php';
 include_once '../objects/users.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare spares item object
-$item = new Spares($db);
+// prepare collections item object
+$item = new Collections($db);
  
-// set spares item property values
+// set collections item property values
 $item->id = $_POST['id'];
 
 // API AUTH Key check
@@ -25,7 +25,7 @@ if (!$user->validAction()){
     die();
 }
  
-// remove the spares item
+// remove the collections item
 if($item->delete()){
     $output_arr=array(
         "status" => true,

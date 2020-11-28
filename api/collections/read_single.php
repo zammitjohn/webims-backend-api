@@ -1,17 +1,17 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/spares.php';
+include_once '../objects/collections.php';
 include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare spares item object
-$item = new Spares($db);
+// prepare collections item object
+$item = new Collections($db);
 
-// set ID property of spares item to be edited
+// set ID property of collections item to be edited
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // API AUTH Key check
@@ -22,7 +22,7 @@ if (!$user->validAction()){
     die();
 }
 
-// read the details of spares item to be edited
+// read the details of collections item to be edited
 $stmt = $item->read_single();
 
 if ($stmt != false){

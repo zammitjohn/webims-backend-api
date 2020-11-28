@@ -1,19 +1,22 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/spares.php';
+include_once '../objects/collections.php';
 include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare spares item object
-$item = new Spares($db);
+// prepare collections item object
+$item = new Collections($db);
  
-// set type property of spares item type to be shown 
+// set type/inventoryId property of collections type property to be shown 
 if (isset($_GET['type'])) {
     $item->type = $_GET['type'];
+}
+if (isset($_GET['inventoryId'])) {
+    $item->inventoryId = $_GET['inventoryId'];
 }
 
 // API AUTH Key check
@@ -24,7 +27,7 @@ if (!$user->validAction()){
     die();
 }
 
-// query spares item
+// query collections item
 $stmt = $item->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
@@ -34,23 +37,26 @@ if ($stmt != false){
     
         // sapres item array
         $output_arr=array();
-        $output_arr["Spares"]=array();
+        $output_arr["Collections"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $spares_item=array(
+            $collections_item=array(
                 "id" => $id,
+                "inventoryId" => $inventoryId,
                 "type_id" => $type_id,
                 "type_name" => $type_name,
                 "name" => $name,
                 "description" => $description,
                 "qty" => $qty,
-                "notes" => $notes
+                "notes" => $notes,
+                "firstname" => $firstname,
+                "lastname" => $lastname
             );
-            array_push($output_arr["Spares"], $spares_item);
+            array_push($output_arr["Collections"], $collections_item);
         }
     
-        echo json_encode($output_arr["Spares"]);
+        echo json_encode($output_arr["Collections"]);
     }
     else{
         echo json_encode(array());

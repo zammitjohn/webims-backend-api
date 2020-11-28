@@ -9,7 +9,7 @@ $content = '
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="../pools">Buffer Pools</a></li>
+          <li class="breadcrumb-item">Buffer Pools</li>
           <li class="breadcrumb-item active">Add item</li>
         </ol>
       </div>
@@ -42,8 +42,8 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input3">Tech: </label>
-                <select id="tech">
+                <label for="input3">Type: </label>
+                <select id="type">
                 </select>
                 <label for="input4">Pool: </label>
                 <select id="pool">
@@ -91,8 +91,8 @@ include('../master.php');
 ?>
 
 <script>
-$("#tech").change(function () {
-  loadPools($("#tech").val());
+$("#type").change(function () {
+  loadPools($("#type").val());
 });
 
 $(document).ready(function() {
@@ -122,7 +122,7 @@ $(document).ready(function() {
         $('#name').val($("#SKU :selected").text());
       }
 
-      // populate tech dropdown
+      // populate type dropdown
       $.ajax({
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
@@ -135,8 +135,8 @@ $(document).ready(function() {
             dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
           }
           // append dropdowndata to SKU dropdown
-          $("#tech").append(dropdowndata);
-          loadPools($("#tech").val());
+          $("#type").append(dropdowndata);
+          loadPools($("#type").val());
         },
         error: function(data) {
           console.log(data);
@@ -161,7 +161,7 @@ function AddItem() {
     dataType: 'json',
     data: {
       inventoryId: $("#SKU").val(),
-      tech: $("#tech").val(),
+      type: $("#type").val(),
       pool: $("#pool").val(),
       name: $("#name").val(),
       description: $("#description").val(),
@@ -175,7 +175,7 @@ function AddItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '/rims/pools';
+        window.location.href = '../pools/type.php?id=' + $("#type").val();
       }
     }
   });
