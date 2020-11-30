@@ -112,7 +112,7 @@ $content = '
         <!-- form start -->
         <form role="form" id="new_collection">
           <div class="modal-body">
-            <input type="text" maxlength="255" class="form-control" id="collection_name" placeholder="Enter collection name">
+            <input type="text" class="form-control" id="collection_name" maxlength="20" placeholder="Enter collection name">
           </div>
           <div class="modal-footer justify-content-between">
             <button type="submit" class="btn btn-primary button_action_create">Submit</button>

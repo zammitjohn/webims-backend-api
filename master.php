@@ -1,3 +1,16 @@
+<?php
+// include database and object files
+include_once 'api/config/database.php';
+include_once 'api/objects/inventory_categories.php';
+include_once 'api/objects/inventory_types.php';
+include_once 'api/objects/collections_types.php';
+include_once 'api/objects/pools_types.php';
+
+// get database connection
+$database = new Database();
+$db = $database->getConnection();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -115,7 +128,7 @@ to get the desired effect
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" id="inventory_tree">
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/rims/inventory/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
@@ -133,10 +146,32 @@ to get the desired effect
                   <i class="fas fa-circle nav-icon"></i>
                   <p>All items</p>
                 </a>
-              </li>                                              
+              </li>
+              <?php
+              ## Building inventory sidebar tree
+              $inventory_category_object = new Inventory_Categories($db);
+              $inventory_types_object = new Inventory_Types($db);
+
+              $inventory_category_stmt = $inventory_category_object->read();
+              if ($inventory_category_stmt != false){
+                while ($inventory_category_row = $inventory_category_stmt->fetch(PDO::FETCH_ASSOC)){ // first loop categories
+                  extract($inventory_category_row);
+                  echo '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' . $name .  '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/category.php?id=' . $id . '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul>';
+                  
+                  $inventory_types_object->category = $id;
+                  $inventory_types_stmt = $inventory_types_object->read();
+                  while ($inventory_types_row = $inventory_types_stmt->fetch(PDO::FETCH_ASSOC)){ // ...then loop types
+                    extract($inventory_types_row);
+                    $type_name = $name;
+                    $type_id = $id;
+                    echo '<ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/type.php?id=' . $type_id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $type_name . '</p></a></li></ul>';
+                  }
+                  echo '</li>';
+                }
+              }
+              ?>
             </ul>
           </li>
-
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -172,13 +207,25 @@ to get the desired effect
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" id="spares_tree">
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/rims/collections/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
               </li>
+              <?php
+              ## Building collections sidebar tree
+              $collections_types_object = new Collections_Types($db);
+              $collections_types_stmt = $collections_types_object->read();
+
+              if ($collections_types_stmt != false){
+                while ($collections_types_row = $collections_types_stmt->fetch(PDO::FETCH_ASSOC)){
+                  extract($collections_types_row);
+                  echo '<li class="nav-item"> <a href="/rims/collections/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                }
+              }
+              ?>
             </ul>
           </li>
 
@@ -190,13 +237,25 @@ to get the desired effect
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview" id="pools_tree">
+            <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="/rims/pools/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
               </li>
+              <?php
+              ## Building pools sidebar tree
+              $pools_types_object = new Pools_Types($db);
+              $pools_types_stmt = $pools_types_object->read();
+
+              if ($pools_types_stmt != false){
+                while ($pools_types_row = $pools_types_stmt->fetch(PDO::FETCH_ASSOC)){
+                  extract($pools_types_row);
+                  echo '<li class="nav-item"> <a href="/rims/pools/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                }
+              }
+              ?>
             </ul>
           </li>
 
@@ -290,79 +349,6 @@ to get the desired effect
 
 <script>
 $(document).ready(function() {
-  // load side bar tree view
-  var treeviewdata = "";
-
-  // load inventory side bar tree
-  $.ajax({
-    type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "<?php echo $ROOT; ?>api/inventory/categories/read.php",
-    dataType: 'json',
-    success: function(data) {
-      for (var element in data) {
-        treeviewdata += '<li class="nav-item has-treeview" id="inventory_category_type_tree_' + data[element].id + '"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' + data[element].name + '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/category.php?id=' + data[element].id + '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul></li>';
-      }
-      // append treeviewdata to side bar tree view
-      $("#inventory_tree").append(treeviewdata);
-
-
-      treeviewdata = "";
-      $.ajax({
-        type: "GET",
-        cache: false, // due to aggressive caching on IE 11
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "<?php echo $ROOT; ?>api/inventory/types/read.php",
-        dataType: 'json',
-        success: function(data) {
-          for (var element in data) {
-            treeviewdata = '<ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li></ul>';
-            $("#inventory_category_type_tree_" + data[element].type_category).append(treeviewdata);
-          }
- 
-
-        // load pools side bar tree
-        treeviewdata = "";
-        $.ajax({
-          type: "GET",
-          cache: false, // due to aggressive caching on IE 11
-          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "<?php echo $ROOT; ?>api/pools/types/read.php",
-          dataType: 'json',
-          success: function(data) {
-            for (var element in data) {
-              treeviewdata += '<li class="nav-item"> <a href="/rims/pools/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
-            }
-            // append treeviewdata to side bar tree view
-            $("#pools_tree").append(treeviewdata);
-
-            // load collections side bar tree
-            treeviewdata = "";
-            $.ajax({
-              type: "GET",
-              cache: false, // due to aggressive caching on IE 11
-              headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "<?php echo $ROOT; ?>api/collections/types/read.php",
-              dataType: 'json',
-              success: function(data) {
-                for (var element in data) {
-                  treeviewdata += '<li class="nav-item"> <a href="/rims/collections/type.php?id=' + data[element].id + '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' + data[element].name + '</p></a></li>';
-                }
-                // append treeviewdata to side bar tree view
-                $("#spares_tree").append(treeviewdata);
-              }
-            });
-          }
-        });
-      }
-    });
-    },
-    error: function(data) {
-      console.log(data);
-    }
-  });
-
   // Validate session characteristics
   $.ajax({
   type: "GET",
