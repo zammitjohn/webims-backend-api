@@ -34,12 +34,18 @@ $content = '
               </div>
               
               <div class="form-group">
-                <label for="input2">Category: </label>
-                <select id="category">
-                </select>
-                <label for="input3">Type: </label>
-                <select id="type">
-                </select>
+                <div class="row">
+                  <div class="col-6 col-sm-3">
+                    <label for="input3">Category</label>
+                    <select id="category" class="form-control">
+                    </select>
+                  </div>
+                  <div class="col-6 col-sm-3">
+                    <label for="input4">Type</label>
+                    <select id="type" class="form-control">
+                    </select>
+                  </div>
+                </div>
               </div>           
 
               <div class="form-group">

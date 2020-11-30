@@ -137,9 +137,6 @@ include('master.php');
 
 <script>
 $(document).ready(function() {
-  localStorage.setItem('userId', '15');
-  localStorage.setItem('sessionId', 'test');
-
   // load reports table
   reportcount = 0;
   $.ajax({

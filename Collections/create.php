@@ -34,17 +34,17 @@ $content = '
                 <select id="SKU" class="form-control">
                   <option value="">None</option>
                 </select>
-              </div>  
+              </div>
 
               <div class="form-group">
-                <label for="input2">Collection</label>
+                <label for="input2">Name</label>
+                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter name">
+              </div>              
+
+              <div class="form-group">
+                <label for="input3">Collection</label>
                 <select id="type" class="form-control">
                 </select>
-              </div>
-              
-              <div class="form-group">
-                <label for="input3">Name</label>
-                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter name">
               </div>
               
               <div class="form-group">

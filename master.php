@@ -48,10 +48,7 @@ to get the desired effect
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index.php" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a onclick="userFeedback()" class="nav-link" onmouseover="" style="cursor: pointer;">Send Feedback</a>
+        <a href="https://github.com/zammitjohn/RIMS" class="nav-link" target="_blank"><i class="fab fa-github"></i></a>
       </li>
     </ul>
 
@@ -290,14 +287,6 @@ to get the desired effect
 <script src="<?php echo $ROOT; ?>plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
 </body>
 </html>
-
-<!-- User Feedback Script -->
-<script>
-function userFeedback() {
-  url = "mailto:?subject=RIMS%20User%20Feedback&body=User%20Agent%3A%20" + navigator.userAgent + "%0D%0ACurrent%20Page%3A%20" + window.location.href + "%0D%0AUser%20ID%3A%20#" + (localStorage.getItem('userId')) + "%0D%0ADescription%3A%20"
-  window.open(url);
-}
-</script>
 
 <script>
 $(document).ready(function() {

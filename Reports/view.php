@@ -1,15 +1,20 @@
 <?php
 ## Page specific code
 
-if (!(is_dir("uploads/". $_GET['id']))) {
-  mkdir("uploads/". $_GET['id'], 0700);
+// uploads saved to root
+if (!(is_dir("../../uploads"))) {
+  mkdir("../../uploads");
 }
-$dir = 'uploads/' . $_GET['id'];
+if (!(is_dir("../../uploads/". $_GET['id']))) {
+  mkdir("../../uploads/". $_GET['id'], 0700);
+}
+
+$dir = '../../uploads/' . $_GET['id'];
 $files = scandir($dir);
 
 $dropbox_content = '';
 for ($x = 2; $x < sizeof($files); $x++) {
-  $dropbox_content .= '<td><a href="uploads/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
+  $dropbox_content .= '<td><a href="../../uploads/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
   $dropbox_content .= '</tr>';
 }
 
