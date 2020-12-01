@@ -38,25 +38,49 @@ if ($stmt != false){
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $reports_item=array(
-                "id" => $id,
-                "inventoryId" => $inventoryId,
-                "ticketNo" => $ticketNo,
-                "name" => $name,
-                "description" => $description,
-                "reportNo" => $reportNo,
-                "userId" => $userId,
-                "faultySN" => $faultySN,
-                "replacementSN" => $replacementSN,
-                "dateRequested" => $dateRequested,
-                "dateLeavingRBS" => $dateLeavingRBS,
-                "dateDispatched" => $dateDispatched,
-                "dateReturned" => $dateReturned,
-                "AWB" => $AWB,
-                "AWBreturn" => $AWBreturn,
-                "RMA" => $RMA,
-                "isClosed" => $isClosed
-            );
+
+            // different output depending on the params passed
+            if (isset($isClosed)){
+                $reports_item=array(
+                    "id" => $id,
+                    "inventoryId" => $inventoryId,
+                    "ticketNo" => $ticketNo,
+                    "name" => $name,
+                    "description" => $description,
+                    "reportNo" => $reportNo,
+                    "userId" => $userId,
+                    "faultySN" => $faultySN,
+                    "replacementSN" => $replacementSN,
+                    "dateRequested" => $dateRequested,
+                    "dateLeavingRBS" => $dateLeavingRBS,
+                    "dateDispatched" => $dateDispatched,
+                    "dateReturned" => $dateReturned,
+                    "AWB" => $AWB,
+                    "AWBreturn" => $AWBreturn,
+                    "RMA" => $RMA,
+                    "isClosed" => $isClosed
+                );
+
+            } else {
+                $reports_item=array(
+                    "id" => $id,
+                    "inventoryId" => $inventoryId,
+                    "ticketNo" => $ticketNo,
+                    "name" => $name,
+                    "description" => $description,
+                    "reportNo" => $reportNo,
+                    "userId" => $userId,
+                    "faultySN" => $faultySN,
+                    "replacementSN" => $replacementSN,
+                    "dateRequested" => $dateRequested,
+                    "dateLeavingRBS" => $dateLeavingRBS,
+                    "dateDispatched" => $dateDispatched,
+                    "dateReturned" => $dateReturned,
+                    "AWB" => $AWB,
+                    "AWBreturn" => $AWBreturn,
+                    "RMA" => $RMA,
+                );
+            }
             array_push($output_arr["reports"], $reports_item);
         }
     

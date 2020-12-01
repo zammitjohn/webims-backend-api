@@ -49,7 +49,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed accent-orange">
+<body class="hold-transition sidebar-mini layout-fixed accent-orange">
 <div class="wrapper">
 
   <!-- Navbar -->

@@ -31,24 +31,22 @@ class reports{
     // read reports
     function read(){
 
-        // filter by user
-        if ($this->userId) {
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name . " 
-                    WHERE
-                        userId = '".$this->userId."' AND isClosed = '0'
-                    ORDER BY 
-                        `id`  DESC";     
+        // filter by pending reports assigned to user
+        if ($this->userId) {                        
+            $query = "SELECT * 
+                    FROM `reports` 
+                    WHERE userid = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (AWBreturn IS NULL))
+                    ORDER BY `id` DESC";   
+
         } else {    
             // select all query
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name . " 
-                    ORDER BY
-                        id DESC";
+            $query = "SELECT *, 
+                    CASE WHEN replacementSN IS NOT NULL THEN '1'
+                        WHEN dateReturned IS NOT NULL THEN '1'
+                        WHEN AWBreturn IS NOT NULL THEN '1'
+                        ELSE '0' END AS isClosed
+                    FROM " . $this->table_name . " 
+                    ORDER BY `id` DESC";                       
         }
     
         // prepare query statement
@@ -62,13 +60,14 @@ class reports{
     // get single report data
     function read_single(){
 
-        // select all query
-        $query = "SELECT
-                    *
-                FROM
-                    " . $this->table_name . " 
-                WHERE
-                    id= '".$this->id."'";
+        // select query
+        $query = "SELECT *, 
+                CASE WHEN replacementSN IS NOT NULL THEN '1'
+                    WHEN dateReturned IS NOT NULL THEN '1'
+                    WHEN AWBreturn IS NOT NULL THEN '1'
+                    ELSE '0' END AS isClosed
+                FROM " . $this->table_name . " 
+                WHERE id= '".$this->id."'";                        
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -122,29 +121,6 @@ class reports{
         // prepare and bind query
         $stmt = $this->conn->prepare($query);
         $stmt = $this->bindValues($stmt);
-        
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
-        }
-        return false;
-    }
-
-    // toggle isClosed bool
-    function toggle_status(){
-        
-        // query to update record
-        $query = "UPDATE
-                    " . $this->table_name . "
-
-                SET isClosed = !isClosed          
-                
-                WHERE
-                    id='".$this->id."'";
-        
-        // prepare query
-        $stmt = $this->conn->prepare($query);
         
         // execute query
         $stmt->execute();

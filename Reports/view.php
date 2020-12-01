@@ -2,19 +2,23 @@
 ## Page specific code
 
 // uploads saved to root
-if (!(is_dir("../../uploads"))) {
-  mkdir("../../uploads");
+if (!(is_dir("../../rims_uploads"))) {
+  mkdir("../../rims_uploads", 0700);
 }
-if (!(is_dir("../../uploads/". $_GET['id']))) {
-  mkdir("../../uploads/". $_GET['id'], 0700);
+if (!(is_dir("../../rims_uploads/reports"))) {
+  mkdir("../../rims_uploads/reports", 0700);
 }
 
-$dir = '../../uploads/' . $_GET['id'];
+if (!(is_dir("../../rims_uploads/reports/". $_GET['id']))) {
+  mkdir("../../rims_uploads/reports/". $_GET['id'], 0700);
+}
+
+$dir = '../../rims_uploads/reports/' . $_GET['id'];
 $files = scandir($dir);
 
 $dropbox_content = '';
 for ($x = 2; $x < sizeof($files); $x++) {
-  $dropbox_content .= '<td><a href="../../uploads/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
+  $dropbox_content .= '<td><a href="../../rims_uploads/reports/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
   $dropbox_content .= '</tr>';
 }
 
@@ -149,15 +153,7 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-
-              <div class="row">
-                <div class="col-auto mr-auto">
-                  <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
-                </div>
-                <div class="col-auto">
-                  <input type="Button" id="toggle-status-btn" class="btn button_action_update" onClick="ToggleStatus()" value=""></input>
-                </div>
-              </div>
+              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
             </div>
           </form>
         </div>
@@ -304,16 +300,7 @@ $(document).ready(function() {
               $('#AWB').val(data['AWB']);
               $('#AWBreturn').val(data['AWBreturn']);
               $('#RMA').val(data['RMA']);
-
-              // show 'Mark as resolved' or 'Mark as pending' buttons accordingly
-              if ((data['isClosed']) == '1'){
-                $("#toggle-status-btn").addClass("btn-secondary");
-                $("#toggle-status-btn").prop('value', 'Mark as pending');
-              } else {
-                $("#toggle-status-btn").addClass("btn-success");
-                $("#toggle-status-btn").prop('value', 'Mark as closed');
-              }
-
+              
               document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
               if ($('#SKU').val() != ""){
                 populateSerialNumbers(faultySN, replacementSN); // populate serial number dropdown with options and actual value from DB
@@ -451,43 +438,42 @@ function populateSerialNumbers(faultySN, replacementSN) {
       $('#replacementSN').val(replacementSN);
     }
   });
-
-  // handle file upload
-  $('#upload_file').on("submit", function(e){
-    var formData = new FormData(this); // Add id value with submitted file formData 
-    formData.append('reportId', <?php echo $_GET['id']; ?>);
-
-    toastr.info('Uploading file'); // show toast
-    e.preventDefault(); //form will not submitted
-    $.ajax({
-        headers: { "Auth-Key": (localStorage.getItem('sessionId'))},
-        url:"upload.php",  
-        method:"POST",  
-        data: formData,  
-        contentType:false,          // The content type used when sending data to the server.  
-        cache:false,                // To disable request pages to be cached  
-        processData:false,          // To send DOMDocument or non processed data file
-        dataType: 'json',
-        success: function(data) {
-          if (data['status'] == true) {  
-            location.reload();
-          } else {
-            toastr.error("Upload failed. " + data['message']);
-          }
-        
-        },
-        error: function(data) {
-          toastr.error("Upload failed");
-        }
-    })  
-  });  
-
-  //handle file upload form
-  $('#file').on('change',function(){ // validate file type to import
-    var fileName = $(this).val(); // get the file name
-    var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
-    $(this).next('.custom-file-label').html(cleanFileName);  // replace the file input label
-  });
-
 }
+
+// handle file upload
+$('#upload_file').on("submit", function(e){
+  var formData = new FormData(this); // Add id value with submitted file formData 
+  formData.append('reportId', <?php echo $_GET['id']; ?>);
+
+  toastr.info('Uploading file'); // show toast
+  e.preventDefault(); //form will not submitted
+  $.ajax({
+      headers: { "Auth-Key": (localStorage.getItem('sessionId'))},
+      url:"upload.php",  
+      method:"POST",  
+      data: formData,  
+      contentType:false,          // The content type used when sending data to the server.  
+      cache:false,                // To disable request pages to be cached  
+      processData:false,          // To send DOMDocument or non processed data file
+      dataType: 'json',
+      success: function(data) {
+        if (data['status'] == true) {  
+          location.reload();
+        } else {
+          toastr.error("Upload failed. " + data['message']);
+        }
+      
+      },
+      error: function(data) {
+        toastr.error("Upload failed");
+      }
+  })  
+});  
+
+//handle file upload form
+$('#file').on('change',function(){ // validate file type to import
+  var fileName = $(this).val(); // get the file name
+  var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+  $(this).next('.custom-file-label').html(cleanFileName);  // replace the file input label
+});
 </script>

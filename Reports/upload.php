@@ -8,7 +8,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 // setting target directory
-$target_dir = "../../uploads/" . $_POST['reportId'] . "/";
+$target_dir = "../../rims_uploads/reports/" . $_POST['reportId'] . "/";
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
 
 // API AUTH Key check
