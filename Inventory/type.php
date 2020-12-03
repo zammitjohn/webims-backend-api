@@ -1,4 +1,32 @@
 <?php
+## Page specific code
+// include database and object files
+include_once '../api/config/database.php';
+include_once '../api/objects/inventory_types.php';
+
+// get database connection
+$database = new Database();
+$db = $database->getConnection();
+
+// prepare inventory type property object
+$inventory_types_object = new Inventory_Types($db);
+$inventory_types_object->id = $_GET['id'];
+
+$stmt = $inventory_types_object->read();
+$category_name = 'Unknown Category';
+$type_name = 'Unknown Type';
+$type_alt_name = '';
+$category_id = '#';
+
+if($stmt->rowCount() > 0) {
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $type_name = ($row['name']);
+  if ($row['alt_name']) { $type_alt_name = (' (' . $row['alt_name'] . ')'); }
+  $category_name = ($row['category_name']);
+  $category_id = ($row['type_category']);
+}
+
+## Content goes here
 $content = '
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -10,8 +38,8 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
-          <li class="breadcrumb-item active" id="navigator_categoryPage"></li>
-          <li class="breadcrumb-item active" id="navigator_typePage"></li>
+          <li class="breadcrumb-item active" id="navigator_categoryPage"><a href="category.php?id=' . $category_id . '">' . $category_name . '</a></li>
+          <li class="breadcrumb-item active" id="navigator_typePage">' . $type_name . '</li>
         </ol>
       </div>
     </div>
@@ -25,7 +53,7 @@ $content = '
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"></h3>
+          <h3 class="card-title">' . $type_name . $type_alt_name . '</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -35,8 +63,7 @@ $content = '
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Provisional In</th>
-                <th>Provisional Out</th>
+                <th>Quantity Allocated</th>
                 <th>Supplier</th>
                 <th>Inventory Date</th>                
               </tr>
@@ -48,8 +75,7 @@ $content = '
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Provisional In</th>
-                <th>Provisional Out</th>
+                <th>Quantity Allocated</th>
                 <th>Supplier</th>
                 <th>Inventory Date</th>                
               </tr>
@@ -67,7 +93,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Inventory";
+$title = $category_name;
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -76,21 +102,6 @@ include('../master.php');
 <script>
 
 $(document).ready(function() {
-  // load type
-  $.ajax({
-    type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
-    dataType: 'json',
-    success: function(data) {
-
-      for (var element in data) {
-        $("h3.card-title").html(data[element].name + " " + "(" + data[element].alt_name + ")");
-        $("#navigator_categoryPage").append('<a href="category.php?id=' + data[element].type_category + '">' + data[element].category_name + '<a>');
-        $("#navigator_typePage").append(data[element].name);
-      }
-
       // load table contents
       $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
       $('#table1').DataTable({
@@ -106,8 +117,7 @@ $(document).ready(function() {
             { data: 'SKU' },     
             { data: 'description' },
             { data: 'qty' },
-            { data: 'qtyIn' },
-            { data: 'qtyOut' },
+            { data: 'qty_collections_allocated' },
             { data: 'supplier' },
             { data: 'inventoryDate' },        
         ],
@@ -119,13 +129,6 @@ $(document).ready(function() {
           }
         ]
       });
-
-
-    },
-    error: function(data) {
-      console.log(data);
-    },
-  });
 
 });
 </script>

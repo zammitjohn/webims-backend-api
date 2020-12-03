@@ -188,7 +188,6 @@ $(document).ready(function() {
     success: function(data) {
       var tableData = "";
       for (var element in data) {
-        reportcount++;
         tableData += "<tr>" +
           "<td>" + "<a href='collections/type.php?id=" + data[element].id + "' class='text-muted'>" + data[element].name +  "</a></td>" +
           "</tr>";

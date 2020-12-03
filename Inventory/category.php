@@ -1,4 +1,30 @@
 <?php
+## Page specific code
+// include database and object files
+include_once '../api/config/database.php';
+include_once '../api/objects/inventory_categories.php';
+
+// get database connection
+$database = new Database();
+$db = $database->getConnection();
+
+// prepare inventory category property object
+$inventory_category_object = new Inventory_Categories($db);
+$inventory_category_object->id = $_GET['id'];
+
+$stmt = $inventory_category_object->read();
+$import_button = '';
+$category_name = 'Unknown Category';
+
+if($stmt->rowCount() > 0) {
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $category_name = ($row['name']);
+  if ($row['supportImport']){
+    $import_button = '<div class="card-tools"> <a href="#" class="btn btn-tool btn-sm button_action_import" data-toggle="modal" data-target="#modal-import"> <i class="fas fa-upload"></i> </a> </div>';
+  }
+}
+
+## Content goes here
 $content = '
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -10,8 +36,8 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
-          <li class="breadcrumb-item active" id="navigator_categoryPage"></li>
-          <li class="breadcrumb-item active" id="navigator_typePage"></li>
+          <li class="breadcrumb-item active" id="navigator_categoryPage">'. $category_name .'</li>
+          <li class="breadcrumb-item active" id="navigator_typePage">All items</li>
         </ol>
       </div>
     </div>
@@ -25,12 +51,8 @@ $content = '
 
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title"></h3>
-          <div class="card-tools">
-            <a href="#" class="btn btn-tool btn-sm button_action_import" data-toggle="modal" data-target="#modal-import">
-              <i class="fas fa-upload"></i>
-            </a>
-          </div>            
+          <h3 class="card-title">' . $category_name . '</h3>
+          ' . $import_button . '           
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -41,8 +63,7 @@ $content = '
                 <th>Type</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Provisional In</th>
-                <th>Provisional Out</th>
+                <th>Quantity Allocated</th>
                 <th>Supplier</th>
                 <th>Inventory Date</th>                
               </tr>
@@ -55,8 +76,7 @@ $content = '
                 <th>Type</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Provisional In</th>
-                <th>Provisional Out</th>
+                <th>Quantity Allocated</th>
                 <th>Supplier</th>
                 <th>Inventory Date</th>                
               </tr>
@@ -109,7 +129,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Inventory";
+$title = $category_name;
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -118,71 +138,40 @@ include('../master.php');
 <script>
 
 $(document).ready(function() {
-  // load type
-  $.ajax({
-    type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/categories/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
-    dataType: 'json',
-    success: function(data) {
-
-      for (var element in data) {
-        $("h3.card-title").html(data[element].name);
-        $("#navigator_categoryPage").append(data[element].name);
-        $("#navigator_typePage").append('All items');
-    
-        if ((data[element].supportImport) == false) { // disable button accordingly  
-          $(".button_action_import").hide();
-        }
-
+  // load table contents
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+  $('#table1').DataTable({
+    autoWidth: false,
+    responsive: true,
+    order:[],
+    ajax: {
+        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        url: "../api/inventory/read.php" + "?category=" + <?php echo $_GET['id']; ?>,
+        dataSrc: ''
+    },
+    columns: [
+        { data: 'SKU' },
+        { data: 'type' },
+        { data: 'description' },
+        { data: 'qty' },
+        { data: 'qty_collections_allocated' },
+        { data: 'supplier' },
+        { data: 'inventoryDate' }        
+    ],
+    columnDefs: [
+      { targets: [0], // first column
+        "render": function (data, type, row, meta) {
+        return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+        }  
+      },
+      { targets: [1], // type column
+        "render": function (data, type, row, meta) {
+        return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
+        }  
       }
+    ]
 
-      // load table contents
-      $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-      $('#table1').DataTable({
-        autoWidth: false,
-        responsive: true,
-        order:[],
-        ajax: {
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/inventory/read.php" + "?category=" + <?php echo $_GET['id']; ?>,
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'SKU' },
-            { data: 'type' },
-            { data: 'description' },
-            { data: 'qty' },
-            { data: 'qtyIn' },
-            { data: 'qtyOut' },
-            { data: 'supplier' },
-            { data: 'inventoryDate' }        
-        ],
-        columnDefs: [
-          { targets: [0], // first column
-            "render": function (data, type, row, meta) {
-            return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
-            }  
-          },
-
-
-          { targets: [1], // type column
-            "render": function (data, type, row, meta) {
-            return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
-            }  
-        }
-
-        ]
-      });
-
-
-    },
-    error: function(data) {
-      console.log(data);
-    },
   });
-
 });
 
 

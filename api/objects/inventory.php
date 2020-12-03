@@ -37,7 +37,7 @@ class Inventory{
             inventory_types.name AS type_name, inventory_types.alt_name AS type_altname, 
             inventory_categories.id AS category_id, inventory_categories.name AS category_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-            inventory.supplier, inventory.inventoryDate
+            inventory.supplier, inventory.inventoryDate, SUM(collections.qty) AS qty_collections_allocated
         FROM 
             " . $this->table_name . "
             JOIN 
@@ -47,7 +47,10 @@ class Inventory{
             JOIN 
                 inventory_categories
             ON 
-                inventory.category = inventory_categories.id";
+                inventory.category = inventory_categories.id
+
+            LEFT JOIN 
+                collections ON inventory.id = collections.inventoryId";
 
         // different SQL query according to API call
         if ($this->type){
@@ -55,6 +58,8 @@ class Inventory{
             $query .= "
             WHERE
                 inventory.type = '".$this->type."'
+            GROUP BY 
+                inventory.id
             ORDER BY 
                 `inventory`.`id`  DESC";            
 
@@ -63,12 +68,16 @@ class Inventory{
             $query .= "
             WHERE
                 inventory.category = '".$this->category."'
+            GROUP BY 
+                inventory.id                
             ORDER BY 
                 `inventory`.`id`  DESC";      
 
         } else {
             // select query
             $query .= "
+            GROUP BY 
+                inventory.id            
             ORDER BY 
                 `inventory`.`id`  DESC";
         }

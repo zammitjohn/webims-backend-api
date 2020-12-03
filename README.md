@@ -4,7 +4,7 @@ Introduction
 **RIMS** (**R**adio **I**nventory **M**anagement **S**ystem) is a modern web-based inventory, fault report and warehouse management solution for Telco providers. RIMS allows you to stay on top of your inventory levels and value across multiple locations, as well as multiple projects - pools and collections. The interface makes it easy to search and filter your inventory and to assess the state of your current stock. It also facilitates tracking of item fault report progresses for better recordkeeping.
 
 Key features:
-- Item bundling and registration
+- Item collections, allocations, pooling and registration
 - Easy sorting and filtering
 - Batch comma-separated values (CSV) file imports
 - Multi-warehouse management

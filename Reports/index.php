@@ -28,7 +28,7 @@ $content = '
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-          <table id="table1" class="table table-bordered table-striped">
+          <table id="table1" class="table table-bordered table-hover">
             <thead>
               <tr>
                 <th>Report ID</th>

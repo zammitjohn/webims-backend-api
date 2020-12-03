@@ -36,8 +36,7 @@ $content = '
               <th>Type</th>
               <th>Description</th>
               <th>Quantity</th>
-              <th>Provisional In</th>
-              <th>Provisional Out</th>
+              <th>Quantity Allocated</th>
               <th>Supplier</th>
               <th>Inventory Date</th>               
             </tr>
@@ -51,8 +50,7 @@ $content = '
               <th>Type</th>
               <th>Description</th>
               <th>Quantity</th>
-              <th>Provisional In</th>
-              <th>Provisional Out</th>
+              <th>Quantity Allocated</th>
               <th>Supplier</th>
               <th>Inventory Date</th>              
             </tr>
@@ -94,8 +92,7 @@ $(function () {
           { data: 'type' },        
           { data: 'description' },
           { data: 'qty' },
-          { data: 'qtyIn' },
-          { data: 'qtyOut' },
+          { data: 'qty_collections_allocated' },
           { data: 'supplier' },
           { data: 'inventoryDate' },        
       ],

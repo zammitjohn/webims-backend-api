@@ -54,7 +54,9 @@ if ($stmt != false){
                 "qtyIn" => $qtyIn,
                 "qtyOut" => $qtyOut,
                 "supplier" => $supplier,
-                "inventoryDate" => $inventoryDate
+                "inventoryDate" => $inventoryDate,
+                "qty_collections_allocated" => $qty_collections_allocated
+                
             );
             array_push($output_arr["Inventory"], $inventory_item);
         }
