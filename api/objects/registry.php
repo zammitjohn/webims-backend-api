@@ -19,14 +19,17 @@ class Registry{
     // list registry items with particular 'inventoryId'
     function read(){
     
-        // select all query
-        $query = "SELECT
-                    *
-                FROM
-                    " . $this->table_name . " 
-                WHERE
-                    inventoryId= '".$this->inventoryId."'";
-    
+        // select query
+        $query = "SELECT registry.id, registry.inventoryId, registry.serialNumber, registry.datePurchased,
+                    CASE WHEN registry.id = reports.faultySN THEN 'Faulty' 
+                         WHEN registry.id = reports.replacementSN THEN 'Replacement' 
+                    ELSE 'New' END AS state
+                FROM " . $this->table_name . " 
+                LEFT JOIN reports
+                    ON reports.faultySN = registry.id
+                    OR reports.replacementSN = registry.id
+                WHERE registry.inventoryId = '".$this->inventoryId."'";
+
         // prepare query statement
         $stmt = $this->conn->prepare($query);
     

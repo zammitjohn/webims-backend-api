@@ -42,6 +42,7 @@ if ($stmt != false){
                 "inventoryId" => $inventoryId,
                 "serialNumber" => $serialNumber,
                 "datePurchased" => $datePurchased,
+                "state" => $state
             );
             array_push($output_arr["Registry"], $registry_item);
         }

@@ -358,7 +358,6 @@ $(document).ready(function() {
   dataType: 'json',
   success: function(data) {
     if (data['status'] == false) {
-      //alert(data.message);
       $("a.d-block").html("Log in"); // change text
       $(".card").addClass("collapsed-card"); // hide card content
       $('#modal-login').modal('toggle'); // toggle modal login

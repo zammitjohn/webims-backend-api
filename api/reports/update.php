@@ -40,17 +40,25 @@ if (!$user->validAction()){
     die();
 }
 
-// create the reports item
-if($item->update()){
-    $output_arr=array(
-        "status" => true,
-        "message" => "Successfully updated!"
-    );
-}
-else{
+if (($item->replacementSN AND $item->faultySN) AND ($item->replacementSN == $item->faultySN)){
     $output_arr=array(
         "status" => false,
-        "message" => "Failed to update!"
+        "message" => "You cannot use the same serial number twice!"
     );
+
+} else {
+    // update the reports item
+    if($item->update()){
+        $output_arr=array(
+            "status" => true,
+            "message" => "Successfully updated!"
+        );
+    }
+    else{
+        $output_arr=array(
+            "status" => false,
+            "message" => "Failed to update!"
+        );
+    }
 }
 print_r(json_encode($output_arr));

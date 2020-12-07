@@ -39,33 +39,41 @@ if (!$user->validAction()){
     die();
 }
 
-// create the item
-if($item->create()){
-    $output_arr=array(
-        "status" => true,
-        "message" => "Successfully created!",
-        "id" => $item->id,
-        "inventoryId" => $item->inventoryId,
-        "ticketNo" => $item->ticketNo,
-        "name" => $item->name,
-        "description" => $item->description,
-		"reportNo" => $item->reportNo,
-        "userId" => $item->userId,
-        "faultySN" => $item->faultySN,
-        "replacementSN" => $item->replacementSN,
-        "dateRequested" => $item->dateRequested,
-        "dateLeavingRBS" => $item->dateLeavingRBS,
-        "dateDispatched" => $item->dateDispatched,
-        "dateReturned" => $item->dateReturned,
-        "AWB" => $item->AWB,
-        "AWBreturn" => $item->AWBreturn,
-        "RMA" => $item->RMA
-    );
-}
-else{
+if (($item->replacementSN AND $item->faultySN) AND ($item->replacementSN == $item->faultySN)){
     $output_arr=array(
         "status" => false,
-        "message" => "Failed to create!"
+        "message" => "You cannot use the same serial number twice!"
     );
+    
+} else {
+    // create the item
+    if($item->create()){
+        $output_arr=array(
+            "status" => true,
+            "message" => "Successfully created!",
+            "id" => $item->id,
+            "inventoryId" => $item->inventoryId,
+            "ticketNo" => $item->ticketNo,
+            "name" => $item->name,
+            "description" => $item->description,
+            "reportNo" => $item->reportNo,
+            "userId" => $item->userId,
+            "faultySN" => $item->faultySN,
+            "replacementSN" => $item->replacementSN,
+            "dateRequested" => $item->dateRequested,
+            "dateLeavingRBS" => $item->dateLeavingRBS,
+            "dateDispatched" => $item->dateDispatched,
+            "dateReturned" => $item->dateReturned,
+            "AWB" => $item->AWB,
+            "AWBreturn" => $item->AWBreturn,
+            "RMA" => $item->RMA
+        );
+    }
+    else{
+        $output_arr=array(
+            "status" => false,
+            "message" => "Failed to create!"
+        );
+    }
 }
 print_r(json_encode($output_arr));

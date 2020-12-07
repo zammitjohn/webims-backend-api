@@ -427,7 +427,11 @@ function populateSerialNumbers(faultySN, replacementSN) {
     success: function(data) {
       var dropdowndata = "";
       for (var element in data) {
-        dropdowndata += "<option value = '" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</option>";
+        if (data[element].state == 'New'){
+          dropdowndata += "<option value = '" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</option>";
+        } else {
+          dropdowndata += "<option value = '" + data[element].id + "' hidden>" + "#" + data[element].id + ": " + data[element].serialNumber + "</option>";
+        }
       }
       // append dropdowndata to serial numbers dropdown
       $("#faultySN").append(dropdowndata);

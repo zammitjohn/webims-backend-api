@@ -67,7 +67,7 @@ This is a full JSON API reference which interfaces to the extensive RIMS databas
 |------------|------------|-----------------------|----------------------------------------|----------------------------------------------------------|---------------------------------------|
 | **create** | `POST`     | Auth-Key Content-Type | inventoryId serialNumber datePurchased | status message id inventoryId serialNumber datePurchased | \$host\$/rims/api/registry/create.php |
 | **delete** | `POST`     | Auth-Key Content-Type | id                                     | status message                                           | \$host\$/rims/api/registry/delete.php |
-| **read**   | `GET`      | Auth-Key Content-Type | inventoryId                            | id inventoryId serialNumber datePurchased                | \$host\$/rims/api/registry/read.php   |
+| **read**   | `GET`      | Auth-Key Content-Type | inventoryId                            | id inventoryId serialNumber datePurchased state          | \$host\$/rims/api/registry/read.php   |
 
 ---
 

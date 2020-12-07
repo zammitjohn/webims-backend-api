@@ -150,6 +150,7 @@ $content = '
                 <tr>
                   <th>Registry ID</th>
                   <th>Serial Number</th>
+                  <th>State</th>
                   <th>Data Purchased</th>
                   <th></th>
                 </tr>
@@ -308,7 +309,7 @@ $(document).ready(function() {
       $(collection_table_data).appendTo($("#collections_table"));
     }
   });
-
+  
   // load registry table
   $.ajax({
     type: "GET",
@@ -322,6 +323,7 @@ $(document).ready(function() {
         registry_table_data += "<tr>" +
           "<td>" + "#" + data[element].id + "</td>" +
           "<td>" + data[element].serialNumber + "</td>" +
+          "<td><span class='badge badge-info'>" + data[element].state + "</span></td>" +
           "<td>" + data[element].datePurchased + "</td>" +
           "<td><button type='button' onClick=Deregister('" + data[element].id + "') class='btn btn-block btn-danger'>Delete</button></td>" +
           "</tr>";
