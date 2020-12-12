@@ -3,7 +3,7 @@ class Database{
  
     // database credentials
     private $host = "localhost";
-    private $db_name = "rims_db";
+    private $db_name = "webims_db";
     private $username = "root";
     private $password = "";
     public $conn;

@@ -2,23 +2,23 @@
 ## Page specific code
 
 // uploads saved to root
-if (!(is_dir("../../rims_uploads"))) {
-  mkdir("../../rims_uploads", 0700);
+if (!(is_dir("../../uploads"))) {
+  mkdir("../../uploads", 0700);
 }
-if (!(is_dir("../../rims_uploads/reports"))) {
-  mkdir("../../rims_uploads/reports", 0700);
-}
-
-if (!(is_dir("../../rims_uploads/reports/". $_GET['id']))) {
-  mkdir("../../rims_uploads/reports/". $_GET['id'], 0700);
+if (!(is_dir("../../uploads/reports"))) {
+  mkdir("../../uploads/reports", 0700);
 }
 
-$dir = '../../rims_uploads/reports/' . $_GET['id'];
+if (!(is_dir("../../uploads/reports/". $_GET['id']))) {
+  mkdir("../../uploads/reports/". $_GET['id'], 0700);
+}
+
+$dir = '../../uploads/reports/' . $_GET['id'];
 $files = scandir($dir);
 
 $dropbox_content = '';
 for ($x = 2; $x < sizeof($files); $x++) {
-  $dropbox_content .= '<td><a href="../../rims_uploads/reports/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
+  $dropbox_content .= '<td><a href="../../uploads/reports/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
   $dropbox_content .= '</tr>';
 }
 

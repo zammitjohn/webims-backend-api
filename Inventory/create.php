@@ -216,7 +216,7 @@ function AddItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '/rims/inventory';
+        window.location.href = '../inventory';
       }
     }
   });

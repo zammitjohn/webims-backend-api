@@ -14,7 +14,7 @@ $user = new Users($db);
 if (!isset($_SERVER['HTTP_AUTH_KEY']) or $_SERVER['HTTP_AUTH_KEY'] == "null"){
     $output_arr=array(
         "status" => false,
-        "message" => "You need to login to access RIMS!"
+        "message" => "You need to login!"
     );
 } else { // check if key is correct
 

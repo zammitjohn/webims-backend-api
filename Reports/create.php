@@ -225,7 +225,7 @@ function AddItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '/rims/reports';
+        window.location.href = '../reports';
       }
     }
   });

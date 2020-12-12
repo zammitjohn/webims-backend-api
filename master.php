@@ -18,7 +18,7 @@ $db = $database->getConnection();
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title><?php echo "RIMS | ". $title; ?></title>
+  <title><?php echo $title . " | WebIMS"; ?></title>
   <!-- pace-progress -->
   <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/pace-progress/themes/yellow/pace-theme-minimal.css">
   <!-- Font Awesome -->
@@ -61,7 +61,7 @@ to get the desired effect
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="https://github.com/zammitjohn/RIMS" class="nav-link" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/zammitjohn/WebIMS" class="nav-link" target="_blank"><i class="fab fa-github"></i></a>
       </li>
     </ul>
 
@@ -91,7 +91,7 @@ to get the desired effect
     <!-- Brand Logo -->
     <a href="<?php echo $ROOT; ?>" class="brand-link navbar-warning">
       <img src="<?php echo $ROOT; ?>dist/img/logo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light"><b>RIMS</b></span>
+      <span class="brand-text font-weight-light"><b>WebIMS</b></span>
     </a>
 
     <!-- Sidebar -->
@@ -130,19 +130,19 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/rims/inventory/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>inventory/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/rims/inventory/register.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>inventory/register.php" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
                   <p>Register item</p>
                 </a>
               </li> 
               <li class="nav-item">
-                <a href="/rims/inventory" class="nav-link">
+                <a href="<?php echo $ROOT; ?>inventory" class="nav-link">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>All items</p>
                 </a>
@@ -156,7 +156,7 @@ to get the desired effect
               if ($inventory_category_stmt != false){
                 while ($inventory_category_row = $inventory_category_stmt->fetch(PDO::FETCH_ASSOC)){ // first loop categories
                   extract($inventory_category_row);
-                  echo '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' . $name .  '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/category.php?id=' . $id . '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul>';
+                  echo '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' . $name .  '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="' . $ROOT . 'inventory/category.php?id=' . $id . '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul>';
                   
                   $inventory_types_object->category = $id;
                   $inventory_types_stmt = $inventory_types_object->read();
@@ -164,7 +164,7 @@ to get the desired effect
                     extract($inventory_types_row);
                     $type_name = $name;
                     $type_id = $id;
-                    echo '<ul class="nav nav-treeview"><li class="nav-item"><a href="/rims/inventory/type.php?id=' . $type_id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $type_name . '</p></a></li></ul>';
+                    echo '<ul class="nav nav-treeview"><li class="nav-item"><a href="' . $ROOT . 'inventory/type.php?id=' . $type_id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $type_name . '</p></a></li></ul>';
                   }
                   echo '</li>';
                 }
@@ -183,13 +183,13 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/rims/reports/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>reports/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>New report</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/rims/reports" class="nav-link">
+                <a href="<?php echo $ROOT; ?>reports" class="nav-link">
                   <i class="fas fa-circle nav-icon"></i>
                   <p>All reports</p>
                 </a>
@@ -209,7 +209,7 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/rims/collections/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>collections/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
@@ -222,7 +222,7 @@ to get the desired effect
               if ($collections_types_stmt != false){
                 while ($collections_types_row = $collections_types_stmt->fetch(PDO::FETCH_ASSOC)){
                   extract($collections_types_row);
-                  echo '<li class="nav-item"> <a href="/rims/collections/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                  echo '<li class="nav-item"> <a href="' . $ROOT . 'collections/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
                 }
               }
               ?>
@@ -239,7 +239,7 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/rims/pools/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>pools/create.php" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
@@ -252,7 +252,7 @@ to get the desired effect
               if ($pools_types_stmt != false){
                 while ($pools_types_row = $pools_types_stmt->fetch(PDO::FETCH_ASSOC)){
                   extract($pools_types_row);
-                  echo '<li class="nav-item"> <a href="/rims/pools/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                  echo '<li class="nav-item"> <a href="' . $ROOT . 'pools/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
                 }
               }
               ?>
@@ -294,7 +294,7 @@ to get the desired effect
           
             <div class="row">
               <p class="login-box-msg">
-                <small><b>Your credentials are not stored on RIMS.</b> Verification of credentials is performed using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
+                <small><b>Your credentials are not stored on WebIMS.</b> Verification of credentials is performed using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
               </p>
               <div class="col-6 mx-auto">
                 <button type="submit" class="btn btn-default btn-block">Log in</button>
