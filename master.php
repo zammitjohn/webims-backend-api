@@ -286,10 +286,10 @@ to get the desired effect
           <!-- form start -->
           <form role="form" id="loginForm">
             <div class="form-group">
-              <input type="username" name="username" class="form-control" id="username" placeholder="Username">
+              <input type="username" name="username" class="form-control" id="username" placeholder="username or email">
             </div>
             <div class="form-group">
-              <input type="password" name="password" class="form-control" id="password" placeholder="Password" autocomplete="on">
+              <input type="password" name="password" class="form-control" id="password" placeholder="password" autocomplete="on">
             </div>
           
             <div class="row">
@@ -313,7 +313,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 2.1.0
+      <b>Version</b> 2.1.1
     </div>
   </footer>
   
@@ -424,7 +424,7 @@ $(document).ready(function() {
     },
     messages: {
       username: {
-        required: "Please enter a username",
+        required: "Please enter a username or email",
       },
       password: {
         required: "Please provide a password",

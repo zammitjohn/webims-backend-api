@@ -14,19 +14,28 @@ $user = new Users($db);
 $username = $_POST['username'];
 $password = $_POST['password'];
 
-// New LAPD connection
+// LAPD connection, modify the following as required!
 $ldap = ldap_connect('ldap://mt-wi-dc1.telco.mt:389 ldap://mt-wi-dc2.telco.mt:389');
-$ldaprdn = 'telco' . "\\" . $username;
+$ldap_DC_1 = 'telco';
+$ldap_DC_2 = 'mt';
+
 ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+
+// Narrow down search to user
+if (!filter_var($username, FILTER_VALIDATE_EMAIL)) { // not an email address
+    $filter="(sAMAccountName=$username)";
+    $ldaprdn = $ldap_DC_1 . "\\" . $username;  
+} else { // email address
+    $filter="(userPrincipalName=$username)";    
+    $ldaprdn = $username;  
+}
 
 // Bind to LDAP directory: establishes the authentication state for the session
 $bind = @ldap_bind($ldap, $ldaprdn, $password);
 
 if ($bind) { // user found in directory 
-    // narrow down search
-    $filter="(sAMAccountName=$username)";
-    $result = ldap_search($ldap,"DC=telco,DC=mt",$filter);
+    $result = ldap_search($ldap,"DC=" . $ldap_DC_1  . ",DC=" . $ldap_DC_2 . "",$filter);
     $info = ldap_get_entries($ldap, $result);
     for ($i=0; $i<$info["count"]; $i++) {
 

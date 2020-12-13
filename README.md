@@ -21,13 +21,7 @@ Download from [Github releases](https://github.com/zammitjohn/WebIMS/releases).
 Documentation
 -------------
 - [API Reference](docs/api.md)
-
-Configuration
----------------
-1. Deploy DB using webims_db.sql from the corresponding release
-2. Setup and connect DB in [database.php](api/config/database.php)
-3. Modify LDAP server connection in [login.php](api/users/login.php)
-4. Modify branding logo in [img folder](dist/img)     
+- [Deployment](docs/deployment.md)
 
 Browser Support
 ---------------
