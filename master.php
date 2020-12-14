@@ -112,7 +112,7 @@ to get the desired effect
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="<?php echo $ROOT; ?>index.php" class="nav-link">
+            <a href="/WebIMS/" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -294,7 +294,7 @@ to get the desired effect
           
             <div class="row">
               <p class="login-box-msg">
-                <small><b>Your credentials are not stored on WebIMS.</b> Verification of credentials is performed using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
+                <small><b>Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
               </p>
               <div class="col-6 mx-auto">
                 <button type="submit" class="btn btn-default btn-block">Log in</button>
@@ -358,7 +358,7 @@ $(document).ready(function() {
   dataType: 'json',
   success: function(data) {
     if (data['status'] == false) {
-      $("a.d-block").html("Log in"); // change text
+      $("a.d-block").html("Not logged in"); // change text
       $(".card").addClass("collapsed-card"); // hide card content
       $('#modal-login').modal('toggle'); // toggle modal login
     } else {
