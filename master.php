@@ -67,20 +67,9 @@ to get the desired effect
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-      <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="far fa-user"></i>
+      <a onclick="userLogout()" class="nav-link" onmouseover="" style="cursor: pointer;">
+        <i class="fas fa-sign-out-alt"></i>
       </a>
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <span class="dropdown-item dropdown-header"></span>
-        <div class="dropdown-divider"></div>
-        <a onclick="clearSession()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
-          <i class="fas fa-sign-out-alt mr-2"></i> Log out
-        </a>
-        <div class="dropdown-divider"></div>
-        <a onclick="deleteAccount()" class="dropdown-item" onmouseover="" style="cursor: pointer;">
-          <i class="fas fa-trash-alt mr-2"></i> Delete Account
-        </a>
-      </div>
     </ul>
 
   </nav>
@@ -112,7 +101,7 @@ to get the desired effect
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="/WebIMS/" class="nav-link">
+            <a href="<?php echo $ROOT; ?>" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -313,7 +302,7 @@ to get the desired effect
   <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 2.1.1
+      <b>Version</b> 2.1.2
     </div>
   </footer>
   
@@ -364,9 +353,8 @@ $(document).ready(function() {
     } else {
       // populate name text fields
       var name = (data['firstname'] + " " + data['lastname']);
-      $("a.d-block").html(name);
-      $("span.dropdown-item.dropdown-header").html(name);
-
+      $("a.d-block").html(name); // change text
+   
       // ...and disable/hide buttons accordingly
       if (data['canUpdate'] == false) {
         $(".button_action_update").prop("disabled",true);
@@ -446,40 +434,24 @@ $(document).ready(function() {
 });
 </script>
 
-<!-- Remove session info from localstorage -->
+<!-- Log out user -->
 <script>
-function clearSession(){
-  localStorage.removeItem('userId');
-  localStorage.removeItem('sessionId');
-  location.reload();
-}
-</script>
-
-<!-- Remove session info from localstorage -->
-<script>
-function deleteAccount(){
-  var result = confirm("Are you sure you want to delete your account? Associated reports will not be deleted.");
-  if (result == true) {
-    $.ajax({
-      type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '<?php echo $ROOT; ?>api/users/delete.php',
-      dataType: 'json',
-      data: {
-        id: (localStorage.getItem('userId'))
-      },
-      error: function(data) {
-        alert(data.responseText);
-      },
-      success: function(data) {
-        if (data['status'] == true) {
-          alert(data['message']);
-          clearSession();
-        } else {
-          alert(data['message']);
-        }
+function userLogout(){
+  $.ajax({
+    type: "POST",
+    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    url: '<?php echo $ROOT; ?>api/users/logout.php',
+    dataType: 'json',
+    error: function(data) {
+      alert(data.responseText);
+    },
+    success: function(data) {
+      if (data['status'] == true) {
+        location.reload();
+      } else {
+        alert(data['message']);
       }
-    });
-  }
+    }
+  });
 }
 </script>

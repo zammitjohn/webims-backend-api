@@ -6,8 +6,8 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 
 | **Action**           | **Method** | **Headers**           | **Parameters**    | **Response**                                                              | **URL**                         |
 |----------------------|------------|-----------------------|-------------------|---------------------------------------------------------------------------|---------------------------------|
-| **delete**           | `POST`     | Auth-Key Content-Type | id                | status message                                                            | /api/users/delete.php           |
 | **login**            | `POST`     | Content-Type          | username password | status message id username firstname lastname *sessionId* created         | /api/users/login.php            |
+| **logout**           | `POST`     | Auth-Key Content-Type |                   | status message                                                            | /api/users/logout.php           |
 | **read**             | `GET`      | Auth-Key Content-Type |                   | id firstname lastname lastLogin                                           | /api/users/read.php             |
 | **validate_session** | `GET`      | Auth-Key Content-Type |                   | status message firstname lastname canUpdate canCreate canImport canDelete | /api/users/validate_session.php |
 

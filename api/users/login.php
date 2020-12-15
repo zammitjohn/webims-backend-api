@@ -53,7 +53,7 @@ if ($bind) { // user found in directory
             // create array
             $output_arr=array(
                 "status" => true,
-                "message" => "Login successful!",
+                "message" => "Log in successful!",
                 "id" => $row['id'],
                 "username" => $row['username'],
                 "firstname" => $row['firstname'],
@@ -64,7 +64,7 @@ if ($bind) { // user found in directory
         } else {
             $output_arr=array(
                 "status" => false,
-                "message" => "Login failed!"
+                "message" => "Log in failed!"
             );
         }
 

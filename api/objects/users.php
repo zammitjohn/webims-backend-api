@@ -22,14 +22,16 @@ class Users{
         $this->conn = $db;
     }
 
-    // delete user
-    function delete(){
+    // log out user
+    function logout(){
 
-        // query to delete record
-        $query = "DELETE FROM
+        // query to update record
+        $query = "UPDATE
                     " . $this->table_name . "
+                SET
+                    sessionId=NULL
                 WHERE
-                    id= '".$this->id."' AND sessionId='".$this->sessionId."'";
+                    sessionId='".$this->sessionId."'"; 
         
         // prepare query
         $stmt = $this->conn->prepare($query);

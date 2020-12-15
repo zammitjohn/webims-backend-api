@@ -1,5 +1,4 @@
 <?php
- 
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/users.php';
@@ -11,12 +10,8 @@ $db = $database->getConnection();
 // prepare user object
 $user = new users($db);
  
-// set users property values
-$user->id = $_POST['id'];
-
 // API AUTH Key check
 if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    //$user->action_isDelete = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
 if (!$user->validAction()){
@@ -25,16 +20,16 @@ if (!$user->validAction()){
 }
  
 // remove the user
-if($user->delete()){
+if($user->logout()){
     $output_arr=array(
         "status" => true,
-        "message" => "Successfully deleted!"
+        "message" => "Log out successful!"
     );
 }
 else{
     $output_arr=array(
         "status" => false,
-        "message" => "Failed to delete!"
+        "message" => "Log out failed!"
     );
 }
 print_r(json_encode($output_arr));
