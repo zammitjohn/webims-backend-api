@@ -257,6 +257,31 @@ class Inventory{
         }
     }
 
+    // clean OLD inventory items which aren't referenced by collections, registry, pools and reports 
+    function inventorySweep(){
+        $query = "DELETE FROM " . $this->table_name . "  WHERE (inventoryDate < '" . $this->inventoryDate . "') AND id IN (
+                    SELECT id FROM (
+                        SELECT inventory.id FROM inventory
+                        LEFT JOIN collections
+                            ON inventory.id = collections.inventoryId
+                        LEFT JOIN registry
+                            ON inventory.id = registry.inventoryId
+                        LEFT JOIN pools
+                            ON inventory.id = pools.inventoryId    
+                        LEFT JOIN reports
+                            ON inventory.id = reports.inventoryId  
+                        WHERE (registry.inventoryId IS NULL) AND (collections.inventoryId IS NULL) AND (pools.inventoryId IS NULL) AND (reports.inventoryId IS NULL)
+                    ) AS inventory_old
+                )";
+                
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
     function bindValues($stmt){
         if ($this->SKU == ""){
             $stmt->bindValue(':SKU', $this->SKU, PDO::PARAM_NULL);

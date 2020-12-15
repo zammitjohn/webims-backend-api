@@ -12,6 +12,7 @@ $status = false;
 $created_counter = 0;
 $updated_counter = 0;
 $conflict_counter = 0;
+$deleted_counter = 0;
 $modifiedItemIDs = []; // to keep track of modified inventory item IDs
 
 // API AUTH Key check
@@ -130,7 +131,10 @@ if($_FILES["file"]["size"] > 0) {
 
         }
     }
-    fclose($file);	
+    fclose($file);
+    
+    // clean-up operation
+    $deleted_counter = $item->inventorySweep();
 }
 
 
@@ -138,7 +142,8 @@ $result_arr=array(
     "status" => $status,
     "created_count" => $created_counter,
     "updated_count" => $updated_counter,
-    "conflict_count" => $conflict_counter
+    "conflict_count" => $conflict_counter,
+    "deleted_count" => $deleted_counter
 );
 
 print_r(json_encode($result_arr));
