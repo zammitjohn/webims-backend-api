@@ -87,7 +87,9 @@ $(function () {
         },
         { targets: [4], // status column
             "render": function (data, type, row, meta) {
-              if (data == "1") {        
+              if (row.isRepairable == "0") {
+                return '<span class="badge badge-danger">Unrepairable</span>';
+              } else if (data == "1") {        
                 return '<span class="badge badge-success">Closed</span>';
               } else {
                 return '<span class="badge badge-warning">Pending</span>';

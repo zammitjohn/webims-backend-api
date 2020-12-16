@@ -35,7 +35,7 @@ class reports{
         if ($this->userId) {                        
             $query = "SELECT * 
                     FROM `reports` 
-                    WHERE userid = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (AWBreturn IS NULL))
+                    WHERE userid = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
                     ORDER BY `id` DESC";   
 
         } else {    
@@ -43,7 +43,6 @@ class reports{
             $query = "SELECT *, 
                     CASE WHEN replacementSN IS NOT NULL THEN '1'
                         WHEN dateReturned IS NOT NULL THEN '1'
-                        WHEN AWBreturn IS NOT NULL THEN '1'
                         ELSE '0' END AS isClosed
                     FROM " . $this->table_name . " 
                     ORDER BY `id` DESC";                       
@@ -64,7 +63,6 @@ class reports{
         $query = "SELECT *, 
                 CASE WHEN replacementSN IS NOT NULL THEN '1'
                     WHEN dateReturned IS NOT NULL THEN '1'
-                    WHEN AWBreturn IS NOT NULL THEN '1'
                     ELSE '0' END AS isClosed
                 FROM " . $this->table_name . " 
                 WHERE id= '".$this->id."'";                        
@@ -129,6 +127,29 @@ class reports{
         }
         return false;
     }
+
+    // toggle isRepairable bool
+    function toggle_repairable(){
+        
+        // query to update record
+        $query = "UPDATE
+                    " . $this->table_name . "
+
+                SET isRepairable = !isRepairable          
+                
+                WHERE
+                    id='".$this->id."'";
+        
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+            return true;
+        }
+        return false;
+    }    
 
     function bindValues($stmt){
         if ($this->inventoryId == ""){

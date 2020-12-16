@@ -283,7 +283,7 @@ to get the desired effect
           
             <div class="row">
               <p class="login-box-msg">
-                <small><b>Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
+                <small><i class="fas fa-exclamation-triangle text-warning"></i><b> Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
               </p>
               <div class="col-6 mx-auto">
                 <button type="submit" class="btn btn-default btn-block">Log in</button>

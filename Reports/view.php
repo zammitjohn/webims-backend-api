@@ -153,7 +153,16 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
+
+              <div class="row">
+                <div class="col-auto mr-auto">
+                  <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
+                </div>
+                <div class="col-auto">
+                  <input type="Button" id="toggle-repairable-btn" class="btn button_action_update" onClick="ToggleRepairable()" value=""></input>
+                </div>
+              </div>            
+
             </div>
           </form>
         </div>
@@ -300,7 +309,16 @@ $(document).ready(function() {
               $('#AWB').val(data['AWB']);
               $('#AWBreturn').val(data['AWBreturn']);
               $('#RMA').val(data['RMA']);
-              
+
+              // show 'Mark as repairable' or 'Mark as unrepairable' buttons accordingly
+              if ((data['isRepairable']) == '1'){
+                $("#toggle-repairable-btn").addClass("btn-danger");
+                $("#toggle-repairable-btn").prop('value', 'Mark as unrepairable');
+              } else {
+                $("#toggle-repairable-btn").addClass("btn-secondary");
+                $("#toggle-repairable-btn").prop('value', 'Mark as repairable');
+              }
+
               document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
               if ($('#SKU').val() != ""){
                 populateSerialNumbers(faultySN, replacementSN); // populate serial number dropdown with options and actual value from DB
@@ -316,7 +334,6 @@ $(document).ready(function() {
     
     }
   });
-
 
   // load comments
   messagedata = "";
@@ -395,12 +412,12 @@ function NewComment() {
   });
 }
 
-function ToggleStatus() {
+function ToggleRepairable() {
   var id = (<?php echo $_GET['id']; ?>);
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/reports/toggle_status.php',
+    url: '../api/reports/toggle_repairable.php',
     dataType: 'json',
     data: {
       id: id

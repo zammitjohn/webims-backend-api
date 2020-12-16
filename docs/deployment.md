@@ -1,9 +1,9 @@
-# WebIMS Deployment
+# Deployment
 This page describes how to deploy WebIMS on a PHP server with Apache and MySQL.
 
 ## Preparation
 - Download latest version of [WebIMS](https://github.com/zammitjohn/WebIMS/releases) (source code and database file).
-- Prepare valid SSL keys and certificates.
+- Valid SSL keys and certificates.
 
 ## Steps
 1. Stop Apache and MySQL services.

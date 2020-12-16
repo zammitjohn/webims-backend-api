@@ -58,7 +58,8 @@ if ($stmt != false){
                     "AWB" => $AWB,
                     "AWBreturn" => $AWBreturn,
                     "RMA" => $RMA,
-                    "isClosed" => $isClosed
+                    "isClosed" => $isClosed,
+                    "isRepairable" => $isRepairable
                 );
 
             } else {
@@ -79,6 +80,7 @@ if ($stmt != false){
                     "AWB" => $AWB,
                     "AWBreturn" => $AWBreturn,
                     "RMA" => $RMA,
+                    "isRepairable" => $isRepairable
                 );
             }
             array_push($output_arr["reports"], $reports_item);

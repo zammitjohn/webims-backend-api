@@ -47,7 +47,8 @@ if ($stmt != false){
             "AWB" => $row['AWB'],
             "AWBreturn" => $row['AWBreturn'],
             "RMA" => $row['RMA'],
-            "isClosed" => $row['isClosed']
+            "isClosed" => $row['isClosed'],
+            "isRepairable" => $row['isRepairable']
         );
     }
     // make it json format
