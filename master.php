@@ -36,8 +36,16 @@ $db = $database->getConnection();
   <link rel="stylesheet" href="<?php echo $ROOT; ?>dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="<?php echo $ROOT; ?>dist/img/logo.png">  
+  <!-- Favicon via realfavicongenerator.net -->
+  <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $ROOT; ?>dist/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $ROOT; ?>dist/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="<?php echo $ROOT; ?>dist/img/favicon-16x16.png">
+  <link rel="manifest" href="<?php echo $ROOT; ?>dist/img/site.webmanifest">
+  <link rel="mask-icon" href="<?php echo $ROOT; ?>dist/img/safari-pinned-tab.svg" color="#ffc107">
+  <link rel="shortcut icon" href="<?php echo $ROOT; ?>dist/img/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="WebIMS">
+  <meta name="application-name" content="WebIMS">
+  <meta name="theme-color" content="#ffc107">
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -79,7 +87,7 @@ to get the desired effect
   <aside class="main-sidebar elevation-4 sidebar-light-warning">
     <!-- Brand Logo -->
     <a href="<?php echo $ROOT; ?>" class="brand-link navbar-warning">
-      <img src="<?php echo $ROOT; ?>dist/img/logo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="<?php echo $ROOT; ?>dist/img/logo.svg" class="brand-image img-circle elevation-1" style="opacity: .9">
       <span class="brand-text font-weight-light"><b>WebIMS</b></span>
     </a>
 
@@ -88,7 +96,7 @@ to get the desired effect
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="<?php echo $ROOT; ?>dist/img/generic-user.png" class="img-circle elevation-2" alt="User Image">
+          <img src="<?php echo $ROOT; ?>dist/img/generic-user.png" class="img-circle elevation-1" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block"></a>
@@ -299,7 +307,7 @@ to get the desired effect
 
   <!-- Main Footer -->
   <footer class="main-footer">
-  <strong>Developed by <a href="https://zammitjohn.com">John Zammit</a>.</strong> Copyright &copy; <?php echo date('Y'); ?>.
+  Copyright &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com"><strong>John Zammit</strong></a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 2.1.2

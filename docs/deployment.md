@@ -12,6 +12,5 @@ This page describes how to deploy WebIMS on a PHP server with Apache and MySQL.
 4. Copy Certificate Signing Request, Key, Certificate files to \apache\conf\ssl.csr, ssl.key and ssl.crt accordingly.
 5. Deploy database with the database file downloaded. Connect to database in [database.php](../api/config/database.php).
 6. Modify LDAP server connection in [login.php](../api/users/login.php).
-7. Modify branding logo in the [img](../dist/img) directory.
-8. Start Apache and MySQL services.
-9. Confirm webserver is operating with your browser.
+7. Start Apache and MySQL services.
+8. Confirm webserver is operating with your browser.
