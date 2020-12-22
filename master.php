@@ -15,7 +15,7 @@ $db = $database->getConnection();
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
   <title><?php echo $title . " | WebIMS"; ?></title>
@@ -46,8 +46,7 @@ $db = $database->getConnection();
   <meta name="apple-mobile-web-app-title" content="WebIMS">
   <meta name="application-name" content="WebIMS">
   <meta name="theme-color" content="#ffc107">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
+  
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -71,7 +70,7 @@ to get the desired effect
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="https://github.com/zammitjohn/WebIMS" class="nav-link" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://github.com/zammitjohn/WebIMS" class="nav-link" target="_blank" rel="noreferrer"><i class="fab fa-github"></i></a>
       </li>
     </ul>
 
@@ -293,7 +292,7 @@ to get the desired effect
           
             <div class="row">
               <p class="login-box-msg">
-                <small><i class="fas fa-exclamation-triangle text-warning"></i><b> Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank">LDAP</a> authentication.</small>
+                <small><i class="fas fa-exclamation-triangle text-warning"></i><b> Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank" rel="noreferrer">LDAP</a> authentication.</small>
               </p>
               <div class="col-6 mx-auto">
                 <button type="submit" class="btn btn-default btn-block">Log in</button>
@@ -309,7 +308,7 @@ to get the desired effect
 
   <!-- Main Footer -->
   <footer class="main-footer">
-  Copyright &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com"><strong>John Zammit</strong></a>.
+  Copyright &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 2.1.5
@@ -347,6 +346,11 @@ to get the desired effect
 </html>
 
 <script>
+// offline page service worker for PWA
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('<?php echo $ROOT; ?>service-worker.js');
+}
+
 $(document).ready(function validate() {
   // Validate session characteristics
   $.ajax({
