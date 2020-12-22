@@ -14,8 +14,7 @@ Key features:
 
 !["WebIMS Demo"](dist/img/demo.PNG "WebIMS Demo")
 
-WebIMS is based on **[AdminLTE.io](https://adminlte.io)**, which is a fully responsive administration template based on the **[Bootstrap](https://getbootstrap.com)** framework.
-Highly customizable and easy to use. Fits many screen resolutions from small mobile devices to large desktops.
+WebIMS is built on an SQL, PHP and JS/jQuery stack. The theme uses **[AdminLTE.io](https://adminlte.io)**, a fully responsive administration template based on the **[Bootstrap](https://getbootstrap.com)** framework, fits many screen resolutions from small mobile devices to large desktops.
 
 #### Download:
 

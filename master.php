@@ -365,6 +365,13 @@ $(document).ready(function validate() {
         // populate name text fields
         var name = (data['firstname'] + " " + data['lastname']);
         $("a.d-block").html(name); // change text
+
+        // show/hide dashboard user_permission_alert accordingly
+        if ( (data['canUpdate'] == false) || (data['canCreate'] == false) || (data['canImport'] == false) || (data['canDelete'] == false) ) {
+          $("#user_permission_alert").show();
+        } else {
+          $("#user_permission_alert").hide();
+        }
     
         // ...and disable/hide buttons accordingly
         if (data['canUpdate'] == false) {

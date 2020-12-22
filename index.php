@@ -19,7 +19,10 @@ $content = '
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
-
+    <div id="user_permission_alert" class="alert alert-warning" style="display:none;">
+      <h5><i class="icon fas fa-lock"></i>Resticted access</h5>
+      Full permissions are not enabled for this account. Additional permissions require admin approval.
+    </div>  
 
     <!-- Main row -->
     <div class="row">

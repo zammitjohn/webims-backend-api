@@ -1,6 +1,6 @@
 # API Reference
 
-This is a full JSON API reference which interfaces to the extensive WebIMS database.
+This is a full JSON API reference which interfaces to the extensive WebIMS database. To authenticate against the RIMS API, you'll need to pass an authorization header – HTTP_AUTH_KEY with each request.
 
 ## Users
 
