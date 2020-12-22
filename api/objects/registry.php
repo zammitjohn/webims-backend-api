@@ -28,7 +28,9 @@ class Registry{
                 LEFT JOIN reports
                     ON reports.faultySN = registry.id
                     OR reports.replacementSN = registry.id
-                WHERE registry.inventoryId = '".$this->inventoryId."'";
+                WHERE registry.inventoryId = '".$this->inventoryId."'
+                ORDER BY 
+                    `registry`.`id`  DESC";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);

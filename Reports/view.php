@@ -210,7 +210,7 @@ $content = '
               </div>
               <!-- /.card-body -->
               <div class="card-footer">
-                <form action="javascript:NewComment()" method="post">
+                <form id="comment_form" method="post">
                   <div class="input-group">
                     <input type="text" id="user_comment" name="message" placeholder="Write a comment..." class="form-control">
                     <span class="input-group-append">
@@ -347,7 +347,7 @@ $(document).ready(function() {
                 $("#toggle-repairable-btn").prop('value', 'Mark as repairable');
               }
 
-              document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
+              $('#SKU').attr('disabled', 'disabled'); // disable field, to prevent further changes!
               if ($('#SKU').val() != ""){
                 populateSerialNumbers(); // populate serial number dropdown with options and actual value from DB
               }
@@ -362,8 +362,18 @@ $(document).ready(function() {
     
     }
   });
+  
+  loadComments(); // load comments
+  $('#comment_form').on('submit',function (e) {
+    e.preventDefault();
+    NewComment();
+  });
 
-  // load comments
+});
+
+function loadComments() {
+  $("#user_comment").val(""); // clear comment box
+  $(".direct-chat-msg").remove(); //remove messages from DOM
   messagedata = "";
   $.ajax({
     type: "GET",
@@ -379,8 +389,7 @@ $(document).ready(function() {
       $(".direct-chat-messages").append(messagedata);
     }
   });
-
-});
+}
 
 function UpdateItem() {
   $.ajax({
@@ -434,7 +443,7 @@ function NewComment() {
     },
     success: function(result) {
       if (result.status) {
-        location.reload();
+        loadComments();
       }
     }
   });
@@ -455,7 +464,16 @@ function ToggleRepairable() {
     },
     success: function(result) {
       if (result.status) {
-        location.reload();
+        // toggle button without reloading all the DOM
+        if ($("#toggle-repairable-btn").hasClass("btn-secondary")) {
+          $("#toggle-repairable-btn").removeClass("btn-secondary");
+          $("#toggle-repairable-btn").addClass("btn-danger");
+          $("#toggle-repairable-btn").prop('value', 'Mark as unrepairable');
+        } else {
+          $("#toggle-repairable-btn").removeClass("btn-danger");
+          $("#toggle-repairable-btn").addClass("btn-secondary");
+          $("#toggle-repairable-btn").prop('value', 'Mark as repairable');
+        }
       }
     }
   });

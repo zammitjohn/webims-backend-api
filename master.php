@@ -312,7 +312,7 @@ to get the desired effect
   Copyright &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com"><strong>John Zammit</strong></a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 2.1.2
+      <b>Version</b> 2.1.5
     </div>
   </footer>
   
@@ -347,7 +347,7 @@ to get the desired effect
 </html>
 
 <script>
-$(document).ready(function() {
+$(document).ready(function validate() {
   // Validate session characteristics
   $.ajax({
   type: "GET",
@@ -355,32 +355,35 @@ $(document).ready(function() {
   headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
   url: '<?php echo $ROOT; ?>api/users/validate_session.php',
   dataType: 'json',
-  success: function(data) {
-    if (data['status'] == false) {
-      $("a.d-block").html("Not logged in"); // change text
-      $(".card").addClass("collapsed-card"); // hide card content
-      $('#modal-login').modal('toggle'); // toggle modal login
-    } else {
-      // populate name text fields
-      var name = (data['firstname'] + " " + data['lastname']);
-      $("a.d-block").html(name); // change text
-   
-      // ...and disable/hide buttons accordingly
-      if (data['canUpdate'] == false) {
-        $(".button_action_update").prop("disabled",true);
+    success: function(data) {
+      if (data['status'] == false) {
+        $("a.d-block").html("Not logged in"); // change text
+        $(".card").addClass("collapsed-card"); // hide card content
+        $('#modal-login').modal('toggle'); // toggle modal login
+      } else {
+        setTimeout(validate, 10000); // session validate every 10 seconds and upon page refresh
+        // populate name text fields
+        var name = (data['firstname'] + " " + data['lastname']);
+        $("a.d-block").html(name); // change text
+    
+        // ...and disable/hide buttons accordingly
+        if (data['canUpdate'] == false) {
+          $(".button_action_update").prop("disabled",true);
+        }
+        if (data['canCreate'] == false) {
+          $(".button_action_create").prop("disabled",true);
+        }
+        if (data['canImport'] == false) {
+          $(".button_action_import").hide();
+        }
+        if (data['canDelete'] == false) {
+          $(".button_action_delete").prop("disabled",true);
+        }
       }
-      if (data['canCreate'] == false) {
-        $(".button_action_create").prop("disabled",true);
-      }
-      if (data['canImport'] == false) {
-        $(".button_action_import").hide();
-      }
-      if (data['canDelete'] == false) {
-        $(".button_action_delete").prop("disabled",true);
-      }
-
+    },
+    error: function(data) {
+      alert("Failed to validate session!");
     }
-  }
   });
 
   // login form validation

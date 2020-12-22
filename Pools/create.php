@@ -122,7 +122,7 @@ $(document).ready(function() {
       var id = urlParams.get('id'); // inventoryId
       if (id != null) {
         $('#SKU').val(id);
-        document.getElementById("SKU").disabled=true; // disable field
+        $('#SKU').attr('disabled', 'disabled'); // disable field
 
         // populate 'name' field to 'SKU'
         $('#name').val($("#SKU :selected").text());

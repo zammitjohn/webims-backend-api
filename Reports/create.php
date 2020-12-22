@@ -266,7 +266,7 @@ $("#SKU").change(function(){
 });
 
 function populateSerialNumbers() {
-  document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
+  $('#SKU').attr('disabled', 'disabled'); // disable field, to prevent further changes!
 
   $.ajax({
     type: "GET",
