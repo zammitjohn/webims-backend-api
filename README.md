@@ -10,6 +10,9 @@ Key features:
 - Multi-warehouse management
 - Convenient fault reporting options
 - LDAP integration
+- Progressive web application
+
+!["WebIMS Demo"](dist/img/demo.PNG "WebIMS Demo")
 
 WebIMS is based on **[AdminLTE.io](https://adminlte.io)**, which is a fully responsive administration template based on the **[Bootstrap](https://getbootstrap.com)** framework.
 Highly customizable and easy to use. Fits many screen resolutions from small mobile devices to large desktops.
@@ -44,3 +47,7 @@ Contribution are always **welcome and recommended**! Here is how:
 Change log
 ----------
 Visit the [releases](https://github.com/zammitjohn/WebIMS/releases) page to view the changelog
+
+Image Credits
+-------------
+Icon made by [Freepik via Flaticon](https://www.flaticon.com/authors/freepik)

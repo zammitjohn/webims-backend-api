@@ -46,6 +46,8 @@ $db = $database->getConnection();
   <meta name="apple-mobile-web-app-title" content="WebIMS">
   <meta name="application-name" content="WebIMS">
   <meta name="theme-color" content="#ffc107">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -57,7 +59,7 @@ to get the desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition sidebar-mini layout-fixed accent-orange">
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed accent-orange">
 <div class="wrapper">
 
   <!-- Navbar -->
@@ -403,7 +405,6 @@ $(document).ready(function() {
             location.reload();
           } else {
             alert(data['message']);
-            location.reload();
           }
         }
       });

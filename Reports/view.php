@@ -23,7 +23,6 @@ for ($x = 2; $x < sizeof($files); $x++) {
 }
 
 
-## Content goes here
 $content = '
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -42,7 +41,6 @@ $content = '
   </div><!-- /.container-fluid -->
 </section>
 
-
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
@@ -60,10 +58,11 @@ $content = '
                   <option value="">None</option>
                 </select>
               </div>   
+              
               <div class="row">
-
                 <div class="col">
-          
+                  
+                  <hr>
                   <h5>Details</h5>
                   <div class="form-group">
                     <label for="input2">Name</label>
@@ -94,22 +93,42 @@ $content = '
 
                   <hr>
                   <h5>Serial Numbers</h5>
-                  <div class="form-group">
-                    <label for="input7">Faulty</label> <div class="addSN" style="display:inline-block;"> </div>
-                    <select id="faultySN" class="form-control">
-                      <option value="">None</option>
-                    </select>
+                  <div class="form-inline">
+                    <label for="input7">Faulty: </label>
+
+                    <div class="dropdown dropright" style="width: 300px !important;">
+                      <button id="faultySN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                        None
+                      </button>
+                      <div class="dropdown-menu">
+                        <div id="serial_number_faulty" class="serial_number" style="overflow-y:auto; max-height:10vh">
+                          <button type="button" class="dropdown-item" item_id="">None</button>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                   
-                  <div class="form-group">
-                    <label for="input8">Replacement</label> <div class="addSN" style="display:inline-block;"> </div>
-                    <select id="replacementSN" class="form-control">
-                      <option value="">None</option>
-                    </select>
+                  <div class="form-inline">
+                    <label for="input8">Replacement: </label>
+
+                    <div class="dropdown dropright" style="width: 300px !important;">
+                      <button id="replacementSN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                        None
+                      </button>
+                      <div class="dropdown-menu">
+                        <div id="serial_number_replacement" class="serial_number" style="overflow-y:auto; max-height:10vh">
+                          <button type="button" class="dropdown-item" item_id="">None</button>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>  
                 </div>
 
                 <div class="col">
+                  
+                  <hr>
                   <h5>Dates</h5>
                   <div class="form-group">
                     <label for="input9">Requested by RBS</label>
@@ -132,17 +151,23 @@ $content = '
                   </div>
 
                   <hr>
+
                   <h5>Miscellaneous</h5>
-                  <div class="form-group">
-                    <label for="input13">AWB</label>
-                    <input type="text" maxlength="255" class="form-control" id="AWB" placeholder="Enter AWB">
-                  </div>
-                  
-                  <div class="form-group">
-                    <label for="input14">AWB (returned)</label>
-                    <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter AWB returned">
-                  </div>
-                  
+                  <div class="row">
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="input13">AWB</label>
+                        <input type="text" maxlength="255" class="form-control" id="AWB" placeholder="Enter AWB">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="input14">AWB (return)</label>
+                        <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter return AWB">
+                      </div>
+                    </div> 
+                  </div>                     
+                
                   <div class="form-group">
                     <label for="input15">RMA</label>
                     <input type="text" maxlength="255" class="form-control" id="RMA" placeholder="Enter RMA">
@@ -254,6 +279,9 @@ include('../master.php');
 
 <script>
 $(document).ready(function() {
+  selected_faulty_serial_number = "";
+  selected_replacement_serial_number = "";
+
   // populate inventoryId dropdown
   $.ajax({
     type: "GET",
@@ -300,8 +328,8 @@ $(document).ready(function() {
               $('#description').val(data['description']);
               $('#reportNo').val(data['reportNo']);
               $('#userId').val( (data['userId'] == null) ? "" : (data['userId']) ); // JSON: null -> form/SQL: ""
-              var faultySN = ( (data['faultySN'] == null) ? "" : (data['faultySN']) ); // JSON: null -> form/SQL: ""
-              var replacementSN = ( (data['replacementSN'] == null) ? "" : (data['replacementSN']) ); // JSON: null -> form/SQL: ""
+              selected_faulty_serial_number = ( (data['faultySN'] == null) ? "" : (data['faultySN']) ); // JSON: null -> form/SQL: ""
+              selected_replacement_serial_number = ( (data['replacementSN'] == null) ? "" : (data['replacementSN']) ); // JSON: null -> form/SQL: ""
               $('#dateRequested').val(data['dateRequested']);
               $('#dateLeavingRBS').val(data['dateLeavingRBS']);
               $('#dateDispatched').val(data['dateDispatched']);
@@ -321,7 +349,7 @@ $(document).ready(function() {
 
               document.getElementById("SKU").disabled=true; // disable field, to prevent further changes!
               if ($('#SKU').val() != ""){
-                populateSerialNumbers(faultySN, replacementSN); // populate serial number dropdown with options and actual value from DB
+                populateSerialNumbers(); // populate serial number dropdown with options and actual value from DB
               }
             },
             error: function(result) {
@@ -368,8 +396,8 @@ function UpdateItem() {
       description: $("#description").val(),
       reportNo: $("#reportNo").val(),
       userId: $("#userId").val(),
-      faultySN: $("#faultySN").val(),
-      replacementSN: $("#replacementSN").val(),
+      faultySN: selected_faulty_serial_number,
+      replacementSN: selected_replacement_serial_number,
       dateRequested: $("#dateRequested").val(),
       dateLeavingRBS: $("#dateLeavingRBS").val(),
       dateDispatched: $("#dateDispatched").val(),
@@ -433,8 +461,7 @@ function ToggleRepairable() {
   });
 }
 
-function populateSerialNumbers(faultySN, replacementSN) {
-  $('.addSN').append('<a href="../inventory/register.php?id=' +  $("#SKU").val() + '" ><b>+Add</b></a>');
+function populateSerialNumbers() {
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
@@ -445,18 +472,34 @@ function populateSerialNumbers(faultySN, replacementSN) {
       var dropdowndata = "";
       for (var element in data) {
         if (data[element].state == 'New'){
-          dropdowndata += "<option value = '" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</option>";
+          dropdowndata += "<button type='button' class='dropdown-item' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";
         } else {
-          dropdowndata += "<option value = '" + data[element].id + "' hidden>" + "#" + data[element].id + ": " + data[element].serialNumber + "</option>";
+          dropdowndata += "<button type='button' class='dropdown-item disabled' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";
         }
       }
-      // append dropdowndata to serial numbers dropdown
-      $("#faultySN").append(dropdowndata);
-      $("#replacementSN").append(dropdowndata);
 
-      // populate actual value from DB
-      $('#faultySN').val(faultySN);
-      $('#replacementSN').val(replacementSN);
+      // append dropdowndata to serial numbers dropdown
+      $(".serial_number").append(dropdowndata);
+      // show the '+ Add item' dropdown menu option
+      $( '<div class="dropdown-divider"></div><a class="dropdown-item" href="../inventory/register.php?id=' +  $("#SKU").val() + '"> + Add item</a>').appendTo(".dropdown-menu");
+
+      // populate value in field
+      if (selected_faulty_serial_number != ""){
+        $("#faultySN").text($("#serial_number_faulty").find('button[item_id="' + selected_faulty_serial_number + '"]').text());
+      }
+      if (selected_replacement_serial_number != ""){
+        $("#replacementSN").text($("#serial_number_replacement").find('button[item_id="' + selected_replacement_serial_number + '"]').text());
+      }
+
+      // dropdown onclick
+      $('.dropdown-menu button').click(function() {
+        $(this).closest(".dropdown-menu").siblings(".dropdown-toggle").text($(this).text());
+        if ($(this).closest(".serial_number").attr('id') == "serial_number_faulty"){
+          selected_faulty_serial_number = $(this).attr('item_id');
+        } else {
+          selected_replacement_serial_number = $(this).attr('item_id');
+        }
+      });
     }
   });
 }

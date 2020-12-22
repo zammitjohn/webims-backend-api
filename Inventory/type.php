@@ -63,7 +63,7 @@ $content = '
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Quantity Allocated</th>
+                <th>Allocated</th>
                 <th>Supplier</th>
                 <th>Inventory Date</th>                
               </tr>
@@ -75,7 +75,7 @@ $content = '
                 <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
-                <th>Quantity Allocated</th>
+                <th>Allocated</th>
                 <th>Supplier</th>
                 <th>Inventory Date</th>                
               </tr>
