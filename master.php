@@ -308,7 +308,7 @@ to get the desired effect
 
   <!-- Main Footer -->
   <footer class="main-footer">
-  Copyright &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
+  &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 2.1.5
@@ -346,7 +346,7 @@ to get the desired effect
 </html>
 
 <script>
-// offline page service worker for PWA
+// service worker for PWA
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('<?php echo $ROOT; ?>service-worker.js');
 }
