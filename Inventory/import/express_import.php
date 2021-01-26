@@ -88,7 +88,7 @@ if($_FILES["file"]["size"] > 0) {
             } else if (stristr($data_type,"repeater")) {
                 $data_type = 3; // Repeaters
             } else if (stristr($data_type,"spare")) {
-                $data_type = 2; // Collections
+                $data_type = 2; // Spares
             } else {
                 $data_type = 1; // General
             }

@@ -1,25 +1,23 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/pools.php';
+include_once '../objects/projects.php';
 include_once '../objects/users.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare pools item object
-$item = new Pools($db);
+// prepare projects item object
+$item = new Projects($db);
  
 // set item property values
 $item->inventoryId = $_POST['inventoryId'];
 $item->type = $_POST['type'];
-$item->pool = $_POST['pool'];
-$item->name = $_POST['name'];
 $item->description = $_POST['description'];
-$item->qtyOrdered = $_POST['qtyOrdered'];
-$item->qtyStock = $_POST['qtyStock'];
+$item->qty = $_POST['qty'];
 $item->notes = $_POST['notes'];
+$item->userId = $_POST['userId'];
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object
@@ -40,11 +38,8 @@ if($item->create()){
         "id" => $item->id,
         "inventoryId" => $item->inventoryId,
         "type" => $item->type,
-        "pool" => $item->pool,
-        "name" => $item->name,
         "description" => $item->description,
-        "qtyOrdered" => $item->qtyOrdered,
-        "qtyStock" => $item->qtyStock,
+		"qty" => $item->qty,
         "notes" => $item->notes	
     );
 }

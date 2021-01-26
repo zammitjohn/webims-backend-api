@@ -1,15 +1,14 @@
 <?php
-class Collections{
+class Projects{
  
     // database connection and table name
     private $conn;
-    private $table_name = "collections";
+    private $table_name = "projects";
  
     // object properties
     public $id;
     public $inventoryId;
     public $type;
-    public $name;
     public $description;
     public $qty;
     public $notes;
@@ -20,46 +19,85 @@ class Collections{
         $this->conn = $db;
     }
 
-    // read collections
+    // read projects
     function read(){
 
-        $query = "SELECT 
-            collections.id, collections.inventoryId, collections.name, collections_types.id AS type_id,
-            collections_types.name AS type_name, collections.description, collections.qty, collections.notes, 
-            users.firstname, users.lastname
-        FROM 
-            " . $this->table_name . " 
-            JOIN 
-                collections_types
-            ON 
-                collections.type = collections_types.id
-            LEFT JOIN 
-                users
-            ON 
-                collections.userId = users.id";               
-    
-        // different SQL query according to API call
-        if ($this->type) {
-            // select query for particular type
-            $query .= "
-            WHERE
-			    collections_types.id= '".$this->type."'                        
-            ORDER BY 
-                `collections`.`id`  DESC";   
-
-        } else if ($this->inventoryId){
+        if ($this->inventoryId){
             // select query for particular inventoryId
-            $query .= "
+            $query = "SELECT 
+                projects.id, projects.inventoryId, inventory.SKU AS inventory_SKU, inventory_categories.name AS inventory_category, projects_types.id AS type_id,
+                projects_types.name AS type_name, projects.description, SUM(projects.qty) AS qty, projects.notes, 
+                users.firstname, users.lastname
+            FROM 
+                " . $this->table_name . " 
+                JOIN 
+                    projects_types
+                ON 
+                    projects.type = projects_types.id
+
+                JOIN 
+                    inventory
+                ON 
+                    projects.inventoryId = inventory.id
+
+                JOIN 
+                    inventory_categories
+                ON 
+                    inventory.category = inventory_categories.id                
+
+                LEFT JOIN 
+                    users
+                ON 
+                    projects.userId = users.id                    
             WHERE
-                collections.inventoryId= '".$this->inventoryId."'                        
+                projects.inventoryId= '".$this->inventoryId."'
+            GROUP BY 
+                projects.type                     
             ORDER BY 
-                `collections`.`id`  DESC";
+                `projects`.`id`  DESC";
 
         } else {
-             // select query
-            $query .= "
-            ORDER BY 
-                `collections`.`id`  DESC";   
+            $query = "SELECT 
+                projects.id, projects.inventoryId, inventory.SKU AS inventory_SKU, inventory_categories.name AS inventory_category, projects_types.id AS type_id,
+                projects_types.name AS type_name, projects.description, projects.qty, projects.notes, 
+                users.firstname, users.lastname
+            FROM 
+                " . $this->table_name . " 
+                JOIN 
+                    projects_types
+                ON 
+                    projects.type = projects_types.id
+
+                JOIN 
+                    inventory
+                ON 
+                    projects.inventoryId = inventory.id
+
+                JOIN 
+                    inventory_categories
+                ON 
+                    inventory.category = inventory_categories.id                
+
+                LEFT JOIN 
+                    users
+                ON 
+                    projects.userId = users.id";               
+        
+            // different SQL query according to API call
+            if ($this->type) {
+                // select query for particular type
+                $query .= "
+                WHERE
+                    projects_types.id= '".$this->type."'                        
+                ORDER BY 
+                    `projects`.`id`  DESC";   
+
+            } else {
+                // select query
+                $query .= "
+                ORDER BY 
+                    `projects`.`id`  DESC";   
+            }
         }
 
         // prepare query statement
@@ -96,7 +134,7 @@ class Collections{
         $query = "INSERT INTO  
                     ". $this->table_name ."
                 SET
-                    inventoryId=:inventoryId, type=:type, name=:name, description=:description, qty=:qty, 
+                    inventoryId=:inventoryId, type=:type, description=:description, qty=:qty, 
                     notes=:notes, userId=:userId";
 
         // prepare and bind query
@@ -120,7 +158,7 @@ class Collections{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=:inventoryId, type=:type, name=:name, description=:description, qty=:qty, 
+                    inventoryId=:inventoryId, type=:type, description=:description, qty=:qty, 
                     notes=:notes, userId=:userId                          
                 WHERE
                     id='".$this->id."'";            
@@ -167,11 +205,6 @@ class Collections{
             $stmt->bindValue(':type', $this->type, PDO::PARAM_NULL);
         } else {
             $stmt->bindValue(':type', $this->type);
-        }
-        if ($this->name == ""){
-            $stmt->bindValue(':name', $this->name, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':name', $this->name);
         }
         if ($this->description == ""){
             $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);

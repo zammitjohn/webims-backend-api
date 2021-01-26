@@ -1,10 +1,10 @@
 WebIMS
 ============
-WebIMS is a modern web-based inventory, fault report and warehouse management solution for Telco providers. WebIMS allows you to stay on top of your inventory levels and value across multiple locations, as well as multiple projects - pools and collections. The interface makes it easy to search and filter your inventory and to assess the state of your current stock. It also facilitates tracking of item fault report progresses for better recordkeeping.
+WebIMS is a modern web-based inventory, fault report and warehouse management solution for Telco providers. WebIMS allows you to stay on top of your inventory levels and value across multiple locations, as well as multiple projects. The interface makes it easy to search and filter your inventory and to assess the state of your current stock. It also facilitates tracking of item fault report progresses for better recordkeeping.
 
 Key features:
-- Item collections, allocations, pooling and registration
-- Easy sorting and filtering
+- Project allocations and item registration
+- Easy table view sorting and filtering
 - Batch comma-separated values (CSV) file imports
 - Multi-warehouse management
 - Convenient fault reporting options

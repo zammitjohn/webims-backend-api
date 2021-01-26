@@ -1,17 +1,17 @@
 <?php
 // include database and object files
 include_once '../../config/database.php';
-include_once '../../objects/collections_types.php';
+include_once '../../objects/projects_types.php';
 include_once '../../objects/users.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare collections type property object
+// prepare projects type property object
 $property = new Collections_Types($db);
 
-// set id/userId property of collections type property to be shown 
+// set id/userId property of projects type property to be shown 
 if (isset($_GET['id'])) {
     $property->id = $_GET['id'];
 }
@@ -27,7 +27,7 @@ if (!$user->validAction()){
     die();
 }
  
-// query collections type property
+// query projects type property
 $stmt = $property->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
@@ -35,7 +35,7 @@ if ($stmt != false){
     // check if more than 0 record found
     if($num>0){
     
-        // collections type property array
+        // projects type property array
         $output_arr=array();
         $output_arr["Collections_Types"]=array();
     

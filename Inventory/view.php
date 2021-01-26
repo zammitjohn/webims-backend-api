@@ -127,10 +127,9 @@ $content = '
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon button_action_create" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                     <div class="dropdown-menu" role="menu">
-                      <a class="dropdown-item" onClick=addTo(1);>Collections</a>
-                      <a class="dropdown-item" onClick=addTo(2);>Buffer Pools</a>
+                      <a class="dropdown-item" onClick=addTo(1);>Projects</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" onClick=addTo(3);>New fault report</a>
+                      <a class="dropdown-item" onClick=addTo(2);>New fault report</a>
                     </div>
                   </button>
               </div>
@@ -161,22 +160,21 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <input type="Button" class="btn btn-primary button_action_create" onClick="addTo(4)" value="Add"></input>
+            <input type="Button" class="btn btn-primary button_action_create" onClick="addTo(3)" value="Add"></input>
           </div>
         </div>
         <!-- /.card -->
 
-        <div id="collection_allocations" class="card" style="display:none">
+        <div id="project_allocations" class="card" style="display:none">
           <div class="card-header">
-            <h3 class="card-title">Collection Allocations</h3>
+            <h3 class="card-title">Project Allocations</h3>
           </div>
           <!-- /.card-header --> 
           <div class="card-body table-responsive p-0" style="max-height: 300px;">
             <table id="collections_table" table class="table table-hover text-nowrap">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Collection</th>
+                  <th>Project</th>
                   <th>Quantity</th>
                   <th>Added by</th>
                 </tr>
@@ -288,20 +286,20 @@ $(document).ready(function() {
     },
   });
   
-  // load collection table
+  // load project table
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/collections/read" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
+    url: "../api/projects/read" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
       var collection_table_data = "";
       for (var element in data) {
-        $('#collection_allocations').show();
+        $('#project_allocations').show();
         collection_table_data += "<tr>" +
-          "<td><a href='../collections/view?id=" + data[element].id + "'>" + data[element].name + "</a></td>" +
-          "<td><a href='../collections/type?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
+
+          "<td><a href='../projects/type?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
           "<td>" + data[element].qty + "</td>" +
           "<td>" + data[element].firstname + " " + data[element].lastname + "</td>" +
           "</tr>";
@@ -392,7 +390,7 @@ function UpdateItem() {
 
 function Remove() {
   var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want to delete the item? This will delete all associated registrations! Items from Projects will not be deleted.");
+  var result = confirm("Are you sure you want to delete the item? This will delete all registrations and allocations!");
   if (result == true) {
     $.ajax({
       type: "POST",
@@ -441,10 +439,8 @@ function Deregister(id) {
 
 function addTo(type) {
   if (type == 1){
-    location.href = "../collections/create?id=" + (<?php echo $_GET['id']; ?>);
+    location.href = "../projects/create?id=" + (<?php echo $_GET['id']; ?>);
   } else if (type == 2) {
-    location.href = "../pools/create?id=" + (<?php echo $_GET['id']; ?>);
-  } else if (type == 3) {
     location.href = "../reports/create?id=" + (<?php echo $_GET['id']; ?>);
   } else {
     location.href = "../inventory/register?id=" + (<?php echo $_GET['id']; ?>);

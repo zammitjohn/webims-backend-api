@@ -2,13 +2,13 @@
 ## Page specific code
 // include database and object files
 include_once '../api/config/database.php';
-include_once '../api/objects/collections_types.php';
+include_once '../api/objects/projects_types.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// prepare collections type property object
+// prepare projects type property object
 $collections_types_object = new Collections_Types($db);
 $collections_types_object->id = $_GET['id'];
 
@@ -27,11 +27,11 @@ $content = '
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Collections</h1>
+        <h1>Projects</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item">Collections</li>
+          <li class="breadcrumb-item">Projects</li>
           <li class="breadcrumb-item active">' . $type_name . '</li>
         </ol>
       </div>
@@ -53,7 +53,7 @@ $content = '
           <table id="table1" class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>SKU</th>
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Notes</th>
@@ -74,7 +74,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Collections";
+$title = "Projects";
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -89,11 +89,11 @@ $(document).ready(function() {
       responsive: true,
       ajax: {
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/collections/read" + "?type=" + <?php echo $_GET['id']; ?>,
+          url: "../api/projects/read" + "?type=" + <?php echo $_GET['id']; ?>,
           dataSrc: ''
       },
       columns: [
-          { data: 'name' },
+          { data: 'inventory_SKU' },
           { data: 'description' },
           { data: 'qty' },
           { data: 'notes' }		
@@ -101,7 +101,7 @@ $(document).ready(function() {
       columnDefs: [ 
         { targets: [0],
           "render": function (data, type, row, meta) {
-          return '<a href="view?id=' + row.id + '">' + data + '</a>';
+          return '<a href="view?id=' + row.id + '">' + data + " (" + row.inventory_category + ")" + '</a>';
           }  
         }
       ]

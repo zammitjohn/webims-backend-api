@@ -3,8 +3,7 @@
 include_once 'api/config/database.php';
 include_once 'api/objects/inventory_categories.php';
 include_once 'api/objects/inventory_types.php';
-include_once 'api/objects/collections_types.php';
-include_once 'api/objects/pools_types.php';
+include_once 'api/objects/projects_types.php';
 
 // get database connection
 $database = new Database();
@@ -198,63 +197,18 @@ to get the desired effect
           <li class="nav-header">PROJECTS</li>
 
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cubes"></i>
-              <p>
-                Collections
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>collections/create" class="nav-link">
-                  <i class="fas fa-plus nav-icon"></i>
-                  <p>Add item</p>
-                </a>
-              </li>
-              <?php
-              ## Building collections sidebar tree
-              $collections_types_object = new Collections_Types($db);
-              $collections_types_stmt = $collections_types_object->read();
+            <?php
+            ## Building projects sidebar tree
+            $collections_types_object = new Collections_Types($db);
+            $collections_types_stmt = $collections_types_object->read();
 
-              if ($collections_types_stmt != false){
-                while ($collections_types_row = $collections_types_stmt->fetch(PDO::FETCH_ASSOC)){
-                  extract($collections_types_row);
-                  echo '<li class="nav-item"> <a href="' . $ROOT . 'collections/type?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
-                }
+            if ($collections_types_stmt != false){
+              while ($collections_types_row = $collections_types_stmt->fetch(PDO::FETCH_ASSOC)){
+                extract($collections_types_row);
+                echo '<li class="nav-item"> <a href="' . $ROOT . 'projects/type?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
               }
-              ?>
-            </ul>
-          </li>
-
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-coins"></i>
-              <p>
-                Buffer Pools
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>pools/create" class="nav-link">
-                  <i class="fas fa-plus nav-icon"></i>
-                  <p>Add item</p>
-                </a>
-              </li>
-              <?php
-              ## Building pools sidebar tree
-              $pools_types_object = new Pools_Types($db);
-              $pools_types_stmt = $pools_types_object->read();
-
-              if ($pools_types_stmt != false){
-                while ($pools_types_row = $pools_types_stmt->fetch(PDO::FETCH_ASSOC)){
-                  extract($pools_types_row);
-                  echo '<li class="nav-item"> <a href="' . $ROOT . 'pools/type?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
-                }
-              }
-              ?>
-            </ul>
+            }
+            ?>
           </li>
 
         </ul>
@@ -311,7 +265,7 @@ to get the desired effect
   &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 2.1.5
+      <b>Version</b> 2.2.0
     </div>
   </footer>
   

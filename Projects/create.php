@@ -5,12 +5,12 @@ $content = '
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Collections item</h1>
+        <h1>Add item</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item">Collections</li>
-          <li class="breadcrumb-item active">Item</li>
+          <li class="breadcrumb-item">Projects</li>
+          <li class="breadcrumb-item active">Add item</li>
         </ol>
       </div>
     </div>
@@ -32,41 +32,34 @@ $content = '
               <div class="form-group">
                 <label for="input1">Inventory SKU</label>
                 <select id="SKU" class="form-control">
-                  <option value="">None</option>
                 </select>
-              </div>       
+              </div>        
 
               <div class="form-group">
-                <label for="input2">Name</label>
-                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter name">
-              </div>              
-
-              <div class="form-group">
-                <label for="input3">Collection</label>
+                <label for="input2">Project</label>
                 <select id="type" class="form-control">
                 </select>
-              </div>       
+              </div>
               
               <div class="form-group">
-                <label for="input4">Description</label>
+                <label for="input3">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
               
               <div class="form-group">
-                <label for="input5">Quantity</label>
+                <label for="input4">Quantity</label>
                 <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
               </div>
               
               <div class="form-group">
-                <label for="input6">Miscellaneous</label>
+                <label for="input5">Miscellaneous</label>
                 <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Notes">
               </div>
             
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
-              <input type="Button" class="btn btn-danger button_action_delete" onClick="Remove()" value="Delete"></input>
+              <input type="Button" class="btn btn-primary button_action_create" onClick="AddItem()" value="Submit"></input>
             </div>
           </form>
         </div>
@@ -78,7 +71,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Collections Item #" . $_GET['id'];
+$title = "Add item";
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -96,64 +89,55 @@ $(document).ready(function() {
       var dropdowndata = "";
       for (var element in data) {
         dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].SKU + " (" + data[element].category_name + ") " + "</option>";
+
       }
       // append dropdowndata to SKU dropdown
       $("#SKU").append(dropdowndata);
+
+      // populate fields on 'add to'
+      var urlParams = new URLSearchParams(window.location.search);
+      var id = urlParams.get('id'); // inventoryId
+      if (id != null) {
+        $('#SKU').val(id);
+        $('#SKU').attr('disabled', 'disabled'); // disable fields      
+      }
 
       // populate type dropdown
       $.ajax({
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/collections/types/read",
+        url: "../api/projects/types/read",
         dataType: 'json',
         success: function(data) {
-          dropdowndata = "";
+          var dropdowndata = "";
           for (var element in data) {
             dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
           }
           // append dropdowndata to SKU dropdown
           $("#type").append(dropdowndata);
-
-
-          // populate form
-          $.ajax({
-            type: "GET",
-            cache: false, // due to aggressive caching on IE 11
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/collections/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
-            dataType: 'json',
-            success: function(data) {
-              $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
-              $('#type').val(data['type']);
-              $('#name').val(data['name']);
-              $('#description').val(data['description']);
-              $('#qty').val(data['qty']);
-              $('#notes').val(data['notes']);
-            },
-            error: function(result) {
-              console.log(result);
-            },
-          });
+        },
+        error: function(data) {
+          console.log(data);
         }
       });
 
     }
 
   });
+
 });
 
-function UpdateItem() {
+  
+function AddItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/collections/update',
+    url: '../api/projects/create',
     dataType: 'json',
     data: {
-      id: <?php echo $_GET['id']; ?>,
       inventoryId: $("#SKU").val(),
       type: $("#type").val(),
-      name: $("#name").val(),
       description: $("#description").val(),
       qty: $("#qty").val(),
       notes: $("#notes").val(),
@@ -162,37 +146,12 @@ function UpdateItem() {
     error: function(result) {
       alert(result.statusText);
     },
-  success: function(result) {
+    success: function(result) {
       alert(result.message);
-      if (result.status) {
-        window.location.href = '../collections/type?id=' + $("#type").val();
+      if (result.status == true) {
+        window.location.href = '../projects/type?id=' + $("#type").val();
       }
     }
   });
-}
-
-function Remove() {
-  var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want to delete the item?");
-  if (result == true) {
-    $.ajax({
-      type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/collections/delete',
-      dataType: 'json',
-      data: {
-        id: id
-      },
-      error: function(result) {
-        alert(result.statusText);
-      },
-      success: function(result) {
-        alert(result.message);
-        if (result.status) {
-          window.location.href = '../collections/type?id=' + $("#type").val();
-        }
-      }
-    });
-  }
 }
 </script>

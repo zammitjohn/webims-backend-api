@@ -1,31 +1,23 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/pools.php';
+include_once '../objects/projects.php';
 include_once '../objects/users.php';
- 
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare pools item object
-$item = new Pools($db);
+// prepare projects item object
+$item = new Projects($db);
  
-// set pools item property values
+// set projects item property values
 $item->id = $_POST['id'];
-$item->inventoryId = $_POST['inventoryId'];
-$item->type = $_POST['type'];
-$item->pool = $_POST['pool'];
-$item->name = $_POST['name'];
-$item->description = $_POST['description'];
-$item->qtyOrdered = $_POST['qtyOrdered'];
-$item->qtyStock = $_POST['qtyStock'];
-$item->notes = $_POST['notes'];
 
 // API AUTH Key check
 $user = new Users($db); // prepare users object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    $user->action_isUpdate = true;
+    $user->action_isDelete = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
 if (!$user->validAction()){
@@ -33,17 +25,17 @@ if (!$user->validAction()){
     die();
 }
  
-// create the pools item
-if($item->update()){
+// remove the projects item
+if($item->delete()){
     $output_arr=array(
         "status" => true,
-        "message" => "Successfully updated!"
+        "message" => "Successfully deleted!"
     );
 }
 else{
     $output_arr=array(
         "status" => false,
-        "message" => "Failed to update!"
+        "message" => "Failed to delete!"
     );
 }
 print_r(json_encode($output_arr));

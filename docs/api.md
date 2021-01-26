@@ -41,26 +41,6 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 
 ---
 
-## Pools
-
-| **Action**      | **Method** | **Headers**           | **Parameters**                                                      | **Response**                                                                       | **URL**                |
-|-----------------|------------|-----------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------|------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type pool name description qtyOrdered qtyStock notes    | status message id inventoryId type pool name description qtyOrdered qtyStock notes | /api/pools/create      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                  | status message                                                                     | /api/pools/delete      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                  | id inventoryId type pool name description qtyOrdered qtyStock notes                | /api/pools/read_single |
-| **read**        | `GET`      | Auth-Key Content-Type | type pool                                                           | id tech_id tech_name pool name description qtyOrdered qtyStock notes               | /api/pools/read        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type pool name description qtyOrdered qtyStock notes | status message                                                                     | /api/pools/update      |
-
----
-
-## Pools Types
-
-| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**               |
-|------------|------------|-----------------------|----------------|--------------|-----------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | id             | id name qty  | /api/pools/types/read |
-
----
-
 ## Registry
 
 | **Action** | **Method** | **Headers**           | **Parameters**                         | **Response**                                             | **URL**              |
@@ -92,23 +72,23 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 
 ---
 
-## Collections
+## Projects
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                        | **Response**                                                                   | **URL**                      |
-|-----------------|------------|-----------------------|-------------------------------------------------------|--------------------------------------------------------------------------------|------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type name description qty notes userId    | status message id inventoryId type name description qty notes                  | /api/collections/create      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                    | status message                                                                 | /api/collections/delete      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                    | id inventoryId type name description qty notes                                 | /api/collections/read_single |
-| **read**        | `GET`      | Auth-Key Content-Type | type inventoryId                                      | id inventoryId type_id type_name name description qty notes firstname lastname | /api/collections/read        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type name description qty notes userId | status message                                                                 | /api/collections/update      |
+| **Action**      | **Method** | **Headers**           | **Parameters**                                   | **Response**                                                                            | **URL**                   |
+|-----------------|------------|-----------------------|--------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------|
+| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type description qty notes userId    | status message id inventoryId type description qty notes                                | /api/projects/create      |
+| **delete**      | `POST`     | Auth-Key Content-Type | id                                               | status message                                                                          | /api/projects/delete      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                               | id inventoryId type description qty notes                                               | /api/projects/read_single |
+| **read**        | `GET`      | Auth-Key Content-Type | type inventoryId                                 | id inventoryId type_id type_name inventory_SKU description qty notes firstname lastname | /api/projects/read        |
+| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type description qty notes userId | status message                                                                          | /api/projects/update      |
 
 ---
 
-## Collections Types
+## Projects Types
 
 | **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                       |
 |------------|------------|-----------------------|----------------|--------------|-------------------------------|
-| **create** | `POST`     | Auth-Key Content-Type | name userId    | name         | /api/collections/types/create |
-| **read**   | `GET`      | Auth-Key Content-Type | id userId      | id name      | /api/collections/types/read   |
+| **create** | `POST`     | Auth-Key Content-Type | name userId    | name         | /api/projects/types/create |
+| **read**   | `GET`      | Auth-Key Content-Type | id userId      | id name      | /api/projects/types/read   |
 
 ---

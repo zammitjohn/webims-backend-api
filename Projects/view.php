@@ -5,11 +5,11 @@ $content = '
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1>Pools item</h1>
+        <h1>Projects item</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item">Buffer Pools</li>
+          <li class="breadcrumb-item">Projects</li>
           <li class="breadcrumb-item active">Item</li>
         </ol>
       </div>
@@ -28,55 +28,36 @@ $content = '
           <!-- form start -->
           <form role="form">
             <div class="card-body">
-              
+
               <div class="form-group">
                 <label for="input1">Inventory SKU</label>
                 <select id="SKU" class="form-control">
                   <option value="">None</option>
                 </select>
-              </div>  
+              </div>                  
 
               <div class="form-group">
-                <label for="input2">Name</label>
-                <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter name">
-              </div>
+                <label for="input2">Project</label>
+                <select id="type" class="form-control">
+                </select>
+              </div>       
               
               <div class="form-group">
-                <div class="row">
-                  <div class="col-6 col-sm-3">
-                    <label for="input3">Type</label>
-                    <select id="type" class="form-control">
-                    </select>
-                  </div>
-                  <div class="col-6 col-sm-3">
-                    <label for="input4">Pool</label>
-                    <select id="pool" class="form-control">
-                    </select>
-                  </div>
-                </div>
-              </div>  
-
-              <div class="form-group">
-                <label for="input5">Description</label>
+                <label for="input3">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
               
               <div class="form-group">
-                <label for="input6">Quantity ordered</label>
-                <input type="number" min="0" max="9999" class="form-control" id="qtyOrdered" placeholder="Enter quantity">
+                <label for="input4">Quantity</label>
+                <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
               </div>
               
               <div class="form-group">
-                <label for="input7">Quantity in stock</label>
-                <input type="number" min="0" max="9999" class="form-control" id="qtyStock" placeholder="Enter quantity">
-              </div>
-
-              <div class="form-group">
-                <label for="input8">Miscellaneous</label>
+                <label for="input5">Miscellaneous</label>
                 <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Notes">
               </div>
             
-              </div>
+            </div>
             <!-- /.card-body -->
             <div class="card-footer">
               <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
@@ -92,7 +73,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Pools item #" . $_GET['id'];
+$title = "Projects Item #" . $_GET['id'];
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -119,7 +100,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/pools/types/read",
+        url: "../api/projects/types/read",
         dataType: 'json',
         success: function(data) {
           dropdowndata = "";
@@ -129,47 +110,19 @@ $(document).ready(function() {
           // append dropdowndata to SKU dropdown
           $("#type").append(dropdowndata);
 
+
           // populate form
           $.ajax({
             type: "GET",
             cache: false, // due to aggressive caching on IE 11
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/pools/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
+            url: "../api/projects/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
               $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
               $('#type').val(data['type']);
-
-
-              $.ajax({
-                type: "GET",
-                cache: false, // due to aggressive caching on IE 11
-                headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-                url: "../api/pools/types/read?id=" + data['type'],
-                dataType: 'json',
-                success: function(list) {
-                  var dropdowndata = "";
-                  for (var element in list) {
-                    for (var $p = 1; $p <= list[element].qty; $p++) {
-                      dropdowndata += "<option value = '" + $p + "'>" + "#" + $p + "</option>";
-                    }
-                  }
-                  
-                  $("#type").prop('disabled', true); // disable type field
-                  $("#pool").append(dropdowndata); // append dropdowndata to pool dropdown
-                  $('#pool').val(data['pool']); // select correct pool
-                
-                },
-                error: function(data) {
-                  console.log(data);
-                },
-              });
-
-              
-              $('#name').val(data['name']);
               $('#description').val(data['description']);
-              $('#qtyOrdered').val(data['qtyOrdered']);
-              $('#qtyStock').val(data['qtyStock']);
+              $('#qty').val(data['qty']);
               $('#notes').val(data['notes']);
             },
             error: function(result) {
@@ -177,38 +130,35 @@ $(document).ready(function() {
             },
           });
         }
-      });          
+      });
 
     }
 
   });
 });
 
-
 function UpdateItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/pools/update',
+    url: '../api/projects/update',
     dataType: 'json',
     data: {
       id: <?php echo $_GET['id']; ?>,
       inventoryId: $("#SKU").val(),
       type: $("#type").val(),
-      pool: $("#pool").val(),
-      name: $("#name").val(),
       description: $("#description").val(),
-      qtyOrdered: $("#qtyOrdered").val(),
-      qtyStock: $("#qtyStock").val(),
-      notes: $("#notes").val()
+      qty: $("#qty").val(),
+      notes: $("#notes").val(),
+      userId: localStorage.getItem('userId')
     },
     error: function(result) {
       alert(result.statusText);
     },
-    success: function(result) {
+  success: function(result) {
       alert(result.message);
-      if (result.status == true) {
-        window.location.href = '../pools/type?id=' + $("#type").val();
+      if (result.status) {
+        window.location.href = '../projects/type?id=' + $("#type").val();
       }
     }
   });
@@ -221,7 +171,7 @@ function Remove() {
     $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/pools/delete',
+      url: '../api/projects/delete',
       dataType: 'json',
       data: {
         id: id
@@ -232,7 +182,7 @@ function Remove() {
       success: function(result) {
         alert(result.message);
         if (result.status) {
-          window.location.href = '../pools/type?id=' + $("#type").val();
+          window.location.href = '../projects/type?id=' + $("#type").val();
         }
       }
     });

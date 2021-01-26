@@ -1,17 +1,17 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/pools.php';
+include_once '../objects/projects.php';
 include_once '../objects/users.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare pools item object
-$item = new Pools($db);
+// prepare projects item object
+$item = new Projects($db);
 
-// set ID property of pools item to be edited
+// set ID property of projects item to be edited
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // API AUTH Key check
@@ -22,7 +22,7 @@ if (!$user->validAction()){
     die();
 }
 
-// read the details of pools item to be edited
+// read the details of projects item to be edited
 $stmt = $item->read_single();
 
 if ($stmt != false){
@@ -34,11 +34,8 @@ if ($stmt != false){
             "id" => $row['id'],
             "inventoryId" => $row['inventoryId'],
             "type" => $row['type'],
-            "pool" => $row['pool'],
-            "name" => $row['name'],
             "description" => $row['description'],
-            "qtyOrdered" => $row['qtyOrdered'],
-            "qtyStock" => $row['qtyStock'],
+            "qty" => $row['qty'],
             "notes" => $row['notes']
         );
     }

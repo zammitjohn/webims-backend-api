@@ -57,7 +57,7 @@ $content = '
 
         <div class="card">
           <div class="card-header border-transparent">
-            <h3 class="card-title">My Collections</h3>
+            <h3 class="card-title">My Projects</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body p-0">
@@ -71,8 +71,8 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-newcollection">New Collection</button> 
-            <a href="collections/create.php" class="btn btn-sm btn-info">Add Item</a>           
+            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-newcollection">New Project</button> 
+            <a href="projects/create.php" class="btn btn-sm btn-info">Add Item</a>           
           </div>
           <!-- /.card-footer -->
         </div>
@@ -107,7 +107,7 @@ $content = '
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">New Collection</h4>
+          <h4 class="modal-title">New Project</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -115,7 +115,7 @@ $content = '
         <!-- form start -->
         <form role="form" id="new_collection">
           <div class="modal-body">
-            <input type="text" class="form-control" id="collection_name" maxlength="20" placeholder="Enter collection name">
+            <input type="text" class="form-control" id="collection_name" maxlength="20" placeholder="Enter project name">
           </div>
           <div class="modal-footer justify-content-between">
             <button type="submit" class="btn btn-primary button_action_create">Submit</button>
@@ -186,13 +186,13 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/collections/types/read.php" + "?userId=" + localStorage.getItem('userId'),
+    url: "api/projects/types/read.php" + "?userId=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
       var tableData = "";
       for (var element in data) {
         tableData += "<tr>" +
-          "<td>" + "<a href='collections/type.php?id=" + data[element].id + "' class='text-muted'>" + data[element].name +  "</a></td>" +
+          "<td>" + "<a href='projects/type.php?id=" + data[element].id + "' class='text-muted'>" + data[element].name +  "</a></td>" +
           "</tr>";
       }
       $(tableData).appendTo($("#table2"));
@@ -207,7 +207,7 @@ $('#new_collection').on("submit", function(e){
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/collections/types/create.php",
+    url: "api/projects/types/create.php",
     dataType: 'json',
     data: {
       name: $("#collection_name").val(),

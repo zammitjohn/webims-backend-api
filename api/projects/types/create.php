@@ -1,17 +1,17 @@
 <?php
 // include database and object files
 include_once '../../config/database.php';
-include_once '../../objects/collections_types.php';
+include_once '../../objects/projects_types.php';
 include_once '../../objects/users.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare collections type proprty object
+// prepare projects type proprty object
 $property = new Collections_Types($db);
  
-// set collections type property values
+// set projects type property values
 $property->name = $_POST['name'];
 $property->userId = $_POST['userId'];
 
@@ -26,7 +26,7 @@ if (!$user->validAction()){
     die();
 }
 
-// create the collection type
+// create the project type
 if($property->create()){
     $output_arr=array(
         "status" => true,

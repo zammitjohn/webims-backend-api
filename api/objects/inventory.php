@@ -37,7 +37,7 @@ class Inventory{
             inventory_types.name AS type_name, inventory_types.alt_name AS type_altname, 
             inventory_categories.id AS category_id, inventory_categories.name AS category_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-            inventory.supplier, inventory.inventoryDate, SUM(collections.qty) AS qty_collections_allocated
+            inventory.supplier, inventory.inventoryDate, SUM(projects.qty) AS qty_collections_allocated
         FROM 
             " . $this->table_name . "
             JOIN 
@@ -50,7 +50,7 @@ class Inventory{
                 inventory.category = inventory_categories.id
 
             LEFT JOIN 
-                collections ON inventory.id = collections.inventoryId";
+                projects ON inventory.id = projects.inventoryId";
 
         // different SQL query according to API call
         if ($this->type){
@@ -257,20 +257,18 @@ class Inventory{
         }
     }
 
-    // clean OLD inventory items which aren't referenced by collections, registry, pools and reports 
+    // clean OLD inventory items which aren't referenced by projects, registry and reports 
     function inventorySweep(){
         $query = "DELETE FROM " . $this->table_name . "  WHERE (inventoryDate < '" . $this->inventoryDate . "') AND id IN (
                     SELECT id FROM (
                         SELECT inventory.id FROM inventory
-                        LEFT JOIN collections
-                            ON inventory.id = collections.inventoryId
+                        LEFT JOIN projects
+                            ON inventory.id = projects.inventoryId
                         LEFT JOIN registry
                             ON inventory.id = registry.inventoryId
-                        LEFT JOIN pools
-                            ON inventory.id = pools.inventoryId    
                         LEFT JOIN reports
                             ON inventory.id = reports.inventoryId  
-                        WHERE (registry.inventoryId IS NULL) AND (collections.inventoryId IS NULL) AND (pools.inventoryId IS NULL) AND (reports.inventoryId IS NULL)
+                        WHERE (registry.inventoryId IS NULL) AND (projects.inventoryId IS NULL) AND (reports.inventoryId IS NULL)
                     ) AS inventory_old
                 )";
                 

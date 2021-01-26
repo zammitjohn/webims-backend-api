@@ -3,7 +3,7 @@ class Collections_Types{
  
     // database connection and table name
     private $conn;
-    private $table_name = "collections_types";
+    private $table_name = "projects_types";
  
     // object properties
     public $id;
@@ -15,7 +15,7 @@ class Collections_Types{
         $this->conn = $db;
     }
 
-    // read collection types
+    // read project types
     function read(){
     
         // different SQL query according to API call
