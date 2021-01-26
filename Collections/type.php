@@ -89,7 +89,7 @@ $(document).ready(function() {
       responsive: true,
       ajax: {
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/collections/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
+          url: "../api/collections/read" + "?type=" + <?php echo $_GET['id']; ?>,
           dataSrc: ''
       },
       columns: [
@@ -101,7 +101,7 @@ $(document).ready(function() {
       columnDefs: [ 
         { targets: [0],
           "render": function (data, type, row, meta) {
-          return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+          return '<a href="view?id=' + row.id + '">' + data + '</a>';
           }  
         }
       ]

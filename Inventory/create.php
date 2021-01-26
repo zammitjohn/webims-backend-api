@@ -150,7 +150,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/categories/read.php",
+    url: "../api/inventory/categories/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -192,7 +192,7 @@ function AddItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/inventory/create.php',
+    url: '../api/inventory/create',
     dataType: 'json',
     data: {
       SKU: $("#SKU").val(),
@@ -229,7 +229,7 @@ function loadTypes(category) {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/types/read.php?category=" + category,
+    url: "../api/inventory/types/read?category=" + category,
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";

@@ -104,7 +104,7 @@ $(function () {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/pools/types/read.php" + "?id=" + <?php echo $_GET['id']; ?>,
+    url: "../api/pools/types/read" + "?id=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {      
       for (var element in data) {
@@ -117,7 +117,7 @@ $(function () {
           searching: false,
           ajax: {
               headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-              url: "../api/pools/read.php" + "?type=" + data[element].id + "&pool=" + $p,
+              url: "../api/pools/read" + "?type=" + data[element].id + "&pool=" + $p,
               dataSrc: ''
           },
           columns: [
@@ -130,7 +130,7 @@ $(function () {
           columnDefs: [ 
             { targets: [0],
               "render": function (data, type, row, meta) {
-              return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+              return '<a href="view?id=' + row.id + '">' + data + '</a>';
               }  
             }
           ]

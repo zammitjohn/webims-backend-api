@@ -38,7 +38,7 @@ $content = '
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
           <li class="breadcrumb-item"><a href="../inventory">Inventory</a></li>
-          <li class="breadcrumb-item active" id="navigator_categoryPage"><a href="category.php?id=' . $category_id . '">' . $category_name . '</a></li>
+          <li class="breadcrumb-item active" id="navigator_categoryPage"><a href="category?id=' . $category_id . '">' . $category_name . '</a></li>
           <li class="breadcrumb-item active" id="navigator_typePage">' . $type_name . '</li>
         </ol>
       </div>
@@ -110,7 +110,7 @@ $(document).ready(function() {
         order:[],
         ajax: {
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/inventory/read.php" + "?type=" + <?php echo $_GET['id']; ?>,
+            url: "../api/inventory/read" + "?type=" + <?php echo $_GET['id']; ?>,
             dataSrc: ''
         },
         columns: [
@@ -124,7 +124,7 @@ $(document).ready(function() {
         columnDefs: [
           { targets: [0], // first column
             "render": function (data, type, row, meta) {
-            return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+            return '<a href="view?id=' + row.id + '">' + data + '</a>';
             }  
           }
         ]

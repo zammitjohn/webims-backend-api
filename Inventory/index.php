@@ -83,7 +83,7 @@ $(function () {
       order:[],
       ajax: {
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/inventory/read.php",
+          url: "../api/inventory/read",
           dataSrc: ''
       },
       columns: [
@@ -100,19 +100,19 @@ $(function () {
       columnDefs: [
         { targets: [0], // first column
           "render": function (data, type, row, meta) {
-          return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+          return '<a href="view?id=' + row.id + '">' + data + '</a>';
           }  
         },
 
         { targets: [1], // category column
             "render": function (data, type, row, meta) {
-            return '<a href="category.php?id=' + row.category_id + '">' + row.category_name + '</a>';
+            return '<a href="category?id=' + row.category_id + '">' + row.category_name + '</a>';
             }  
         },
 
         { targets: [2], // type column
             "render": function (data, type, row, meta) {
-            return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
+            return '<a href="type?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
             }  
         }
       ]

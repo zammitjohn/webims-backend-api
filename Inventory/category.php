@@ -146,7 +146,7 @@ $(document).ready(function() {
     order:[],
     ajax: {
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/inventory/read.php" + "?category=" + <?php echo $_GET['id']; ?>,
+        url: "../api/inventory/read" + "?category=" + <?php echo $_GET['id']; ?>,
         dataSrc: ''
     },
     columns: [
@@ -161,12 +161,12 @@ $(document).ready(function() {
     columnDefs: [
       { targets: [0], // first column
         "render": function (data, type, row, meta) {
-        return '<a href="view.php?id=' + row.id + '">' + data + '</a>';
+        return '<a href="view?id=' + row.id + '">' + data + '</a>';
         }  
       },
       { targets: [1], // type column
         "render": function (data, type, row, meta) {
-        return '<a href="type.php?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
+        return '<a href="type?id=' + row.type_id + '">' + row.type_name + " " + "(" + row.type_altname + ")" + '</a>';
         }  
       }
     ]
@@ -181,7 +181,7 @@ $('#upload_csv').on("submit", function(e){
   e.preventDefault(); //form will not submitted
   $.ajax({
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url:"import/express_import.php",  
+      url:"import/express_import",  
       method:"POST",  
       data:new FormData(this),  
       contentType:false,          // The content type used when sending data to the server.  

@@ -89,7 +89,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -116,7 +116,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/collections/types/read.php",
+        url: "../api/collections/types/read",
         dataType: 'json',
         success: function(data) {
           var dropdowndata = "";
@@ -142,7 +142,7 @@ function AddItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/collections/create.php',
+    url: '../api/collections/create',
     dataType: 'json',
     data: {
       inventoryId: $("#SKU").val(),
@@ -159,7 +159,7 @@ function AddItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../collections/type.php?id=' + $("#type").val();
+        window.location.href = '../collections/type?id=' + $("#type").val();
       }
     }
   });

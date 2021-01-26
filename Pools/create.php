@@ -107,7 +107,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
 	  headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -133,7 +133,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/pools/types/read.php",
+        url: "../api/pools/types/read",
         dataType: 'json',
         success: function(data) {
           var dropdowndata = "";
@@ -163,7 +163,7 @@ function AddItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/pools/create.php',
+    url: '../api/pools/create',
     dataType: 'json',
     data: {
       inventoryId: $("#SKU").val(),
@@ -181,7 +181,7 @@ function AddItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../pools/type.php?id=' + $("#type").val();
+        window.location.href = '../pools/type?id=' + $("#type").val();
       }
     }
   });
@@ -194,7 +194,7 @@ function loadPools(id) {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/pools/types/read.php?id=" + id,
+    url: "../api/pools/types/read?id=" + id,
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";

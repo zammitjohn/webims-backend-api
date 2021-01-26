@@ -287,7 +287,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -303,7 +303,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/users/read.php",
+        url: "../api/users/read",
         dataType: 'json',
         success: function(data) {
           var dropdowndata = "";
@@ -319,7 +319,7 @@ $(document).ready(function() {
             type: "GET",
             cache: false, // due to aggressive caching on IE 11
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/reports/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+            url: "../api/reports/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
               $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
@@ -379,7 +379,7 @@ function loadComments() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "<?php echo $ROOT; ?>api/reports/comments/read.php" + "?reportId=" + <?php echo $_GET['id']; ?>,
+    url: "<?php echo $ROOT; ?>api/reports/comments/read" + "?reportId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
       for (var element in data) {
@@ -395,7 +395,7 @@ function UpdateItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/reports/update.php',
+    url: '../api/reports/update',
     dataType: 'json',
     data: {
       id: <?php echo $_GET['id']; ?>,
@@ -431,7 +431,7 @@ function NewComment() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/reports/comments/create.php',
+    url: '../api/reports/comments/create',
     dataType: 'json',
     data: {
       reportId: <?php echo $_GET['id']; ?>,
@@ -454,7 +454,7 @@ function ToggleRepairable() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/reports/toggle_repairable.php',
+    url: '../api/reports/toggle_repairable',
     dataType: 'json',
     data: {
       id: id
@@ -484,7 +484,7 @@ function populateSerialNumbers() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/registry/read.php" + "?inventoryId=" +  $("#SKU").val(),
+    url: "../api/registry/read" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -499,7 +499,7 @@ function populateSerialNumbers() {
       // append dropdowndata to serial numbers dropdown
       $(".serial_number").append(dropdowndata);
       // show the '+ Add item' dropdown menu option
-      $( '<div class="dropdown-divider"></div><a class="dropdown-item" href="../inventory/register.php?id=' +  $("#SKU").val() + '"> + Add item</a>').appendTo(".dropdown-menu");
+      $( '<div class="dropdown-divider"></div><a class="dropdown-item" href="../inventory/register?id=' +  $("#SKU").val() + '"> + Add item</a>').appendTo(".dropdown-menu");
 
       // populate value in field
       if (selected_faulty_serial_number != ""){
@@ -531,7 +531,7 @@ $('#upload_file').on("submit", function(e){
   e.preventDefault(); //form will not submitted
   $.ajax({
       headers: { "Auth-Key": (localStorage.getItem('sessionId'))},
-      url:"upload.php",  
+      url:"upload",  
       method:"POST",  
       data: formData,  
       contentType:false,          // The content type used when sending data to the server.  

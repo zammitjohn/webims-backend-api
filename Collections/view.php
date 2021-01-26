@@ -90,7 +90,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -105,7 +105,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/collections/types/read.php",
+        url: "../api/collections/types/read",
         dataType: 'json',
         success: function(data) {
           dropdowndata = "";
@@ -121,7 +121,7 @@ $(document).ready(function() {
             type: "GET",
             cache: false, // due to aggressive caching on IE 11
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/collections/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+            url: "../api/collections/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
               $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
@@ -147,7 +147,7 @@ function UpdateItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/collections/update.php',
+    url: '../api/collections/update',
     dataType: 'json',
     data: {
       id: <?php echo $_GET['id']; ?>,
@@ -165,7 +165,7 @@ function UpdateItem() {
   success: function(result) {
       alert(result.message);
       if (result.status) {
-        window.location.href = '../collections/type.php?id=' + $("#type").val();
+        window.location.href = '../collections/type?id=' + $("#type").val();
       }
     }
   });
@@ -178,7 +178,7 @@ function Remove() {
     $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/collections/delete.php',
+      url: '../api/collections/delete',
       dataType: 'json',
       data: {
         id: id
@@ -189,7 +189,7 @@ function Remove() {
       success: function(result) {
         alert(result.message);
         if (result.status) {
-          window.location.href = '../collections/type.php?id=' + $("#type").val();
+          window.location.href = '../collections/type?id=' + $("#type").val();
         }
       }
     });

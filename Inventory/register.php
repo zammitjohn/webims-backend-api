@@ -72,7 +72,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -99,7 +99,7 @@ function Register() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/registry/create.php',
+    url: '../api/registry/create',
     dataType: 'json',
     data: {
       inventoryId: $("#SKU").val(),
@@ -112,7 +112,7 @@ function Register() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../inventory/view.php?id=' + $("#SKU").val();
+        window.location.href = '../inventory/view?id=' + $("#SKU").val();
       }
     }
   });

@@ -45,7 +45,7 @@ $db = $database->getConnection();
   <link rel="shortcut icon" href="<?php echo $ROOT; ?>dist/img/favicon.ico">
   <meta name="apple-mobile-web-app-title" content="WebIMS">
   <meta name="application-name" content="WebIMS">
-  <meta name="theme-color" content="#ffc107">
+  <meta name="theme-color" content="#ffffff">
   
 </head>
 <!--
@@ -128,13 +128,13 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>inventory/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>inventory/create" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>inventory/register.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>inventory/register" class="nav-link">
                   <i class="fas fa-edit nav-icon"></i>
                   <p>Register item</p>
                 </a>
@@ -154,7 +154,7 @@ to get the desired effect
               if ($inventory_category_stmt != false){
                 while ($inventory_category_row = $inventory_category_stmt->fetch(PDO::FETCH_ASSOC)){ // first loop categories
                   extract($inventory_category_row);
-                  echo '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' . $name .  '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="' . $ROOT . 'inventory/category.php?id=' . $id . '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul>';
+                  echo '<li class="nav-item has-treeview"><a href="#" class="nav-link"><i class="far fa-dot-circle nav-icon"></i><p>' . $name .  '<i class="right fas fa-angle-left"></i></p></a><ul class="nav nav-treeview"><li class="nav-item"><a href="' . $ROOT . 'inventory/category?id=' . $id . '" class="nav-link"><i class="fas fa-circle nav-icon"></i><p>All items</p></a></li></ul>';
                   
                   $inventory_types_object->category = $id;
                   $inventory_types_stmt = $inventory_types_object->read();
@@ -162,7 +162,7 @@ to get the desired effect
                     extract($inventory_types_row);
                     $type_name = $name;
                     $type_id = $id;
-                    echo '<ul class="nav nav-treeview"><li class="nav-item"><a href="' . $ROOT . 'inventory/type.php?id=' . $type_id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $type_name . '</p></a></li></ul>';
+                    echo '<ul class="nav nav-treeview"><li class="nav-item"><a href="' . $ROOT . 'inventory/type?id=' . $type_id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $type_name . '</p></a></li></ul>';
                   }
                   echo '</li>';
                 }
@@ -181,7 +181,7 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>reports/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>reports/create" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>New report</p>
                 </a>
@@ -207,7 +207,7 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>collections/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>collections/create" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
@@ -220,7 +220,7 @@ to get the desired effect
               if ($collections_types_stmt != false){
                 while ($collections_types_row = $collections_types_stmt->fetch(PDO::FETCH_ASSOC)){
                   extract($collections_types_row);
-                  echo '<li class="nav-item"> <a href="' . $ROOT . 'collections/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                  echo '<li class="nav-item"> <a href="' . $ROOT . 'collections/type?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
                 }
               }
               ?>
@@ -237,7 +237,7 @@ to get the desired effect
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo $ROOT; ?>pools/create.php" class="nav-link">
+                <a href="<?php echo $ROOT; ?>pools/create" class="nav-link">
                   <i class="fas fa-plus nav-icon"></i>
                   <p>Add item</p>
                 </a>
@@ -250,7 +250,7 @@ to get the desired effect
               if ($pools_types_stmt != false){
                 while ($pools_types_row = $pools_types_stmt->fetch(PDO::FETCH_ASSOC)){
                   extract($pools_types_row);
-                  echo '<li class="nav-item"> <a href="' . $ROOT . 'pools/type.php?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                  echo '<li class="nav-item"> <a href="' . $ROOT . 'pools/type?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
                 }
               }
               ?>
@@ -357,7 +357,7 @@ $(document).ready(function validate() {
   type: "GET",
   cache: false, // due to aggressive caching on IE 11
   headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-  url: '<?php echo $ROOT; ?>api/users/validate_session.php',
+  url: '<?php echo $ROOT; ?>api/users/validate_session',
   dataType: 'json',
     success: function(data) {
       if (data['status'] == false) {
@@ -394,6 +394,9 @@ $(document).ready(function validate() {
     },
     error: function(data) {
       alert("Failed to validate session!");
+      $("a.d-block").html("Not logged in"); // change text
+      $(".card").addClass("collapsed-card"); // hide card content
+      $('#modal-login').modal('toggle'); // toggle modal login
     }
   });
 
@@ -403,7 +406,7 @@ $(document).ready(function validate() {
       $.ajax({
         type: "POST",
         cache: false, // due to aggressive caching on IE 11
-        url: '<?php echo $ROOT; ?>api/users/login.php',
+        url: '<?php echo $ROOT; ?>api/users/login',
         dataType: 'json',
         data: {
           username: $("#username").val(),
@@ -463,7 +466,7 @@ function userLogout(){
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '<?php echo $ROOT; ?>api/users/logout.php',
+    url: '<?php echo $ROOT; ?>api/users/logout',
     dataType: 'json',
     error: function(data) {
       alert(data.responseText);

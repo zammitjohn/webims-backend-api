@@ -209,7 +209,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/categories/read.php",
+    url: "../api/inventory/categories/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -225,7 +225,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/inventory/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+        url: "../api/inventory/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
         dataType: 'json',
         success: function(data) {
           $('#SKU').val(data['SKU']);
@@ -236,7 +236,7 @@ $(document).ready(function() {
             type: "GET",
             cache: false, // due to aggressive caching on IE 11
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/inventory/types/read.php?category=" + data['category'],
+            url: "../api/inventory/types/read?category=" + data['category'],
             dataType: 'json',
             success: function(list) {
               var dropdowndata = "";
@@ -293,15 +293,15 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/collections/read.php" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
+    url: "../api/collections/read" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
       var collection_table_data = "";
       for (var element in data) {
         $('#collection_allocations').show();
         collection_table_data += "<tr>" +
-          "<td><a href='../collections/view.php?id=" + data[element].id + "'>" + data[element].name + "</a></td>" +
-          "<td><a href='../collections/type.php?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
+          "<td><a href='../collections/view?id=" + data[element].id + "'>" + data[element].name + "</a></td>" +
+          "<td><a href='../collections/type?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
           "<td>" + data[element].qty + "</td>" +
           "<td>" + data[element].firstname + " " + data[element].lastname + "</td>" +
           "</tr>";
@@ -315,7 +315,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/registry/read.php" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
+    url: "../api/registry/read" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
       var registry_table_data = "";
@@ -359,7 +359,7 @@ function UpdateItem() {
   $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/inventory/update.php',
+      url: '../api/inventory/update',
       dataType: 'json',
       data: {
         id: <?php echo $_GET['id']; ?>,
@@ -397,7 +397,7 @@ function Remove() {
     $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/inventory/delete.php',
+      url: '../api/inventory/delete',
       dataType: 'json',
       data: {
         id: id
@@ -421,7 +421,7 @@ function Deregister(id) {
     $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/registry/delete.php',
+      url: '../api/registry/delete',
       dataType: 'json',
       data: {
         id: id,
@@ -441,13 +441,13 @@ function Deregister(id) {
 
 function addTo(type) {
   if (type == 1){
-    location.href = "../collections/create.php?id=" + (<?php echo $_GET['id']; ?>);
+    location.href = "../collections/create?id=" + (<?php echo $_GET['id']; ?>);
   } else if (type == 2) {
-    location.href = "../pools/create.php?id=" + (<?php echo $_GET['id']; ?>);
+    location.href = "../pools/create?id=" + (<?php echo $_GET['id']; ?>);
   } else if (type == 3) {
-    location.href = "../reports/create.php?id=" + (<?php echo $_GET['id']; ?>);
+    location.href = "../reports/create?id=" + (<?php echo $_GET['id']; ?>);
   } else {
-    location.href = "../inventory/register.php?id=" + (<?php echo $_GET['id']; ?>);
+    location.href = "../inventory/register?id=" + (<?php echo $_GET['id']; ?>);
   }
 }
 

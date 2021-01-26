@@ -104,7 +104,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -119,7 +119,7 @@ $(document).ready(function() {
         type: "GET",
         cache: false, // due to aggressive caching on IE 11
         headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-        url: "../api/pools/types/read.php",
+        url: "../api/pools/types/read",
         dataType: 'json',
         success: function(data) {
           dropdowndata = "";
@@ -134,7 +134,7 @@ $(document).ready(function() {
             type: "GET",
             cache: false, // due to aggressive caching on IE 11
             headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-            url: "../api/pools/read_single.php" + "?id=" + <?php echo $_GET['id']; ?>,
+            url: "../api/pools/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
               $('#SKU').val( (data['inventoryId'] == null) ? "" : (data['inventoryId']) ); // JSON: null -> form/SQL: ""
@@ -145,7 +145,7 @@ $(document).ready(function() {
                 type: "GET",
                 cache: false, // due to aggressive caching on IE 11
                 headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-                url: "../api/pools/types/read.php?id=" + data['type'],
+                url: "../api/pools/types/read?id=" + data['type'],
                 dataType: 'json',
                 success: function(list) {
                   var dropdowndata = "";
@@ -189,7 +189,7 @@ function UpdateItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/pools/update.php',
+    url: '../api/pools/update',
     dataType: 'json',
     data: {
       id: <?php echo $_GET['id']; ?>,
@@ -208,7 +208,7 @@ function UpdateItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../pools/type.php?id=' + $("#type").val();
+        window.location.href = '../pools/type?id=' + $("#type").val();
       }
     }
   });
@@ -221,7 +221,7 @@ function Remove() {
     $.ajax({
       type: "POST",
       headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-      url: '../api/pools/delete.php',
+      url: '../api/pools/delete',
       dataType: 'json',
       data: {
         id: id
@@ -232,7 +232,7 @@ function Remove() {
       success: function(result) {
         alert(result.message);
         if (result.status) {
-          window.location.href = '../pools/type.php?id=' + $("#type").val();
+          window.location.href = '../pools/type?id=' + $("#type").val();
         }
       }
     });

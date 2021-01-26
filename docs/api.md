@@ -4,111 +4,111 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 
 ## Users
 
-| **Action**           | **Method** | **Headers**           | **Parameters**    | **Response**                                                              | **URL**                         |
-|----------------------|------------|-----------------------|-------------------|---------------------------------------------------------------------------|---------------------------------|
-| **login**            | `POST`     | Content-Type          | username password | status message id username firstname lastname *sessionId* created         | /api/users/login.php            |
-| **logout**           | `POST`     | Auth-Key Content-Type |                   | status message                                                            | /api/users/logout.php           |
-| **read**             | `GET`      | Auth-Key Content-Type |                   | id firstname lastname lastLogin                                           | /api/users/read.php             |
-| **validate_session** | `GET`      | Auth-Key Content-Type |                   | status message firstname lastname canUpdate canCreate canImport canDelete | /api/users/validate_session.php |
+| **Action**           | **Method** | **Headers**           | **Parameters**    | **Response**                                                              | **URL**                     |
+|----------------------|------------|-----------------------|-------------------|---------------------------------------------------------------------------|-----------------------------|
+| **login**            | `POST`     | Content-Type          | username password | status message id username firstname lastname *sessionId* created         | /api/users/login            |
+| **logout**           | `POST`     | Auth-Key Content-Type |                   | status message                                                            | /api/users/logout           |
+| **read**             | `GET`      | Auth-Key Content-Type |                   | id firstname lastname lastLogin                                           | /api/users/read             |
+| **validate_session** | `GET`      | Auth-Key Content-Type |                   | status message firstname lastname canUpdate canCreate canImport canDelete | /api/users/validate_session |
 
 ---
 
 ## Inventory
 
-| **Action**      | **Method** | **Headers**           | **Body Parameters**                                                                                | **Response**                                                                                                                                  | **URL**                        |
-|-----------------|------------|-----------------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes                          | /api/inventory/create.php      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                                                 | status message                                                                                                                                | /api/inventory/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                                                 | id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                | /api/inventory/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | type or category                                                                                   | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_collections_allocated supplier inventoryDate | /api/inventory/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | id description qty isGSM isUMTS isLTE ancillary toCheck notes                                      | status message                                                                                                                                | /api/inventory/update.php      |
+| **Action**      | **Method** | **Headers**           | **Body Parameters**                                                                                | **Response**                                                                                                                                  | **URL**                    |
+|-----------------|------------|-----------------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
+| **create**      | `POST`     | Auth-Key Content-Type | SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes                          | /api/inventory/create      |
+| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                                                 | status message                                                                                                                                | /api/inventory/delete      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                                                 | id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                | /api/inventory/read_single |
+| **read**        | `GET`      | Auth-Key Content-Type | type or category                                                                                   | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_collections_allocated supplier inventoryDate | /api/inventory/read        |
+| **update**      | `POST`     | Auth-Key Content-Type | id description qty isGSM isUMTS isLTE ancillary toCheck notes                                      | status message                                                                                                                                | /api/inventory/update      |
 
 ---
 
 ## Inventory Categories
 
-| **Action** | **Method** | **Headers**           | **Parameters** | **Response**          | **URL**                            |
-|------------|------------|-----------------------|----------------|-----------------------|------------------------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | id             | id name supportImport | /api/inventory/categories/read.php |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response**          | **URL**                        |
+|------------|------------|-----------------------|----------------|-----------------------|--------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id             | id name supportImport | /api/inventory/categories/read |
 
 ---
 
 ## Inventory Types
 
-| **Action** | **Method** | **Headers**           | **Parameters** | **Response**                                 | **URL**                       |
-|------------|------------|-----------------------|----------------|----------------------------------------------|-------------------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | id or category | id name alt_name type_category category_name | /api/inventory/types/read.php |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response**                                 | **URL**                   |
+|------------|------------|-----------------------|----------------|----------------------------------------------|---------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id or category | id name alt_name type_category category_name | /api/inventory/types/read |
 
 ---
 
 ## Pools
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                                      | **Response**                                                                       | **URL**                    |
-|-----------------|------------|-----------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------|----------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type pool name description qtyOrdered qtyStock notes    | status message id inventoryId type pool name description qtyOrdered qtyStock notes | /api/pools/create.php      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                  | status message                                                                     | /api/pools/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                  | id inventoryId type pool name description qtyOrdered qtyStock notes                | /api/pools/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | type pool                                                           | id tech_id tech_name pool name description qtyOrdered qtyStock notes               | /api/pools/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type pool name description qtyOrdered qtyStock notes | status message                                                                     | /api/pools/update.php      |
+| **Action**      | **Method** | **Headers**           | **Parameters**                                                      | **Response**                                                                       | **URL**                |
+|-----------------|------------|-----------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------|------------------------|
+| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type pool name description qtyOrdered qtyStock notes    | status message id inventoryId type pool name description qtyOrdered qtyStock notes | /api/pools/create      |
+| **delete**      | `POST`     | Auth-Key Content-Type | id                                                                  | status message                                                                     | /api/pools/delete      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                                                  | id inventoryId type pool name description qtyOrdered qtyStock notes                | /api/pools/read_single |
+| **read**        | `GET`      | Auth-Key Content-Type | type pool                                                           | id tech_id tech_name pool name description qtyOrdered qtyStock notes               | /api/pools/read        |
+| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type pool name description qtyOrdered qtyStock notes | status message                                                                     | /api/pools/update      |
 
 ---
 
 ## Pools Types
 
-| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                                |
-|------------|------------|-----------------------|----------------|--------------|----------------------------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | id             | id name qty  | /api/pools/types/read.php |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**               |
+|------------|------------|-----------------------|----------------|--------------|-----------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | id             | id name qty  | /api/pools/types/read |
 
 ---
 
 ## Registry
 
-| **Action** | **Method** | **Headers**           | **Parameters**                         | **Response**                                             | **URL**                  |
-|------------|------------|-----------------------|----------------------------------------|----------------------------------------------------------|--------------------------|
-| **create** | `POST`     | Auth-Key Content-Type | inventoryId serialNumber datePurchased | status message id inventoryId serialNumber datePurchased | /api/registry/create.php |
-| **delete** | `POST`     | Auth-Key Content-Type | id                                     | status message                                           | /api/registry/delete.php |
-| **read**   | `GET`      | Auth-Key Content-Type | inventoryId                            | id inventoryId serialNumber datePurchased state          | /api/registry/read.php   |
+| **Action** | **Method** | **Headers**           | **Parameters**                         | **Response**                                             | **URL**              |
+|------------|------------|-----------------------|----------------------------------------|----------------------------------------------------------|----------------------|
+| **create** | `POST`     | Auth-Key Content-Type | inventoryId serialNumber datePurchased | status message id inventoryId serialNumber datePurchased | /api/registry/create |
+| **delete** | `POST`     | Auth-Key Content-Type | id                                     | status message                                           | /api/registry/delete |
+| **read**   | `GET`      | Auth-Key Content-Type | inventoryId                            | id inventoryId serialNumber datePurchased state          | /api/registry/read   |
 
 ---
 
 ## Reports
 
-| **Action**            | **Method** | **Headers**           | **Parameters**                                                                                                                                                | **Response**                                                                                                                                                                 | **URL**                            |
-|-----------------------|------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------|
-| **create**            | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | /api/reports/create.php            |
-| **read_single**       | `GET`      | Auth-Key Content-Type | id                                                                                                                                                            | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes isClosed    | /api/reports/read_single.php       |
-| **read**              | `GET`      | Auth-Key Content-Type | userId                                                                                                                                                        | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes (isClosed)  | /api/reports/read.php              |
-| **update**            | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message                                                                                                                                                               | /api/reports/update.php            |
-| **toggle_repairable** | `POST`     | Auth-Key Content-Type | id                                                                                                                                                            | status message                                                                                                                                                               | /api/reports/toggle_repairable.php |
+| **Action**            | **Method** | **Headers**           | **Parameters**                                                                                                                                                | **Response**                                                                                                                                                                 | **URL**                        |
+|-----------------------|------------|-----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
+| **create**            | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | /api/reports/create            |
+| **read_single**       | `GET`      | Auth-Key Content-Type | id                                                                                                                                                            | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes isClosed    | /api/reports/read_single       |
+| **read**              | `GET`      | Auth-Key Content-Type | userId                                                                                                                                                        | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes (isClosed)  | /api/reports/read              |
+| **update**            | `POST`     | Auth-Key Content-Type | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message                                                                                                                                                               | /api/reports/update            |
+| **toggle_repairable** | `POST`     | Auth-Key Content-Type | id                                                                                                                                                            | status message                                                                                                                                                               | /api/reports/toggle_repairable |
 
 ---
 
 ## Reports Comments
 
-| **Action** | **Method** | **Headers**           | **Parameters**       | **Response**                                  | **URL**                          |
-|------------|------------|-----------------------|----------------------|-----------------------------------------------|----------------------------------|
-| **read**   | `GET`      | Auth-Key Content-Type | reportId             | id reportId firstname lastname text timestamp | /api/reports/comments/read.php   |
-| **create** | `POST`     | Auth-Key Content-Type | reportId userId text | status message id reportId userId text        | /api/reports/comments/create.php |
+| **Action** | **Method** | **Headers**           | **Parameters**       | **Response**                                  | **URL**                      |
+|------------|------------|-----------------------|----------------------|-----------------------------------------------|------------------------------|
+| **read**   | `GET`      | Auth-Key Content-Type | reportId             | id reportId firstname lastname text timestamp | /api/reports/comments/read   |
+| **create** | `POST`     | Auth-Key Content-Type | reportId userId text | status message id reportId userId text        | /api/reports/comments/create |
 
 ---
 
 ## Collections
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                        | **Response**                                                                   | **URL**                          |
-|-----------------|------------|-----------------------|-------------------------------------------------------|--------------------------------------------------------------------------------|----------------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type name description qty notes userId    | status message id inventoryId type name description qty notes                  | /api/collections/create.php      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                                    | status message                                                                 | /api/collections/delete.php      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                                    | id inventoryId type name description qty notes                                 | /api/collections/read_single.php |
-| **read**        | `GET`      | Auth-Key Content-Type | type inventoryId                                      | id inventoryId type_id type_name name description qty notes firstname lastname | /api/collections/read.php        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type name description qty notes userId | status message                                                                 | /api/collections/update.php      |
+| **Action**      | **Method** | **Headers**           | **Parameters**                                        | **Response**                                                                   | **URL**                      |
+|-----------------|------------|-----------------------|-------------------------------------------------------|--------------------------------------------------------------------------------|------------------------------|
+| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type name description qty notes userId    | status message id inventoryId type name description qty notes                  | /api/collections/create      |
+| **delete**      | `POST`     | Auth-Key Content-Type | id                                                    | status message                                                                 | /api/collections/delete      |
+| **read_single** | `GET`      | Auth-Key Content-Type | id                                                    | id inventoryId type name description qty notes                                 | /api/collections/read_single |
+| **read**        | `GET`      | Auth-Key Content-Type | type inventoryId                                      | id inventoryId type_id type_name name description qty notes firstname lastname | /api/collections/read        |
+| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type name description qty notes userId | status message                                                                 | /api/collections/update      |
 
 ---
 
 ## Collections Types
 
-| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                           |
-|------------|------------|-----------------------|----------------|--------------|-----------------------------------|
-| **create** | `POST`     | Auth-Key Content-Type | name userId    | name         | /api/collections/types/create.php |
-| **read**   | `GET`      | Auth-Key Content-Type | id userId      | id name      | /api/collections/types/read.php   |
+| **Action** | **Method** | **Headers**           | **Parameters** | **Response** | **URL**                       |
+|------------|------------|-----------------------|----------------|--------------|-------------------------------|
+| **create** | `POST`     | Auth-Key Content-Type | name userId    | name         | /api/collections/types/create |
+| **read**   | `GET`      | Auth-Key Content-Type | id userId      | id name      | /api/collections/types/read   |
 
 ---

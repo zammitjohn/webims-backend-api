@@ -181,7 +181,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/inventory/read.php",
+    url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -211,7 +211,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/users/read.php",
+    url: "../api/users/read",
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -230,7 +230,7 @@ function AddItem() {
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: '../api/reports/create.php',
+    url: '../api/reports/create',
     dataType: 'json',
     data: {
       inventoryId: $("#SKU").val(),
@@ -272,7 +272,7 @@ function populateSerialNumbers() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/registry/read.php" + "?inventoryId=" +  $("#SKU").val(),
+    url: "../api/registry/read" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',
     success: function(data) {
       var dropdowndata = "";
@@ -287,7 +287,7 @@ function populateSerialNumbers() {
       // append dropdowndata to serial numbers dropdown
       $(".serial_number").append(dropdowndata);
       // show the '+ Add item' dropdown menu option
-      $( '<div class="dropdown-divider"></div><a class="dropdown-item" href="../inventory/register.php?id=' +  $("#SKU").val() + '"> + Add item</a>').appendTo(".dropdown-menu");
+      $( '<div class="dropdown-divider"></div><a class="dropdown-item" href="../inventory/register?id=' +  $("#SKU").val() + '"> + Add item</a>').appendTo(".dropdown-menu");
 
       // dropdown onclick
       $('.dropdown-menu button').click(function() {

@@ -69,7 +69,7 @@ $(function () {
       order:[],
       ajax: {
           headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-          url: "../api/reports/read.php",
+          url: "../api/reports/read",
           dataSrc: ''
       },
       columns: [
@@ -82,7 +82,7 @@ $(function () {
       columnDefs: [ 
         { targets: [0],
           "render": function (data, type, row, meta) {
-            return '<a href="view.php?id=' + data + '" class="text-muted"><i class="fas fa-search"></i> #' + data + '</a>';
+            return '<a href="view?id=' + data + '" class="text-muted"><i class="fas fa-search"></i> #' + data + '</a>';
           }   
         },
         { targets: [4], // status column
