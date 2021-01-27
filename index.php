@@ -48,7 +48,7 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <a href="reports/create.php" class="btn btn-sm btn-info float-left">New Report</a>
+            <a href="reports/create" class="btn btn-sm btn-info float-left">New Report</a>
             <a href="reports" class="btn btn-sm btn-secondary float-right">View All Reports</a>
           </div>
           <!-- /.card-footer -->
@@ -72,7 +72,7 @@ $content = '
           <!-- /.card-body -->
           <div class="card-footer clearfix">
             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-newproject">New Project</button> 
-            <a href="projects/create.php" class="btn btn-sm btn-info">Add Item</a>           
+            <a href="projects/create" class="btn btn-sm btn-info">Add Item</a>           
           </div>
           <!-- /.card-footer -->
         </div>
@@ -146,14 +146,14 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/reports/read.php" + "?userId=" + localStorage.getItem('userId'),
+    url: "api/reports/read" + "?userId=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
       var tableData = "";
       for (var element in data) {
         reportcount++;
         tableData += "<tr>" +
-          "<td>" + "<a href='reports/view.php?id=" + data[element].id + "' class='text-muted'><i class='fas fa-search'></i> #" + data[element].id +  "</a></td>" +
+          "<td>" + "<a href='reports/view?id=" + data[element].id + "' class='text-muted'><i class='fas fa-search'></i> #" + data[element].id +  "</a></td>" +
           "<td>" + data[element].name + "</td>" +
           "</tr>";
       }
@@ -169,7 +169,7 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/users/read.php",
+    url: "api/users/read",
     dataType: 'json',
     success: function(data) {
       for (var element in data) {
@@ -186,13 +186,13 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/projects/types/read.php" + "?userId=" + localStorage.getItem('userId'),
+    url: "api/projects/types/read" + "?userId=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
       var tableData = "";
       for (var element in data) {
         tableData += "<tr>" +
-          "<td>" + "<a href='projects/type.php?id=" + data[element].id + "' class='text-muted'>" + data[element].name +  "</a></td>" +
+          "<td>" + "<a href='projects?id=" + data[element].id + "' class='text-muted'>" + data[element].name +  "</a></td>" +
           "</tr>";
       }
       $(tableData).appendTo($("#table2"));
@@ -207,7 +207,7 @@ $('#new_project').on("submit", function(e){
   $.ajax({
     type: "POST",
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "api/projects/types/create.php",
+    url: "api/projects/types/create",
     dataType: 'json',
     data: {
       name: $("#project_name").val(),

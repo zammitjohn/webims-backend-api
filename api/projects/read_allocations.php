@@ -42,9 +42,7 @@ if ($stmt != false){
                 "inventoryId" => $inventoryId,
                 "type_id" => $type_id,
                 "type_name" => $type_name,
-                "total_qty" => $total_qty,
-                "firstname" => $firstname,
-                "lastname" => $lastname
+                "total_qty" => $total_qty
             );
             array_push($output_arr["Projects"], $projects_item);
         }

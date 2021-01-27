@@ -25,7 +25,7 @@ class Projects{
         // select query for particular inventoryId
         $query = "SELECT 
         projects.inventoryId, projects_types.id AS type_id, projects_types.name AS type_name, 
-        SUM(projects.qty) AS total_qty, users.firstname, users.lastname
+        SUM(projects.qty) AS total_qty
 
         FROM 
         " . $this->table_name . " 
@@ -33,11 +33,7 @@ class Projects{
             projects_types
         ON 
             projects.type = projects_types.id
-             
-        LEFT JOIN 
-            users
-        ON 
-            projects.userId = users.id
+    
 
         WHERE
         projects.inventoryId= '".$this->inventoryId."'
@@ -61,7 +57,7 @@ class Projects{
         // select query
         $query = "SELECT 
             projects.id, projects.inventoryId, inventory.SKU AS inventory_SKU, inventory_categories.name AS inventory_category, projects_types.id AS type_id,
-            projects_types.name AS type_name, projects.description, projects.qty, projects.notes
+            projects_types.name AS type_name, projects.description, projects.qty, projects.notes, CONCAT(users.firstname, ' ', users.lastname) AS user_fullname
 
         FROM 
             " . $this->table_name . " 
@@ -74,6 +70,11 @@ class Projects{
                 inventory
             ON 
                 projects.inventoryId = inventory.id
+
+            LEFT JOIN 
+                users
+            ON 
+                projects.userId = users.id                
 
             JOIN 
                 inventory_categories

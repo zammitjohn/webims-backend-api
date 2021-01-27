@@ -47,7 +47,8 @@ if ($stmt != false){
                 "inventory_category" => $inventory_category,
                 "description" => $description,
                 "qty" => $qty,
-                "notes" => $notes
+                "notes" => $notes,
+                "user_fullname" => $user_fullname
             );
             array_push($output_arr["Projects"], $projects_item);
         }

@@ -57,6 +57,7 @@ $content = '
                 <th>Description</th>
                 <th>Quantity</th>
                 <th>Notes</th>
+                <th>Added by</th>
               </tr>
             </thead>
             <tbody>
@@ -96,7 +97,8 @@ $(document).ready(function() {
           { data: 'inventory_SKU' },
           { data: 'description' },
           { data: 'qty' },
-          { data: 'notes' }		
+          { data: 'notes' },
+          { data: 'user_fullname' }		
       ],
       columnDefs: [ 
         { targets: [0],

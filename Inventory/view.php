@@ -176,7 +176,6 @@ $content = '
                 <tr>
                   <th>Project</th>
                   <th>Quantity</th>
-                  <th>Added by</th>
                 </tr>
               </thead>
               <tbody> 
@@ -300,7 +299,6 @@ $(document).ready(function() {
         project_table_data += "<tr>" +
           "<td><a href='../projects?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
           "<td>" + data[element].total_qty + "</td>" +
-          "<td>" + data[element].firstname + " " + data[element].lastname + "</td>" +
           "</tr>";
       }
       $(project_table_data).appendTo($("#projects_table"));
@@ -389,7 +387,7 @@ function UpdateItem() {
 
 function Remove() {
   var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want to delete the item? This will delete all registrations and allocations!");
+  var result = confirm("Are you sure you want to delete the item?");
   if (result == true) {
     $.ajax({
       type: "POST",
@@ -428,7 +426,7 @@ function Deregister(id) {
       },
       success: function(result) {
         alert(result.message);
-        if (result.status = true) {
+        if (result.status) {
           location.reload();
         }
       }

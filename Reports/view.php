@@ -55,7 +55,6 @@ $content = '
               <div class="form-group">
                 <h5>Inventory SKU</h5>
                 <select id="SKU" class="form-control">
-                  <option value="">None</option>
                 </select>
               </div>   
               
