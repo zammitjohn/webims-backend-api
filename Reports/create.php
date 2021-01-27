@@ -72,12 +72,10 @@ $content = '
                     <label for="input7">Faulty: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
-                      <button id="faultySN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                        None
-                      </button>
+                      <button id="faultySN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">None</button>
                       <div class="dropdown-menu">
                         <div id="serial_number_faulty" class="serial_number" style="overflow-y:auto; max-height:10vh">
-                          <button type="button" class="dropdown-item" item_id="">None</button>
+                        
                         </div>
                       </div>
                     </div>
@@ -88,12 +86,10 @@ $content = '
                     <label for="input8">Replacement: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
-                      <button id="replacementSN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                        None
-                      </button>
+                      <button id="replacementSN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">None</button>
                       <div class="dropdown-menu">
                         <div id="serial_number_replacement" class="serial_number" style="overflow-y:auto; max-height:10vh">
-                          <button type="button" class="dropdown-item" item_id="">None</button>
+                  
                         </div>
                       </div>
                     </div>
@@ -195,14 +191,10 @@ $(document).ready(function() {
       var id = urlParams.get('id'); // inventoryId
       if (id != null) {
         $('#SKU').val(id);
-        populateSerialNumbers();
-
-        // populate 'name' field to 'SKU'
-        $('#name').val($("#SKU :selected").text());
-        
+        $('#SKU').attr('disabled', 'disabled'); // disable field, to prevent further changes!
       }
+      populateSerialNumbers();
     }
-
   });
 
   // populate userId dropdown
@@ -261,12 +253,16 @@ function AddItem() {
 }
 
 $("#SKU").change(function(){
+  $(".dropdown-menu").find(".dropdown-item").remove();
+  $(".dropdown-menu").find(".dropdown-divider").remove();
+  $("#faultySN").html("None");
+  $("#replacementSN").html("None");
+  selected_faulty_serial_number = "";
+  selected_replacement_serial_number = "";
   populateSerialNumbers();
 });
 
 function populateSerialNumbers() {
-  $('#SKU').attr('disabled', 'disabled'); // disable field, to prevent further changes!
-
   $.ajax({
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
@@ -274,7 +270,7 @@ function populateSerialNumbers() {
     url: "../api/registry/read" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',
     success: function(data) {
-      var dropdowndata = "";
+      var dropdowndata = "<button type='button' class='dropdown-item' item_id=''>None</button>";
       for (var element in data) {
         if (data[element].state == 'New'){
           dropdowndata += "<button type='button' class='dropdown-item' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";

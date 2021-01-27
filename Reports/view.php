@@ -101,7 +101,6 @@ $content = '
                       </button>
                       <div class="dropdown-menu">
                         <div id="serial_number_faulty" class="serial_number" style="overflow-y:auto; max-height:10vh">
-                          <button type="button" class="dropdown-item" item_id="">None</button>
                         </div>
                       </div>
                     </div>
@@ -117,7 +116,6 @@ $content = '
                       </button>
                       <div class="dropdown-menu">
                         <div id="serial_number_replacement" class="serial_number" style="overflow-y:auto; max-height:10vh">
-                          <button type="button" class="dropdown-item" item_id="">None</button>
                         </div>
                       </div>
                     </div>
@@ -346,10 +344,7 @@ $(document).ready(function() {
                 $("#toggle-repairable-btn").prop('value', 'Mark as repairable');
               }
 
-              $('#SKU').attr('disabled', 'disabled'); // disable field, to prevent further changes!
-              if ($('#SKU').val() != ""){
-                populateSerialNumbers(); // populate serial number dropdown with options and actual value from DB
-              }
+              populateSerialNumbers(); // populate serial number dropdown with options and actual value from DB
             },
             error: function(result) {
               console.log(result);
@@ -478,6 +473,16 @@ function ToggleRepairable() {
   });
 }
 
+$("#SKU").change(function(){
+  $(".dropdown-menu").find(".dropdown-item").remove();
+  $(".dropdown-menu").find(".dropdown-divider").remove();
+  $("#faultySN").html("None");
+  $("#replacementSN").html("None");
+  selected_faulty_serial_number = "";
+  selected_replacement_serial_number = "";
+  populateSerialNumbers();
+});
+
 function populateSerialNumbers() {
   $.ajax({
     type: "GET",
@@ -486,7 +491,7 @@ function populateSerialNumbers() {
     url: "../api/registry/read" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',
     success: function(data) {
-      var dropdowndata = "";
+      var dropdowndata = "<button type='button' class='dropdown-item' item_id=''>None</button>";
       for (var element in data) {
         if (data[element].state == 'New'){
           dropdowndata += "<button type='button' class='dropdown-item' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";
