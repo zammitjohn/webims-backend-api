@@ -39,10 +39,7 @@ class Projects{
         projects.inventoryId= '".$this->inventoryId."'
 
         GROUP BY 
-        projects.type
-
-        ORDER BY 
-        `projects`.`id`  DESC";
+        projects.type";
         
         // prepare query statement
         $stmt = $this->conn->prepare($query);

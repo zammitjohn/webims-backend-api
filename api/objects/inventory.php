@@ -259,7 +259,7 @@ class Inventory{
 
     // clean OLD inventory items which aren't referenced by projects, registry and reports 
     function inventorySweep(){
-        $query = "DELETE FROM " . $this->table_name . "  WHERE (inventoryDate < '" . $this->inventoryDate . "') AND id IN (
+        $query = "DELETE FROM " . $this->table_name . "  WHERE (inventoryDate < '" . $this->inventoryDate . "') AND (category = '" . $this->category . "') AND id IN (
                     SELECT id FROM (
                         SELECT inventory.id FROM inventory
                         LEFT JOIN projects

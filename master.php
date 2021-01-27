@@ -348,9 +348,7 @@ $(document).ready(function validate() {
     },
     error: function(data) {
       alert("Failed to validate session!");
-      $("a.d-block").html("Not logged in"); // change text
-      $(".card").addClass("collapsed-card"); // hide card content
-      $('#modal-login').modal('toggle'); // toggle modal login
+      location.reload();
     }
   });
 
