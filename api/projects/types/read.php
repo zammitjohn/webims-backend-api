@@ -9,7 +9,7 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare projects type property object
-$property = new Collections_Types($db);
+$property = new Projects_Types($db);
 
 // set id/userId property of projects type property to be shown 
 if (isset($_GET['id'])) {
@@ -37,18 +37,18 @@ if ($stmt != false){
     
         // projects type property array
         $output_arr=array();
-        $output_arr["Collections_Types"]=array();
+        $output_arr["Projects_Types"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $collections_type_property=array(
+            $projects_type_property=array(
                 "id" => $id,
                 "name" => $name
             );
-            array_push($output_arr["Collections_Types"], $collections_type_property);
+            array_push($output_arr["Projects_Types"], $projects_type_property);
         }
     
-        echo json_encode($output_arr["Collections_Types"]);
+        echo json_encode($output_arr["Projects_Types"]);
     }
     else{
         echo json_encode(array());

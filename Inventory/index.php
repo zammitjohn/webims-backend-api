@@ -92,7 +92,7 @@ $(function () {
           { data: 'type' },        
           { data: 'description' },
           { data: 'qty' },
-          { data: 'qty_collections_allocated' },
+          { data: 'qty_projects_allocated' },
           { data: 'supplier' },
           { data: 'inventoryDate' },        
       ],

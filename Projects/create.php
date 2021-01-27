@@ -149,7 +149,7 @@ function AddItem() {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../projects/type?id=' + $("#type").val();
+        window.location.href = '../projects?id=' + $("#type").val();
       }
     }
   });

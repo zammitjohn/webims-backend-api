@@ -171,7 +171,7 @@ $content = '
           </div>
           <!-- /.card-header --> 
           <div class="card-body table-responsive p-0" style="max-height: 300px;">
-            <table id="collections_table" table class="table table-hover text-nowrap">
+            <table id="projects_table" table class="table table-hover text-nowrap">
               <thead>
                 <tr>
                   <th>Project</th>
@@ -291,20 +291,19 @@ $(document).ready(function() {
     type: "GET",
     cache: false, // due to aggressive caching on IE 11
     headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
-    url: "../api/projects/read" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
+    url: "../api/projects/read_allocations" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
-      var collection_table_data = "";
+      var project_table_data = "";
       for (var element in data) {
         $('#project_allocations').show();
-        collection_table_data += "<tr>" +
-
-          "<td><a href='../projects/type?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
-          "<td>" + data[element].qty + "</td>" +
+        project_table_data += "<tr>" +
+          "<td><a href='../projects?id=" + data[element].type_id + "'>" + data[element].type_name + "</a></td>" +
+          "<td>" + data[element].total_qty + "</td>" +
           "<td>" + data[element].firstname + " " + data[element].lastname + "</td>" +
           "</tr>";
       }
-      $(collection_table_data).appendTo($("#collections_table"));
+      $(project_table_data).appendTo($("#projects_table"));
     }
   });
   

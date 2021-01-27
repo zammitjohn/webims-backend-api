@@ -71,7 +71,7 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer clearfix">
-            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-newcollection">New Project</button> 
+            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-newproject">New Project</button> 
             <a href="projects/create.php" class="btn btn-sm btn-info">Add Item</a>           
           </div>
           <!-- /.card-footer -->
@@ -102,8 +102,8 @@ $content = '
     </div>
     <!-- /.row -->
 
-    <!-- modal-newcollection start -->
-    <div class="modal fade" id="modal-newcollection">
+    <!-- modal-newproject start -->
+    <div class="modal fade" id="modal-newproject">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -113,9 +113,9 @@ $content = '
           </button>
         </div>
         <!-- form start -->
-        <form role="form" id="new_collection">
+        <form role="form" id="new_project">
           <div class="modal-body">
-            <input type="text" class="form-control" id="collection_name" maxlength="20" placeholder="Enter project name">
+            <input type="text" class="form-control" id="project_name" maxlength="20" placeholder="Enter project name">
           </div>
           <div class="modal-footer justify-content-between">
             <button type="submit" class="btn btn-primary button_action_create">Submit</button>
@@ -201,8 +201,8 @@ $(document).ready(function() {
 
 });
 
-$('#new_collection').on("submit", function(e){
-  $('#modal-newcollection').modal('toggle'); // hide modal
+$('#new_project').on("submit", function(e){
+  $('#modal-newproject').modal('toggle'); // hide modal
   e.preventDefault(); //form will not submitted
   $.ajax({
     type: "POST",
@@ -210,7 +210,7 @@ $('#new_collection').on("submit", function(e){
     url: "api/projects/types/create.php",
     dataType: 'json',
     data: {
-      name: $("#collection_name").val(),
+      name: $("#project_name").val(),
       userId: localStorage.getItem('userId')
     },
     success: function(result) {

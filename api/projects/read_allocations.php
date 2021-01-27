@@ -11,9 +11,9 @@ $db = $database->getConnection();
 // prepare projects item object
 $item = new Projects($db);
  
-// set type property of projects type property to be shown 
-if (isset($_GET['type'])) {
-    $item->type = $_GET['type'];
+// set inventoryId property of projects type property to be shown 
+if (isset($_GET['inventoryId'])) {
+    $item->inventoryId = $_GET['inventoryId'];
 }
 
 // API AUTH Key check
@@ -25,7 +25,7 @@ if (!$user->validAction()){
 }
 
 // query projects item
-$stmt = $item->read();
+$stmt = $item->read_allocations();
 if ($stmt != false){
     $num = $stmt->rowCount();
 
@@ -39,15 +39,12 @@ if ($stmt != false){
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $projects_item=array(
-                "id" => $id,
                 "inventoryId" => $inventoryId,
                 "type_id" => $type_id,
                 "type_name" => $type_name,
-                "inventory_SKU" => $inventory_SKU,
-                "inventory_category" => $inventory_category,
-                "description" => $description,
-                "qty" => $qty,
-                "notes" => $notes
+                "total_qty" => $total_qty,
+                "firstname" => $firstname,
+                "lastname" => $lastname
             );
             array_push($output_arr["Projects"], $projects_item);
         }

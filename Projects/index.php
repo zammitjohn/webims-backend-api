@@ -9,10 +9,10 @@ $database = new Database();
 $db = $database->getConnection();
 
 // prepare projects type property object
-$collections_types_object = new Collections_Types($db);
-$collections_types_object->id = $_GET['id'];
+$projects_types_object = new Projects_Types($db);
+$projects_types_object->id = $_GET['id'];
 
-$stmt = $collections_types_object->read();
+$stmt = $projects_types_object->read();
 $type_name = 'Unknown Type';
 
 if($stmt->rowCount() > 0) {

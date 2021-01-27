@@ -199,13 +199,13 @@ to get the desired effect
           <li class="nav-item has-treeview">
             <?php
             ## Building projects sidebar tree
-            $collections_types_object = new Collections_Types($db);
-            $collections_types_stmt = $collections_types_object->read();
+            $projects_types_object = new Projects_Types($db);
+            $projects_types_stmt = $projects_types_object->read();
 
-            if ($collections_types_stmt != false){
-              while ($collections_types_row = $collections_types_stmt->fetch(PDO::FETCH_ASSOC)){
-                extract($collections_types_row);
-                echo '<li class="nav-item"> <a href="' . $ROOT . 'projects/type?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+            if ($projects_types_stmt != false){
+              while ($projects_types_row = $projects_types_stmt->fetch(PDO::FETCH_ASSOC)){
+                extract($projects_types_row);
+                echo '<li class="nav-item"> <a href="' . $ROOT . 'projects?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
               }
             }
             ?>

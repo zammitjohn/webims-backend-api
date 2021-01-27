@@ -1,5 +1,5 @@
 <?php
-class Collections_Types{
+class Projects_Types{
  
     // database connection and table name
     private $conn;

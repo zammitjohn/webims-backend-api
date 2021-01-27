@@ -37,7 +37,7 @@ class Inventory{
             inventory_types.name AS type_name, inventory_types.alt_name AS type_altname, 
             inventory_categories.id AS category_id, inventory_categories.name AS category_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-            inventory.supplier, inventory.inventoryDate, SUM(projects.qty) AS qty_collections_allocated
+            inventory.supplier, inventory.inventoryDate, SUM(projects.qty) AS qty_projects_allocated
         FROM 
             " . $this->table_name . "
             JOIN 

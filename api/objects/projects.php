@@ -19,87 +19,83 @@ class Projects{
         $this->conn = $db;
     }
 
+
+    // read project allocations
+    function read_allocations(){
+        // select query for particular inventoryId
+        $query = "SELECT 
+        projects.inventoryId, projects_types.id AS type_id, projects_types.name AS type_name, 
+        SUM(projects.qty) AS total_qty, users.firstname, users.lastname
+
+        FROM 
+        " . $this->table_name . " 
+        JOIN 
+            projects_types
+        ON 
+            projects.type = projects_types.id
+             
+        LEFT JOIN 
+            users
+        ON 
+            projects.userId = users.id
+
+        WHERE
+        projects.inventoryId= '".$this->inventoryId."'
+
+        GROUP BY 
+        projects.type
+
+        ORDER BY 
+        `projects`.`id`  DESC";
+        
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+        return $stmt;
+    }
+
     // read projects
     function read(){
+        // select query
+        $query = "SELECT 
+            projects.id, projects.inventoryId, inventory.SKU AS inventory_SKU, inventory_categories.name AS inventory_category, projects_types.id AS type_id,
+            projects_types.name AS type_name, projects.description, projects.qty, projects.notes
 
-        if ($this->inventoryId){
-            // select query for particular inventoryId
-            $query = "SELECT 
-                projects.id, projects.inventoryId, inventory.SKU AS inventory_SKU, inventory_categories.name AS inventory_category, projects_types.id AS type_id,
-                projects_types.name AS type_name, projects.description, SUM(projects.qty) AS qty, projects.notes, 
-                users.firstname, users.lastname
-            FROM 
-                " . $this->table_name . " 
-                JOIN 
-                    projects_types
-                ON 
-                    projects.type = projects_types.id
+        FROM 
+            " . $this->table_name . " 
+            JOIN 
+                projects_types
+            ON 
+                projects.type = projects_types.id
 
-                JOIN 
-                    inventory
-                ON 
-                    projects.inventoryId = inventory.id
+            JOIN 
+                inventory
+            ON 
+                projects.inventoryId = inventory.id
 
-                JOIN 
-                    inventory_categories
-                ON 
-                    inventory.category = inventory_categories.id                
+            JOIN 
+                inventory_categories
+            ON 
+                inventory.category = inventory_categories.id";               
 
-                LEFT JOIN 
-                    users
-                ON 
-                    projects.userId = users.id                    
+        // different SQL query according to API call
+        if ($this->type) {
+            // select query for particular type
+            $query .= "
             WHERE
-                projects.inventoryId= '".$this->inventoryId."'
-            GROUP BY 
-                projects.type                     
+                projects_types.id= '".$this->type."'                        
             ORDER BY 
-                `projects`.`id`  DESC";
+                `projects`.`id`  DESC";   
 
         } else {
-            $query = "SELECT 
-                projects.id, projects.inventoryId, inventory.SKU AS inventory_SKU, inventory_categories.name AS inventory_category, projects_types.id AS type_id,
-                projects_types.name AS type_name, projects.description, projects.qty, projects.notes, 
-                users.firstname, users.lastname
-            FROM 
-                " . $this->table_name . " 
-                JOIN 
-                    projects_types
-                ON 
-                    projects.type = projects_types.id
-
-                JOIN 
-                    inventory
-                ON 
-                    projects.inventoryId = inventory.id
-
-                JOIN 
-                    inventory_categories
-                ON 
-                    inventory.category = inventory_categories.id                
-
-                LEFT JOIN 
-                    users
-                ON 
-                    projects.userId = users.id";               
-        
-            // different SQL query according to API call
-            if ($this->type) {
-                // select query for particular type
-                $query .= "
-                WHERE
-                    projects_types.id= '".$this->type."'                        
-                ORDER BY 
-                    `projects`.`id`  DESC";   
-
-            } else {
-                // select query
-                $query .= "
-                ORDER BY 
-                    `projects`.`id`  DESC";   
-            }
+            // select query
+            $query .= "
+            ORDER BY 
+                `projects`.`id`  DESC";   
         }
-
+        
         // prepare query statement
         $stmt = $this->conn->prepare($query);
     

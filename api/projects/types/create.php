@@ -9,7 +9,7 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare projects type proprty object
-$property = new Collections_Types($db);
+$property = new Projects_Types($db);
  
 // set projects type property values
 $property->name = $_POST['name'];

@@ -158,7 +158,7 @@ function UpdateItem() {
   success: function(result) {
       alert(result.message);
       if (result.status) {
-        window.location.href = '../projects/type?id=' + $("#type").val();
+        window.location.href = '../projects?id=' + $("#type").val();
       }
     }
   });
@@ -182,7 +182,7 @@ function Remove() {
       success: function(result) {
         alert(result.message);
         if (result.status) {
-          window.location.href = '../projects/type?id=' + $("#type").val();
+          window.location.href = '../projects?id=' + $("#type").val();
         }
       }
     });

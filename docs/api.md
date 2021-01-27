@@ -20,7 +20,7 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 | **create**      | `POST`     | Auth-Key Content-Type | SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes                          | /api/inventory/create      |
 | **delete**      | `POST`     | Auth-Key Content-Type | id                                                                                                 | status message                                                                                                                                | /api/inventory/delete      |
 | **read_single** | `GET`      | Auth-Key Content-Type | id                                                                                                 | id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                | /api/inventory/read_single |
-| **read**        | `GET`      | Auth-Key Content-Type | type or category                                                                                   | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_collections_allocated supplier inventoryDate | /api/inventory/read        |
+| **read**        | `GET`      | Auth-Key Content-Type | type or category                                                                                   | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_projects_allocated supplier inventoryDate | /api/inventory/read        |
 | **update**      | `POST`     | Auth-Key Content-Type | id description qty isGSM isUMTS isLTE ancillary toCheck notes                                      | status message                                                                                                                                | /api/inventory/update      |
 
 ---
@@ -74,13 +74,14 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 
 ## Projects
 
-| **Action**      | **Method** | **Headers**           | **Parameters**                                   | **Response**                                                                            | **URL**                   |
-|-----------------|------------|-----------------------|--------------------------------------------------|-----------------------------------------------------------------------------------------|---------------------------|
-| **create**      | `POST`     | Auth-Key Content-Type | inventoryId type description qty notes userId    | status message id inventoryId type description qty notes                                | /api/projects/create      |
-| **delete**      | `POST`     | Auth-Key Content-Type | id                                               | status message                                                                          | /api/projects/delete      |
-| **read_single** | `GET`      | Auth-Key Content-Type | id                                               | id inventoryId type description qty notes                                               | /api/projects/read_single |
-| **read**        | `GET`      | Auth-Key Content-Type | type inventoryId                                 | id inventoryId type_id type_name inventory_SKU description qty notes firstname lastname | /api/projects/read        |
-| **update**      | `POST`     | Auth-Key Content-Type | id inventoryId type description qty notes userId | status message                                                                          | /api/projects/update      |
+| **Action**           | **Method** | **Headers**           | **Parameters**                                   | **Response**                                                                            | **URL**                        |
+|----------------------|------------|-----------------------|--------------------------------------------------|-----------------------------------------------------------------------------------------|--------------------------------|
+| **create**           | `POST`     | Auth-Key Content-Type | inventoryId type description qty notes userId    | status message id inventoryId type description qty notes                                | /api/projects/create           |
+| **delete**           | `POST`     | Auth-Key Content-Type | id                                               | status message                                                                          | /api/projects/delete           |
+| **read_single**      | `GET`      | Auth-Key Content-Type | id                                               | id inventoryId type description qty notes                                               | /api/projects/read_single      |
+| **read**             | `GET`      | Auth-Key Content-Type | type                                             | id inventoryId type_id type_name inventory_SKU inventory_category description qty notes | /api/projects/read             |
+| **read_allocations** | `GET`      | Auth-Key Content-Type | type                                             | inventoryId type_id type_name total_qty firstname lastname                              | /api/projects/read_allocations |
+| **update**           | `POST`     | Auth-Key Content-Type | id inventoryId type description qty notes userId | status message                                                                          | /api/projects/update           |
 
 ---
 
