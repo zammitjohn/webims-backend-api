@@ -28,11 +28,11 @@ $item->ancillary = $_POST['ancillary'];
 $item->toCheck = $_POST['toCheck'];
 $item->notes = $_POST['notes'];
 
-// API AUTH Key check
+// AUTH check 
 $user = new Users($db); // prepare users object
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
+if (isset($_COOKIE['UserSession'])){
     $user->action_isUpdate = true;
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");

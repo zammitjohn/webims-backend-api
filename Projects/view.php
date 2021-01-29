@@ -82,8 +82,7 @@ $(document).ready(function() {
   // populate inventoryId dropdown
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
@@ -97,8 +96,7 @@ $(document).ready(function() {
       // populate type dropdown
       $.ajax({
         type: "GET",
-        cache: false, // due to aggressive caching on IE 11
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        cache: false,
         url: "../api/projects/types/read",
         dataType: 'json',
         success: function(data) {
@@ -113,8 +111,7 @@ $(document).ready(function() {
           // populate form
           $.ajax({
             type: "GET",
-            cache: false, // due to aggressive caching on IE 11
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            cache: false,
             url: "../api/projects/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
@@ -139,7 +136,6 @@ $(document).ready(function() {
 function UpdateItem() {
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/projects/update',
     dataType: 'json',
     data: {
@@ -169,7 +165,6 @@ function Remove() {
   if (result == true) {
     $.ajax({
       type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
       url: '../api/projects/delete',
       dataType: 'json',
       data: {

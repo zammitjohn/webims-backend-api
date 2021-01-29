@@ -99,7 +99,15 @@ to get the desired effect
           <img src="<?php echo $ROOT; ?>dist/img/generic-user.png" class="img-circle elevation-1" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block"></a>
+          <a href="#" class="d-block">
+            <?php
+              if (isset($_COOKIE['UserSession'])) {
+                echo json_decode(base64_decode($_COOKIE['UserSession'])) -> {'FullName'};
+              } else {
+                echo "Not logged in";
+              }
+            ?>
+          </a>
         </div>
       </div>
 
@@ -309,20 +317,15 @@ $(document).ready(function validate() {
   // Validate session characteristics
   $.ajax({
   type: "GET",
-  cache: false, // due to aggressive caching on IE 11
-  headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+  cache: false,
   url: '<?php echo $ROOT; ?>api/users/validate_session',
   dataType: 'json',
     success: function(data) {
       if (data['status'] == false) {
-        $("a.d-block").html("Not logged in"); // change text
         $(".card").addClass("collapsed-card"); // hide card content
         $('#modal-login').modal('toggle'); // toggle modal login
       } else {
         setTimeout(validate, 10000); // session validate every 10 seconds and upon page refresh
-        // populate name text fields
-        var name = (data['firstname'] + " " + data['lastname']);
-        $("a.d-block").html(name); // change text
 
         // show/hide dashboard user_permission_alert accordingly
         if ( (data['canUpdate'] == false) || (data['canCreate'] == false) || (data['canImport'] == false) || (data['canDelete'] == false) ) {
@@ -357,7 +360,7 @@ $(document).ready(function validate() {
     submitHandler: function () {
       $.ajax({
         type: "POST",
-        cache: false, // due to aggressive caching on IE 11
+        cache: false,
         url: '<?php echo $ROOT; ?>api/users/login',
         dataType: 'json',
         data: {
@@ -417,7 +420,6 @@ $(document).ready(function validate() {
 function userLogout(){
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '<?php echo $ROOT; ?>api/users/logout',
     dataType: 'json',
     error: function(data) {

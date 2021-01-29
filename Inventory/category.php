@@ -145,7 +145,6 @@ $(document).ready(function() {
     responsive: true,
     order:[],
     ajax: {
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
         url: "../api/inventory/read" + "?category=" + <?php echo $_GET['id']; ?>,
         dataSrc: ''
     },
@@ -180,7 +179,6 @@ $('#upload_csv').on("submit", function(e){
   toastr.info('Importing data'); // show toast
   e.preventDefault(); //form will not submitted
   $.ajax({
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
       url:"import/express_import",  
       method:"POST",  
       data:new FormData(this),  

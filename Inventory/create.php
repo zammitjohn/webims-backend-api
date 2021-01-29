@@ -148,8 +148,7 @@ $(document).ready(function() {
   // load type field
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/categories/read",
     dataType: 'json',
     success: function(data) {
@@ -191,7 +190,6 @@ function AddItem() {
 
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/inventory/create',
     dataType: 'json',
     data: {
@@ -227,8 +225,7 @@ function loadTypes(category) {
   // load type field
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/types/read?category=" + category,
     dataType: 'json',
     success: function(data) {

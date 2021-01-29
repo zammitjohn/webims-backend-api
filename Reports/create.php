@@ -174,8 +174,7 @@ $(document).ready(function() {
   // populate inventoryId dropdown
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
@@ -200,8 +199,7 @@ $(document).ready(function() {
   // populate userId dropdown
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/users/read",
     dataType: 'json',
     success: function(data) {
@@ -211,7 +209,6 @@ $(document).ready(function() {
       }
       // append dropdowndata to userId dropdown
       $("#userId").append(dropdowndata);
-      $("#userId").val(localStorage.getItem('userId')); // set userId to current userId
     }
   });
 
@@ -220,7 +217,6 @@ $(document).ready(function() {
 function AddItem() {
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/reports/create',
     dataType: 'json',
     data: {
@@ -265,8 +261,7 @@ $("#SKU").change(function(){
 function populateSerialNumbers() {
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/registry/read" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',
     success: function(data) {

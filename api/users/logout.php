@@ -10,9 +10,9 @@ $db = $database->getConnection();
 // prepare user object
 $user = new users($db);
  
-// API AUTH Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+// AUTH check 
+if (isset($_COOKIE['UserSession'])){
+    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -21,6 +21,13 @@ if (!$user->validAction()){
  
 // remove the user
 if($user->logout()){
+
+    // empty cookie value and old timestamp
+    if (isset($_COOKIE['UserSession'])) {
+        unset($_COOKIE['UserSession']);
+        setcookie('UserSession', '', time() - 3600, '/');
+    }
+
     $output_arr=array(
         "status" => true,
         "message" => "Log out successful!"

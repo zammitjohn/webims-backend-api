@@ -50,6 +50,14 @@ if ($bind) { // user found in directory
         if($stmt){
             // get retrieved row
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // set cookie (expires in 24 hours)
+            $user_info=array(
+                "FullName" => $row['firstname'] . ' ' . $row['lastname'],
+                "SessionId" => $row['sessionId']
+            );
+            setcookie('UserSession', base64_encode(json_encode($user_info)), time()+86400, "/",);
+            
             // create array
             $output_arr=array(
                 "status" => true,

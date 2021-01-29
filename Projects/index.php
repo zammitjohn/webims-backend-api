@@ -89,7 +89,6 @@ $(document).ready(function() {
       autoWidth: false,
       responsive: true,
       ajax: {
-          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
           url: "../api/projects/read" + "?type=" + <?php echo $_GET['id']; ?>,
           dataSrc: ''
       },

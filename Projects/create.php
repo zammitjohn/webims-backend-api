@@ -81,8 +81,7 @@ $(document).ready(function() {
   // populate inventoryId dropdown
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
@@ -105,8 +104,7 @@ $(document).ready(function() {
       // populate type dropdown
       $.ajax({
         type: "GET",
-        cache: false, // due to aggressive caching on IE 11
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        cache: false,
         url: "../api/projects/types/read",
         dataType: 'json',
         success: function(data) {
@@ -132,7 +130,6 @@ $(document).ready(function() {
 function AddItem() {
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/projects/create',
     dataType: 'json',
     data: {

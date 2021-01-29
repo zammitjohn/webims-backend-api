@@ -70,8 +70,7 @@ include('../master.php');
 $(document).ready(function() {
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
@@ -98,7 +97,6 @@ $(document).ready(function() {
 function Register() {
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/registry/create',
     dataType: 'json',
     data: {

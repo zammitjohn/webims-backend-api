@@ -204,8 +204,7 @@ $(document).ready(function() {
   // populate category dropdown
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/categories/read",
     dataType: 'json',
     success: function(data) {
@@ -220,8 +219,7 @@ $(document).ready(function() {
       // populate form
       $.ajax({
         type: "GET",
-        cache: false, // due to aggressive caching on IE 11
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        cache: false,
         url: "../api/inventory/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
         dataType: 'json',
         success: function(data) {
@@ -231,8 +229,7 @@ $(document).ready(function() {
           // populate type dropdown
           $.ajax({
             type: "GET",
-            cache: false, // due to aggressive caching on IE 11
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            cache: false,
             url: "../api/inventory/types/read?category=" + data['category'],
             dataType: 'json',
             success: function(list) {
@@ -288,8 +285,7 @@ $(document).ready(function() {
   // load project table
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/projects/read_allocations" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
@@ -308,8 +304,7 @@ $(document).ready(function() {
   // load registry table
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/registry/read" + "?inventoryId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
@@ -353,7 +348,6 @@ function UpdateItem() {
 
   $.ajax({
       type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
       url: '../api/inventory/update',
       dataType: 'json',
       data: {
@@ -391,7 +385,6 @@ function Remove() {
   if (result == true) {
     $.ajax({
       type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
       url: '../api/inventory/delete',
       dataType: 'json',
       data: {
@@ -415,7 +408,6 @@ function Deregister(id) {
   if (result == true) {
     $.ajax({
       type: "POST",
-      headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
       url: '../api/registry/delete',
       dataType: 'json',
       data: {

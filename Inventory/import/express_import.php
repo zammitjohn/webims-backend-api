@@ -15,11 +15,11 @@ $conflict_counter = 0;
 $deleted_counter = 0;
 $modifiedItemIDs = []; // to keep track of modified inventory item IDs
 
-// API AUTH Key check
+// AUTH check 
 $user = new Users($db); // prepare users object
-if (isset($_SERVER['HTTP_AUTH_KEY'])){
+if (isset($_COOKIE['UserSession'])){
     $user->action_isImport = true;
-    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");

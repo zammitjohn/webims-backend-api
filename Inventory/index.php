@@ -82,7 +82,6 @@ $(function () {
       responsive: true,
       order:[],
       ajax: {
-          headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
           url: "../api/inventory/read",
           dataSrc: ''
       },

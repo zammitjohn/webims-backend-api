@@ -10,8 +10,8 @@ $db = $database->getConnection();
 // prepare users object
 $user = new Users($db);
 
-// API AUTH Key check
-if (isset($_SERVER['HTTP_AUTH_KEY'])){ $user->sessionId = $_SERVER['HTTP_AUTH_KEY']; }
+// AUTH check 
+if (isset($_COOKIE['UserSession'])){ $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}; }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();

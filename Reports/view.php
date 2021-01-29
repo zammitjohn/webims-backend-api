@@ -282,8 +282,7 @@ $(document).ready(function() {
   // populate inventoryId dropdown
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/inventory/read",
     dataType: 'json',
     success: function(data) {
@@ -298,8 +297,7 @@ $(document).ready(function() {
       // populate userId dropdown
       $.ajax({
         type: "GET",
-        cache: false, // due to aggressive caching on IE 11
-        headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+        cache: false,
         url: "../api/users/read",
         dataType: 'json',
         success: function(data) {
@@ -314,8 +312,7 @@ $(document).ready(function() {
           // populate form from DB
           $.ajax({
             type: "GET",
-            cache: false, // due to aggressive caching on IE 11
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+            cache: false,
             url: "../api/reports/read_single" + "?id=" + <?php echo $_GET['id']; ?>,
             dataType: 'json',
             success: function(data) {
@@ -371,8 +368,7 @@ function loadComments() {
   messagedata = "";
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "<?php echo $ROOT; ?>api/reports/comments/read" + "?reportId=" + <?php echo $_GET['id']; ?>,
     dataType: 'json',
     success: function(data) {
@@ -388,7 +384,6 @@ function loadComments() {
 function UpdateItem() {
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/reports/update',
     dataType: 'json',
     data: {
@@ -424,7 +419,6 @@ function UpdateItem() {
 function NewComment() {
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/reports/comments/create',
     dataType: 'json',
     data: {
@@ -447,7 +441,6 @@ function ToggleRepairable() {
   var id = (<?php echo $_GET['id']; ?>);
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: '../api/reports/toggle_repairable',
     dataType: 'json',
     data: {
@@ -486,8 +479,7 @@ $("#SKU").change(function(){
 function populateSerialNumbers() {
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "../api/registry/read" + "?inventoryId=" +  $("#SKU").val(),
     dataType: 'json',
     success: function(data) {
@@ -534,7 +526,6 @@ $('#upload_file').on("submit", function(e){
   toastr.info('Uploading file'); // show toast
   e.preventDefault(); //form will not submitted
   $.ajax({
-      headers: { "Auth-Key": (localStorage.getItem('sessionId'))},
       url:"upload",  
       method:"POST",  
       data: formData,  

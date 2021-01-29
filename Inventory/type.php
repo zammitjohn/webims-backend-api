@@ -109,7 +109,6 @@ $(document).ready(function() {
         responsive: true,
         order:[],
         ajax: {
-            headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
             url: "../api/inventory/read" + "?type=" + <?php echo $_GET['id']; ?>,
             dataSrc: ''
         },

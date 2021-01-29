@@ -144,8 +144,7 @@ $(document).ready(function() {
   reportcount = 0;
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "api/reports/read" + "?userId=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
@@ -167,8 +166,7 @@ $(document).ready(function() {
   userlistdata = "";
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "api/users/read",
     dataType: 'json',
     success: function(data) {
@@ -184,8 +182,7 @@ $(document).ready(function() {
   
   $.ajax({
     type: "GET",
-    cache: false, // due to aggressive caching on IE 11
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
+    cache: false,
     url: "api/projects/types/read" + "?userId=" + localStorage.getItem('userId'),
     dataType: 'json',
     success: function(data) {
@@ -206,7 +203,6 @@ $('#new_project').on("submit", function(e){
   e.preventDefault(); //form will not submitted
   $.ajax({
     type: "POST",
-    headers: { "Auth-Key": (localStorage.getItem('sessionId')) },
     url: "api/projects/types/create",
     dataType: 'json',
     data: {
