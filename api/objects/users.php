@@ -227,4 +227,19 @@ class Users{
         }        
     }
 
+    function getUserId(){
+        $query = "SELECT id
+        FROM
+            " . $this->table_name . " 
+        WHERE
+            sessionId='".$this->sessionId."'";
+        
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['id']; // return item id of matching user
+    }
+
 }

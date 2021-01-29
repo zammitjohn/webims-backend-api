@@ -423,7 +423,6 @@ function NewComment() {
     dataType: 'json',
     data: {
       reportId: <?php echo $_GET['id']; ?>,
-      userId: localStorage.getItem('userId'),
       text: $("#user_comment").val()
     },
     error: function(result) {

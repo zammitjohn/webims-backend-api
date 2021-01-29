@@ -145,7 +145,7 @@ $(document).ready(function() {
   $.ajax({
     type: "GET",
     cache: false,
-    url: "api/reports/read" + "?userId=" + localStorage.getItem('userId'),
+    url: "api/reports/read_myreports",
     dataType: 'json',
     success: function(data) {
       var tableData = "";
@@ -183,7 +183,7 @@ $(document).ready(function() {
   $.ajax({
     type: "GET",
     cache: false,
-    url: "api/projects/types/read" + "?userId=" + localStorage.getItem('userId'),
+    url: "api/projects/types/read_myprojects",
     dataType: 'json',
     success: function(data) {
       var tableData = "";
@@ -206,14 +206,14 @@ $('#new_project').on("submit", function(e){
     url: "api/projects/types/create",
     dataType: 'json',
     data: {
-      name: $("#project_name").val(),
-      userId: localStorage.getItem('userId')
+      name: $("#project_name").val()
     },
     success: function(result) {
       if (result.status == false) {
         alert(result.message);
+      } else {
+        location.reload();
       }
-      location.reload();
     }
   });
 

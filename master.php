@@ -372,8 +372,6 @@ $(document).ready(function validate() {
         },
         success: function(data) {
           if (data['status'] == true) {
-            localStorage.setItem('userId', data['id']);
-            localStorage.setItem('sessionId', data['sessionId']);
             location.reload();
           } else {
             alert(data['message']);

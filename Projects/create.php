@@ -137,8 +137,7 @@ function AddItem() {
       type: $("#type").val(),
       description: $("#description").val(),
       qty: $("#qty").val(),
-      notes: $("#notes").val(),
-      userId: localStorage.getItem('userId')
+      notes: $("#notes").val()
     },
     error: function(result) {
       alert(result.statusText);
