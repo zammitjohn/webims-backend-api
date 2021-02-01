@@ -12,7 +12,7 @@ $user = new users($db);
  
 // AUTH check 
 if (isset($_COOKIE['UserSession'])){
-    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
+    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");

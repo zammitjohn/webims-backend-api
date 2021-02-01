@@ -18,7 +18,7 @@ if (!isset($_COOKIE['UserSession'])){
     );
 } else { // check if key is correct
 
-    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
+    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
 
     // query users
     $stmt = $user->validateSession();

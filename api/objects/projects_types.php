@@ -90,5 +90,23 @@ class Projects_Types{
         return $stmt;
     }
 
-   
+    //delete
+    function delete(){
+        // query to delete
+        $query = "DELETE FROM
+                    " . $this->table_name . "
+                WHERE
+                    id= '".$this->id."'";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+            return true;
+        }
+        return false;
+    }
+
 }

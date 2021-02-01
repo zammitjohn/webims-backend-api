@@ -13,11 +13,13 @@ $projects_types_object = new Projects_Types($db);
 $projects_types_object->id = $_GET['id'];
 
 $stmt = $projects_types_object->read();
+$delete_button = '';
 $type_name = 'Unknown Type';
 
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $type_name = ($row['name']);
+  $delete_button = '<div class="card-tools"> <a href="#" class="btn btn-tool btn-sm button_action_delete"> <i class="fas fa-trash-alt"></i> </a> </div>';
 }
 
 ## Content goes here
@@ -47,6 +49,7 @@ $content = '
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">' . $type_name . '</h3>
+          ' . $delete_button . '
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -108,4 +111,27 @@ $(document).ready(function() {
       ]
   });
 });
+
+// project deletion
+$(document).on('click', ".button_action_delete", function () {
+  var result = confirm("Are you sure you want to delete the project?");
+  if (result == true) {
+    $.ajax({
+      type: "POST",
+      url: '../api/projects/types/delete',
+      dataType: 'json',
+      data: {
+        id: <?php echo $_GET['id']; ?>
+      },
+      error: function(result) {
+        alert(result.statusText);
+      },
+      success: function(result) {
+        window.location.href = "../"
+      }
+    });
+  }
+});
+
+
 </script>

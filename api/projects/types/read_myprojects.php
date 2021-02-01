@@ -14,7 +14,7 @@ $property = new Projects_Types($db);
 // AUTH check 
 $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
-    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}; 
+    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
     $property->userId = $user->getUserId();
 }
 if (!$user->validAction()){

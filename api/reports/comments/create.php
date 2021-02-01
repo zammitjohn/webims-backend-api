@@ -19,7 +19,7 @@ $property->text = $_POST['text'];
 $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
     $user->action_isCreate = true;
-    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
+    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
     $property->userId = $user->getUserId();
 }
 if (!$user->validAction()){

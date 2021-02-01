@@ -202,8 +202,6 @@ to get the desired effect
             </ul>
           </li>          
 
-          <li class="nav-header">PROJECTS</li>
-
           <li class="nav-item has-treeview">
             <?php
             ## Building projects sidebar tree
@@ -211,9 +209,14 @@ to get the desired effect
             $projects_types_stmt = $projects_types_object->read();
 
             if ($projects_types_stmt != false){
+              $projects_types_row_count = 1;
               while ($projects_types_row = $projects_types_stmt->fetch(PDO::FETCH_ASSOC)){
+                if($projects_types_row_count == 1) {
+                  echo '<li class="nav-header">PROJECTS</li>';
+                } 
                 extract($projects_types_row);
                 echo '<li class="nav-item"> <a href="' . $ROOT . 'projects?id=' . $id . '" class="nav-link"><i class="far fa-circle nav-icon"></i><p>' . $name . '</p></a></li>';
+                ++$projects_types_row_count;
               }
             }
             ?>
@@ -342,10 +345,11 @@ $(document).ready(function validate() {
           $(".button_action_create").prop("disabled",true);
         }
         if (data['canImport'] == false) {
-          $(".button_action_import").hide();
+          $(".button_action_import").hide(); // card tools
         }
         if (data['canDelete'] == false) {
           $(".button_action_delete").prop("disabled",true);
+          $(".button_action_delete").hide(); // card tools
         }
       }
     },

@@ -96,10 +96,11 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Projects Types
 
-| **Action**          | **Method** | **Parameters** | **Response** | **URL**                    |
-|---------------------|------------|----------------|--------------|----------------------------|
-| **create**          | `POST`     | name           | name         | /api/projects/types/create |
-| **read**            | `GET`      | id             | id name      | /api/projects/types/read   |
-| **read_myprojects** | `GET`      | id             | id name      | /api/projects/types/read   |
+| **Action**          | **Method** | **Parameters** | **Response**           | **URL**                    |
+|---------------------|------------|----------------|------------------------|----------------------------|
+| **create**          | `POST`     | name           | id name status message | /api/projects/types/create |
+| **delete**          | `POST`     | id             | status message         | /api/projects/types/create |
+| **read**            | `GET`      | id             | id name                | /api/projects/types/read   |
+| **read_myprojects** | `GET`      | id             | id name                | /api/projects/types/read   |
 
 ---

@@ -32,7 +32,7 @@ $item->notes = $_POST['notes'];
 $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
     $user->action_isUpdate = true;
-    $user->sessionId = json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'};
+    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
