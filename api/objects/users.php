@@ -51,11 +51,11 @@ class Users{
     
         // select all query
         $query = "SELECT
-                    `id`, `firstname`, `lastname`, `lastLogin`
+                    `id`, `firstname`, `lastname`, `lastAvailable`
                 FROM
                     " . $this->table_name . " 
                 ORDER BY
-                    lastLogin DESC";
+                    lastAvailable DESC";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -68,6 +68,20 @@ class Users{
 
     // validate session parameters
     function validateSession(){
+
+        // update lastAvailable
+        $query = "UPDATE
+                    ".$this->table_name." 
+                SET
+                    lastAvailable = now() 
+                WHERE
+                    sessionId='".$this->sessionId."'";   
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+        
+        // execute query
+        $stmt->execute();   
     
         // select query
         $query = "SELECT 
@@ -75,9 +89,7 @@ class Users{
                 FROM
                     " . $this->table_name . " 
                 WHERE
-                    sessionId='".$this->sessionId."'
-                AND 
-                    lastLogin >= now() - INTERVAL 1 DAY";
+                    sessionId='".$this->sessionId."'";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -140,7 +152,7 @@ class Users{
         $query = "UPDATE
                     ".$this->table_name." 
                 SET
-                    sessionId = '".$hash."',  lastLogin = now() 
+                    sessionId = '".$hash."'
                 WHERE
                     username = '".$this->username."'";       
 

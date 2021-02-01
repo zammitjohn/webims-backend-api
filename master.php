@@ -241,34 +241,40 @@ to get the desired effect
   <!-- /.content-wrapper -->
 
   <!-- Login Modal -->
-  <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="overflow-y: hidden">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <p class="login-box-msg">Log in using your corporate account</p>
-          <!-- form start -->
-          <form role="form" id="loginForm">
-            <div class="form-group">
-              <input type="username" name="username" class="form-control" id="username" placeholder="username or email">
-            </div>
-            <div class="form-group">
-              <input type="password" name="password" class="form-control" id="password" placeholder="password" autocomplete="on">
-            </div>
-          
-            <div class="row">
-              <p class="login-box-msg">
-                <small><i class="fas fa-exclamation-triangle text-warning"></i><b> Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" target="_blank" rel="noreferrer">LDAP</a> authentication.</small>
-              </p>
-              <div class="col-6 mx-auto">
-                <button type="submit" class="btn btn-default btn-block">Log in</button>
-              </div>
-            </div>
-          </form>
-          <!-- /.form -->
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="modal fade" data-backdrop="static" data-keyboard="false" id="modal-login" role="dialog" style="overflow-y: hidden" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+        <!-- form start -->
+				<form id="loginForm" name="loginForm" role="form">
+					<div class="modal-body">
+						<p class="login-box-msg">Log in using your corporate account</p>
+						<div class="form-group">
+							<input class="form-control" id="username" name="username" placeholder="username or email" type="username">
+						</div>
+						<div class="form-group">
+							<input autocomplete="on" class="form-control" id="password" name="password" placeholder="password" type="password">
+						</div>
+						<div class="row">
+							<p class="login-box-msg"><small><i class="fas fa-exclamation-triangle text-warning"></i> <b>Your credentials are not stored on WebIMS.</b> Credentials are verified using <a href="https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol" rel="noreferrer" target="_blank">LDAP</a> authentication.</small></p>
+						</div>
+					</div>
+					<div class="card-footer">
+						<div class="row">
+							<div class="col-8">
+								<input id="remember_me_checkbox" name="remember_me_checkbox" type="checkbox"> <label for="remember_me_checkbox">Remember Me</label>
+							</div>
+              <!-- /.col -->
+							<div class="col-4">
+								<button class="btn btn-default btn-block" type="submit">Log in</button>
+							</div>
+              <!-- /.col -->
+						</div>
+					</div>
+				</form>
+        <!-- /.form -->
+			</div>
+		</div>
+	</div>
   <!-- /.login-modal -->
 
   <!-- Main Footer -->
@@ -369,7 +375,8 @@ $(document).ready(function validate() {
         dataType: 'json',
         data: {
           username: $("#username").val(),
-          password: $("#password").val()
+          password: $("#password").val(),
+          remember: $("#remember_me_checkbox").is(':checked')  ? 1 : 0
         },
         error: function(data) {
           alert(data['message']);

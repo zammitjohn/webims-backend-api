@@ -36,7 +36,7 @@ if ($stmt != false){
                 "id" => $id,
                 "firstname" => $firstname,
                 "lastname" => $lastname,
-                "lastLogin" => $lastLogin
+                "lastAvailable" => $lastAvailable
             );
             array_push($output_arr["Users"], $users);
         }

@@ -12,12 +12,12 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Users
 
-| **Action**           | **Method** | **Parameters**    | **Response**                                                              | **URL**                     |
-|----------------------|------------|-------------------|---------------------------------------------------------------------------|-----------------------------|
-| **login**            | `POST`     | username password | status message id username firstname lastname sessionId created           | /api/users/login            |
-| **logout**           | `POST`     |                   | status message                                                            | /api/users/logout           |
-| **read**             | `GET`      |                   | id firstname lastname lastLogin                                           | /api/users/read             |
-| **validate_session** | `GET`      |                   | status message firstname lastname canUpdate canCreate canImport canDelete | /api/users/validate_session |
+| **Action**           | **Method** | **Parameters**             | **Response**                                                              | **URL**                     |
+|----------------------|------------|----------------------------|---------------------------------------------------------------------------|-----------------------------|
+| **login**            | `POST`     | username password remember | status message id username firstname lastname sessionId created           | /api/users/login            |
+| **logout**           | `POST`     |                            | status message                                                            | /api/users/logout           |
+| **read**             | `GET`      |                            | id firstname lastname lastAvailable                                       | /api/users/read             |
+| **validate_session** | `GET`      |                            | status message firstname lastname canUpdate canCreate canImport canDelete | /api/users/validate_session |
 
 ---
 

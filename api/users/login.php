@@ -51,12 +51,17 @@ if ($bind) { // user found in directory
             // get retrieved row
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // set cookie (expires in 24 hours)
+            // set cookie
             $user_info=array(
                 "FullName" => $row['firstname'] . ' ' . $row['lastname'],
                 "SessionId" => $row['sessionId']
             );
-            setcookie('UserSession', base64_encode(json_encode($user_info)), time()+86400, "/",);
+
+            if ($_POST['remember']){ // expires in 30 days
+                setcookie('UserSession', base64_encode(json_encode($user_info)),strtotime('+30 days'),"/");
+            } else { // will expire at the end of the session (when the browser closes)
+                setcookie('UserSession', base64_encode(json_encode($user_info)),0,"/");
+            } 
             
             // create array
             $output_arr=array(
