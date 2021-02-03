@@ -13,10 +13,10 @@ $inventory_types_object = new Inventory_Types($db);
 $inventory_types_object->id = $_GET['id'];
 
 $stmt = $inventory_types_object->read();
-$category_name = 'Unknown Category';
-$type_name = 'Unknown Type';
+$category_name = '';
+$type_name = '';
 $type_alt_name = '';
-$category_id = '#';
+$category_id = '';
 
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -24,6 +24,10 @@ if($stmt->rowCount() > 0) {
   if ($row['alt_name']) { $type_alt_name = (' (' . $row['alt_name'] . ')'); }
   $category_name = ($row['category_name']);
   $category_id = ($row['type_category']);
+} else {
+  header("HTTP/1.0 404 Not Found");
+  include '../pages/404.php';
+  die();
 }
 
 ## Content goes here

@@ -422,6 +422,18 @@ $(document).ready(function validate() {
   });
 
 });
+
+$('#csvfile').on('change',function(){ // validate file type to import
+  var regex = new RegExp("(.*?)\.(csv)$");
+  var fileName = $(this).val(); // get the file name
+  if (!(regex.test(fileName.toLowerCase()))) {
+    toastr.error('Please select correct file format');
+    $(this).next('.custom-file-label').html("");  // replace the file input label
+  } else { // Show file name in dialog https://stackoverflow.com/questions/48613992/bootstrap-4-file-input-doesnt-show-the-file-name
+    var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
+    $(this).next('.custom-file-label').html(cleanFileName);  // replace the file input label
+  }
+});
 </script>
 
 <!-- Log out user -->

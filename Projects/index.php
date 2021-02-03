@@ -14,12 +14,16 @@ $projects_types_object->id = $_GET['id'];
 
 $stmt = $projects_types_object->read();
 $delete_button = '';
-$type_name = 'Unknown Type';
+$type_name = '';
 
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $type_name = ($row['name']);
   $delete_button = '<div class="card-tools"> <a href="#" class="btn btn-tool btn-sm button_action_delete"> <i class="fas fa-trash-alt"></i> </a> </div>';
+} else {
+  header("HTTP/1.0 404 Not Found");
+  include '../pages/404.php';
+  die();
 }
 
 ## Content goes here
@@ -50,6 +54,9 @@ $content = '
         <div class="card-header">
           <h3 class="card-title">' . $type_name . '</h3>
           ' . $delete_button . '
+          <div class="card-tools">
+            <a href="#" class="btn btn-tool btn-sm button_action_import" data-toggle="modal" data-target="#modal-import"><i class="fas fa-upload"></i></a>
+          </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -70,6 +77,54 @@ $content = '
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
+
+      <!-- data import modal -->
+      <div class="modal fade" id="modal-import">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Import</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <p>Select CSV data file to import. CSV data file must use the following format: <i>SKU,description,quantity,notes</i></p>
+              <div class="form-group">
+                <b>Allocate items from:</b>
+                <div class="row">
+                  <div class="col-8">
+                    <select id="inventory_category" class="form-control">
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <select id="inventory_type" class="form-control">
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <form id="upload_csv" method="post" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="csvfile" name="file" accept=".csv">
+                    <label class="custom-file-label" for="file"></label>
+                  </div>
+                  <div class="input-group-append">
+                    <button type="submit" name="upload" id="upload" class="btn btn-primary">Upload</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->   
     
     </div>
     <!-- /.col -->
@@ -133,5 +188,95 @@ $(document).on('click', ".button_action_delete", function () {
   }
 });
 
+$("#inventory_category").change(function () {
+  loadTypes($("#inventory_category").val());
+});
+
+// load inventory categories and types
+$("#modal-import").on('shown.bs.modal', function() { 
+  $("#inventory_category").empty();
+  // load category field
+  $.ajax({
+    type: "GET",
+    cache: false,
+    url: "../api/inventory/categories/read",
+    dataType: 'json',
+    success: function(data) {
+      var dropdowndata = "";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
+      }
+      // append dropdowndata to SKU dropdown
+      $("#inventory_category").append(dropdowndata);
+      loadTypes($("#inventory_category").val());
+    },
+    error: function(data) {
+      console.log(data);
+    },
+  });
+});
+
+function loadTypes(category) {
+  $("#inventory_type").empty();
+  // load type field
+  $.ajax({
+    type: "GET",
+    cache: false,
+    url: "../api/inventory/types/read?category=" + category,
+    dataType: 'json',
+    success: function(data) {
+      var dropdowndata = "";
+      for (var element in data) {
+        dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].name + "</option>";
+      }
+      // append dropdowndata to SKU dropdown
+      $("#inventory_type").append(dropdowndata);
+    },
+    error: function(data) {
+      console.log(data);
+    },
+  });
+}
+
+
+
+// upload csv
+$('#upload_csv').on("submit", function(e){
+  $('#modal-import').modal('toggle'); // hide modal
+  toastr.info('Importing data'); // show toast
+  e.preventDefault(); //form will not submitted
+
+  // POST csv file using Ajax along with other form details
+  var formData = new FormData(this);
+  formData.append('type', "<?php echo $_GET['id']; ?>");
+  formData.append('inventory_type', $('#inventory_type').val());
+  formData.append('inventory_category', $('#inventory_category').val());
+
+  $.ajax({
+      url:"../api/projects/import",  
+      method:"POST",  
+      data:formData,  
+      contentType:false,          // The content type used when sending data to the server.  
+      cache:false,                // To disable request pages to be cached  
+      processData:false,          // To send DOMDocument or non processed data file
+      dataType: 'json',
+      success: function(data) {
+          if (data['status'] == false) {  
+              toastr.error('No data imported');
+          } else {  
+              toastr.success("Added " + data['created_count'] + " items.");
+
+              if (data['notfound_count']){
+                toastr.warning("SKUs " + data['additional_info'] + "not in inventory! First create item to inventory and then add to project.");
+              }
+
+              $('#table1').DataTable().ajax.reload(); // reload table
+          }
+      },
+      error: function(data) {
+        toastr.error("Import failed");  
+      }
+  })  
+});
 
 </script>

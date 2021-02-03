@@ -91,6 +91,8 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 | **read**             | `GET`      | type                                             | id inventoryId type_id type_name inventory_SKU inventory_category description qty notes user_fullname | /api/projects/read             |
 | **read_allocations** | `GET`      | type                                             | inventoryId type_id type_name total_qty                                                               | /api/projects/read_allocations |
 | **update**           | `POST`     | id inventoryId type description qty notes        | status message                                                                                        | /api/projects/update           |
+| **import**           | `POST`     | type inventory_type inventory_category binary    | status created_count notfound_count additional_info                                                   | /api/projects/update           |
+
 
 ---
 

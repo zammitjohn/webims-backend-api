@@ -14,14 +14,17 @@ $inventory_category_object->id = $_GET['id'];
 
 $stmt = $inventory_category_object->read();
 $import_button = '';
-$category_name = 'Unknown Category';
-
+$category_name = '';
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $category_name = ($row['name']);
   if ($row['supportImport']){
     $import_button = '<div class="card-tools"> <a href="#" class="btn btn-tool btn-sm button_action_import" data-toggle="modal" data-target="#modal-import"> <i class="fas fa-upload"></i> </a> </div>';
   }
+} else {
+  header("HTTP/1.0 404 Not Found");
+  include '../pages/404.php';
+  die();
 }
 
 ## Content goes here
@@ -103,7 +106,7 @@ $content = '
               <form id="upload_csv" method="post" enctype="multipart/form-data">
                 <div class="input-group mb-3">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="file" name="file" accept=".csv">
+                    <input type="file" class="custom-file-input" id="csvfile" name="file" accept=".csv">
                     <label class="custom-file-label" for="file"></label>
                   </div>
                   <div class="input-group-append">
@@ -206,16 +209,4 @@ $('#upload_csv').on("submit", function(e){
       }
   })  
 });  
-
-$('#file').on('change',function(){ // validate file type to import
-  var regex = new RegExp("(.*?)\.(csv)$");
-  var fileName = $(this).val(); // get the file name
-  if (!(regex.test(fileName.toLowerCase()))) {
-    toastr.error('Please select correct file format');
-    $(this).next('.custom-file-label').html("");  // replace the file input label
-  } else { // Show file name in dialog https://stackoverflow.com/questions/48613992/bootstrap-4-file-input-doesnt-show-the-file-name
-    var cleanFileName = fileName.replace('C:\\fakepath\\', " ");
-    $(this).next('.custom-file-label').html(cleanFileName);  // replace the file input label
-  }
-});
 </script>
