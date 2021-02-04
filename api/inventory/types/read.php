@@ -44,7 +44,7 @@ if ($stmt != false){
             $inventory_type_property=array(
                 "id" => $id,
                 "name" => $name,
-                "alt_name" => $alt_name,
+                "import_name" => $import_name,
                 "type_category" => $type_category,
                 "category_name" => $category_name
             );

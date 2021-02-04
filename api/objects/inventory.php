@@ -29,7 +29,7 @@ class Inventory{
         // select query
         $query = "SELECT 
             inventory.id, inventory.SKU, inventory_types.id AS type_id, 
-            inventory_types.name AS type_name, inventory_types.alt_name AS type_altname, 
+            inventory_types.name AS type_name, inventory_types.import_name AS type_altname, 
             inventory_categories.id AS category_id, inventory_categories.name AS category_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
             inventory.supplier, inventory.inventoryDate, SUM(projects.qty) AS qty_projects_allocated

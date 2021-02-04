@@ -101,10 +101,11 @@ $content = '
               </button>
             </div>
             <div class="modal-body">
-              <p>Select CSV data file to import</p>
-              
+              <p>Select CSV data file to import. Data file must use the following format: <i>Date,Type,SKU,Description,Quantity,,QuantityIN,QuantityOUT,Supplier</i> (header and blank lines are ignored).</p>  
+            </div>
+            <div class="modal-footer">
               <form id="upload_csv" method="post" enctype="multipart/form-data">
-                <div class="input-group mb-3">
+                <div class="input-group">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="csvfile" name="file" accept=".csv">
                     <label class="custom-file-label" for="file"></label>
@@ -114,8 +115,7 @@ $content = '
                   </div>
                 </div>
               </form>
-              
-            </div>
+            </div>            
 
           </div>
           <!-- /.modal-content -->
@@ -181,10 +181,15 @@ $('#upload_csv').on("submit", function(e){
   $('#modal-import').modal('toggle'); // hide modal
   toastr.info('Importing data'); // show toast
   e.preventDefault(); //form will not submitted
+
+  // POST csv file using Ajax along with other form details
+  var formData = new FormData(this);
+  formData.append('category', "<?php echo $_GET['id']; ?>");
+
   $.ajax({
-      url:"import/express_import",  
+      url:"../api/inventory/import",  
       method:"POST",  
-      data:new FormData(this),  
+      data:formData,  
       contentType:false,          // The content type used when sending data to the server.  
       cache:false,                // To disable request pages to be cached  
       processData:false,          // To send DOMDocument or non processed data file

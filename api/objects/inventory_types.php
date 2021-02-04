@@ -20,7 +20,7 @@ class Inventory_Types{
         // select query
         $query = "SELECT 
             inventory_types.id, inventory_types.type_category, inventory_categories.name AS category_name, 
-            inventory_types.name, inventory_types.alt_name
+            inventory_types.name, inventory_types.import_name
             
             FROM
                 " . $this->table_name . "

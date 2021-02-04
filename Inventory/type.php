@@ -21,7 +21,7 @@ $category_id = '';
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $type_name = ($row['name']);
-  if ($row['alt_name']) { $type_alt_name = (' (' . $row['alt_name'] . ')'); }
+  if ($row['import_name']) { $type_alt_name = (' (' . $row['import_name'] . ')'); }
   $category_name = ($row['category_name']);
   $category_id = ($row['type_category']);
 } else {

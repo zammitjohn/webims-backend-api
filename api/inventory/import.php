@@ -1,14 +1,16 @@
 <?php
 // include database and object files
-include_once '../../api/config/database.php';
-include_once '../../api/objects/inventory.php';
-include_once '../../api/objects/users.php';
+include_once '../config/database.php';
+include_once '../objects/inventory.php';
+include_once '../objects/users.php';
+include_once '../objects/inventory_types.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
- 
+
 $status = false;
+$inventory_types = []; // array to hold inventory types for particular category
 $created_counter = 0;
 $updated_counter = 0;
 $conflict_counter = 0;
@@ -26,24 +28,31 @@ if (!$user->validAction()){
     die();
 }
 
+// load types all import_name for particular category
+$property = new Inventory_Types($db);
+$property->category = $_POST['category'];
+$inventory_types_stmt  = $property->read();
+
+while ($inventory_types_row = $inventory_types_stmt->fetch(PDO::FETCH_ASSOC)) { // ...then loop types andd add to array
+  extract($inventory_types_row);
+  $inventory_types[$id] = strtoupper($import_name);
+}
+
 $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
     $file = fopen($filename, "r");
+    fgetcsv($file, 10000, ","); // before beginning the while loop, just get the first line and do nothing with it
     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
-
-        if (stristr($getData[1],"VNETWORK") or stristr($getData[1],"INDOOR_REPEATER")) {
+        if ($getData[0] == NULL) // skip blank lines in file
+            continue;
+        
+        if (($getData[1] != NULL) && $data_type = array_search(strtoupper(trim($getData[1])), $inventory_types)) {
 
             // Get data from CSV and clean values
             if (!empty($getData[0])) {               
                 $data_date = date('Y-m-d', strtotime(str_replace('/', '-', trim($getData[0]))));
             } else {
                 $data_date = "";
-            }
-
-            if (!empty($getData[1])) {               
-                $data_type = trim($getData[1]);
-            } else {
-                $data_type = "";
             }
 
             if (!empty($getData[2])) {
@@ -81,22 +90,11 @@ if($_FILES["file"]["size"] > 0) {
             } else {
                 $data_supplier = ""; 
             }
-            
-            // Overwrite var data_type with correct terminology
-            if (stristr($data_type,"return")) {
-                $data_type = 4; // Returns
-            } else if (stristr($data_type,"repeater")) {
-                $data_type = 3; // Repeaters
-            } else if (stristr($data_type,"spare")) {
-                $data_type = 2; // Spares
-            } else {
-                $data_type = 1; // General
-            }
-            
+                        
             // prepare inventory item object
             $item = new Inventory($db);
             $item->SKU = $data_SKU;
-            $item->category = 1;
+            $item->category = $_POST['category'];
             $item->type = $data_type;
             $item->description = $data_description;
             $item->qty = $data_qty;
@@ -130,6 +128,7 @@ if($_FILES["file"]["size"] > 0) {
             }
 
         }
+
     }
     fclose($file);
     
