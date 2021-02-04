@@ -28,19 +28,19 @@ $content = '
           <div class="card-body">
 
             <div class="form-group">
-              <label for="input1">SKU</label>
+              <label for="SKU">SKU</label>
               <select id="SKU" class="form-control">
                 <option value="">None</option>
               </select>
             </div>
             
             <div class="form-group">
-              <label for="input2">Serial Number</label>
+              <label for="serialNumber">Serial Number</label>
               <input type="text" maxlength="255" class="form-control" id="serialNumber" placeholder="Enter serial number">
             </div>
             
             <div class="form-group">
-              <label for="input3">Date Purchased</label>
+              <label for="datePurchased">Date Purchased</label>
               <input type="date" class="form-control" id="datePurchased">
             </div>     
             

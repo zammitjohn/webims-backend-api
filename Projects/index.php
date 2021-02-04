@@ -90,7 +90,7 @@ $content = '
             </div>
 
             <div class="modal-body">
-              <p>Select CSV data file to import. CSV data file must use the following format: <i>SKU,description,quantity,notes</i></p>
+              <p>Select CSV data file to import. Data file must use the following format: <i>SKU,description,quantity,notes</i> (header and blank lines are ignored).</p>
               <div class="form-group">
                 <b>Allocate items from:</b>
                 <div class="row">
@@ -107,7 +107,7 @@ $content = '
             </div>
             <div class="modal-footer">
               <form id="upload_csv" method="post" enctype="multipart/form-data">
-                <div class="input-group mb-3">
+                <div class="input-group">
                   <div class="custom-file">
                     <input type="file" class="custom-file-input" id="csvfile" name="file" accept=".csv">
                     <label class="custom-file-label" for="file"></label>
@@ -267,7 +267,7 @@ $('#upload_csv').on("submit", function(e){
               toastr.success("Added " + data['created_count'] + " items.");
 
               if (data['notfound_count']){
-                toastr.warning("SKUs " + data['additional_info'] + "not in inventory! First create item to inventory and then add to project.");
+                toastr.warning(data['additional_info'] + "not in inventory! First create item to inventory and then add to project.");
               }
 
               $('#table1').DataTable().ajax.reload(); // reload table

@@ -30,29 +30,29 @@ $content = '
             <div class="card-body">
 
               <div class="form-group">
-                <label for="input1">Inventory SKU</label>
+                <label for="SKU">Inventory SKU</label>
                 <select id="SKU" class="form-control">
                 </select>
               </div>                  
 
               <div class="form-group">
-                <label for="input2">Project</label>
+                <label for="type">Project</label>
                 <select id="type" class="form-control">
                 </select>
               </div>       
               
               <div class="form-group">
-                <label for="input3">Description</label>
+                <label for="description">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
               
               <div class="form-group">
-                <label for="input4">Quantity</label>
+                <label for="qty">Quantity</label>
                 <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
               </div>
               
               <div class="form-group">
-                <label for="input5">Miscellaneous</label>
+                <label for="notes">Miscellaneous</label>
                 <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Notes">
               </div>
             

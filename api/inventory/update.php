@@ -21,11 +21,6 @@ $item->qty = $_POST['qty'];
 $item->qtyIn = $_POST['qtyIn'];
 $item->qtyOut = $_POST['qtyOut'];
 $item->supplier = $_POST['supplier'];
-$item->isGSM = $_POST['isGSM'];
-$item->isUMTS = $_POST['isUMTS'];
-$item->isLTE = $_POST['isLTE'];
-$item->ancillary = $_POST['ancillary'];
-$item->toCheck = $_POST['toCheck'];
 $item->notes = $_POST['notes'];
 
 // AUTH check 

@@ -21,11 +21,6 @@ $item->qty = $_POST['qty'];
 $item->qtyIn = $_POST['qtyIn'];
 $item->qtyOut = $_POST['qtyOut'];
 $item->supplier = $_POST['supplier'];
-$item->isGSM = $_POST['isGSM'];
-$item->isUMTS = $_POST['isUMTS'];
-$item->isLTE = $_POST['isLTE'];
-$item->ancillary = $_POST['ancillary'];
-$item->toCheck = $_POST['toCheck'];
 $item->notes = $_POST['notes'];
 
 // AUTH check 
@@ -52,12 +47,7 @@ if($item->create(false)){
 		"qty" => $item->qty,
         "qtyIn" => $item->qtyIn,
         "qtyOut" => $item->qtyOut,
-        "supplier" => $item->supplier,        
-        "isGSM" => $item->isGSM,
-        "isUMTS" => $item->isUMTS,
-        "isLTE" => $item->isLTE,
-        "ancillary" => $item->ancillary,
-        "toCheck" => $item->toCheck,
+        "supplier" => $item->supplier,
         "notes" => $item->notes	
     );
 }

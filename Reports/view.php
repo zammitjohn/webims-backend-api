@@ -64,27 +64,27 @@ $content = '
                   <hr>
                   <h5>Details</h5>
                   <div class="form-group">
-                    <label for="input2">Name</label>
+                    <label for="name">Name</label>
                     <input type="text" maxlength="255" class="form-control" id="name" placeholder="Enter hardware type / location">
                   </div>                      
 
                   <div class="form-group">
-                    <label for="input3">Ticket Number</label>
+                    <label for="ticketNo">Ticket Number</label>
                     <input type="text" maxlength="255" class="form-control" id="ticketNo" placeholder="Enter ticket#">
                   </div>
 
                   <div class="form-group">
-                    <label for="input4">Description</label>
+                    <label for="description">Description</label>
                     <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter fault description">
                   </div>   
                   
                   <div class="form-group">
-                    <label for="input5">Report Number</label>
+                    <label for="reportNo">Report Number</label>
                     <input type="text" maxlength="255" class="form-control" id="reportNo" placeholder="Enter fault report#">
                   </div>
                   
                   <div class="form-group">
-                    <label for="input6">Requested by</label>
+                    <label for="userId">Requested by</label>
                     <select id="userId" class="form-control">
                       <option value="">None</option>
                     </select>
@@ -93,7 +93,7 @@ $content = '
                   <hr>
                   <h5>Serial Numbers</h5>
                   <div class="form-inline">
-                    <label for="input7">Faulty: </label>
+                    <label for="faultySN">Faulty: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
                       <button id="faultySN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
@@ -108,7 +108,7 @@ $content = '
                   </div>
                   
                   <div class="form-inline">
-                    <label for="input8">Replacement: </label>
+                    <label for="replacementSN">Replacement: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
                       <button id="replacementSN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
@@ -128,22 +128,22 @@ $content = '
                   <hr>
                   <h5>Dates</h5>
                   <div class="form-group">
-                    <label for="input9">Requested by RBS</label>
+                    <label for="dateRequested">Requested by RBS</label>
                     <input type="date" class="form-control" id="dateRequested">
                   </div>
 
                   <div class="form-group">
-                    <label for="input10">Leaving RBS</label>
+                    <label for="dateLeavingRBS">Leaving RBS</label>
                     <input type="date" class="form-control" id="dateLeavingRBS">
                   </div>     
 
                   <div class="form-group">
-                    <label for="input11">Dispatched</label>
+                    <label for="dateDispatched">Dispatched</label>
                     <input type="date" class="form-control" id="dateDispatched">
                   </div>              
 
                   <div class="form-group">
-                    <label for="input12">Returned</label>
+                    <label for="dateReturned">Returned</label>
                     <input type="date" class="form-control" id="dateReturned">
                   </div>
 
@@ -153,20 +153,20 @@ $content = '
                   <div class="row">
                     <div class="col">
                       <div class="form-group">
-                        <label for="input13">AWB</label>
+                        <label for="AWB">AWB</label>
                         <input type="text" maxlength="255" class="form-control" id="AWB" placeholder="Enter AWB">
                       </div>
                     </div>
                     <div class="col">
                       <div class="form-group">
-                        <label for="input14">AWB (return)</label>
+                        <label for="AWBreturn">AWB (return)</label>
                         <input type="text" maxlength="255" class="form-control" id="AWBreturn" placeholder="Enter return AWB">
                       </div>
                     </div> 
                   </div>                     
                 
                   <div class="form-group">
-                    <label for="input15">RMA</label>
+                    <label for="RMA">RMA</label>
                     <input type="text" maxlength="255" class="form-control" id="RMA" placeholder="Enter RMA">
                   </div>              
                 </div>

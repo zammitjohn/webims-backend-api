@@ -30,19 +30,19 @@ $content = '
             <div class="card-body">
 
               <div class="form-group">
-                <label for="input1">SKU</label>
+                <label for="SKU">SKU</label>
                 <input type="text" maxlength="255" class="form-control" id="SKU" placeholder="Enter SKU">
               </div>
               
               <div class="form-group">
                 <div class="row">
                   <div class="col-6 col-sm-3">
-                    <label for="input3">Category</label>
+                    <label for="category">Category</label>
                     <select id="category" class="form-control">
                     </select>
                   </div>
                   <div class="col-6 col-sm-3">
-                    <label for="input4">Type</label>
+                    <label for="type">Type</label>
                     <select id="type" class="form-control">
                     </select>
                   </div>
@@ -50,74 +50,41 @@ $content = '
               </div>                 
 
               <div class="form-group">
-                <label for="input4">Description</label>
+                <label for="description">Description</label>
                 <input type="text" maxlength="255" class="form-control" id="description" placeholder="Enter description">
               </div>
 
               <div class="form-group">
-                <label for="input5">Supplier</label>
+                <label for="supplier">Supplier</label>
                 <input type="text" maxlength="255" class="form-control" id="supplier" placeholder="Enter supplier">
               </div>              
 
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="input6">Quantity</label>
+                    <label for="qty">Quantity</label>
                     <input type="number" min="0" max="9999" class="form-control" id="qty" placeholder="Enter quantity">
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <label for="input7">Provisional In</label>
+                    <label for="qtyIn">Provisional In</label>
                     <input type="number" min="0" max="9999" class="form-control" id="qtyIn" placeholder="Enter quantity">
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <div class="form-group">
-                  <label for="input8">Provisional Out</label>
+                  <label for="qtyOut">Provisional Out</label>
                   <input type="number" min="0" max="9999" class="form-control" id="qtyOut" placeholder="Enter quantity">
                   </div>
                 </div>
               </div>
-   
+                 
               <div class="form-group">
-                <label for="input9">Technology</label>
-                <div class="container-fluid">
-                    <label class="form-check-label">
-                      <input type="checkbox" id="isGSM">
-                      GSM
-                    </label>
-                </div>
-                <div class="container-fluid">
-                  <label class="form-check-label">
-                    <input type="checkbox" id="isUMTS">
-                    UMTS
-                  </label>
-                </div>
-                <div class="container-fluid">
-                  <label class="form-check-label">
-                    <input type="checkbox" id="isLTE">
-                    LTE
-                  </label>
-                </div>
+                <label for="notes">Miscellaneous</label>
+                <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Notes">
               </div>
-              
-              <div class="form-group">
-                <label for="input10">Miscellaneous</label>
-                <div class="container-fluid">
-                  <label class="form-check-label">
-                    <input type="checkbox" id="ancillary">
-                    Ancillary
-                  </label>
-                </div>
-                <div class="container-fluid">
-                  <label class="form-check-label">
-                    <input type="checkbox" id="toCheck">
-                    To Check
-                  </label>
-                </div>
-              </div>
-              <input type="text" maxlength="255" class="form-control" id="notes" placeholder="Notes">
+
             </div>
             <!-- /.card-body -->
             
@@ -167,27 +134,6 @@ $(document).ready(function() {
 });
 
 function AddItem() {
-  var isGSMval = "";
-  var isUMTSval = "";
-  var isLTEval = "";
-  var ancillaryval = "";
-  var toCheckval = "";
-
-  if ($('#isGSM').is(":checked"))
-    isGSMval = 1;
-
-  if ($('#isUMTS').is(":checked"))
-    isUMTSval = 1;
-
-  if ($('#isLTE').is(":checked"))
-    isLTEval = 1;
-
-  if ($('#ancillary').is(":checked"))
-    ancillaryval = 1;
-
-  if ($('#toCheck').is(":checked"))
-    toCheckval = 1;
-
   $.ajax({
     type: "POST",
     url: '../api/inventory/create',
@@ -201,11 +147,6 @@ function AddItem() {
       qtyIn: $("#qtyIn").val(),
       qtyOut: $("#qtyOut").val(),      
       supplier: $("#supplier").val(),
-      isGSM: isGSMval,
-      isUMTS: isUMTSval,
-      isLTE: isLTEval,
-      ancillary: ancillaryval,
-      toCheck: toCheckval,
       notes: $("#notes").val()
     },
     error: function(result) {

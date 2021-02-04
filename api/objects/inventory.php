@@ -15,11 +15,6 @@ class Inventory{
     public $qtyIn;
     public $qtyOut;
     public $supplier;
-    public $isGSM;
-    public $isUMTS;
-    public $isLTE;
-    public $ancillary;
-    public $toCheck;
     public $notes;
     public $inventoryDate;
  
@@ -135,8 +130,7 @@ class Inventory{
                         ". $this->table_name ." 
                     SET
                         SKU=:SKU, type=:type, category=:category, description=:description, qty=:qty, qtyIn=:qtyIn, 
-                        qtyOut=:qtyOut, supplier=:supplier, isGSM=:isGSM, isUMTS=:isUMTS, isLTE=:isLTE, 
-                        ancillary=:ancillary, toCheck=:toCheck, notes=:notes";
+                        qtyOut=:qtyOut, supplier=:supplier, notes=:notes";
             
             // prepare and bind query
             $stmt = $this->conn->prepare($query);
@@ -175,8 +169,7 @@ class Inventory{
                         " . $this->table_name . "
                     SET
                         SKU=:SKU, type=:type, category=:category, description=:description, qty=:qty, qtyIn=:qtyIn, 
-                        qtyOut=:qtyOut, supplier=:supplier, isGSM=:isGSM, isUMTS=:isUMTS, isLTE=:isLTE,
-                        ancillary=:ancillary, toCheck=:toCheck, notes=:notes
+                        qtyOut=:qtyOut, supplier=:supplier, notes=:notes
                     WHERE
                         id='".$this->id."'";
             
@@ -320,31 +313,6 @@ class Inventory{
             $stmt->bindValue(':supplier', $this->supplier, PDO::PARAM_NULL);
         } else {
             $stmt->bindValue(':supplier', $this->supplier);
-        }
-        if ($this->isGSM == ""){
-            $stmt->bindValue(':isGSM', $this->isGSM, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':isGSM', $this->isGSM);
-        }
-        if ($this->isUMTS == ""){
-            $stmt->bindValue(':isUMTS', $this->isUMTS, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':isUMTS', $this->isUMTS);
-        }
-        if ($this->isLTE == ""){
-            $stmt->bindValue(':isLTE', $this->isLTE, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':isLTE', $this->isLTE);
-        }
-        if ($this->ancillary == ""){
-            $stmt->bindValue(':ancillary', $this->ancillary, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':ancillary', $this->ancillary);
-        }
-        if ($this->toCheck == ""){
-            $stmt->bindValue(':toCheck', $this->toCheck, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':toCheck', $this->toCheck);
         }
         if ($this->notes == ""){
             $stmt->bindValue(':notes', $this->notes, PDO::PARAM_NULL);

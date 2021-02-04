@@ -23,13 +23,13 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Inventory
 
-| **Action**      | **Method** | **Body Parameters**                                                                                | **Response**                                                                                                                                  | **URL**                    |
-|-----------------|------------|----------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
-| **create**      | `POST`     | SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes | status message id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes                          | /api/inventory/create      |
-| **delete**      | `POST`     | id                                                                                                 | status message                                                                                                                                | /api/inventory/delete      |
-| **read_single** | `GET`      | id                                                                                                 | id SKU type category description qty qtyIn qtyOut supplier isGSM isUMTS isLTE ancillary toCheck notes inventoryDate lastChange                | /api/inventory/read_single |
-| **read**        | `GET`      | type or category                                                                                   | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_projects_allocated supplier inventoryDate    | /api/inventory/read        |
-| **update**      | `POST`     | id description qty isGSM isUMTS isLTE ancillary toCheck notes                                      | status message                                                                                                                                | /api/inventory/update      |
+| **Action**      | **Method** | **Body Parameters**                                               | **Response**                                                                                                                               | **URL**                    |
+|-----------------|------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
+| **create**      | `POST`     | SKU type category description qty qtyIn qtyOut supplier notes     | status message id SKU type category description qty qtyIn qtyOut supplier notes                                                            | /api/inventory/create      |
+| **delete**      | `POST`     | id                                                                | status message                                                                                                                             | /api/inventory/delete      |
+| **read_single** | `GET`      | id                                                                | id SKU type category description qty qtyIn qtyOut supplier notes inventoryDate lastChange                                                  | /api/inventory/read_single |
+| **read**        | `GET`      | type or category                                                  | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_projects_allocated supplier inventoryDate | /api/inventory/read        |
+| **update**      | `POST`     | id SKU type category description qty qtyIn qtyOut supplier notes  | status message                                                                                                                             | /api/inventory/update      |
 
 ---
 
