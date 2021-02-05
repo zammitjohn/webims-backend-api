@@ -11,10 +11,7 @@ $db = $database->getConnection();
 // prepare projects type property object
 $projects_types_object = new Projects_Types($db);
 $projects_types_object->id = $_GET['id'];
-
 $stmt = $projects_types_object->read();
-$delete_button = '';
-$type_name = '';
 
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -13,10 +13,6 @@ $inventory_types_object = new Inventory_Types($db);
 $inventory_types_object->id = $_GET['id'];
 
 $stmt = $inventory_types_object->read();
-$category_name = '';
-$type_name = '';
-$type_alt_name = '';
-$category_id = '';
 
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);

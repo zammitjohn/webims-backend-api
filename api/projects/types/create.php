@@ -12,7 +12,7 @@ $db = $database->getConnection();
 $property = new Projects_Types($db);
  
 // set projects type property values
-$property->name = $_POST['name'];
+$property->name = htmlspecialchars($_POST['name']);
 
 // AUTH check 
 $user = new Users($db); // prepare users object

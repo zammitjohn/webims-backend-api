@@ -14,7 +14,6 @@ $inventory_category_object->id = $_GET['id'];
 
 $stmt = $inventory_category_object->read();
 $import_button = '';
-$category_name = '';
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $category_name = ($row['name']);
@@ -139,7 +138,6 @@ include('../master.php');
 
 <!-- page script -->
 <script>
-
 $(document).ready(function() {
   // load table contents
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
@@ -175,7 +173,6 @@ $(document).ready(function() {
 
   });
 });
-
 
 $('#upload_csv').on("submit", function(e){
   $('#modal-import').modal('toggle'); // hide modal
