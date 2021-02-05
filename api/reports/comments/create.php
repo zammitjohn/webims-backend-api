@@ -13,7 +13,7 @@ $property = new Reports_Comments($db);
  
 // set object property values
 $property->reportId = $_POST['reportId'];
-$property->text = $_POST['text'];
+$property->text = htmlspecialchars($_POST['text']);
 
 // AUTH check 
 $user = new Users($db); // prepare users object

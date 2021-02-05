@@ -50,7 +50,7 @@ $content = '
         <div class="card">
 
           <!-- form start -->
-          <form role="form">
+          <form id="report_form" method="post">
             <div class="card-body">
               <div class="form-group">
                 <h5>Inventory SKU</h5>
@@ -178,10 +178,10 @@ $content = '
 
               <div class="row">
                 <div class="col-auto mr-auto">
-                  <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
+                  <button type="submit" class="btn btn-primary button_action_update">Update</button>
                 </div>
                 <div class="col-auto">
-                  <input type="Button" id="toggle-repairable-btn" class="btn button_action_update" onClick="ToggleRepairable()" value=""></input>
+                  <input type="Button" id="toggle-repairable-btn" class="btn button_action_update" value=""></input>
                 </div>
               </div>            
 
@@ -211,7 +211,7 @@ $content = '
                   <div class="input-group">
                     <input type="text" id="user_comment" name="message" placeholder="Write a comment..." class="form-control">
                     <span class="input-group-append">
-                      <button type="button" onClick="NewComment()" class="btn btn-warning button_action_create">Post</button>
+                      <button type="submit" class="btn btn-warning button_action_create">Post</button>
                     </span>
                   </div>
                 </form>
@@ -354,12 +354,94 @@ $(document).ready(function() {
     }
   });
   
+  // reports form events
+  $('#report_form').on('submit',function (e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: '../api/reports/update',
+      dataType: 'json',
+      data: {
+        id: <?php echo $_GET['id']; ?>,
+        inventoryId: $("#SKU").val(),
+        ticketNo: $("#ticketNo").val(),
+        name: $("#name").val(),
+        description: $("#description").val(),
+        reportNo: $("#reportNo").val(),
+        userId: $("#userId").val(),
+        faultySN: selected_faulty_serial_number,
+        replacementSN: selected_replacement_serial_number,
+        dateRequested: $("#dateRequested").val(),
+        dateLeavingRBS: $("#dateLeavingRBS").val(),
+        dateDispatched: $("#dateDispatched").val(),
+        dateReturned: $("#dateReturned").val(),
+        AWB: $("#AWB").val(),
+        AWBreturn: $("#AWBreturn").val(),
+        RMA: $("#RMA").val()
+      },
+      error: function(result) {
+        alert(result.statusText);
+      },
+      success: function(result) {
+        alert(result.message);
+        if (result.status == true) {
+          window.location.href = '../reports';
+        }
+      }
+    });
+  });
+
+  $('#toggle-repairable-btn').on('click',function (e) {
+    var id = (<?php echo $_GET['id']; ?>);
+    $.ajax({
+      type: "POST",
+      url: '../api/reports/toggle_repairable',
+      dataType: 'json',
+      data: {
+        id: id
+      },
+      error: function(result) {
+        alert(result.statusText);
+      },
+      success: function(result) {
+        if (result.status) {
+          // toggle button without reloading all the DOM
+          if ($("#toggle-repairable-btn").hasClass("btn-secondary")) {
+            $("#toggle-repairable-btn").removeClass("btn-secondary");
+            $("#toggle-repairable-btn").addClass("btn-danger");
+            $("#toggle-repairable-btn").prop('value', 'Mark as unrepairable');
+          } else {
+            $("#toggle-repairable-btn").removeClass("btn-danger");
+            $("#toggle-repairable-btn").addClass("btn-secondary");
+            $("#toggle-repairable-btn").prop('value', 'Mark as repairable');
+          }
+        }
+      }
+    });
+  });
+
+  // comments form events
   loadComments(); // load comments
   $('#comment_form').on('submit',function (e) {
     e.preventDefault();
-    NewComment();
+    $.ajax({
+      type: "POST",
+      url: '../api/reports/comments/create',
+      dataType: 'json',
+      data: {
+        reportId: <?php echo $_GET['id']; ?>,
+        text: $("#user_comment").val()
+      },
+      error: function(result) {
+        alert(result.statusText);
+      },
+      success: function(result) {
+        if (result.status) {
+          loadComments();
+        }
+      }
+    });
   });
-
 });
 
 function loadComments() {
@@ -377,90 +459,6 @@ function loadComments() {
       }
       // append messagedata to side bar tree view
       $(".direct-chat-messages").append(messagedata);
-    }
-  });
-}
-
-function UpdateItem() {
-  $.ajax({
-    type: "POST",
-    url: '../api/reports/update',
-    dataType: 'json',
-    data: {
-      id: <?php echo $_GET['id']; ?>,
-      inventoryId: $("#SKU").val(),
-      ticketNo: $("#ticketNo").val(),
-      name: $("#name").val(),
-      description: $("#description").val(),
-      reportNo: $("#reportNo").val(),
-      userId: $("#userId").val(),
-      faultySN: selected_faulty_serial_number,
-      replacementSN: selected_replacement_serial_number,
-      dateRequested: $("#dateRequested").val(),
-      dateLeavingRBS: $("#dateLeavingRBS").val(),
-      dateDispatched: $("#dateDispatched").val(),
-      dateReturned: $("#dateReturned").val(),
-      AWB: $("#AWB").val(),
-      AWBreturn: $("#AWBreturn").val(),
-      RMA: $("#RMA").val()
-    },
-    error: function(result) {
-      alert(result.statusText);
-    },
-    success: function(result) {
-      alert(result.message);
-      if (result.status == true) {
-        window.location.href = '../reports';
-      }
-    }
-  });
-}
-
-function NewComment() {
-  $.ajax({
-    type: "POST",
-    url: '../api/reports/comments/create',
-    dataType: 'json',
-    data: {
-      reportId: <?php echo $_GET['id']; ?>,
-      text: $("#user_comment").val()
-    },
-    error: function(result) {
-      alert(result.statusText);
-    },
-    success: function(result) {
-      if (result.status) {
-        loadComments();
-      }
-    }
-  });
-}
-
-function ToggleRepairable() {
-  var id = (<?php echo $_GET['id']; ?>);
-  $.ajax({
-    type: "POST",
-    url: '../api/reports/toggle_repairable',
-    dataType: 'json',
-    data: {
-      id: id
-    },
-    error: function(result) {
-      alert(result.statusText);
-    },
-    success: function(result) {
-      if (result.status) {
-        // toggle button without reloading all the DOM
-        if ($("#toggle-repairable-btn").hasClass("btn-secondary")) {
-          $("#toggle-repairable-btn").removeClass("btn-secondary");
-          $("#toggle-repairable-btn").addClass("btn-danger");
-          $("#toggle-repairable-btn").prop('value', 'Mark as unrepairable');
-        } else {
-          $("#toggle-repairable-btn").removeClass("btn-danger");
-          $("#toggle-repairable-btn").addClass("btn-secondary");
-          $("#toggle-repairable-btn").prop('value', 'Mark as repairable');
-        }
-      }
     }
   });
 }

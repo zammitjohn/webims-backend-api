@@ -24,32 +24,35 @@ $content = '
       <div class="col-12">
         <!-- general form elements -->
         <div class="card">
-    
-          <div class="card-body">
 
-            <div class="form-group">
-              <label for="SKU">SKU</label>
-              <select id="SKU" class="form-control">
-                <option value="">None</option>
-              </select>
+          <!-- form start -->
+          <form id="item_form" method="post">
+    
+            <div class="card-body">
+              <div class="form-group">
+                <label for="SKU">SKU</label>
+                <select id="SKU" class="form-control">
+                  <option value="">None</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="serialNumber">Serial Number</label>
+                <input type="text" maxlength="255" class="form-control" id="serialNumber" placeholder="Enter serial number">
+              </div>
+              
+              <div class="form-group">
+                <label for="datePurchased">Date Purchased</label>
+                <input type="date" class="form-control" id="datePurchased">
+              </div>     
+              
             </div>
-            
-            <div class="form-group">
-              <label for="serialNumber">Serial Number</label>
-              <input type="text" maxlength="255" class="form-control" id="serialNumber" placeholder="Enter serial number">
+            <!-- /.card-body -->
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary button_action_create">Submit</button>
             </div>
-            
-            <div class="form-group">
-              <label for="datePurchased">Date Purchased</label>
-              <input type="date" class="form-control" id="datePurchased">
-            </div>     
-            
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer">
-            <input type="Button" class="btn btn-primary button_action_create" onClick="Register()" value="Submit"></input>
-          </div>
-   
+
+          </form>
         </div>
         <!-- /.card -->
       </div>
@@ -93,8 +96,8 @@ $(document).ready(function() {
   });
 });
 
-
-function Register() {
+$('#item_form').on('submit',function (e) {
+  e.preventDefault();
   $.ajax({
     type: "POST",
     url: '../api/registry/create',
@@ -114,5 +117,5 @@ function Register() {
       }
     }
   });
-}
+});
 </script>

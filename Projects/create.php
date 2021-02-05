@@ -26,7 +26,7 @@ $content = '
         <div class="card">
 
           <!-- form start -->
-          <form role="form">
+          <form id="item_form" method="post">
             <div class="card-body">
 
               <div class="form-group">
@@ -59,7 +59,7 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_create" onClick="AddItem()" value="Submit"></input>
+              <button type="submit" class="btn btn-primary button_action_create">Submit</button>
             </div>
           </form>
         </div>
@@ -119,15 +119,12 @@ $(document).ready(function() {
           console.log(data);
         }
       });
-
     }
-
   });
-
 });
 
-  
-function AddItem() {
+$('#item_form').on('submit',function (e) {
+  e.preventDefault();
   $.ajax({
     type: "POST",
     url: '../api/projects/create',
@@ -149,5 +146,5 @@ function AddItem() {
       }
     }
   });
-}
+});
 </script>

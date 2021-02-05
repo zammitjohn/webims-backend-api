@@ -26,7 +26,7 @@ $content = '
         <div class="card">
 
           <!-- form start -->
-          <form role="form">
+          <form id="item_form" method="post">
             <div class="card-body">
 
               <div class="form-group">
@@ -59,8 +59,8 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
-              <input type="Button" class="btn btn-danger button_action_delete" onClick="Remove()" value="Delete"></input>
+              <button type="submit" class="btn btn-primary button_action_update">Update</button>
+              <button type="button" id="delete_item_btn" class="btn btn-danger button_action_delete">Delete</button>
             </div>
           </form>
         </div>
@@ -133,7 +133,8 @@ $(document).ready(function() {
   });
 });
 
-function UpdateItem() {
+$('#item_form').on('submit',function (e) {
+  e.preventDefault();
   $.ajax({
     type: "POST",
     url: '../api/projects/update',
@@ -156,9 +157,9 @@ function UpdateItem() {
       }
     }
   });
-}
+});
 
-function Remove() {
+$('#delete_item_btn').on('click',function (e) {
   var id = (<?php echo $_GET['id']; ?>);
   var result = confirm("Are you sure you want to delete the item?");
   if (result == true) {
@@ -180,5 +181,5 @@ function Remove() {
       }
     });
   }
-}
+});
 </script>

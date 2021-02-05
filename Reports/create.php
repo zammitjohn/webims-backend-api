@@ -26,7 +26,7 @@ $content = '
         <div class="card">
 
           <!-- form start -->
-          <form role="form">
+          <form id="report_form" method="post">
             <div class="card-body">
               <div class="form-group">
                 <h5>Inventory SKU</h5>
@@ -149,7 +149,7 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_create" onClick="AddItem()" value="Submit"></input>
+              <button type="submit" class="btn btn-primary button_action_create">Submit</button>
             </div>
           </form>
         </div>
@@ -213,9 +213,10 @@ $(document).ready(function() {
   });
 
 });
-  
-function AddItem() {
-  $.ajax({
+
+$('#report_form').on('submit',function (e) {
+  e.preventDefault();
+    $.ajax({
     type: "POST",
     url: '../api/reports/create',
     dataType: 'json',
@@ -246,7 +247,7 @@ function AddItem() {
       }
     }
   });
-}
+});
 
 $("#SKU").change(function(){
   $(".dropdown-menu").find(".dropdown-item").remove();
@@ -293,5 +294,4 @@ function populateSerialNumbers() {
 
   });
 }
-
 </script>

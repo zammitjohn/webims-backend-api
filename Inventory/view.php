@@ -26,7 +26,7 @@ $content = '
         <div class="card">
 
           <!-- form start -->
-          <form role="form">
+          <form id="item_form" method="post">
             <div class="card-body">
               <div class="form-group">
                 <label for="SKU">SKU</label>
@@ -87,16 +87,15 @@ $content = '
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-              <input type="Button" class="btn btn-primary button_action_update" onClick="UpdateItem()" value="Update"></input>
-              <input type="Button" class="btn btn-danger button_action_delete" onClick="Remove()" value="Delete"></input>
+              <button type="submit" class="btn btn-primary button_action_update">Update</button>
+              <button type="button" id="delete-item-btn" class="btn btn-danger button_action_delete">Delete</button>
               <div class="btn-group">
                 <button type="button" class="btn btn-default button_action_create">Add to...</button>
                   <button type="button" class="btn btn-default dropdown-toggle dropdown-icon button_action_create" data-toggle="dropdown">
                     <span class="sr-only">Toggle Dropdown</span>
                     <div class="dropdown-menu" role="menu">
-                      <a class="dropdown-item" onClick=addTo(1);>Projects</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" onClick=addTo(2);>New fault report</a>
+                      <a class="dropdown-item" id="addto-project-btn">Project</a>
+                      <a class="dropdown-item" id="addto-report-btn">Fault Report</a>
                     </div>
                   </button>
               </div>
@@ -127,7 +126,7 @@ $content = '
           </div>
           <!-- /.card-body -->
           <div class="card-footer">
-            <input type="Button" class="btn btn-primary button_action_create" onClick="addTo(3)" value="Add"></input>
+            <button type="button" id="register-item-btn" class="btn btn-primary button_action_create">Add</button>
           </div>
         </div>
         <!-- /.card -->
@@ -166,7 +165,6 @@ include('../master.php');
 ?>
 
 <script>
-
 $(document).ready(function() {
   // populate category dropdown
   $.ajax({
@@ -267,47 +265,72 @@ $(document).ready(function() {
           "<td>" + data[element].serialNumber + "</td>" +
           "<td><span class='badge badge-info'>" + data[element].state + "</span></td>" +
           "<td>" + data[element].datePurchased + "</td>" +
-          "<td><button type='button' onClick=Deregister('" + data[element].id + "') class='btn btn-block btn-danger'>Delete</button></td>" +
+          "<td><button type='button' registryId='" + data[element].id + "' class='btn btn-block btn-danger deregister-item-btn'>Delete</button></td>" +
           "</tr>";
       }
       $(registry_table_data).appendTo($("#registry_table"));
+
+      // delete button event
+      $('.deregister-item-btn').on('click',function (e) {
+        var result = confirm("Are you sure you want to delete the item?");
+        if (result == true) {
+          $.ajax({
+            type: "POST",
+            url: '../api/registry/delete',
+            dataType: 'json',
+            data: {
+              id: $(this).attr("registryId"),
+            },
+            error: function(result) {
+              alert(result.statusText);
+            },
+            success: function(result) {
+              alert(result.message);
+              if (result.status) {
+                location.reload();
+              }
+            }
+          });
+        }
+      });
+
     }
   });
-
 });
 
-function UpdateItem() {
+$('#item_form').on('submit',function (e) {
+  e.preventDefault();
   $.ajax({
-      type: "POST",
-      url: '../api/inventory/update',
-      dataType: 'json',
-      data: {
-        id: <?php echo $_GET['id']; ?>,
-        SKU: $("#SKU").val(),
-        type: $("#type").val(),
-        category: $("#category").val(),
-        description: $("#description").val(),
-        qty: $("#qty").val(),
-        qtyIn: $("#qtyIn").val(),
-        qtyOut: $("#qtyOut").val(),
-        supplier: $("#supplier").val(),
-        notes: $("#notes").val()
-      },
-      error: function(result) {
-        alert(result.statusText);
-      },
-      success: function(result) {
-        alert(result.message);
-        if (result.status == true) {
-          window.location.href = '../inventory';
-        }
+    type: "POST",
+    url: '../api/inventory/update',
+    dataType: 'json',
+    data: {
+      id: <?php echo $_GET['id']; ?>,
+      SKU: $("#SKU").val(),
+      type: $("#type").val(),
+      category: $("#category").val(),
+      description: $("#description").val(),
+      qty: $("#qty").val(),
+      qtyIn: $("#qtyIn").val(),
+      qtyOut: $("#qtyOut").val(),
+      supplier: $("#supplier").val(),
+      notes: $("#notes").val()
+    },
+    error: function(result) {
+      alert(result.statusText);
+    },
+    success: function(result) {
+      alert(result.message);
+      if (result.status == true) {
+        window.location.href = '../inventory';
       }
+    }
   });
-}
+});
 
-function Remove() {
+$('#delete-item-btn').on('click',function (e) {
   var id = (<?php echo $_GET['id']; ?>);
-  var result = confirm("Are you sure you want to delete the item?");
+  var result = confirm("Are you sure you want to delete the item? You cannot delete Inventory items associated to any Fault Reports, Projects or Registry items!");
   if (result == true) {
     $.ajax({
       type: "POST",
@@ -327,39 +350,17 @@ function Remove() {
       }
     });
   }
-}
+});
 
-function Deregister(id) {
-  var result = confirm("Are you sure you want to delete the item?");
-  if (result == true) {
-    $.ajax({
-      type: "POST",
-      url: '../api/registry/delete',
-      dataType: 'json',
-      data: {
-        id: id,
-      },
-      error: function(result) {
-        alert(result.statusText);
-      },
-      success: function(result) {
-        alert(result.message);
-        if (result.status) {
-          location.reload();
-        }
-      }
-    });
-  }
-}
+$('#addto-project-btn').on('click',function (e) {
+  location.href = "../projects/create?id=" + (<?php echo $_GET['id']; ?>);
+});
 
-function addTo(type) {
-  if (type == 1){
-    location.href = "../projects/create?id=" + (<?php echo $_GET['id']; ?>);
-  } else if (type == 2) {
-    location.href = "../reports/create?id=" + (<?php echo $_GET['id']; ?>);
-  } else {
-    location.href = "../inventory/register?id=" + (<?php echo $_GET['id']; ?>);
-  }
-}
+$('#addto-report-btn').on('click',function (e) {
+  location.href = "../reports/create?id=" + (<?php echo $_GET['id']; ?>);
+});
 
+$('#register-item-btn').on('click',function (e) {
+  location.href = "../inventory/register?id=" + (<?php echo $_GET['id']; ?>);
+});
 </script>

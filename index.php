@@ -195,7 +195,6 @@ $(document).ready(function() {
       $(tableData).appendTo($("#table2"));
     }
   });  
-
 });
 
 $('#new_project').on("submit", function(e){
@@ -216,7 +215,5 @@ $('#new_project').on("submit", function(e){
       }
     }
   });
-
 });  
-
 </script>
