@@ -525,7 +525,7 @@ $('#upload_file').on("submit", function(e){
   toastr.info('Uploading file'); // show toast
   e.preventDefault(); //form will not submitted
   $.ajax({
-      url:"upload",  
+      url:"../api/reports/upload",  
       method:"POST",  
       data: formData,  
       contentType:false,          // The content type used when sending data to the server.  

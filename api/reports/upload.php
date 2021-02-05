@@ -1,14 +1,14 @@
 <?php
- // include database and object files
-include_once '../api/config/database.php';
-include_once '../api/objects/users.php';
+// include database and object files
+include_once '../config/database.php';
+include_once '../objects/users.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
 // setting target directory
-$target_dir = "../../uploads/reports/" . $_POST['reportId'] . "/";
+$target_dir = "../../../uploads/reports/" . $_POST['reportId'] . "/";
 $target_file = $target_dir . basename($_FILES["file"]["name"]);
 
 // AUTH check 

@@ -160,7 +160,7 @@ $(document).ready(function() {
       columnDefs: [ 
         { targets: [0],
           "render": function (data, type, row, meta) {
-          return '<a href="view?id=' + row.id + '">' + data + " (" + row.inventory_category + ")" + '</a>';
+          return '<a href="view?id=' + row.id + '">' + data + '</a>';
           }  
         }
       ]

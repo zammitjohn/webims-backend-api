@@ -156,8 +156,7 @@ class Inventory{
                         " . $this->table_name . "
                     SET
                         qty='".$this->qty."', qtyIn='".$this->qtyIn."', 
-                        qtyOut='".$this->qtyOut."', inventoryDate='".$this->inventoryDate."',
-                        description='".$this->description."', supplier='".$this->supplier."'
+                        qtyOut='".$this->qtyOut."', inventoryDate='".$this->inventoryDate."'
                     WHERE
                         id='".$this->id."'"; 
 
