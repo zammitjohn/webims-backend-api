@@ -30,7 +30,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 | **read_single** | `GET`      | id                                                               | id SKU type category description qty qtyIn qtyOut supplier notes inventoryDate lastChange                                                  | /api/inventory/read_single |
 | **read**        | `GET`      | type or category                                                 | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_projects_allocated supplier inventoryDate | /api/inventory/read        |
 | **update**      | `POST`     | id SKU type category description qty qtyIn qtyOut supplier notes | status message                                                                                                                             | /api/inventory/update      |
-| **import**      | `POST`     | category file                                                    | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/update      |
+| **import**      | `POST`     | category file                                                    | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/import      |
 
 ---
 
@@ -44,8 +44,8 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Inventory Types
 
-| **Action** | **Method** | **Parameters** | **Response**                                 | **URL**                   |
-|------------|------------|----------------|----------------------------------------------|---------------------------|
+| **Action** | **Method** | **Parameters** | **Response**                                    | **URL**                   |
+|------------|------------|----------------|-------------------------------------------------|---------------------------|
 | **read**   | `GET`      | id or category | id name import_name type_category category_name | /api/inventory/types/read |
 
 ---
@@ -62,15 +62,15 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Reports
 
-| **Action**            | **Method** | **Parameters**                                                                                                                                                | **Response**                                                                                                                                                                 | **URL**                        |
-|-----------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| **create**            | `POST`     | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | /api/reports/create            |
-| **read_single**       | `GET`      | id                                                                                                                                                            | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes isClosed    | /api/reports/read_single       |
-| **read**              | `GET`      |                                                                                                                                                               | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes (isClosed)  | /api/reports/read              |
-| **read_myreports**    | `GET`      |                                                                                                                                                               | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes (isClosed)  | /api/reports/read              |
-| **update**            | `POST`     | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message                                                                                                                                                               | /api/reports/update            |
-| **toggle_repairable** | `POST`     | id                                                                                                                                                            | status message                                                                                                                                                               | /api/reports/toggle_repairable |
-| **upload**            | `POST`     | reportId                                                                                                                                                      | status message                                                                                                                                                               | /api/reports/upload            |
+| **Action**            | **Method** | **Parameters**                                                                                                                                                | **Response**                                                                                                                                                                             | **URL**                        |
+|-----------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
+| **create**            | `POST`     | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes             | /api/reports/create            |
+| **read_single**       | `GET`      | id                                                                                                                                                            | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes isClosed isRepairable   | /api/reports/read_single       |
+| **read**              | `GET`      |                                                                                                                                                               | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes (isClosed) isRepairable | /api/reports/read              |
+| **read_myreports**    | `GET`      |                                                                                                                                                               | id inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes (isClosed) isRepairable | /api/reports/read_myreports    |
+| **update**            | `POST`     | inventoryId ticketNo name description reportNo userId faultySN replacementSN dateRequested dateLeavingRBS dateDispatched dateReturned AWB AWBreturn RMA notes | status message                                                                                                                                                                           | /api/reports/update            |
+| **toggle_repairable** | `POST`     | id                                                                                                                                                            | status message                                                                                                                                                                           | /api/reports/toggle_repairable |
+| **upload**            | `POST`     | reportId                                                                                                                                                      | status message                                                                                                                                                                           | /api/reports/upload            |
 
 ---
 
@@ -93,18 +93,18 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 | **read**             | `GET`      | type                                        | id inventoryId type_id type_name inventory_SKU inventory_category description qty notes user_fullname | /api/projects/read             |
 | **read_allocations** | `GET`      | type                                        | inventoryId type_id type_name total_qty                                                               | /api/projects/read_allocations |
 | **update**           | `POST`     | id inventoryId type description qty notes   | status message                                                                                        | /api/projects/update           |
-| **import**           | `POST`     | type inventory_type inventory_category file | status created_count notfound_count additional_info                                                   | /api/projects/update           |
+| **import**           | `POST`     | type inventory_type inventory_category file | status created_count notfound_count additional_info                                                   | /api/projects/import           |
 
 
 ---
 
 ## Projects Types
 
-| **Action**          | **Method** | **Parameters** | **Response**           | **URL**                    |
-|---------------------|------------|----------------|------------------------|----------------------------|
-| **create**          | `POST`     | name           | id name status message | /api/projects/types/create |
-| **delete**          | `POST`     | id             | status message         | /api/projects/types/create |
-| **read**            | `GET`      | id             | id name                | /api/projects/types/read   |
-| **read_myprojects** | `GET`      | id             | id name                | /api/projects/types/read   |
+| **Action**          | **Method** | **Parameters** | **Response**           | **URL**                             |
+|---------------------|------------|----------------|------------------------|-------------------------------------|
+| **create**          | `POST`     | name           | id name status message | /api/projects/types/create          |
+| **delete**          | `POST`     | id             | status message         | /api/projects/types/create          |
+| **read**            | `GET`      | id             | id name                | /api/projects/types/read            |
+| **read_myprojects** | `GET`      |                | id name                | /api/projects/types/read_myprojects |
 
 ---

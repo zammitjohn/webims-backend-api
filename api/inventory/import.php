@@ -33,7 +33,7 @@ $property = new Inventory_Types($db);
 $property->category = $_POST['category'];
 $inventory_types_stmt  = $property->read();
 
-while ($inventory_types_row = $inventory_types_stmt->fetch(PDO::FETCH_ASSOC)) { // ...then loop types andd add to array
+while ($inventory_types_row = $inventory_types_stmt->fetch(PDO::FETCH_ASSOC)) { // ...then loop types and add to array
   extract($inventory_types_row);
   $inventory_types[$id] = strtoupper($import_name);
 }
