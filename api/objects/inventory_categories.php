@@ -16,22 +16,19 @@ class Inventory_Categories{
     // read categories
     function read(){
     
-        // different SQL query according to API call
-        if (is_null($this->id)){
-             // select all query
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name;
- 
-        } else {
-            // select all query for particular type
-            $query = "SELECT
-                        *
-                    FROM
-                        " . $this->table_name . "
-                    WHERE
-                        id= '".$this->id."'";
+        // select query
+        $query = "SELECT inventory_categories.id, inventory_categories.name,
+                    IF((SELECT COUNT(*) FROM inventory_types 
+                    WHERE (inventory_types.import_name IS NULL) AND (inventory_types.type_category = inventory_categories.id)),'0','1') 
+                    AS supportImport
+                FROM
+                    " . $this->table_name;
+
+        // select query for particular category
+        if (!(is_null($this->id))){
+            $query .= "
+                WHERE
+                    inventory_categories.id = '".$this->id."'";                
         }
 
         // prepare query statement
