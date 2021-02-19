@@ -99,7 +99,7 @@ to get the desired effect
           <img src="<?php echo $ROOT; ?>dist/img/generic-user.png" class="img-circle elevation-1" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">
+          <div class="d-block">
             <?php
               if (isset($_COOKIE['UserSession'])) {
                 echo json_decode(base64_decode($_COOKIE['UserSession'])) -> {'FullName'};
@@ -107,7 +107,7 @@ to get the desired effect
                 echo "Not logged in";
               }
             ?>
-          </a>
+          </div>
         </div>
       </div>
 

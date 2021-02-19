@@ -14,6 +14,7 @@ $inventory_types_object->id = $_GET['id'];
 
 $stmt = $inventory_types_object->read();
 
+$type_alt_name = '';
 if($stmt->rowCount() > 0) {
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
   $type_name = ($row['name']);
