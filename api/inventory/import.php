@@ -28,6 +28,18 @@ if (!$user->validAction()){
     die();
 }
 
+// imports also saved to root
+if (!(is_dir("../../../uploads"))) {
+    mkdir("../../../uploads", 0700);
+}
+if (!(is_dir("../../../uploads/inventory"))) {
+    mkdir("../../../uploads/inventory", 0700);
+}
+
+// setting target directory
+$target_dir = "../../../uploads/inventory/";
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
+
 // load types all import_name for particular category
 $property = new Inventory_Types($db);
 $property->category = $_POST['category'];
@@ -41,6 +53,7 @@ while ($inventory_types_row = $inventory_types_stmt->fetch(PDO::FETCH_ASSOC)) { 
 $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
     $file = fopen($filename, "r");
+    move_uploaded_file($filename, $target_file);
     fgetcsv($file, 10000, ","); // before beginning the while loop, just get the first line and do nothing with it
     while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
         if ($getData[0] == NULL) // skip blank lines in file

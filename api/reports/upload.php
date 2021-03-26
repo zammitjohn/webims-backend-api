@@ -7,6 +7,17 @@ include_once '../objects/users.php';
 $database = new Database();
 $db = $database->getConnection();
 
+// uploads are saved to root
+if (!(is_dir("../../../uploads"))) {
+    mkdir("../../../uploads", 0700);
+}
+if (!(is_dir("../../../uploads/reports"))) {
+    mkdir("../../../uploads/reports", 0700);
+}
+if (!(is_dir("../../../uploads/reports/" . $_POST['reportId'] . "/"))) {
+    mkdir("../../../uploads/reports/" . $_POST['reportId'] . "/", 0700);
+}
+
 // setting target directory
 $target_dir = "../../../uploads/reports/" . $_POST['reportId'] . "/";
 $target_file = $target_dir . basename($_FILES["file"]["name"]);

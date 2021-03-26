@@ -1,6 +1,6 @@
 # API Reference
 
-This is a full JSON API reference which interfaces to the extensive WebIMS database. To authenticate against the RIMS API, you'll need to pass a UserSession cookie with each request.
+This is a full JSON API reference which interfaces to the extensive WebIMS database. To authenticate against the API, you'll need to pass a UserSession cookie with each request.
 
 The UserSession cookie contains a base64 value of the following JSON encoded array:
 
