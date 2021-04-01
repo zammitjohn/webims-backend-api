@@ -140,7 +140,8 @@ include('../master.php');
 $(document).ready(function() {
   // load table contents
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  $('#table1').DataTable({
+  var table1 = $('#table1').DataTable({
+      lengthChange: false,
       autoWidth: false,
       responsive: true,
       ajax: {
@@ -162,6 +163,13 @@ $(document).ready(function() {
         }
       ]
   });
+
+  // table buttons
+  new $.fn.dataTable.Buttons(table1, {
+    buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
+  });
+  table1.buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
+
 });
 
 // project deletion

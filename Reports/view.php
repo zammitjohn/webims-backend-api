@@ -96,7 +96,7 @@ $content = '
                     <label for="faultySN">Faulty: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
-                      <button id="faultySN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                      <button id="faultySN" style="color:#ffc107;" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                         None
                       </button>
                       <div class="dropdown-menu">
@@ -111,7 +111,7 @@ $content = '
                     <label for="replacementSN">Replacement: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
-                      <button id="replacementSN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                      <button id="replacementSN" style="color:#ffc107;" type="button" class="btn dropdown-toggle" data-toggle="dropdown">
                         None
                       </button>
                       <div class="dropdown-menu">

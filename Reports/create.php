@@ -72,7 +72,7 @@ $content = '
                     <label for="faultySN">Faulty: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
-                      <button id="faultySN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">None</button>
+                      <button id="faultySN" style="color:#ffc107;" type="button" class="btn dropdown-toggle" data-toggle="dropdown">None</button>
                       <div class="dropdown-menu">
                         <div id="serial_number_faulty" class="serial_number" style="overflow-y:auto; max-height:10vh">
                         
@@ -86,7 +86,7 @@ $content = '
                     <label for="replacementSN">Replacement: </label>
 
                     <div class="dropdown dropright" style="width: 300px !important;">
-                      <button id="replacementSN" type="button" class="btn dropdown-toggle" data-toggle="dropdown">None</button>
+                      <button id="replacementSN" style="color:#ffc107;" type="button" class="btn dropdown-toggle" data-toggle="dropdown">None</button>
                       <div class="dropdown-menu">
                         <div id="serial_number_replacement" class="serial_number" style="overflow-y:auto; max-height:10vh">
                   

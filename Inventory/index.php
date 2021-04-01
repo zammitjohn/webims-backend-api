@@ -87,8 +87,8 @@ $(function () {
       },
       columns: [
           { data: 'SKU' },
-          { data: 'category' },  
-          { data: 'type' },        
+          { data: 'category_name' },  
+          { data: 'type_name' },        
           { data: 'description' },
           { data: 'qty' },
           { data: 'qty_projects_allocated' },

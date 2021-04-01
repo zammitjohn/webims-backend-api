@@ -151,7 +151,7 @@ $(document).ready(function() {
     },
     columns: [
         { data: 'SKU' },
-        { data: 'type' },
+        { data: 'type_name' },
         { data: 'description' },
         { data: 'qty' },
         { data: 'qty_projects_allocated' },
