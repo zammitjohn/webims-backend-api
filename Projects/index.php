@@ -130,7 +130,7 @@ $content = '
 </section>
 <!-- /.content -->
 ';
-$title = "Projects";
+$title = $type_name;
 $ROOT = '../';
 include('../master.php');
 ?>
@@ -166,7 +166,7 @@ $(document).ready(function() {
 
   // table buttons
   new $.fn.dataTable.Buttons(table1, {
-    buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    buttons: ["copy", "csv", "excel", "pdf", "print"]
   });
   table1.buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
 
