@@ -251,7 +251,7 @@ class Users{
         // execute query
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row['id']; // return item id of matching user
+        return $row['id'] ?? null; // return item id of matching user, null if undefined
     }
 
 }

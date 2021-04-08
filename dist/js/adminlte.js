@@ -2153,7 +2153,7 @@
         this._addNotFound();
       } else {
         endResults.each(function (i, result) {
-          $__default['default'](SELECTOR_SEARCH_RESULTS_GROUP).append(_this2._renderItem(escape(result.name), escape(result.link), result.path));
+          $__default['default'](SELECTOR_SEARCH_RESULTS_GROUP).append(_this2._renderItem(escape(result.name), encodeURI(result.link), result.path));
         });
       }
 
@@ -2218,6 +2218,7 @@
 
       path = path.join(" " + this.options.arrowSign + " ");
       name = unescape(name);
+      link = decodeURI(link);      
 
       if (this.options.highlightName || this.options.highlightPath) {
         var searchValue = $__default['default'](SELECTOR_SEARCH_INPUT$1).val().toLowerCase();

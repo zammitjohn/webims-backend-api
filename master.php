@@ -47,7 +47,7 @@
             <img class="animation__wobble" src="<?php echo $ROOT; ?>dist/img/logo.svg" alt="Logo" height="60" width="60">
          </div>
          <!-- Navbar -->
-         <nav id="theme_navbar" class="main-header navbar navbar-expand navbar-light">
+         <nav class="main-header navbar navbar-expand navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                <li class="nav-item">

@@ -108,16 +108,16 @@ if ('serviceWorker' in navigator) {
 
 // matches system dark/light mode settings
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-	$("#theme_navbar").removeClass('navbar-light').addClass('navbar-dark')
+	$(".navbar").removeClass('navbar-light').addClass('navbar-dark')
 	$('body').addClass('dark-mode');
 }
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
 	const newColorScheme = e.matches ? "dark" : "light";
 	if (newColorScheme == "dark"){
-		$("#theme_navbar").removeClass('navbar-light').addClass('navbar-dark')
+		$(".navbar").removeClass('navbar-light').addClass('navbar-dark')
 		$('body').addClass('dark-mode');
 	} else {
-		$("#theme_navbar").removeClass('navbar-dark').addClass('navbar-light')
+		$(".navbar").removeClass('navbar-dark').addClass('navbar-light')
 		$('body').removeClass('dark-mode');
 	}
 });
