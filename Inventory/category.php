@@ -203,8 +203,8 @@ $('#upload_csv').on("submit", function(e){
               if (data['deleted_count']){
                 toastr.warning(data['deleted_count'] + " old items deleted.");
               }
-              $('#table1').DataTable().ajax.reload(); // reload table
           }
+          $('#table1').DataTable().ajax.reload(); // reload table
       },
       error: function(data) {
         toastr.error("Import failed");  

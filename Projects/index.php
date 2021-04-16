@@ -274,9 +274,8 @@ $('#upload_csv').on("submit", function(e){
               if (data['notfound_count']){
                 toastr.warning(data['additional_info'] + "not in inventory! First create item to inventory and then add to project.");
               }
-
-              $('#table1').DataTable().ajax.reload(); // reload table
           }
+          $('#table1').DataTable().ajax.reload(); // reload table
       },
       error: function(data) {
         toastr.error("Import failed");  

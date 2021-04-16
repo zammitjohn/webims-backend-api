@@ -249,8 +249,9 @@ class Inventory{
         }
     }
 
-    // clean OLD inventory items which aren't referenced by projects, registry and reports 
+    // clean inventory
     function inventorySweep(){
+        // delete OLD inventory items which aren't referenced by projects, registry and reports 
         $query = "DELETE FROM " . $this->table_name . "  WHERE (inventoryDate < '" . $this->inventoryDate . "') AND (category = '" . $this->category . "') AND id IN (
                     SELECT id FROM (
                         SELECT inventory.id FROM inventory
@@ -263,13 +264,19 @@ class Inventory{
                         WHERE (registry.inventoryId IS NULL) AND (projects.inventoryId IS NULL) AND (reports.inventoryId IS NULL)
                     ) AS inventory_old
                 )";
-                
         // prepare query
         $stmt = $this->conn->prepare($query);
-        
         // execute query
         $stmt->execute();
-        return $stmt->rowCount();
+
+        // clear quantities for the rest... (referenced items)
+        $query = "UPDATE " . $this->table_name . " 
+                    SET qty='0' 
+                    WHERE (inventoryDate < '" . $this->inventoryDate . "') AND (category = '" . $this->category . "')";    
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+        // execute query
+        $stmt->execute();
     }
 
     function bindValues($stmt){
