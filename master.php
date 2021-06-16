@@ -29,6 +29,10 @@
       <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
       <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
       <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+      <!-- BS-Stepper -->
+      <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/bs-stepper/css/bs-stepper.min.css">
+      <!-- Select2 -->
+      <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/select2/css/select2.min.css">     
       <!-- Favicon via realfavicongenerator.net -->
       <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $ROOT; ?>dist/img/apple-touch-icon.png">
       <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $ROOT; ?>dist/img/favicon-32x32.png">
@@ -265,7 +269,7 @@
             &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-               <b>Version</b> 2.7.0
+               <b>Version</b> 2.8.0
             </div>
          </footer>
       </div>
@@ -302,5 +306,9 @@
       <script src="<?php echo $ROOT; ?>plugins/toastr/toastr.min.js"></script>
       <!-- Moment -->
       <script src="<?php echo $ROOT; ?>plugins/moment/moment.min.js"></script>
+      <!-- BS-Stepper -->
+      <script src="<?php echo $ROOT; ?>plugins/bs-stepper/js/bs-stepper.min.js"></script>
+      <!-- Select2 -->
+      <script src="<?php echo $ROOT; ?>plugins/select2/js/select2.full.min.js"></script>      
    </body>
 </html>

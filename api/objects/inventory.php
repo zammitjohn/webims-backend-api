@@ -17,6 +17,7 @@ class Inventory{
     public $supplier;
     public $notes;
     public $inventoryDate;
+    public $search_term;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -66,7 +67,17 @@ class Inventory{
             GROUP BY 
                 inventory.id                
             ORDER BY 
-                `inventory`.`id`  DESC";      
+                `inventory`.`id`  DESC"; 
+                
+        } elseif ($this->search_term){
+           // search for a specified pattern in a SKU and descriptions column.
+            $query .= "
+            WHERE
+                inventory.SKU LIKE '%".$this->search_term."%' OR inventory.description LIKE '%".$this->search_term."%'
+            GROUP BY 
+                inventory.id
+            ORDER BY 
+                `inventory`.`id`  DESC";            
 
         } else {
             // select query
