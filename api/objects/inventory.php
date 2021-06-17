@@ -312,17 +312,17 @@ class Inventory{
             $stmt->bindValue(':description', $this->description);
         }
         if ($this->qty == ""){
-            $stmt->bindValue(':qty', $this->qty, PDO::PARAM_NULL);
+            $stmt->bindValue(':qty', 0);
         } else {
             $stmt->bindValue(':qty', $this->qty);
         }
         if ($this->qtyIn == ""){
-            $stmt->bindValue(':qtyIn', $this->qtyIn, PDO::PARAM_NULL);
+            $stmt->bindValue(':qtyIn', 0);
         } else {
             $stmt->bindValue(':qtyIn', $this->qtyIn);
         }
         if ($this->qtyOut == ""){
-            $stmt->bindValue(':qtyOut', $this->qtyOut, PDO::PARAM_NULL);
+            $stmt->bindValue(':qtyOut', 0);
         } else {
             $stmt->bindValue(':qtyOut', $this->qtyOut);
         }

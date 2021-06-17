@@ -102,6 +102,26 @@ $content = '
     </div>
     <!-- /.row -->
 
+    <hr>
+    
+    <div class="card">
+      <div class="card-header border-transparent">
+        <h3 class="card-title">Transactions</h3>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table id="table3" table class="table table-hover text-nowrap">
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->    
+
     <!-- modal-newproject start -->
     <div class="modal fade" id="modal-newproject">
     <div class="modal-dialog">
@@ -194,7 +214,24 @@ $(document).ready(function() {
       }
       $(tableData).appendTo($("#table2"));
     }
-  });  
+  });
+  
+  $.ajax({
+    type: "GET",
+    cache: false,
+    url: "api/transactions/read",
+    dataType: 'json',
+    success: function(data) {
+      var tableData = "";
+      for (var element in data) {
+        tableData += "<tr>" +
+          "<td>" + "<a href='api/transactions/download?id=" + data[element].id + "' class='text-muted'> <i class='fas fa-download'></i> #" + data[element].id +  "</a></td><td> " + data[element].user_fullname +  "</td><td> " + data[element].date +  "</td>" +
+          "</tr>";
+      }
+      $(tableData).appendTo($("#table3"));
+    }
+  });
+
 });
 
 $('#new_project').on("submit", function(e){

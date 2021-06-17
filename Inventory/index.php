@@ -214,11 +214,20 @@ $('#item_qty_form').on('submit',function (e) {
   }
   transaction_txt = transaction_txt + ']}';
   var transaction_json = JSON.parse(transaction_txt);
-  console.log(transaction_json);
   
-  // send to API
-  //post api actions
-  toastr.success("Transaction created successfully");
-  $('#modal-transaction').modal('toggle'); //hide modal
+  //console.log(transaction_json);
+  $.ajax({
+    url : "../api/transactions/create" ,
+    type : 'POST',
+    data : JSON.stringify(transaction_json),
+    success : function(data) {
+      // Successfully sent data
+      toastr.success("Transaction created successfully");
+      $('#modal-transaction').modal('toggle'); //hide modal
+    },
+    error: function(data) {
+        // Unable to send data
+    }
+  });
 });
 </script>
