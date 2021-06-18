@@ -38,7 +38,7 @@ class Transactions_Items{
     // dump all items under transaction
     function dumpTransactionItems(){
         // select query
-        $query = "SELECT transactions.date, inventory_types.import_name AS type_altname, inventory.SKU, inventory.description, CONCAT(users.firstname, ' ', users.lastname) AS user_fullname, inventory.category, ABS(transactions_items.qty) AS qty
+        $query = "SELECT transactions.date, inventory_types.import_name AS type_altname, inventory.SKU, inventory.description, CONCAT(users.firstname, ' ', users.lastname) AS user_fullname, inventory.category, transactions_items.qty
         FROM ". $this->table_name ."
             JOIN inventory
             ON transactions_items.inventoryId = inventory.id

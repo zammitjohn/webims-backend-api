@@ -88,7 +88,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 | **Action**   | **Method** | **Parameters** | **Response**                           | **URL**                    |
 |--------------|------------|----------------|----------------------------------------|----------------------------|
-| **read**     | `GET`      |                | id date user_fullname                  | /api/transactions/read     |
+| **read**     | `GET`      |                | id date user_fullname description      | /api/transactions/read     |
 | **create**   | `POST`     | JSON           | status returned_count requested_count  | /api/transactions/create   |
 | **download** | `GET`      | id             | file                                   | /api/transactions/download |
 

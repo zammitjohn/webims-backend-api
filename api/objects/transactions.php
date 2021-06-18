@@ -7,6 +7,7 @@ class Transactions{
  
     // object properties
     public $userId;
+    public $isReturn;
  
     // constructor with $db as database connection
     public function __construct($db){
@@ -17,7 +18,7 @@ class Transactions{
     function read(){
         // select query
         $query = "SELECT 
-            transactions.id, transactions.date, CONCAT(users.firstname, ' ', users.lastname) AS user_fullname
+            transactions.id, transactions.date, IF(isReturn = '1', 'Return of equipment', 'Issue of equipment') AS description, CONCAT(users.firstname, ' ', users.lastname) AS user_fullname
         FROM 
             " . $this->table_name . " 
 
@@ -38,11 +39,19 @@ class Transactions{
 
     // create transaction
     function create(){
-        $query = "INSERT INTO
-                    ". $this->table_name ." 
-                        (`userId`)
-                    VALUES
-                        ('".$this->userId."')";
+        if ($this->isReturn){
+            $query = "INSERT INTO
+                        ". $this->table_name ." 
+                            (`userId`, `isReturn`)
+                        VALUES
+                            ('".$this->userId."', '1')";
+        } else {
+            $query = "INSERT INTO
+                        ". $this->table_name ." 
+                            (`userId`, `isReturn`)
+                        VALUES
+                            ('".$this->userId."', '0')";            
+        }
         
         // prepare and bind query
         $stmt = $this->conn->prepare($query);

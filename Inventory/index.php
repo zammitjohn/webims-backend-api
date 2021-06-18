@@ -99,7 +99,7 @@ $content = '
                     <div class="form-group">
                       <label for="item-skus">Items</label>
                       <div class="select2-primary">
-                        <select class="form-control" multiple="multiple" id="SKU_item_id" style="width: 100%;"></select>
+                        <select class="select2" multiple="multiple" id="SKU_item_id" style="width: 100%;"></select>
                       </div>          
                     </div>
                     <button class="btn btn-primary" id="next_btn">Next</button>
@@ -109,7 +109,10 @@ $content = '
                       <div class="form-group">
                         <label>Item quantities</label>
                         <ul id="items_list">
-                        </ul>                    
+                        </ul>
+                        <hr>
+                        <input type="checkbox" id="isReturn">
+                        <label for="isReturn">Return items</label>                    
                       </div>
                       <button type="button" class="btn btn-primary" onclick="stepper.previous()">Previous</button>
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -196,14 +199,19 @@ $('#next_btn').click(function(){
   stepper.next();
   $("#items_list").empty();
   for (i = 0; i < $("#SKU_item_id").select2('data').length; i++) {
-    $('<li> <label>' +  $("#SKU_item_id").select2('data')[i].text + ' (' +  $("#SKU_item_id").select2('data')[i].title + ') : </label> <input type="number" value="-1" class="input_item_qty" itemId="' +  $("#SKU_item_id").select2('data')[i].id + '" ' + 'style="width: 3em"></li>').appendTo("#items_list");
+    $('<li> <label>' +  $("#SKU_item_id").select2('data')[i].text + ' (' +  $("#SKU_item_id").select2('data')[i].title + ') : </label> <input type="number" value="1" min="1" class="input_item_qty" itemId="' +  $("#SKU_item_id").select2('data')[i].id + '" ' + 'style="width: 3em"></li>').appendTo("#items_list");
   }
 });   
 
 $('#item_qty_form').on('submit',function (e) {
   e.preventDefault();
+
   // create json for transaction api
-  var transaction_txt = '{ "items" : [';
+  if ($('#isReturn').is(":checked")){
+    var transaction_txt = '{ "return" : 1, "items" : [';
+  }else{
+    var transaction_txt = '{ "return" : 0, "items" : [';
+  }
   for (i = 0; i < $("#SKU_item_id").select2('data').length; i++) { // loop item-skus, getting values from input fields...
     transaction_txt = transaction_txt + '{ "item_id":' + $("#SKU_item_id").select2('data')[i].id + ' , "item_qty":"' + $("input[itemid='" + $("#SKU_item_id").select2('data')[i].id  +  "']").val() + '" }'; 
   

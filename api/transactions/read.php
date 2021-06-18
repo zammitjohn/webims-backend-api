@@ -36,6 +36,7 @@ if ($stmt != false){
             extract($row);
             $transactions_item=array(
                 "id" => $id,
+                "description" => $description,
                 "date" => $date,
                 "user_fullname" => $user_fullname
             );

@@ -12,9 +12,7 @@ $db = $database->getConnection();
 $item = new Inventory($db);
 
 // set type property of inventory item type to be shown 
-if (isset($_GET['term'])) {
-    $item->search_term = $_GET['term'];
-}
+$item->search_term = isset($_GET['term']) ? $_GET['term'] : die();
 
 // AUTH check 
 $user = new Users($db); // prepare users object

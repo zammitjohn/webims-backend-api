@@ -104,9 +104,14 @@ $content = '
 
     <hr>
     
-    <div class="card">
+    <div class="card collapsed-card">
       <div class="card-header border-transparent">
         <h3 class="card-title">Transactions</h3>
+        <div class="card-tools">      
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
       </div>
       <!-- /.card-header -->
       <div class="card-body p-0">
@@ -225,7 +230,7 @@ $(document).ready(function() {
       var tableData = "";
       for (var element in data) {
         tableData += "<tr>" +
-          "<td>" + "<a href='api/transactions/download?id=" + data[element].id + "' class='text-muted'> <i class='fas fa-download'></i> #" + data[element].id +  "</a></td><td> " + data[element].user_fullname +  "</td><td> " + data[element].date +  "</td>" +
+          "<td>" + "<a href='api/transactions/download?id=" + data[element].id + "' class='text-muted'> <i class='fas fa-download'></i> #" + data[element].id +  "</a></td><td> " + data[element].description +  "</td><td> " + data[element].user_fullname +  "</td><td> " + data[element].date +  "</td>" +
           "</tr>";
       }
       $(tableData).appendTo($("#table3"));

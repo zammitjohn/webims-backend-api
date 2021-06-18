@@ -6,6 +6,7 @@ Key features:
 - Project allocations and item registration
 - Easy table view sorting and filtering
 - Batch comma-separated values (CSV) file imports
+- Transaction recording and accounting functions 
 - Multi-warehouse management
 - Convenient fault reporting options
 - LDAP integration

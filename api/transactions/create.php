@@ -13,6 +13,8 @@ $db = $database->getConnection();
 
 // json data input
 $data = json_decode(file_get_contents('php://input'), true);
+isset($data['return']) ? : die();
+isset($data['items']) ? : die();
 
 // output flags
 $status = false;
@@ -27,7 +29,7 @@ $item = new Transactions_Items($db);
 // AUTH check 
 $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
-    $user->action_isCreate = true;
+    $user->action_isImport = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
     $transaction->userId = $user->getUserId();
 }
@@ -36,34 +38,38 @@ if (!$user->validAction()){
     die();
 }
 
+// data from JSON
+$transaction->isReturn = $data['return']; //isReturn flag
+$transaction_items = $data['items']; // items
 
-// create new transaction
-if($transaction->create()){
-    $item->transactionId = $transaction->id; // get transaction id
+if (sizeOf($transaction_items)){ 
+    // create new transaction with items array is populated
+    if($transaction->create()){
+        $item->transactionId = $transaction->id; // get transaction id of newly created transaction
 
-    // parse json
-    $transaction_items = $data['items'];
-    foreach($transaction_items as $transaction_item){
-        $item->inventoryId = $transaction_item['item_id'];
-        $item->qty = $transaction_item['item_qty'];
+        // parse json
+        foreach($transaction_items as $transaction_item){
+            $item->inventoryId = $transaction_item['item_id'];
+            $item->qty = $transaction_item['item_qty'];
 
-        if ($item->create()){ // reduce qtys from stock
-            $status = true;
+            if ($item->create()){ // reduce qtys from stock
+                $status = true;
 
-            $inventory_item = new Inventory($db);
-            $inventory_item->id = $item->inventoryId;
-            if ($item->qty < 0){
-                $inventory_item->qty = ($item->qty);
-                $inventory_item->qtyIn = 0;
-                $inventory_item->qtyOut = -($item->qty);
-                $requested_counter++;
-            } else {
-                $inventory_item->qty = ($item->qty);
-                $inventory_item->qtyIn = +($item->qty);
-                $inventory_item->qtyOut = 0;
-                $returned_counter++;
+                $inventory_item = new Inventory($db);
+                $inventory_item->id = $item->inventoryId;
+                if (!($transaction->isReturn)){
+                    $inventory_item->qty = -($item->qty);
+                    $inventory_item->qtyIn = 0;
+                    $inventory_item->qtyOut = ($item->qty);
+                    $requested_counter++;
+                } else {
+                    $inventory_item->qty = ($item->qty);
+                    $inventory_item->qtyIn = ($item->qty);
+                    $inventory_item->qtyOut = 0;
+                    $returned_counter++;
+                }
+                $inventory_item->updateQuantities();
             }
-            $inventory_item->updateQuantities();
         }
     }
 }

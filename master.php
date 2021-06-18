@@ -32,7 +32,8 @@
       <!-- BS-Stepper -->
       <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/bs-stepper/css/bs-stepper.min.css">
       <!-- Select2 -->
-      <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/select2/css/select2.min.css">     
+      <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/select2/css/select2.min.css">
+      <link rel="stylesheet" href="<?php echo $ROOT; ?>plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">     
       <!-- Favicon via realfavicongenerator.net -->
       <link rel="apple-touch-icon" sizes="180x180" href="<?php echo $ROOT; ?>dist/img/apple-touch-icon.png">
       <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $ROOT; ?>dist/img/favicon-32x32.png">
