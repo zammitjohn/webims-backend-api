@@ -42,7 +42,7 @@ if ($stmt != false){
             "text" => $SKU,
             "category" => $category_name,
             "type" => $type_name,
-            "description" => $description
+            "title" => $description
         );
         array_push($output_arr["Inventory"], $inventory_item);
     }

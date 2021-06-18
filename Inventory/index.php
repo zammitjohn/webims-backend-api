@@ -196,7 +196,7 @@ $('#next_btn').click(function(){
   stepper.next();
   $("#items_list").empty();
   for (i = 0; i < $("#SKU_item_id").select2('data').length; i++) {
-    $('<li> <label>' +  $("#SKU_item_id").select2('data')[i].text + ': </label> <input type="number" value="-1" class="input_item_qty" itemId="' +  $("#SKU_item_id").select2('data')[i].id + '" ' + 'style="width: 3em"></li>').appendTo("#items_list");
+    $('<li> <label>' +  $("#SKU_item_id").select2('data')[i].text + ' (' +  $("#SKU_item_id").select2('data')[i].title + ') : </label> <input type="number" value="-1" class="input_item_qty" itemId="' +  $("#SKU_item_id").select2('data')[i].id + '" ' + 'style="width: 3em"></li>').appendTo("#items_list");
   }
 });   
 
@@ -220,14 +220,25 @@ $('#item_qty_form').on('submit',function (e) {
     url : "../api/transactions/create" ,
     type : 'POST',
     data : JSON.stringify(transaction_json),
-    success : function(data) {
-      // Successfully sent data
-      toastr.success("Transaction created successfully");
-      $('#modal-transaction').modal('toggle'); //hide modal
-    },
-    error: function(data) {
-        // Unable to send data
-    }
+    dataType: 'json',
+    success: function(data) {
+          if (data['status'] == false) {  
+              toastr.warning('No items transacted');
+          } else {  
+              if (data['returned_count']){
+                toastr.success(data['returned_count'] + " items returned.");
+              }
+              if (data['requested_count']){
+                toastr.success(data['requested_count'] + " items requested.");
+              }
+
+              $('#modal-transaction').modal('toggle'); // hide modal
+              $('#table1').DataTable().ajax.reload(); // reload table
+          }
+      },
+      error: function(data) {
+        toastr.error("Transaction failed");  
+      }
   });
 });
 </script>

@@ -14,6 +14,10 @@ $db = $database->getConnection();
 // json data input
 $data = json_decode(file_get_contents('php://input'), true);
 
+// output flags
+$status = false;
+$requested_counter = 0;
+$returned_counter = 0;
 
 // prepare item objects
 $transaction = new Transactions($db);
@@ -44,21 +48,30 @@ if($transaction->create()){
         $item->qty = $transaction_item['item_qty'];
 
         if ($item->create()){ // reduce qtys from stock
+            $status = true;
+
             $inventory_item = new Inventory($db);
             $inventory_item->id = $item->inventoryId;
             if ($item->qty < 0){
                 $inventory_item->qty = ($item->qty);
                 $inventory_item->qtyIn = 0;
                 $inventory_item->qtyOut = -($item->qty);
+                $requested_counter++;
             } else {
                 $inventory_item->qty = ($item->qty);
                 $inventory_item->qtyIn = +($item->qty);
                 $inventory_item->qtyOut = 0;
+                $returned_counter++;
             }
             $inventory_item->updateQuantities();
-        
         }
-    
     }
-
 }
+
+$result_arr=array(
+    "status" => $status,
+    "requested_count" => $requested_counter,
+    "returned_count" => $returned_counter
+);
+
+print_r(json_encode($result_arr));

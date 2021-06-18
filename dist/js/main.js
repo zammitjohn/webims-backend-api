@@ -170,7 +170,7 @@ function formatSearchResults (item) {
     return item.text;
   }
   var $item = $(
-    '<span>' + item.text + ' (' + item.category + ' ' + item.type  + '): ' + item.description + '</span>'
+    '<span>' + item.title + ' (' + item.category + ' ' + item.type  + '): ' + item.text + '</span>'
   );
   return $item;
 };
