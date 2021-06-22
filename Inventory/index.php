@@ -184,6 +184,28 @@ $(document).ready(function () {
         }
       ]
   });
+
+  // load dynamic SKU field
+  $('#SKU_item_id').select2({
+    ajax: {
+      url: "../api/inventory/search",
+      dataType: 'json',
+      delay: 250 // wait 250 milliseconds before triggering the request
+    },
+    templateResult: formatSearchResults,
+    placeholder: 'Search for an item',
+    minimumInputLength: 1
+  });
+
+  function formatSearchResults (item) {
+    if (!item.id) {
+      return item.text;
+    }
+    var $item = $(
+      '<span>' + item.title + ' (' + item.category + ' ' + item.type  + '): ' + item.text + '</span>'
+    );
+    return $item;
+  };
 });
 
 $("#modal-transaction").on('shown.bs.modal', function() { 
@@ -232,7 +254,9 @@ $('#item_qty_form').on('submit',function (e) {
     success: function(data) {
           if (data['status'] == false) {  
               toastr.warning('No items transacted');
-          } else {  
+          } else {
+              toastr.success("Transaction #" + data['id'] + " created.");
+              window.open('../api/transactions/download?id='+ data['id'], '_blank');  
               if (data['returned_count']){
                 toastr.success(data['returned_count'] + " items returned.");
               }

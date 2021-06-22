@@ -98,18 +98,6 @@ $(document).ready(function validate() {
       $(element).removeClass('is-invalid');
     }
   });
-
-  // load dynamic SKU field
-  $('#SKU_item_id').select2({
-    ajax: {
-      url: "../api/inventory/search",
-      dataType: 'json',
-    },
-    templateResult: formatSearchResults,
-    placeholder: 'Search for an item',
-    minimumInputLength: 1
-  });
-
 });
 
 // service worker for PWA
@@ -164,13 +152,3 @@ function userLogout(){
     }
   });
 }
-
-function formatSearchResults (item) {
-  if (!item.id) {
-    return item.text;
-  }
-  var $item = $(
-    '<span>' + item.title + ' (' + item.category + ' ' + item.type  + '): ' + item.text + '</span>'
-  );
-  return $item;
-};

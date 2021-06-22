@@ -18,7 +18,7 @@ $files = scandir($dir);
 
 $dropbox_content = '';
 for ($x = 2; $x < sizeof($files); $x++) {
-  $dropbox_content .= '<td><a href="../../uploads/reports/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>' . " " . $files[$x] . '</a></td>';
+  $dropbox_content .= '<td><a href="../../uploads/reports/' .  $_GET['id'] . '/' . $files[$x] . '" target="_blank" class="text-muted"><i class="far fa-file"></i>&nbsp' . $files[$x] . '</a></td>';
   $dropbox_content .= '</tr>';
 }
 

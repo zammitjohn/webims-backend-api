@@ -20,6 +20,7 @@ isset($data['items']) ? : die();
 $status = false;
 $requested_counter = 0;
 $returned_counter = 0;
+$transactionID = NULL;
 
 // prepare item objects
 $transaction = new Transactions($db);
@@ -46,6 +47,7 @@ if (sizeOf($transaction_items)){
     // create new transaction with items array is populated
     if($transaction->create()){
         $item->transactionId = $transaction->id; // get transaction id of newly created transaction
+        $transactionID = $transaction->id;
 
         // parse json
         foreach($transaction_items as $transaction_item){
@@ -76,6 +78,7 @@ if (sizeOf($transaction_items)){
 
 $result_arr=array(
     "status" => $status,
+    "id" => $transactionID,
     "requested_count" => $requested_counter,
     "returned_count" => $returned_counter
 );

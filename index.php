@@ -177,9 +177,7 @@ $(document).ready(function() {
       for (var element in data) {
         reportcount++;
         tableData += "<tr>" +
-          "<td>" + "<a href='reports/view?id=" + data[element].id + "' class='text-muted'><i class='fas fa-search'></i> #" + data[element].id +  "</a></td>" +
-          "<td>" + data[element].name + "</td>" +
-          "</tr>";
+          "<td>" + "<a href='reports/view?id=" + data[element].id + "' class='text-muted'><i class='far fa-file-alt'></i>&nbsp" + data[element].name  + "</a></td></tr>";
       }
       $(tableData).appendTo($("#table1"));
       $("#report_count").append(reportcount + " report(s)");
@@ -230,7 +228,7 @@ $(document).ready(function() {
       var tableData = "";
       for (var element in data) {
         tableData += "<tr>" +
-          "<td>" + "<a href='api/transactions/download?id=" + data[element].id + "' class='text-muted'> <i class='fas fa-download'></i> #" + data[element].id +  "</a></td><td> " + data[element].description +  "</td><td> " + data[element].user_fullname +  "</td><td> " + data[element].date +  "</td>" +
+          "<td>" + "<a href='api/transactions/download?id=" + data[element].id + "' class='text-muted' title=" + "#" + data[element].id + "> <i class='fas fa-download'></i></a></td><td> " + data[element].description +  "</td><td> " + data[element].user_fullname +  "</td><td> " + data[element].date +  "</td>" +
           "</tr>";
       }
       $(tableData).appendTo($("#table3"));
