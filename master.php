@@ -139,12 +139,6 @@
                               </a>
                            </li>
                            <li class="nav-item">
-                              <a href="<?php echo $ROOT; ?>inventory/register" class="nav-link">
-                                 <i class="fas fa-edit nav-icon"></i>
-                                 <p>Register item</p>
-                              </a>
-                           </li>
-                           <li class="nav-item">
                               <a href="<?php echo $ROOT; ?>inventory" class="nav-link">
                                  <i class="fas fa-circle nav-icon"></i>
                                  <p>All items</p>
@@ -270,7 +264,7 @@
             &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-               <b>Version</b> 2.8.0
+               <b>Version</b> 2.8.1
             </div>
          </footer>
       </div>

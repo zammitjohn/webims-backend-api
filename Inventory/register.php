@@ -112,7 +112,7 @@ $('#item_form').on('submit',function (e) {
     success: function(result) {
       alert(result.message);
       if (result.status == true) {
-        window.location.href = '../inventory/view?id=' + $("#SKU").val();
+        history.back();
       }
     }
   });
