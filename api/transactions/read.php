@@ -1,7 +1,7 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/transactions.php';
+include_once '../objects/transactions_items.php';
 include_once '../objects/users.php';
  
 // get database connection
@@ -9,7 +9,7 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare transactions item object
-$item = new Transactions($db);
+$item = new Transactions_Items($db);
 
 // AUTH check 
 $user = new Users($db); // prepare users object
@@ -20,7 +20,7 @@ if (!$user->validAction()){
 }
 
 // query transactions item
-$stmt = $item->read();
+$stmt = $item->read_all();
 
 if ($stmt != false){
     $num = $stmt->rowCount();

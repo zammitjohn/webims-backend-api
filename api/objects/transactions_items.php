@@ -35,6 +35,32 @@ class Transactions_Items{
         return false;
     }
 
+    // read all transaction ids based on the items in the transactions 
+    function read_all(){
+        // select query
+        $query = "SELECT DISTINCT transactions_items.transactionId AS id, transactions.date, IF(isReturn = '1', 'Return of equipment', 'Issue of equipment') AS description, CONCAT(users.firstname, ' ', users.lastname) AS user_fullname
+        FROM 
+            " . $this->table_name . " 
+
+            LEFT JOIN 
+                transactions
+            ON 
+                transactions_items.transactionId = transactions.id 
+            LEFT JOIN 
+                users
+            ON 
+                transactions.userId = users.id               
+            ORDER BY 
+                transactions_items.transactionId DESC;";             
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // execute query
+        $stmt->execute();
+        return $stmt;
+    }
+
     // dump all items under transaction
     function dumpTransactionItems(){
         // select query
