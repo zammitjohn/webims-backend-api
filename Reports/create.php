@@ -268,10 +268,10 @@ function populateSerialNumbers() {
     success: function(data) {
       var dropdowndata = "<button type='button' class='dropdown-item' item_id=''>None</button>";
       for (var element in data) {
-        if (data[element].state == 'New'){
-          dropdowndata += "<button type='button' class='dropdown-item' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";
-        } else {
+        if (data[element].state == 'Faulty'){
           dropdowndata += "<button type='button' class='dropdown-item disabled' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";
+        } else {
+          dropdowndata += "<button type='button' class='dropdown-item' item_id='" + data[element].id + "'>" + "#" + data[element].id + ": " + data[element].serialNumber + "</button>";
         }
       }
 

@@ -21,7 +21,7 @@ $content = '
   <div class="container-fluid">
     <div id="user_permission_alert" class="alert alert-warning" style="display:none;">
       <h5><i class="icon fas fa-lock"></i>Resticted access</h5>
-      Full permissions are not enabled for this account. Additional permissions require administrator approval.
+      Your account has limited permissions. You may not have access to some features. Please contact your administrator.
     </div>  
 
     <!-- Main row -->
