@@ -262,7 +262,7 @@
             &copy; <?php echo date('Y'); ?> <a href="https://zammitjohn.com" target="_blank" rel="noreferrer"><strong>John Zammit</strong></a>.
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
-               <b>Version</b> 2.8.2
+               <b>Version</b> 2.8.3
             </div>
          </footer>
       </div>

@@ -36,7 +36,7 @@ if ($stmt != false){
     $file = fopen('php://memory', 'w'); 
 
     // save the column headers
-    fputcsv($file, array('Company', 'Date', 'stk_code', 'stk_desc', 'qty', 'userid', 'CAT', 'DELPERSON'));
+    fputcsv($file, array('COMPANY','date','','','','','stk_code','stk_desc','','qty','userid','CAT','DELPERSON'));
 
     // transaction item array
     $transaction_arr=array();
@@ -44,7 +44,7 @@ if ($stmt != false){
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
-        $row_data = array($type_altname, $date, $SKU, $description, $qty, $user_fullname, $category, '');
+        $row_data = array($type_altname, date('Y-m-d', strtotime($date)),'','','','', $SKU, $description,'', $qty, $user_fullname, $category, 'WebIMS');
         array_push($transaction_arr["csv_data"], $row_data);
     }
 
