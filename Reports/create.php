@@ -60,7 +60,7 @@ $content = '
                   </div>
                   
                   <div class="form-group">
-                    <label for="userId">Requested by</label>
+                    <label for="userId">Requested</label>
                     <select id="userId" class="form-control">
                       <option value="">None</option>
                     </select>
@@ -102,13 +102,13 @@ $content = '
                   <hr>
                   <h5>Dates</h5>
                   <div class="form-group">
-                    <label for="dateRequested">Requested by RBS</label>
+                    <label for="dateRequested">Requested </label>
                     <input type="date" class="form-control" id="dateRequested">
                   </div>
 
                   <div class="form-group">
-                    <label for="dateLeavingRBS">Leaving RBS</label>
-                    <input type="date" class="form-control" id="dateLeavingRBS">
+                    <label for="dateLeaving">Leaving </label>
+                    <input type="date" class="form-control" id="dateLeaving">
                   </div>     
 
                   <div class="form-group">
@@ -230,7 +230,7 @@ $('#report_form').on('submit',function (e) {
       faultySN: selected_faulty_serial_number,
       replacementSN: selected_replacement_serial_number,
       dateRequested: $("#dateRequested").val(),
-      dateLeavingRBS: $("#dateLeavingRBS").val(),
+      dateLeaving: $("#dateLeaving").val(),
       dateDispatched: $("#dateDispatched").val(),
       dateReturned: $("#dateReturned").val(),
       AWB: $("#AWB").val(),

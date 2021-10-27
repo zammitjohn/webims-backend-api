@@ -16,7 +16,7 @@ class reports{
     public $faultySN;
     public $replacementSN;
     public $dateRequested;
-    public $dateLeavingRBS;
+    public $dateLeaving;
     public $dateDispatched;
     public $dateReturned;
     public $AWB;
@@ -84,7 +84,7 @@ class reports{
                 SET
                     inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, userId=:userId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
-                    dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
+                    dateLeaving=:dateLeaving, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA";
     
         // prepare and bind query
@@ -110,7 +110,7 @@ class reports{
                 SET
                     inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, userId=:userId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
-                    dateLeavingRBS=:dateLeavingRBS, dateDispatched=:dateDispatched, 
+                    dateLeaving=:dateLeaving, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA                
                 
                 WHERE
@@ -197,10 +197,10 @@ class reports{
         } else {
             $stmt->bindValue(':dateRequested', $this->dateRequested);
         }        
-        if ($this->dateLeavingRBS == ""){
-            $stmt->bindValue(':dateLeavingRBS', $this->dateLeavingRBS, PDO::PARAM_NULL);
+        if ($this->dateLeaving == ""){
+            $stmt->bindValue(':dateLeaving', $this->dateLeaving, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':dateLeavingRBS', $this->dateLeavingRBS);
+            $stmt->bindValue(':dateLeaving', $this->dateLeaving);
         }        
         if ($this->dateDispatched == ""){
             $stmt->bindValue(':dateDispatched', $this->dateDispatched, PDO::PARAM_NULL);

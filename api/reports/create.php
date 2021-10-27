@@ -21,7 +21,7 @@ $item->userId = $_POST['userId'];
 $item->faultySN = $_POST['faultySN'];
 $item->replacementSN = $_POST['replacementSN'];
 $item->dateRequested = $_POST['dateRequested'];
-$item->dateLeavingRBS = $_POST['dateLeavingRBS'];
+$item->dateLeaving = $_POST['dateLeaving'];
 $item->dateDispatched = $_POST['dateDispatched'];
 $item->dateReturned = $_POST['dateReturned'];
 $item->AWB = $_POST['AWB'];
@@ -61,7 +61,7 @@ if (($item->replacementSN AND $item->faultySN) AND ($item->replacementSN == $ite
             "faultySN" => $item->faultySN,
             "replacementSN" => $item->replacementSN,
             "dateRequested" => $item->dateRequested,
-            "dateLeavingRBS" => $item->dateLeavingRBS,
+            "dateLeaving" => $item->dateLeaving,
             "dateDispatched" => $item->dateDispatched,
             "dateReturned" => $item->dateReturned,
             "AWB" => $item->AWB,

@@ -66,7 +66,7 @@ $content = '
                 <th>Quantity</th>
                 <th>Allocated</th>
                 <th>Supplier</th>
-                <th>Inventory Date</th>                
+                <th>Import Date</th>                
               </tr>
             </thead>
             <tbody>
@@ -78,7 +78,7 @@ $content = '
                 <th>Quantity</th>
                 <th>Allocated</th>
                 <th>Supplier</th>
-                <th>Inventory Date</th>                
+                <th>Import Date</th>                
               </tr>
             </tfoot>
           </table>

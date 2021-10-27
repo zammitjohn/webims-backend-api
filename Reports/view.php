@@ -84,7 +84,7 @@ $content = '
                   </div>
                   
                   <div class="form-group">
-                    <label for="userId">Requested by</label>
+                    <label for="userId">Requested</label>
                     <select id="userId" class="form-control">
                       <option value="">None</option>
                     </select>
@@ -128,13 +128,13 @@ $content = '
                   <hr>
                   <h5>Dates</h5>
                   <div class="form-group">
-                    <label for="dateRequested">Requested by RBS</label>
+                    <label for="dateRequested">Requested </label>
                     <input type="date" class="form-control" id="dateRequested">
                   </div>
 
                   <div class="form-group">
-                    <label for="dateLeavingRBS">Leaving RBS</label>
-                    <input type="date" class="form-control" id="dateLeavingRBS">
+                    <label for="dateLeaving">Leaving </label>
+                    <input type="date" class="form-control" id="dateLeaving">
                   </div>     
 
                   <div class="form-group">
@@ -325,7 +325,7 @@ $(document).ready(function() {
               selected_faulty_serial_number = ( (data['faultySN'] == null) ? "" : (data['faultySN']) ); // JSON: null -> form/SQL: ""
               selected_replacement_serial_number = ( (data['replacementSN'] == null) ? "" : (data['replacementSN']) ); // JSON: null -> form/SQL: ""
               $('#dateRequested').val(data['dateRequested']);
-              $('#dateLeavingRBS').val(data['dateLeavingRBS']);
+              $('#dateLeaving').val(data['dateLeaving']);
               $('#dateDispatched').val(data['dateDispatched']);
               $('#dateReturned').val(data['dateReturned']);
               $('#AWB').val(data['AWB']);
@@ -372,7 +372,7 @@ $(document).ready(function() {
         faultySN: selected_faulty_serial_number,
         replacementSN: selected_replacement_serial_number,
         dateRequested: $("#dateRequested").val(),
-        dateLeavingRBS: $("#dateLeavingRBS").val(),
+        dateLeaving: $("#dateLeaving").val(),
         dateDispatched: $("#dateDispatched").val(),
         dateReturned: $("#dateReturned").val(),
         AWB: $("#AWB").val(),
