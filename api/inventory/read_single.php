@@ -41,7 +41,7 @@ if ($stmt != false){
             "qtyOut" => $row['qtyOut'],
             "supplier" => $row['supplier'],
             "notes" => $row['notes'],
-            "inventoryDate" => $row['inventoryDate'],
+            "importDate" => $row['importDate'],
             "lastChange" => $row['lastChange']
         );
     }

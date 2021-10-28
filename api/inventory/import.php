@@ -114,7 +114,7 @@ if($_FILES["file"]["size"] > 0) {
             $item->qtyIn = $data_qtyIn;
             $item->qtyOut = $data_qtyOut;
             $item->supplier = $data_supplier;
-            $item->inventoryDate = $data_date;
+            $item->importDate = $data_date;
 
             // check if SKU already exists
             if ($existingId = $item->isAlreadyExist()) { // update existing inventory item

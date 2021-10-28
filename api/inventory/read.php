@@ -54,7 +54,7 @@ if ($stmt != false){
                 "qtyIn" => $qtyIn,
                 "qtyOut" => $qtyOut,
                 "supplier" => $supplier,
-                "inventoryDate" => $inventoryDate,
+                "importDate" => $importDate,
                 "qty_projects_allocated" => $qty_projects_allocated
                 
             );

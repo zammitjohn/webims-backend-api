@@ -16,7 +16,7 @@ class Inventory{
     public $qtyOut;
     public $supplier;
     public $notes;
-    public $inventoryDate;
+    public $importDate;
     public $search_term;
  
     // constructor with $db as database connection
@@ -33,7 +33,7 @@ class Inventory{
             inventory_types.name AS type_name, inventory_types.import_name AS type_altname, 
             inventory_categories.id AS category_id, inventory_categories.name AS category_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-            inventory.supplier, inventory.inventoryDate, SUM(projects.qty) AS qty_projects_allocated
+            inventory.supplier, inventory.importDate, SUM(projects.qty) AS qty_projects_allocated
         FROM 
             " . $this->table_name . "
             JOIN 
@@ -128,10 +128,10 @@ class Inventory{
         if ($fromImport) { // method called from import function
             $query = "INSERT INTO  
                         ". $this->table_name ." 
-                            (`SKU`, `type`, `category`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `inventoryDate`)
+                            (`SKU`, `type`, `category`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `importDate`)
                     VALUES
                             ('".$this->SKU."', '".$this->type."', '".$this->category."', '".$this->description."','".$this->qty."', 
-                            '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->inventoryDate."')";
+                            '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->importDate."')";
 
             // prepare query
             $stmt = $this->conn->prepare($query);
@@ -167,7 +167,7 @@ class Inventory{
                         " . $this->table_name . "
                     SET
                         qty='".$this->qty."', qtyIn='".$this->qtyIn."', 
-                        qtyOut='".$this->qtyOut."', inventoryDate='".$this->inventoryDate."'
+                        qtyOut='".$this->qtyOut."', importDate='".$this->importDate."'
                     WHERE
                         id='".$this->id."'"; 
 
@@ -263,7 +263,7 @@ class Inventory{
     // clean inventory
     function inventorySweep(){
         // delete OLD inventory items which aren't referenced by projects, registry and reports 
-        $query = "DELETE FROM " . $this->table_name . "  WHERE (inventoryDate < '" . $this->inventoryDate . "') AND (category = '" . $this->category . "') AND id IN (
+        $query = "DELETE FROM " . $this->table_name . "  WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "') AND id IN (
                     SELECT id FROM (
                         SELECT inventory.id FROM inventory
                         LEFT JOIN projects
@@ -283,7 +283,7 @@ class Inventory{
         // clear quantities for the rest... (referenced items)
         $query = "UPDATE " . $this->table_name . " 
                     SET qty='0' 
-                    WHERE (inventoryDate < '" . $this->inventoryDate . "') AND (category = '" . $this->category . "')";    
+                    WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "')";    
         // prepare query
         $stmt = $this->conn->prepare($query);
         // execute query

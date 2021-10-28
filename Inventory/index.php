@@ -161,7 +161,7 @@ $(document).ready(function () {
           { data: 'qty' },
           { data: 'qty_projects_allocated' },
           { data: 'supplier' },
-          { data: 'inventoryDate' },        
+          { data: 'importDate' },        
       ],
       // https://datatables.net/forums/discussion/42564/combining-a-url-with-id-from-a-column
       columnDefs: [

@@ -119,7 +119,7 @@ $(document).ready(function() {
             { data: 'qty' },
             { data: 'qty_projects_allocated' },
             { data: 'supplier' },
-            { data: 'inventoryDate' },        
+            { data: 'importDate' },        
         ],
         columnDefs: [
           { targets: [0], // first column
