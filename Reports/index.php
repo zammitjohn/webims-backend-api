@@ -63,7 +63,8 @@ include('../master.php');
 <script>
 $(function () {
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  $('#table1').DataTable({
+  var table = $('#table1').DataTable({
+      oSearch: {"sSearch": dtURLToQuery()},
       autoWidth: false,
       responsive: true,
       order:[],
@@ -97,5 +98,6 @@ $(function () {
         }
       ]
   });
+  dtQueryToURL(table);
 });
 </script>

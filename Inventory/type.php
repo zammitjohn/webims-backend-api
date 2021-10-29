@@ -103,32 +103,33 @@ include('../master.php');
 <script>
 
 $(document).ready(function() {
-      // load table contents
-      $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-      $('#table1').DataTable({
-        autoWidth: false,
-        responsive: true,
-        order:[],
-        ajax: {
-            url: "../api/inventory/read" + "?type=" + <?php echo $_GET['id']; ?>,
-            dataSrc: ''
-        },
-        columns: [
-            { data: 'SKU' },     
-            { data: 'description' },
-            { data: 'qty' },
-            { data: 'qty_projects_allocated' },
-            { data: 'supplier' },
-            { data: 'importDate' },        
-        ],
-        columnDefs: [
-          { targets: [0], // first column
-            "render": function (data, type, row, meta) {
-            return '<a href="view?id=' + row.id + '">' + data + '</a>';
-            }  
-          }
-        ]
-      });
-
+  // load table contents
+  $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
+  var table = $('#table1').DataTable({
+    oSearch: {"sSearch": dtURLToQuery()},
+    autoWidth: false,
+    responsive: true,
+    order:[],
+    ajax: {
+        url: "../api/inventory/read" + "?type=" + <?php echo $_GET['id']; ?>,
+        dataSrc: ''
+    },
+    columns: [
+        { data: 'SKU' },     
+        { data: 'description' },
+        { data: 'qty' },
+        { data: 'qty_projects_allocated' },
+        { data: 'supplier' },
+        { data: 'importDate' },        
+    ],
+    columnDefs: [
+      { targets: [0], // first column
+        "render": function (data, type, row, meta) {
+        return '<a href="view?id=' + row.id + '">' + data + '</a>';
+        }  
+      }
+    ]
+  });
+  dtQueryToURL(table);
 });
 </script>

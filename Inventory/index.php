@@ -146,6 +146,7 @@ include('../master.php');
 $(document).ready(function () {
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
   var table = $('#table1').DataTable({
+      oSearch: {"sSearch": dtURLToQuery()},
       autoWidth: false,
       responsive: true,
       order:[],
@@ -184,6 +185,7 @@ $(document).ready(function () {
         }
       ]
   });
+  dtQueryToURL(table);
 
   // load dynamic SKU field
   $('#SKU_item_id').select2({

@@ -57,7 +57,7 @@ $content = '
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-          <table id="table1" class="table">
+          <table id="table" class="table">
             <thead>
               <tr>
                 <th>SKU</th>
@@ -140,7 +140,8 @@ include('../master.php');
 $(document).ready(function() {
   // load table contents
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  var table1 = $('#table1').DataTable({
+  var table = $('#table').DataTable({
+      oSearch: {"sSearch": dtURLToQuery()},
       lengthChange: false,
       autoWidth: false,
       responsive: true,
@@ -163,12 +164,13 @@ $(document).ready(function() {
         }
       ]
   });
+  dtQueryToURL(table);
 
   // table buttons
-  new $.fn.dataTable.Buttons(table1, {
+  new $.fn.dataTable.Buttons(table, {
     buttons: ["copy", "csv", "excel", "pdf", "print"]
   });
-  table1.buttons().container().appendTo('#table1_wrapper .col-md-6:eq(0)');
+  table.buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
 
 });
 
@@ -275,7 +277,7 @@ $('#upload_csv').on("submit", function(e){
                 toastr.warning(data['additional_info'] + "not in inventory! First create item to inventory and then add to project.");
               }
           }
-          $('#table1').DataTable().ajax.reload(); // reload table
+          $('#table').DataTable().ajax.reload(); // reload table
       },
       error: function(data) {
         toastr.error("Import failed");  

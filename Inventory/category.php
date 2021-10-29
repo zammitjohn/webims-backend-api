@@ -141,7 +141,8 @@ include('../master.php');
 $(document).ready(function() {
   // load table contents
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
-  $('#table1').DataTable({
+  var table = $('#table1').DataTable({
+    oSearch: {"sSearch": dtURLToQuery()},
     autoWidth: false,
     responsive: true,
     order:[],
@@ -172,6 +173,7 @@ $(document).ready(function() {
     ]
 
   });
+  dtQueryToURL(table);
 });
 
 $('#upload_csv').on("submit", function(e){

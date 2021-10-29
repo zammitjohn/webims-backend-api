@@ -134,6 +134,42 @@ $('#csvfile').on('change',function(){
   }
 });
 
+// function to push DataTables search query to URL search parameter
+function dtQueryToURL(table){
+  var currentParams = new URLSearchParams(window.location.search); // get existing params
+  table.on('search', function (){
+    const params = new URLSearchParams({search: table.search()});
+    const query = params.toString();
+    var url = "";
+
+    if (currentParams.get('id') != null){ // for pages with ?id parameter
+      if (table.search() == ""){
+        url = window.location.protocol + "//" +  window.location.hostname + window.location.pathname + "?id=" + currentParams.get('id');
+      } else {
+        url = window.location.protocol + "//" +  window.location.hostname + window.location.pathname + "?id=" + currentParams.get('id') + "&" + query;
+      } 
+
+    } else {
+      if (table.search() == ""){
+        url = window.location.protocol + "//" +  window.location.hostname + window.location.pathname;
+      } else {
+        url = window.location.protocol + "//" +  window.location.hostname + window.location.pathname + "?" + query;
+      } 
+    }
+    window.history.replaceState({}, '', url);
+  });
+}
+
+// function to push URL search parameter to DataTables search query  
+function dtURLToQuery(){
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('search') != null) {
+    return urlParams.get('search');  
+  } else {
+    return "";
+  }
+}
+
 // log out user
 function userLogout(){
   $.ajax({
