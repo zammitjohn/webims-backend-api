@@ -160,16 +160,6 @@ function dtQueryToURL(table){
   });
 }
 
-// function to push URL search parameter to DataTables search query  
-function dtURLToQuery(){
-  var urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('search') != null) {
-    return urlParams.get('search');  
-  } else {
-    return "";
-  }
-}
-
 // log out user
 function userLogout(){
   $.ajax({

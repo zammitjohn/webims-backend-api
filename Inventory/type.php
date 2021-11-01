@@ -106,7 +106,7 @@ $(document).ready(function() {
   // load table contents
   $.fn.dataTable.ext.errMode = 'throw'; // Have DataTables throw errors rather than alert() them
   var table = $('#table1').DataTable({
-    oSearch: {"sSearch": dtURLToQuery()},
+    search: {"search": <?php if (isset($_GET['search'])) { echo '"'.htmlspecialchars($_GET['search']).'"'; } else { echo '""'; } ?>},
     autoWidth: false,
     responsive: true,
     order:[],
