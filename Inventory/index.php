@@ -97,7 +97,7 @@ $content = '
                   <!-- your steps content here -->
                   <div id="select-part" class="content" role="tabpanel" aria-labelledby="select-part-trigger">
                     <div class="form-group">
-                      <label for="item-skus">Items</label>
+                      <label for="item-skus">Select one or more items</label>
                       <div class="select2-primary">
                         <select class="select2" multiple="multiple" id="SKU_item_id" style="width: 100%;"></select>
                       </div>          
