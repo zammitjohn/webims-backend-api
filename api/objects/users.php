@@ -53,7 +53,9 @@ class Users{
         $query = "SELECT
                     `id`, `firstname`, `lastname`, `lastAvailable`
                 FROM
-                    " . $this->table_name . " 
+                    " . $this->table_name . "
+                WHERE    
+                    lastAvailable >= DATE_SUB(NOW(),INTERVAL 1 YEAR)
                 ORDER BY
                     lastAvailable DESC";
     
