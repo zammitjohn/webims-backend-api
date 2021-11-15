@@ -51,5 +51,14 @@ class Inventory_Types{
         return $stmt;
     }
 
-   
+    // load types all import_name for particular category
+    function loadTypes($import_category){
+        $this->category = $import_category;
+        $inventory_types_stmt  = $this->read();
+        while ($inventory_types_row = $inventory_types_stmt->fetch(PDO::FETCH_ASSOC)) { // ...then loop types and add to array
+          extract($inventory_types_row);
+          $inventory_types[$id] = strtoupper($import_name);
+        }
+        return $inventory_types;
+    }
 }

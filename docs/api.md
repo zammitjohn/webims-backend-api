@@ -23,15 +23,18 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Inventory
 
-| **Action**      | **Method** | **Body Parameters**                                              | **Response**                                                                                                                               | **URL**                    |
-|-----------------|------------|------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
-| **create**      | `POST`     | SKU type category description qty qtyIn qtyOut supplier notes    | status message id SKU type category description qty qtyIn qtyOut supplier notes                                                            | /api/inventory/create      |
-| **delete**      | `POST`     | id                                                               | status message                                                                                                                             | /api/inventory/delete      |
-| **read_single** | `GET`      | id                                                               | id SKU type category description qty qtyIn qtyOut supplier notes importDate lastChange                                                     | /api/inventory/read_single |
-| **read**        | `GET`      | type or category                                                 | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_projects_allocated supplier importDate    | /api/inventory/read        |
-| **search**      | `GET`      | term                                                             | id text category type title                                                                                                                | /api/inventory/search      |
-| **update**      | `POST`     | id SKU type category description qty qtyIn qtyOut supplier notes | status message                                                                                                                             | /api/inventory/update      |
-| **import**      | `POST`     | category file                                                    | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/import      |
+| **Action**          | **Method** | **Body Parameters**                                              | **Response**                                                                                                                               | **URL**                    |
+|---------------------|------------|------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
+| **create**          | `POST`     | SKU type category description qty qtyIn qtyOut supplier notes    | status message id SKU type category description qty qtyIn qtyOut supplier notes                                                            | /api/inventory/create      |
+| **delete**          | `POST`     | id                                                               | status message                                                                                                                             | /api/inventory/delete      |
+| **read_single**     | `GET`      | id                                                               | id SKU type category description qty qtyIn qtyOut supplier notes importDate lastChange                                                     | /api/inventory/read_single |
+| **read**            | `GET`      | type or category                                                 | id SKU type_id type_name type_altname category_id category_name description qty qtyIn qtyOut qty_projects_allocated supplier importDate    | /api/inventory/read        |
+| **search**          | `GET`      | term                                                             | id text category type title                                                                                                                | /api/inventory/search      |
+| **update**          | `POST`     | id SKU type category description qty qtyIn qtyOut supplier notes | status message                                                                                                                             | /api/inventory/update      |
+| **import**          | `POST`     | category file                                                    | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/import      |
+| **mail_import**[^1] | `POST`     | JSON (category, file, sessionId, isBase64EncodedContent)         | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/mail_import |
+
+[^1]: Cookie authentication is not supported here. In this case sessionId must be included in the body.
 
 ---
 
@@ -86,11 +89,11 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ## Transactions
 
-| **Action**   | **Method** | **Parameters** | **Response**                             | **URL**                    |
-|--------------|------------|----------------|------------------------------------------|----------------------------|
-| **read**     | `GET`      |                | id date user_fullname description        | /api/transactions/read     |
-| **create**   | `POST`     | JSON           | status id returned_count requested_count | /api/transactions/create   |
-| **download** | `GET`      | id             | file                                     | /api/transactions/download |
+| **Action**   | **Method** | **Parameters**                           | **Response**                             | **URL**                    |
+|--------------|------------|------------------------------------------|------------------------------------------|----------------------------|
+| **read**     | `GET`      |                                          | id date user_fullname description        | /api/transactions/read     |
+| **create**   | `POST`     | JSON (return, items (item_id, item_qty)) | status id returned_count requested_count | /api/transactions/create   |
+| **download** | `GET`      | id                                       | file                                     | /api/transactions/download |
 
 ---
 

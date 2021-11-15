@@ -2,7 +2,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^([^\.]+)$ $1.php [L]
 
-RewriteCond %{HTTPS} !=on
-RewriteRule ^/?(.*) https://%{SERVER_NAME}/WebIMS/$1 [R=301,L]
-
 ErrorDocument 404 /WebIMS/pages/404

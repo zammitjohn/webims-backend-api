@@ -11,39 +11,36 @@ $db = $database->getConnection();
 
 $inventory_types = []; // array to hold inventory types for particular category
 
+// Body Data
+$inputJSON = file_get_contents('php://input');
+$input = json_decode($inputJSON, TRUE); //convert JSON into array
+
 // AUTH check 
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){
+if (isset($input['sessionId'])){
     $user->action_isImport = true;
-    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
+    $user->sessionId =$input['sessionId'];
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }
 
-// imports also saved to root
-if (!(is_dir("../../../uploads"))) {
-    mkdir("../../../uploads", 0700);
-}
-if (!(is_dir("../../../uploads/inventory"))) {
-    mkdir("../../../uploads/inventory", 0700);
-}
-
-// setting target directory
-$target_dir = "../../../uploads/inventory/";
-$target_file = $target_dir . basename($_FILES["file"]["name"]);
-
 // load types
 $inventory_types = new Inventory_Types($db);
-$inv_types = $inventory_types->loadTypes($_POST['category']);
+$inv_types = $inventory_types->loadTypes($input['category']);
 
-$filename=$_FILES["file"]["tmp_name"];
-if($_FILES["file"]["size"] > 0) {
-    $file = fopen($filename, "r");
-    move_uploaded_file($filename, $target_file);
+// load file
+$fileContents = $input['file'];
+if ($input['isBase64EncodedContent']){
+    $file = fopen('data://text/plain' . base64_decode($fileContents),'r');
+} else {
+    $file = fopen('data://text/plain' . ($fileContents),'r');
+}
+
+if($file AND !feof($file)) {
     $inventory = new Inventory($db);
-    $inventory->import($file, $inv_types, $_POST['category']);
+    $inventory->import($file, $inv_types, $input['category']);
 }
 
 $result_arr=array(
