@@ -241,8 +241,9 @@ $('#report_form').on('submit',function (e) {
       alert(result.statusText);
     },
     success: function(result) {
-      alert(result.message);
-      if (result.status == true) {
+      if (result.status == false) {
+        alert(result.message);
+      } else {
         window.location.href = '../reports';
       }
     }

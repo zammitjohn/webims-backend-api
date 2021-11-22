@@ -285,8 +285,9 @@ $(document).ready(function() {
               alert(result.statusText);
             },
             success: function(result) {
-              alert(result.message);
-              if (result.status) {
+              if (result.status == false) {
+                alert(result.message);
+              } else {
                 location.reload();
               }
             }
@@ -320,8 +321,9 @@ $('#item_form').on('submit',function (e) {
       alert(result.statusText);
     },
     success: function(result) {
-      alert(result.message);
-      if (result.status == true) {
+      if (result.status == false) {
+        alert(result.message);
+      } else {
         window.location.href = '../inventory';
       }
     }
@@ -343,8 +345,9 @@ $('#delete-item-btn').on('click',function (e) {
         alert(result.statusText);
       },
       success: function(result) {
-        alert(result.message);
-        if (result.status == true) {
+        if (result.status == false) {
+          alert(result.message);
+        } else {
           window.location.href = '../inventory';
         }
       }
