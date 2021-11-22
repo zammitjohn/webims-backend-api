@@ -1,24 +1,18 @@
 <?php
-class Projects{
+// include object files
+include_once 'base.php';
+
+class Projects extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "projects";
+    // database table name
+    protected $table_name = "projects";
  
     // object properties
-    public $id;
     public $inventoryId;
     public $type;
     public $description;
     public $qty;
     public $notes;
-    public $userId;
- 
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
-
 
     // read project allocations
     function read_allocations(){
@@ -139,6 +133,7 @@ class Projects{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
+            $this->logging('Create');
             return true;
         }
 
@@ -147,15 +142,14 @@ class Projects{
 
     // update item 
     function update(){
-
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
                     inventoryId=:inventoryId, type=:type, description=:description, qty=:qty, 
-                    notes=:notes, userId=:userId                          
+                    notes=:notes, userId=:userId                      
                 WHERE
-                    id='".$this->id."'";            
+                    id= '".$this->id."'";            
 
         // prepare and bind query
         $stmt = $this->conn->prepare($query);
@@ -164,32 +158,13 @@ class Projects{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
+            $this->logging('Update');
             return true;
         }
         return false;
     }
 
-     // delete item
-     function delete(){
-        
-        // query to delete record
-        $query = "DELETE FROM
-                    " . $this->table_name . "
-                WHERE
-                    id= '".$this->id."'";
-        
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-        
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
-        }
-        return false;
-    }
-
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->inventoryId == ""){
             $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
         } else {

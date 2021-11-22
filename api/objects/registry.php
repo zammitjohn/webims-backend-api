@@ -1,21 +1,17 @@
 <?php
-class Registry{
+// include object files
+include_once 'base.php';
+
+class Registry extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "registry";
+    // database table name
+    protected $table_name = "registry";
  
     // object properties
-    public $id;
     public $inventoryId;
     public $serialNumber;
     public $datePurchased;
  
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
-
     // list registry items with particular 'inventoryId'
     function read(){
     
@@ -62,34 +58,15 @@ class Registry{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
+            $this->logging('Create');
             return true;
         }
 
-        return false;
-    }
-
-    // delete item
-    function delete(){
-        
-        // query to delete record
-        $query = "DELETE FROM
-                    " . $this->table_name . "
-                WHERE
-                    id= '".$this->id."'";
-        
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-        
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
-        }
         return false;
     }
 
     // check item with same inventoryId and serialNumber already exist
-    function isAlreadyExist(){
+    private function isAlreadyExist(){
         $query = "SELECT *
             FROM
                 " . $this->table_name . " 
@@ -110,7 +87,7 @@ class Registry{
         }
     }
 
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->inventoryId == ""){
             $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
         } else {

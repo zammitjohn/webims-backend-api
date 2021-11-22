@@ -1,19 +1,14 @@
 <?php
-class Projects_Types{
+// include object files
+include_once 'base.php';
+
+class Projects_Types extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "projects_types";
+    // database table name
+    protected $table_name = "projects_types";
  
     // object properties
-    public $id;
     public $name;
-    public $userId;
-
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
 
     // read project types
     function read(){
@@ -70,13 +65,14 @@ class Projects_Types{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
+            $this->logging('Create');
             return true;
         }
 
         return false;
     }
 
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->name == ""){
             $stmt->bindValue(':name', $this->name, PDO::PARAM_NULL);
         } else {
@@ -89,24 +85,4 @@ class Projects_Types{
         }
         return $stmt;
     }
-
-    //delete
-    function delete(){
-        // query to delete
-        $query = "DELETE FROM
-                    " . $this->table_name . "
-                WHERE
-                    id= '".$this->id."'";
-
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
-            return true;
-        }
-        return false;
-    }
-
 }

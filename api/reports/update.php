@@ -18,7 +18,7 @@ $item->ticketNo = $_POST['ticketNo'];
 $item->name = $_POST['name'];
 $item->description = $_POST['description'];
 $item->reportNo = $_POST['reportNo'];
-$item->userId = $_POST['userId'];
+$item->asigneeUserId = $_POST['asigneeUserId'];
 $item->faultySN = $_POST['faultySN'];
 $item->replacementSN = $_POST['replacementSN'];
 $item->dateRequested = $_POST['dateRequested'];
@@ -34,6 +34,7 @@ $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
     $user->action_isUpdate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
+    $item->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");

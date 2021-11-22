@@ -60,8 +60,8 @@ $content = '
                   </div>
                   
                   <div class="form-group">
-                    <label for="userId">Requested</label>
-                    <select id="userId" class="form-control">
+                    <label for="asigneeUserId">Asignee</label>
+                    <select id="asigneeUserId" class="form-control">
                       <option value="">None</option>
                     </select>
                   </div>
@@ -196,7 +196,7 @@ $(document).ready(function() {
     }
   });
 
-  // populate userId dropdown
+  // populate asigneeUserId dropdown
   $.ajax({
     type: "GET",
     cache: false,
@@ -207,8 +207,8 @@ $(document).ready(function() {
       for (var element in data) {
         dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].firstname + " " + data[element].lastname + "</option>";
       }
-      // append dropdowndata to userId dropdown
-      $("#userId").append(dropdowndata);
+      // append dropdowndata to asigneeUserId dropdown
+      $("#asigneeUserId").append(dropdowndata);
     }
   });
 
@@ -226,7 +226,7 @@ $('#report_form').on('submit',function (e) {
       name: $("#name").val(),
       description: $("#description").val(),
       reportNo: $("#reportNo").val(),
-      userId: $("#userId").val(),
+      asigneeUserId: $("#asigneeUserId").val(),
       faultySN: selected_faulty_serial_number,
       replacementSN: selected_replacement_serial_number,
       dateRequested: $("#dateRequested").val(),

@@ -1,17 +1,11 @@
 <?php
-class Inventory_Categories{
+// include object files
+include_once 'base.php';
+
+class Inventory_Categories extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "inventory_categories";
- 
-    // object properties
-    public $id;
- 
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
+    // database table name
+    protected $table_name = "inventory_categories";
 
     // read categories
     function read(){

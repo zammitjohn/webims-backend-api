@@ -17,23 +17,25 @@ $(document).ready(function validate() {
         // show/hide dashboard user_permission_alert accordingly
         if ( (data['canUpdate'] == false) || (data['canCreate'] == false) || (data['canImport'] == false) || (data['canDelete'] == false) ) {
           $("#user_permission_alert").show();
+
+          // ...and disable/hide buttons accordingly
+          if (data['canUpdate'] == false) {
+            $(".button_action_update").prop("disabled",true);
+            $(".button_action_update").hide(); // card tools
+          }
+          if (data['canCreate'] == false) {
+            $(".button_action_create").prop("disabled",true);
+          }
+          if (data['canImport'] == false) {
+            $(".button_action_import").hide(); // card tools
+          }
+          if (data['canDelete'] == false) {
+            $(".button_action_delete").prop("disabled",true);
+            $(".button_action_delete").hide(); // card tools
+          }
+
         } else {
           $("#user_permission_alert").hide();
-        }
-    
-        // ...and disable/hide buttons accordingly
-        if (data['canUpdate'] == false) {
-          $(".button_action_update").prop("disabled",true);
-        }
-        if (data['canCreate'] == false) {
-          $(".button_action_create").prop("disabled",true);
-        }
-        if (data['canImport'] == false) {
-          $(".button_action_import").hide(); // card tools
-        }
-        if (data['canDelete'] == false) {
-          $(".button_action_delete").prop("disabled",true);
-          $(".button_action_delete").hide(); // card tools
         }
       }
     },

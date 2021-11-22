@@ -1,12 +1,13 @@
 <?php
-class Users{
+// include object files
+include_once 'base.php';
+
+class Users extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "users";
+    // database table name
+    protected $table_name = "users";
  
     // object properties
-    public $id;
     public $username;
     public $firstname;
     public $lastname;
@@ -16,11 +17,6 @@ class Users{
     public $action_isUpdate;
     public $action_isDelete;
     public $action_isImport;
-
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
 
     // log out user
     function logout(){
@@ -146,7 +142,7 @@ class Users{
         }        
     }
 
-    function createSession(){
+    private function createSession(){
         // generates cryptographically secure pseudo-random UUID hash, used as a sessionId
         $bytes = random_bytes(10);
         $hash = (bin2hex($bytes));
@@ -223,7 +219,7 @@ class Users{
         }        
     }    
 
-    function checkifUserExists(){
+    private function checkifUserExists(){
         $query = "SELECT *
             FROM
                 " . $this->table_name . " 

@@ -1,19 +1,15 @@
 <?php
-class Transactions{
+// include object files
+include_once 'base.php';
+
+class Transactions extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "transactions";
+    // database table name
+    protected $table_name = "transactions";
  
     // object properties
-    public $userId;
     public $isReturn;
  
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
-
     // create transaction
     function create(){
         if ($this->isReturn){

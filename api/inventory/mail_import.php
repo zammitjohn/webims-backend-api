@@ -19,7 +19,7 @@ $input = json_decode($inputJSON, TRUE); //convert JSON into array
 $user = new Users($db); // prepare users object
 if (isset($input['sessionId'])){
     $user->action_isImport = true;
-    $user->sessionId =$input['sessionId'];
+    $user->sessionId = $input['sessionId'];
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");

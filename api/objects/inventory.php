@@ -1,12 +1,13 @@
 <?php
-class Inventory{
+// include object files
+include_once 'base.php';
+
+class Inventory extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "inventory";
+    // database table name
+    protected $table_name = "inventory";
  
     // object properties
-    public $id;
     public $SKU;
     public $type;
     public $category;
@@ -26,11 +27,6 @@ class Inventory{
     public $deleted_counter = 0;
     public $import_status = false;
  
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
-
     // read all inventory
     function read(){
 
@@ -159,6 +155,9 @@ class Inventory{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
+            if (!$fromImport){
+                $this->logging('Create');
+            }
             return true;
         }
         return false;
@@ -197,14 +196,17 @@ class Inventory{
 
         // execute query
         $stmt->execute();
-        if($stmt->rowCount() > 0){        
+        if($stmt->rowCount() > 0){   
+            if (!$fromImport){
+                $this->logging('Update');
+            }
             return true;
         }
         return false;
     }
 
     // update item quantities
-    function updateQuantities(){  // method called from import function
+    function updateQuantities(){  // method called from import function and transactions object 
        
         // query to update record quantities
         $query = "UPDATE 
@@ -220,26 +222,6 @@ class Inventory{
 
         // execute query
         if($stmt->execute()){
-            return true;
-        }
-        return false;
-    }
-
-    // delete item
-    function delete(){
-        
-        // query to delete record
-        $query = "DELETE FROM
-                    " . $this->table_name . "
-                WHERE
-                    id= '".$this->id."'";
-        
-        // prepare query
-        $stmt = $this->conn->prepare($query);
-        
-        // execute query
-        $stmt->execute();
-        if($stmt->rowCount() > 0){
             return true;
         }
         return false;
@@ -364,7 +346,7 @@ class Inventory{
     }
 
     // clean inventory
-    function inventorySweep(){
+    private function inventorySweep(){
         // delete OLD inventory items which aren't referenced by projects, registry and reports 
         $query = "DELETE FROM " . $this->table_name . "  WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "') AND id IN (
                     SELECT id FROM (
@@ -395,7 +377,7 @@ class Inventory{
         return $stmt_delete->rowCount();
     }
 
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->SKU == ""){
             $stmt->bindValue(':SKU', $this->SKU, PDO::PARAM_NULL);
         } else {

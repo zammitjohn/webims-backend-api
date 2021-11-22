@@ -1,20 +1,16 @@
 <?php
-class Reports_Comments{
+// include object files
+include_once 'base.php';
+
+class Reports_Comments extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "reports_comments";
+    // database table name
+    protected $table_name = "reports_comments";
  
     // object properties
     public $reportId;
-    public $userId;
     public $text;
  
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
-
     // read comments
     function read(){
     
@@ -68,7 +64,7 @@ class Reports_Comments{
         return false;
     }
 
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->reportId == ""){
             $stmt->bindValue(':reportId', $this->reportId, PDO::PARAM_NULL);
         } else {
@@ -85,7 +81,5 @@ class Reports_Comments{
             $stmt->bindValue(':text', $this->text);
         }
         return $stmt;
-    } 
-
-   
+    }
 }

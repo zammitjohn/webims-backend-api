@@ -1,18 +1,19 @@
 <?php
-class reports{
+// include object files
+include_once 'base.php';
+
+class reports extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "reports";
+    // database table name
+    protected $table_name = "reports";
  
     // object properties
-    public $id;
     public $inventoryId;
     public $ticketNo;
     public $name;
     public $description;
     public $reportNo;
-    public $userId;
+    public $asigneeUserId;
     public $faultySN;
     public $replacementSN;
     public $dateRequested;
@@ -22,11 +23,6 @@ class reports{
     public $AWB;
     public $AWBreturn;
     public $RMA;
- 
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
 
     // read reports
     function read(){
@@ -35,7 +31,7 @@ class reports{
         if ($this->userId) {                        
             $query = "SELECT * 
                     FROM `reports` 
-                    WHERE userid = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
+                    WHERE asigneeUserId = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
                     ORDER BY `id` DESC";   
 
         } else {    
@@ -82,7 +78,7 @@ class reports{
         $query = "INSERT INTO  
                     ". $this->table_name ."
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, userId=:userId, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, asigneeUserId=:asigneeUserId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeaving=:dateLeaving, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA";
@@ -95,6 +91,7 @@ class reports{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
+            $this->logging('Create');
             return true;
         }
 
@@ -108,7 +105,7 @@ class reports{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, userId=:userId, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, asigneeUserId=:asigneeUserId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeaving=:dateLeaving, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA                
@@ -123,6 +120,7 @@ class reports{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
+            $this->logging('Update');
             return true;
         }
         return false;
@@ -146,12 +144,13 @@ class reports{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
+            $this->logging('Update');
             return true;
         }
         return false;
     }    
 
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->inventoryId == ""){
             $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
         } else {
@@ -177,10 +176,10 @@ class reports{
         } else {
             $stmt->bindValue(':reportNo', $this->reportNo);
         }                   
-        if ($this->userId == ""){
-            $stmt->bindValue(':userId', $this->userId, PDO::PARAM_NULL);
+        if ($this->asigneeUserId == ""){
+            $stmt->bindValue(':asigneeUserId', $this->asigneeUserId, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':userId', $this->userId);
+            $stmt->bindValue(':asigneeUserId', $this->asigneeUserId);
         }        
         if ($this->faultySN == ""){
             $stmt->bindValue(':faultySN', $this->faultySN, PDO::PARAM_NULL);

@@ -84,8 +84,8 @@ $content = '
                   </div>
                   
                   <div class="form-group">
-                    <label for="userId">Requested</label>
-                    <select id="userId" class="form-control">
+                    <label for="asigneeUserId">Asignee</label>
+                    <select id="asigneeUserId" class="form-control">
                       <option value="">None</option>
                     </select>
                   </div>
@@ -294,7 +294,7 @@ $(document).ready(function() {
       $("#SKU").append(dropdowndata);
 
 
-      // populate userId dropdown
+      // populate asigneeUserId dropdown
       $.ajax({
         type: "GET",
         cache: false,
@@ -306,7 +306,7 @@ $(document).ready(function() {
             dropdowndata += "<option value = '" + data[element].id + "'>" + data[element].firstname + " " + data[element].lastname + "</option>";
           }
           // append dropdowndata to SKU dropdown
-          $("#userId").append(dropdowndata);
+          $("#asigneeUserId").append(dropdowndata);
 
 
           // populate form from DB
@@ -321,7 +321,7 @@ $(document).ready(function() {
               $('#name').val(data['name']);
               $('#description').val(data['description']);
               $('#reportNo').val(data['reportNo']);
-              $('#userId').val( (data['userId'] == null) ? "" : (data['userId']) ); // JSON: null -> form/SQL: ""
+              $('#asigneeUserId').val( (data['asigneeUserId'] == null) ? "" : (data['asigneeUserId']) ); // JSON: null -> form/SQL: ""
               selected_faulty_serial_number = ( (data['faultySN'] == null) ? "" : (data['faultySN']) ); // JSON: null -> form/SQL: ""
               selected_replacement_serial_number = ( (data['replacementSN'] == null) ? "" : (data['replacementSN']) ); // JSON: null -> form/SQL: ""
               $('#dateRequested').val(data['dateRequested']);
@@ -368,7 +368,7 @@ $(document).ready(function() {
         name: $("#name").val(),
         description: $("#description").val(),
         reportNo: $("#reportNo").val(),
-        userId: $("#userId").val(),
+        asigneeUserId: $("#asigneeUserId").val(),
         faultySN: selected_faulty_serial_number,
         replacementSN: selected_replacement_serial_number,
         dateRequested: $("#dateRequested").val(),

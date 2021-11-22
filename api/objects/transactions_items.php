@@ -1,19 +1,16 @@
 <?php
-class Transactions_Items{
+// include object files
+include_once 'base.php';
+
+class Transactions_Items extends base{
  
-    // database connection and table name
-    private $conn;
-    private $table_name = "transactions_items";
+    // database table name
+    protected $table_name = "transactions_items";
  
     // object properties
     public $transactionId;
     public $inventoryId;
     public $qty;
-    
-    // constructor with $db as database connection
-    public function __construct($db){
-        $this->conn = $db;
-    }
 
     // create new transaction item
     function create(){     
@@ -85,7 +82,7 @@ class Transactions_Items{
         return $stmt;
     }
 
-    function bindValues($stmt){
+    private function bindValues($stmt){
         if ($this->inventoryId == ""){
             $stmt->bindValue(':inventoryId', $this->inventoryId, PDO::PARAM_NULL);
         } else {
