@@ -16,17 +16,23 @@ class base {
         $this->conn = $db;
     }
 
+    // destructor
+    public function __destruct(){
+    }
+
     // object logging
-    protected function logging($action){
+    protected function logging($old_row){
         $log = new Logs($this->conn);
-        $log->properties = json_encode(get_object_vars($this));
-        $log->action = $action;
+        $log->object = get_class($this);
+        $log->properties_before = $old_row;
+        $log->properties_after = $this->selectRow();
+        $log->userId = $this->userId;
         $log->new();
     }
 
     // delete item
     public function delete(){
-
+        $old_row = $this->selectRow();
         // query to delete record
         $query = "DELETE FROM
                     " . $this->table_name . "
@@ -39,11 +45,24 @@ class base {
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
-            $this->logging('Delete');
+            $this->logging($old_row);
             return true;
         }
         return false;
     }
 
+    public function selectRow(){
+        $query = "SELECT
+                    *
+                FROM
+                    " . $this->table_name . "
+                WHERE
+                    id= '".$this->id."'";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return json_encode($row);  
+    }
 }
 ?>

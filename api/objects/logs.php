@@ -8,7 +8,10 @@ class Logs extends base{
     protected $table_name = "logs";
  
     // object properties
-    public $action;
+    public $object;
+    public $properties_before;
+    public $properties_after;
+    public $userId;
  
     // new log
     function new(){
@@ -16,9 +19,8 @@ class Logs extends base{
         $query = "INSERT INTO  
                     ". $this->table_name ."
                 SET
-                    properties=:properties, action=:action";
+                    object=:object, properties_before=:properties_before, properties_after=:properties_after, userId=:userId";
     
- 
         // prepare and bind query
         $stmt = $this->conn->prepare($query);
         $stmt = $this->bindValues($stmt);
@@ -33,15 +35,25 @@ class Logs extends base{
     }
 
     private function bindValues($stmt){
-        if ($this->properties == ""){
-            $stmt->bindValue(':properties', $this->properties, PDO::PARAM_NULL);
+        if ($this->object == ""){
+            $stmt->bindValue(':object', $this->object, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':properties', $this->properties);
+            $stmt->bindValue(':object', $this->object);
         }
-        if ($this->action == ""){
-            $stmt->bindValue(':action', $this->action, PDO::PARAM_NULL);
+        if ($this->properties_before == "" or $this->properties_before == "false"){
+            $stmt->bindValue(':properties_before', $this->properties_before, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':action', $this->action);
+            $stmt->bindValue(':properties_before', $this->properties_before);
+        }
+        if ($this->properties_after == "" or $this->properties_after == "false"){
+            $stmt->bindValue(':properties_after', $this->properties_after, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':properties_after', $this->properties_after);
+        }
+        if ($this->userId == ""){
+            $stmt->bindValue(':userId', $this->userId, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':userId', $this->userId);
         }     
         return $stmt;
     }   

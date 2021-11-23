@@ -155,9 +155,7 @@ class Inventory extends base{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
-            if (!$fromImport){
-                $this->logging('Create');
-            }
+            $this->logging(null);
             return true;
         }
         return false;
@@ -165,7 +163,7 @@ class Inventory extends base{
 
     // update item 
     function update(bool $fromImport){
-
+        $old_row = $this->selectRow();
         // query to insert record      
         if ($fromImport) { // method called from import function
             // query to insert record
@@ -197,9 +195,7 @@ class Inventory extends base{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){   
-            if (!$fromImport){
-                $this->logging('Update');
-            }
+            $this->logging($old_row);
             return true;
         }
         return false;

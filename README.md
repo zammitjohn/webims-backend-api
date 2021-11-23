@@ -6,11 +6,11 @@ Key features:
 - Project allocations and item registration
 - Easy table view sorting and filtering
 - Batch comma-separated values (CSV) file imports
-- Transaction recording and accounting functions 
+- Transaction recording and database accounting functions 
 - Multi-warehouse management
 - Convenient fault reporting options
 - LDAP integration
-- Progressive web application capable
+- Open API
 
 !["WebIMS Demo"](dist/img/demo.PNG "WebIMS Demo")
 

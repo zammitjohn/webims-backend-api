@@ -58,7 +58,7 @@ class Registry extends base{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
-            $this->logging('Create');
+            $this->logging(null);
             return true;
         }
 

@@ -91,7 +91,7 @@ class reports extends base{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
-            $this->logging('Create');
+            $this->logging(null);
             return true;
         }
 
@@ -100,7 +100,7 @@ class reports extends base{
       
     // update report 
     function update(){ 
-    
+        $old_row = $this->selectRow();
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
@@ -120,7 +120,7 @@ class reports extends base{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
-            $this->logging('Update');
+            $this->logging($old_row);
             return true;
         }
         return false;
@@ -128,7 +128,7 @@ class reports extends base{
 
     // toggle isRepairable bool
     function toggle_repairable(){
-        
+        $old_row = $this->selectRow();
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
@@ -144,7 +144,7 @@ class reports extends base{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
-            $this->logging('Update');
+            $this->logging($old_row);
             return true;
         }
         return false;

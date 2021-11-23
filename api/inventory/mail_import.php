@@ -9,6 +9,7 @@ include_once '../objects/inventory_types.php';
 $database = new Database();
 $db = $database->getConnection();
 
+$inventory = new Inventory($db);
 $inventory_types = []; // array to hold inventory types for particular category
 
 // Body Data
@@ -20,6 +21,7 @@ $user = new Users($db); // prepare users object
 if (isset($input['sessionId'])){
     $user->action_isImport = true;
     $user->sessionId = $input['sessionId'];
+    $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -39,7 +41,6 @@ if ($input['isBase64EncodedContent']){
 }
 
 if($file AND !feof($file)) {
-    $inventory = new Inventory($db);
     $inventory->import($file, $inv_types, $input['category']);
 }
 

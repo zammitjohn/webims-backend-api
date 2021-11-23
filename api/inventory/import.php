@@ -9,6 +9,7 @@ include_once '../objects/inventory_types.php';
 $database = new Database();
 $db = $database->getConnection();
 
+$inventory = new Inventory($db);
 $inventory_types = []; // array to hold inventory types for particular category
 
 // AUTH check 
@@ -16,6 +17,7 @@ $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
     $user->action_isImport = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
+    $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -42,7 +44,6 @@ $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
     $file = fopen($filename, "r");
     move_uploaded_file($filename, $target_file);
-    $inventory = new Inventory($db);
     $inventory->import($file, $inv_types, $_POST['category']);
 }
 

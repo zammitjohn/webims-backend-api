@@ -133,7 +133,7 @@ class Projects extends base{
         $stmt->execute();
         if($stmt->rowCount() > 0){
             $this->id = $this->conn->lastInsertId();
-            $this->logging('Create');
+            $this->logging(null);
             return true;
         }
 
@@ -142,6 +142,7 @@ class Projects extends base{
 
     // update item 
     function update(){
+        $old_row = $this->selectRow();
         // query to update record
         $query = "UPDATE
                     " . $this->table_name . "
@@ -158,7 +159,7 @@ class Projects extends base{
         // execute query
         $stmt->execute();
         if($stmt->rowCount() > 0){
-            $this->logging('Update');
+            $this->logging($old_row);
             return true;
         }
         return false;
