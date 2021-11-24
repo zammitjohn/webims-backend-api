@@ -23,6 +23,7 @@ Documentation
 -------------
 - [API Reference](docs/api.md)
 - [Deployment](docs/deployment.md)
+- [SQL Commands](docs/sql.md)
 
 Contribution
 ------------
