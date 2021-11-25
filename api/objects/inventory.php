@@ -203,7 +203,7 @@ class Inventory extends base{
 
     // update item quantities
     function updateQuantities(){  // method called from import function and transactions object 
-       
+        $old_row = $this->selectRow();
         // query to update record quantities
         $query = "UPDATE 
                     " . $this->table_name . "
@@ -217,7 +217,9 @@ class Inventory extends base{
         $stmt = $this->conn->prepare($query);
 
         // execute query
-        if($stmt->execute()){
+        $stmt->execute();
+        if($stmt->rowCount() > 0){   
+            $this->logging($old_row);
             return true;
         }
         return false;

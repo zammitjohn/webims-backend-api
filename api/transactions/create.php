@@ -22,10 +22,10 @@ $requested_counter = 0;
 $returned_counter = 0;
 $transactionID = NULL;
 
-// prepare item objects
+// prepare objects
 $transaction = new Transactions($db);
 $item = new Transactions_Items($db);
-
+$inventory_item = new Inventory($db);
  
 // AUTH check 
 $user = new Users($db); // prepare users object
@@ -33,6 +33,7 @@ if (isset($_COOKIE['UserSession'])){
     $user->action_isUpdate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
     $transaction->userId = $user->getUserId();
+    $inventory_item->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -56,8 +57,6 @@ if (sizeOf($transaction_items)){
 
             if ($item->create()){ // reduce qtys from stock
                 $status = true;
-
-                $inventory_item = new Inventory($db);
                 $inventory_item->id = $item->inventoryId;
                 if (!($transaction->isReturn)){
                     $inventory_item->qty = -($item->qty);
