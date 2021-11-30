@@ -255,7 +255,7 @@ $('#item_qty_form').on('submit',function (e) {
     dataType: 'json',
     success: function(data) {
           if (data['status'] == false) {  
-              toastr.warning('No items transacted');
+              toastr.warning(data['message']);
           } else {
               toastr.success("Transaction #" + data['id'] + " created.");
               window.open('../api/transactions/download?id='+ data['id'], '_blank');  

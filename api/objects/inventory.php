@@ -247,6 +247,27 @@ class Inventory extends base{
         }
     }
 
+    function checkQuantities(){
+        $query = "SELECT *
+            FROM
+                " . $this->table_name . " 
+            WHERE
+                id='".$this->id."' AND qty>='".$this->qty."'"; 
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+
+        // execute query
+        $stmt->execute();
+
+        if($stmt->rowCount() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     function import($file, $inventory_types, $import_category){
         $modifiedItemIDs = []; // to keep track of modified inventory item IDs
         fgetcsv($file, 10000, ","); // before beginning the while loop, just get the first line and do nothing with it

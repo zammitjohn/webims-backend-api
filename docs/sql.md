@@ -22,7 +22,7 @@ View change log for the following objects:
 - Inventory
 	
 ```
-select logs.id, logs.properties_before, logs.properties_after, logs.time, users.username,
+select logs.id, logs.object, logs.properties_before, logs.properties_after, logs.time, users.username,
 	CASE WHEN (logs.properties_before IS NOT NULL) and (logs.properties_after IS NOT NULL) THEN 'UPDATE'
 		WHEN (logs.properties_before IS NULL) and (logs.properties_after IS NOT NULL) THEN 'CREATE'
 		WHEN (logs.properties_before IS NOT NULL) and (logs.properties_after IS NULL) THEN 'DELETE'
