@@ -366,8 +366,8 @@ class Inventory extends base{
 
     // clean inventory
     private function inventorySweep(){
-        // delete OLD inventory items which aren't referenced by projects, registry and reports 
-        $query = "DELETE FROM " . $this->table_name . "  WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "') AND id IN (
+        // list OLD inventory items which aren't referenced by projects, registry and reports 
+        $query = "SELECT id FROM " . $this->table_name . "  WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "') AND id IN (
                     SELECT id FROM (
                         SELECT inventory.id FROM inventory
                         LEFT JOIN projects
@@ -384,15 +384,30 @@ class Inventory extends base{
         // execute query
         $stmt_delete->execute();
 
-        // clear quantities for the rest... (referenced items)
-        $query = "UPDATE " . $this->table_name . " 
-                    SET qty='0' 
+        // delete items
+        while ($row = $stmt_delete->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $this->id = $id;
+            $this->delete();
+        }
+
+        // list the rest... (referenced items)
+        $query = "SELECT id, qty, qtyIn, qtyOut FROM " . $this->table_name . " 
                     WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "')";    
         // prepare query
         $stmt_clear = $this->conn->prepare($query);
         // execute query
         $stmt_clear->execute();
 
+        // clear item quantities
+        while ($row = $stmt_clear->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $this->id = $id;
+            $this->qty = -($qty);
+            $this->qtyIn = -($qtyIn);
+            $this->qtyOut = -($qtyOut);
+            $this->updateQuantities();
+        }
         return $stmt_delete->rowCount();
     }
 
