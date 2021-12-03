@@ -1,5 +1,11 @@
 # SQL Commands
 This page describes SQL commands which provide further functionality.
+
+## List users, permissions and sessions
+	
+```
+SELECT * FROM users
+```
 	
 ## Create new Inventory category
 	

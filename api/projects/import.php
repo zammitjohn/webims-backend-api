@@ -18,7 +18,7 @@ $import_failed = "";
 // AUTH check
 $user = new Users($db); // prepare users object
 if (isset($_COOKIE['UserSession'])){
-    $user->action_isImport = true;
+    $user->action_isUpdate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
     $userId = $user->getUserId();
 }

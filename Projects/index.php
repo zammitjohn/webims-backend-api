@@ -52,7 +52,7 @@ $content = '
           <h3 class="card-title">' . $type_name . '</h3>
           ' . $delete_button . '
           <div class="card-tools">
-            <a href="#" class="btn btn-tool btn-sm button_action_import" data-toggle="modal" data-target="#modal-import"><i class="fas fa-upload"></i></a>
+            <a href="#" class="btn btn-tool btn-sm button_action_update" data-toggle="modal" data-target="#modal-import"><i class="fas fa-upload"></i></a>
           </div>
         </div>
         <!-- /.card-header -->
