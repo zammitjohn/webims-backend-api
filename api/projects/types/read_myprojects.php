@@ -11,10 +11,14 @@ $db = $database->getConnection();
 // prepare projects type property object
 $property = new Projects_Types($db);
 
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){
+if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
+    $property->userId = $user->getUserId();
+}
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
     $property->userId = $user->getUserId();
 }
 if (!$user->validAction()){

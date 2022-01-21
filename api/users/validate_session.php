@@ -11,15 +11,19 @@ $db = $database->getConnection();
 $user = new Users($db);
 
 // check if key was specified
-if (!isset($_COOKIE['UserSession'])){
+if ( (!isset($_COOKIE['UserSession'])) && ((!isset($_SERVER['HTTP_AUTH_KEY']))) ){
     $output_arr=array(
         "status" => false,
         "message" => "You need to login!"
     );
 } else { // check if key is correct
 
-    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
-
+    if (isset($_COOKIE['UserSession'])){ // Cookie authentication
+        $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
+    }
+    if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+        $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+    }
     // query users
     $stmt = $user->validateSession();
 

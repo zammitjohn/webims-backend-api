@@ -14,9 +14,14 @@ $item = new Transactions_Items($db);
 // set ID property of transaction item to be dumped
 $item->transactionId = isset($_GET['id']) ? $_GET['id'] : die();
 
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){ $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); }
+if (isset($_COOKIE['UserSession'])){ // Cookie authentication 
+	$user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
+}
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+}
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();

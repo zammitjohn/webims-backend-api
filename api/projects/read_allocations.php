@@ -16,9 +16,14 @@ if (isset($_GET['inventoryId'])) {
     $item->inventoryId = $_GET['inventoryId'];
 }
 
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){ $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); }
+if (isset($_COOKIE['UserSession'])){ // Cookie authentication 
+	$user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
+}
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
+}
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();

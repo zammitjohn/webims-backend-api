@@ -12,11 +12,16 @@ $db = $database->getConnection();
 $inventory = new Inventory($db);
 $inventory_types = []; // array to hold inventory types for particular category
 
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){
+if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isImport = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
+    $inventory->userId = $user->getUserId();
+}
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+	$user->action_isImport = true;
+    $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
     $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){

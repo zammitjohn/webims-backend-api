@@ -18,11 +18,16 @@ $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->notes = $_POST['notes'];
 
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){
+if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isCreate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
+    $item->userId = $user->getUserId();
+}
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+    $user->action_isCreate = true;
+	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
     $item->userId = $user->getUserId();
 }
 if (!$user->validAction()){

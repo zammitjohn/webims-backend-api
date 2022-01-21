@@ -1,16 +1,20 @@
 # API Reference
 
-This is a full JSON API reference which interfaces to the extensive WebIMS database. To authenticate against the API, you'll need to pass a UserSession cookie with each request.
+This is a full JSON API reference which interfaces to the extensive WebIMS database. 
 
-The UserSession cookie contains a base64 value of the following JSON encoded array:
+## Authentication
+To authenticate against the API, you'll need to pass a UserSession cookie with each request or an HTTP authorization header. The latter is the ideal for client side applications and must simply contain user sessionId.
 
-{
-  "FullName": "<Name> <Surname>",
-  "SessionId": "<sessionId>"
-}
+The UserSession cookie must contain a base64 value of the following JSON encoded array. This is preferred for server side rendered applications and automatically created upon login.
 
+	{
+	  "FullName": "<Name> <Surname>",
+	  "SessionId": "<sessionId>"
+	}
 
-## Users
+## Objects
+
+### Users
 
 | **Action**           | **Method** | **Parameters**             | **Response**                                                              | **URL**                     |
 |----------------------|------------|----------------------------|---------------------------------------------------------------------------|-----------------------------|
@@ -21,7 +25,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Inventory
+### Inventory
 
 | **Action**          | **Method** | **Body Parameters**                                              | **Response**                                                                                                                               | **URL**                    |
 |---------------------|------------|------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
@@ -32,13 +36,13 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 | **search**          | `GET`      | term                                                             | id text category type title                                                                                                                | /api/inventory/search      |
 | **update**          | `POST`     | id SKU type category description qty qtyIn qtyOut supplier notes | status message                                                                                                                             | /api/inventory/update      |
 | **import**          | `POST`     | category file                                                    | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/import      |
-| **mail_import**[^1] | `POST`     | JSON (category, file, sessionId, isBase64EncodedContent)         | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/mail_import |
+| **mail_import**[^1] | `POST`     | JSON (category, file, isBase64EncodedContent)                    | status created_count updated_count conflict_count deleted_count                                                                            | /api/inventory/mail_import |
 
-[^1]: Cookie authentication is not supported here. In this case sessionId must be included in the body.
+[^1]: Cookie authentication is not supported here. In this case HTTP authorization header method must be used. [See Authentication](#authentication).
 
 ---
 
-## Inventory Categories
+### Inventory Categories
 
 | **Action** | **Method** | **Parameters** | **Response**          | **URL**                        |
 |------------|------------|----------------|-----------------------|--------------------------------|
@@ -46,7 +50,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Inventory Types
+### Inventory Types
 
 | **Action** | **Method** | **Parameters** | **Response**                                    | **URL**                   |
 |------------|------------|----------------|-------------------------------------------------|---------------------------|
@@ -54,7 +58,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Registry
+### Registry
 
 | **Action** | **Method** | **Parameters**                         | **Response**                                             | **URL**              |
 |------------|------------|----------------------------------------|----------------------------------------------------------|----------------------|
@@ -64,7 +68,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Reports
+### Reports
 
 | **Action**            | **Method** | **Parameters**                                                                                                                                                    | **Response**                                                                                                                                                                                 | **URL**                        |
 |-----------------------|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
@@ -78,7 +82,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Reports Comments
+### Reports Comments
 
 | **Action** | **Method** | **Parameters** | **Response**                                  | **URL**                      |
 |------------|------------|----------------|-----------------------------------------------|------------------------------|
@@ -87,7 +91,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Transactions
+### Transactions
 
 | **Action**   | **Method** | **Parameters**                           | **Response**                                     | **URL**                    |
 |--------------|------------|------------------------------------------|--------------------------------------------------|----------------------------|
@@ -97,7 +101,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Projects
+### Projects
 
 | **Action**           | **Method** | **Parameters**                              | **Response**                                                                                          | **URL**                        |
 |----------------------|------------|---------------------------------------------|-------------------------------------------------------------------------------------------------------|--------------------------------|
@@ -112,7 +116,7 @@ The UserSession cookie contains a base64 value of the following JSON encoded arr
 
 ---
 
-## Projects Types
+### Projects Types
 
 | **Action**          | **Method** | **Parameters** | **Response**           | **URL**                             |
 |---------------------|------------|----------------|------------------------|-------------------------------------|

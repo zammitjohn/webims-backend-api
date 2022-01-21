@@ -29,11 +29,17 @@ $transaction = new Transactions($db);
 $item = new Transactions_Items($db);
 $inventory_item = new Inventory($db);
  
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($_COOKIE['UserSession'])){
+if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isUpdate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
+    $transaction->userId = $user->getUserId();
+    $inventory_item->userId = $user->getUserId();
+}
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
+    $user->action_isUpdate = true;
+	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
     $transaction->userId = $user->getUserId();
     $inventory_item->userId = $user->getUserId();
 }

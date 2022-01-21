@@ -16,11 +16,11 @@ $inventory_types = []; // array to hold inventory types for particular category
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON into array
 
-// AUTH check 
+// AUTH check
 $user = new Users($db); // prepare users object
-if (isset($input['sessionId'])){
+if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isImport = true;
-    $user->sessionId = $input['sessionId'];
+	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
     $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){
