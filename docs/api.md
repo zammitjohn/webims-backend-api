@@ -121,8 +121,9 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 | **Action**          | **Method** | **Parameters** | **Response**           | **URL**                             |
 |---------------------|------------|----------------|------------------------|-------------------------------------|
 | **create**          | `POST`     | name           | id name status message | /api/projects/types/create          |
-| **delete**          | `POST`     | id             | status message         | /api/projects/types/create          |
+| **delete**          | `POST`     | id             | status message         | /api/projects/types/delete          |
 | **read**            | `GET`      | id             | id name                | /api/projects/types/read            |
 | **read_myprojects** | `GET`      |                | id name                | /api/projects/types/read_myprojects |
+| **download**        | `POST`     | id             | file                   | /api/projects/types/download        |
 
 ---
