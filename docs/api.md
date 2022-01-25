@@ -109,7 +109,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 | **delete**           | `POST`     | id                                          | status message                                                                                        | /api/projects/delete           |
 | **read_single**      | `GET`      | id                                          | id inventoryId type description qty notes                                                             | /api/projects/read_single      |
 | **read**             | `GET`      | type                                        | id inventoryId type_id type_name inventory_SKU inventory_category description qty notes user_fullname | /api/projects/read             |
-| **read_allocations** | `GET`      | type                                        | inventoryId type_id type_name total_qty                                                               | /api/projects/read_allocations |
+| **read_allocations** | `GET`      | inventoryId                                 | inventoryId type_id type_name total_qty                                                               | /api/projects/read_allocations |
 | **update**           | `POST`     | id inventoryId type description qty notes   | status message                                                                                        | /api/projects/update           |
 | **import**           | `POST`     | type inventory_type inventory_category file | status created_count notfound_count additional_info                                                   | /api/projects/import           |
 
