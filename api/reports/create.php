@@ -17,7 +17,7 @@ $item->ticketNo = $_POST['ticketNo'];
 $item->name = $_POST['name'];
 $item->description = $_POST['description'];
 $item->reportNo = $_POST['reportNo'];
-$item->asigneeUserId = $_POST['asigneeUserId'];
+$item->assigneeUserId = $_POST['assigneeUserId'];
 $item->faultySN = $_POST['faultySN'];
 $item->replacementSN = $_POST['replacementSN'];
 $item->dateRequested = $_POST['dateRequested'];
@@ -63,7 +63,7 @@ if (($item->replacementSN AND $item->faultySN) AND ($item->replacementSN == $ite
             "name" => $item->name,
             "description" => $item->description,
             "reportNo" => $item->reportNo,
-            "asigneeUserId" => $item->asigneeUserId,
+            "assigneeUserId" => $item->assigneeUserId,
             "faultySN" => $item->faultySN,
             "replacementSN" => $item->replacementSN,
             "dateRequested" => $item->dateRequested,

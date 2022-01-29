@@ -13,7 +13,7 @@ class reports extends base{
     public $name;
     public $description;
     public $reportNo;
-    public $asigneeUserId;
+    public $assigneeUserId;
     public $faultySN;
     public $replacementSN;
     public $dateRequested;
@@ -31,7 +31,7 @@ class reports extends base{
         if ($this->userId) {                        
             $query = "SELECT * 
                     FROM `reports` 
-                    WHERE asigneeUserId = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
+                    WHERE assigneeUserId = '".$this->userId."' AND ((replacementSN IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
                     ORDER BY `id` DESC";   
 
         } else {    
@@ -78,7 +78,7 @@ class reports extends base{
         $query = "INSERT INTO  
                     ". $this->table_name ."
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, asigneeUserId=:asigneeUserId, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, assigneeUserId=:assigneeUserId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeaving=:dateLeaving, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA";
@@ -105,7 +105,7 @@ class reports extends base{
         $query = "UPDATE
                     " . $this->table_name . "
                 SET
-                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, asigneeUserId=:asigneeUserId, 
+                    inventoryId=:inventoryId, ticketNo=:ticketNo, name=:name, description=:description, reportNo=:reportNo, assigneeUserId=:assigneeUserId, 
                     faultySN=:faultySN, replacementSN=:replacementSN, dateRequested=:dateRequested, 
                     dateLeaving=:dateLeaving, dateDispatched=:dateDispatched, 
                     dateReturned=:dateReturned, AWB=:AWB, AWBreturn=:AWBreturn, RMA=:RMA                
@@ -176,10 +176,10 @@ class reports extends base{
         } else {
             $stmt->bindValue(':reportNo', $this->reportNo);
         }                   
-        if ($this->asigneeUserId == ""){
-            $stmt->bindValue(':asigneeUserId', $this->asigneeUserId, PDO::PARAM_NULL);
+        if ($this->assigneeUserId == ""){
+            $stmt->bindValue(':assigneeUserId', $this->assigneeUserId, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':asigneeUserId', $this->asigneeUserId);
+            $stmt->bindValue(':assigneeUserId', $this->assigneeUserId);
         }        
         if ($this->faultySN == ""){
             $stmt->bindValue(':faultySN', $this->faultySN, PDO::PARAM_NULL);
