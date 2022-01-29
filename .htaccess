@@ -1,5 +1,3 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^([^\.]+)$ $1.php [L]
-
-ErrorDocument 404 /WebIMS/pages/404
