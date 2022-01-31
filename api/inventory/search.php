@@ -41,11 +41,8 @@ if ($stmt != false){
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         extract($row);
         $inventory_item=array(
-            "id" => $id,
-            "text" => $SKU,
-            "category" => $category_name,
-            "type" => $type_name,
-            "title" => $description
+            "value" => $id,
+            "label" => $SKU . ' ('  . $category_name . ' ' . $type_name . ') ' . $description
         );
         array_push($output_arr["Inventory"], $inventory_item);
     }
