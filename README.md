@@ -15,7 +15,7 @@ Contribution is always **welcome and recommended**! Here's how:
 - Create a pull request
 
 ## Change log
-Visit the [releases](https://github.com/zammitjohn/WebIMS/releases) page to view the changelog.
+Visit the [releases](https://github.com/zammitjohn/webims-backend-api/releases) page to view the changelog.
 
 ## Notes
 Legacy WebIMS jQuery + PHP monorepo has been deprecated. Last available version is [v2.9.0](https://github.com/zammitjohn/webims-backend-api/tree/v2.9.0).

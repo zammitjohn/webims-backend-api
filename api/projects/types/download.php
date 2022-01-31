@@ -34,11 +34,6 @@ $stmt = $item->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
     
-    if (!$num){
-        header("HTTP/1.0 404 Not Found");
-        die();
-    }
-
     // open the file for writing
     $file = fopen('php://memory', 'w'); 
 
