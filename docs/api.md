@@ -3,7 +3,7 @@
 This is a full JSON API reference which interfaces to the extensive WebIMS database. 
 
 ## Authentication
-To authenticate against the API, you'll need to pass a UserSession cookie with each request or an HTTP authorization header. The latter is the ideal for client side applications and must simply contain user sessionId.
+To authenticate against the API, you'll need to pass a UserSession cookie or the HTTP authorization header ```Auth-Key```  with each request. The latter is the ideal for client side applications and must simply contain user sessionId.
 
 The UserSession cookie must contain a base64 value of the following JSON encoded array. This is preferred for server side rendered applications and automatically created upon login.
 
@@ -16,7 +16,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Users
 
-| **Action**           | **Method** | **Parameters**             | **Response**                                                              | **URL**                     |
+| **Action**           | **Method** | **Parameters**             | **Response**                                                              | **Path**                    |
 |----------------------|------------|----------------------------|---------------------------------------------------------------------------|-----------------------------|
 | **login**            | `POST`     | username password remember | status message id username firstname lastname sessionId created           | /api/users/login            |
 | **logout**           | `POST`     |                            | status message                                                            | /api/users/logout           |
@@ -27,7 +27,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Inventory
 
-| **Action**          | **Method** | **Body Parameters**                                              | **Response**                                                                                                                               | **URL**                    |
+| **Action**          | **Method** | **Body Parameters**                                              | **Response**                                                                                                                               | **Path**                   |
 |---------------------|------------|------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
 | **create**          | `POST`     | SKU type category description qty qtyIn qtyOut supplier notes    | status message id SKU type category description qty qtyIn qtyOut supplier notes                                                            | /api/inventory/create      |
 | **delete**          | `POST`     | id                                                               | status message                                                                                                                             | /api/inventory/delete      |
@@ -44,7 +44,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Inventory Categories
 
-| **Action** | **Method** | **Parameters** | **Response**          | **URL**                        |
+| **Action** | **Method** | **Parameters** | **Response**          | **Path**                       |
 |------------|------------|----------------|-----------------------|--------------------------------|
 | **read**   | `GET`      | id             | id name supportImport | /api/inventory/categories/read |
 
@@ -52,7 +52,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Inventory Types
 
-| **Action** | **Method** | **Parameters** | **Response**                                    | **URL**                   |
+| **Action** | **Method** | **Parameters** | **Response**                                    | **Path**                  |
 |------------|------------|----------------|-------------------------------------------------|---------------------------|
 | **read**   | `GET`      | id or category | id name import_name type_category category_name | /api/inventory/types/read |
 
@@ -60,7 +60,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Registry
 
-| **Action** | **Method** | **Parameters**                         | **Response**                                             | **URL**              |
+| **Action** | **Method** | **Parameters**                         | **Response**                                             | **Path**             |
 |------------|------------|----------------------------------------|----------------------------------------------------------|----------------------|
 | **create** | `POST`     | inventoryId serialNumber datePurchased | status message id inventoryId serialNumber datePurchased | /api/registry/create |
 | **delete** | `POST`     | id                                     | status message                                           | /api/registry/delete |
@@ -70,7 +70,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Reports
 
-| **Action**            | **Method** | **Parameters**                                                                                                                                                     | **Response**                                                                                                                                                                                  | **URL**                        |
+| **Action**            | **Method** | **Parameters**                                                                                                                                                     | **Response**                                                                                                                                                                                  | **Path**                       |
 |-----------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------|
 | **create**            | `POST`     | inventoryId ticketNo name description reportNo assigneeUserId faultySN replacementSN dateRequested dateLeaving dateDispatched dateReturned AWB AWBreturn RMA notes | status message inventoryId ticketNo name description reportNo assigneeUserId faultySN replacementSN dateRequested dateLeaving dateDispatched dateReturned AWB AWBreturn RMA notes             | /api/reports/create            |
 | **read_single**       | `GET`      | id                                                                                                                                                                 | id inventoryId ticketNo name description reportNo assigneeUserId faultySN replacementSN dateRequested dateLeaving dateDispatched dateReturned AWB AWBreturn RMA notes isClosed isRepairable   | /api/reports/read_single       |
@@ -83,7 +83,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Reports Comments
 
-| **Action** | **Method** | **Parameters** | **Response**                                  | **URL**                      |
+| **Action** | **Method** | **Parameters** | **Response**                                  | **Path**                     |
 |------------|------------|----------------|-----------------------------------------------|------------------------------|
 | **read**   | `GET`      | reportId       | id reportId firstname lastname text timestamp | /api/reports/comments/read   |
 | **create** | `POST`     | reportId text  | status message id reportId text               | /api/reports/comments/create |
@@ -92,7 +92,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Transactions
 
-| **Action**   | **Method** | **Parameters**                           | **Response**                                     | **URL**                    |
+| **Action**   | **Method** | **Parameters**                           | **Response**                                     | **Path**                   |
 |--------------|------------|------------------------------------------|--------------------------------------------------|----------------------------|
 | **read**     | `GET`      |                                          | id date user_fullname description                | /api/transactions/read     |
 | **create**   | `POST`     | JSON (return, items (item_id, item_qty)) | status message id returned_count requested_count | /api/transactions/create   |
@@ -102,7 +102,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Projects
 
-| **Action**           | **Method** | **Parameters**                              | **Response**                                                                                          | **URL**                        |
+| **Action**           | **Method** | **Parameters**                              | **Response**                                                                                          | **Path**                       |
 |----------------------|------------|---------------------------------------------|-------------------------------------------------------------------------------------------------------|--------------------------------|
 | **create**           | `POST`     | inventoryId type description qty notes      | status message id inventoryId type description qty notes                                              | /api/projects/create           |
 | **delete**           | `POST`     | id                                          | status message                                                                                        | /api/projects/delete           |
@@ -117,7 +117,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### Projects Types
 
-| **Action**          | **Method** | **Parameters** | **Response**           | **URL**                             |
+| **Action**          | **Method** | **Parameters** | **Response**           | **Path**                            |
 |---------------------|------------|----------------|------------------------|-------------------------------------|
 | **create**          | `POST`     | name           | id name status message | /api/projects/types/create          |
 | **delete**          | `POST`     | id             | status message         | /api/projects/types/delete          |
