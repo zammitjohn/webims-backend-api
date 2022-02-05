@@ -22,16 +22,16 @@ APIs use authorization to ensure that client requests access data securely. To a
 
 ### inventory
 
-| **Action**      | **Method** | **Body Parameters**                                                                 | **Response**                                                                                                                                                                        | **Path**                   |
-|-----------------|------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
-| **create**      | `POST`     | SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes    | status message id SKU warehouse_categoryId description qty qtyIn qtyOut supplier notes                                                                                              | /api/inventory/create      |
-| **delete**      | `POST`     | id                                                                                  | status message                                                                                                                                                                      | /api/inventory/delete      |
-| **read_single** | `GET`      | id                                                                                  | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes importDate lastChange                                                                           | /api/inventory/read_single |
-| **read**        | `GET`      | warehouseId warehouse_categoryId                                                    | id SKU warehouse_name warehouseId warehouse_categoryId warehouse_category_name warehouse_category_importName description qty qtyIn qtyOut qty_project_allocated supplier importDate | /api/inventory/read        |
-| **search**      | `GET`      | term                                                                                | value, label                                                                                                                                                                        | /api/inventory/search      |
-| **update**      | `POST`     | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes | status message                                                                                                                                                                      | /api/inventory/update      |
-| **import**      | `POST`     | warehouseId file                                                                    | status created_count updated_count conflict_count deleted_count                                                                                                                     | /api/inventory/import      |
-| **mail_import** | `POST`     | JSON (warehouseId, file, isBase64EncodedContent)                                    | status created_count updated_count conflict_count deleted_count                                                                                                                     | /api/inventory/mail_import |
+| **Action**      | **Method** | **Body Parameters**                                                     | **Response**                                                                                                                                                                             | **Path**                   |
+|-----------------|------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
+| **create**      | `POST`     | SKU warehouse_categoryId description qty qtyIn qtyOut supplier notes    | status message id SKU warehouse_categoryId description qty qtyIn qtyOut supplier notes                                                                                                   | /api/inventory/create      |
+| **delete**      | `POST`     | id                                                                      | status message                                                                                                                                                                           | /api/inventory/delete      |
+| **read_single** | `GET`      | id                                                                      | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes importDate lastChange                                                                                | /api/inventory/read_single |
+| **read**        | `GET`      | warehouseId warehouse_categoryId                                        | id SKU warehouse_name warehouseId warehouse_categoryId warehouse_category_name warehouse_category_importName description qty qtyIn qtyOut qty_project_item_allocated supplier importDate | /api/inventory/read        |
+| **search**      | `GET`      | term                                                                    | value, label                                                                                                                                                                             | /api/inventory/search      |
+| **update**      | `POST`     | id SKU warehouse_categoryId description qty qtyIn qtyOut supplier notes | status message                                                                                                                                                                           | /api/inventory/update      |
+| **import**      | `POST`     | warehouseId file                                                        | status created_count updated_count conflict_count deleted_count                                                                                                                          | /api/inventory/import      |
+| **mail_import** | `POST`     | JSON (warehouseId, file, isBase64EncodedContent)                        | status created_count updated_count conflict_count deleted_count                                                                                                                          | /api/inventory/mail_import |
 
 ---
 
@@ -95,14 +95,14 @@ APIs use authorization to ensure that client requests access data securely. To a
 
 ### project
 
-| **Action**          | **Method** | **Parameters**                      | **Response**                                        | **Path**                    |
-|---------------------|------------|-------------------------------------|-----------------------------------------------------|-----------------------------|
-| **create**          | `POST`     | name                                | id name status message                              | /api/project/create         |
-| **delete**          | `POST`     | id                                  | status message                                      | /api/project/delete         |
-| **read**            | `GET`      | id                                  | id name                                             | /api/project/read           |
-| **read_myprojects** | `GET`      |                                     | id name                                             | /api/project/read_myproject |
-| **download**        | `GET`      | id                                  | file                                                | /api/project/download       |
-| **import**          | `POST`     | projectId warehouse_categoryId file | status created_count notfound_count additional_info | /api/project/import         |
+| **Action**          | **Method** | **Parameters**               | **Response**                                        | **Path**                    |
+|---------------------|------------|------------------------------|-----------------------------------------------------|-----------------------------|
+| **create**          | `POST`     | name                         | id name status message                              | /api/project/create         |
+| **delete**          | `POST`     | id                           | status message                                      | /api/project/delete         |
+| **read**            | `GET`      | id                           | id name                                             | /api/project/read           |
+| **read_myprojects** | `GET`      |                              | id name                                             | /api/project/read_myproject |
+| **download**        | `GET`      | id                           | file                                                | /api/project/download       |
+| **import**          | `POST`     | id warehouse_categoryId file | status created_count notfound_count additional_info | /api/project/import         |
 
 ---
 

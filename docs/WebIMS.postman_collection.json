@@ -1430,7 +1430,7 @@
 							"mode": "formdata",
 							"formdata": [
 								{
-									"key": "projectId",
+									"key": "id",
 									"value": "",
 									"type": "default"
 								},

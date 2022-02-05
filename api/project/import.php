@@ -72,7 +72,7 @@ if($_FILES["file"]["size"] > 0) {
         // check if SKU exists in inventory
         if ($existingId = $inventory_item->isAlreadyExist()) { // get ID for an existing inventory item
             $project_item_item->inventoryId = $existingId;
-            $project_item_item->projectId = $_POST['projectId'];
+            $project_item_item->projectId = $_POST['id'];
             $project_item_item->description = $data_description;
             $project_item_item->qty = $data_qty;
             $project_item_item->notes = $data_notes;
