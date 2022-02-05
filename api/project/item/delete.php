@@ -16,11 +16,7 @@ $item->id = $_POST['id'];
 
 // AUTH check
 $user = new user($db); // prepare user object
-if (isset($_COOKIE['UserSession'])){ // Cookie authentication
-    $user->action_isDelete = true;
-    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
-    $item->userId = $user->getUserId();
-}
+
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isDelete = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];

@@ -14,11 +14,7 @@ $warehouse_category = []; // array to hold inventory types for particular wareho
 
 // AUTH check
 $user = new user($db); // prepare user object
-if (isset($_COOKIE['UserSession'])){ // Cookie authentication
-    $user->action_isImport = true;
-    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
-    $inventory->userId = $user->getUserId();
-}
+
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
 	$user->action_isImport = true;
     $user->sessionId = $_SERVER['HTTP_AUTH_KEY'];

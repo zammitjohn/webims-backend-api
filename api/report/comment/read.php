@@ -16,9 +16,7 @@ $property->reportId = $_GET['reportId'];
 
 // AUTH check
 $user = new user($db); // prepare user object
-if (isset($_COOKIE['UserSession'])){ // Cookie authentication 
-	$user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
-}
+
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }

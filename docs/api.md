@@ -4,15 +4,8 @@ This is a full JSON API reference which interfaces to the extensive WebIMS datab
 
 Explore [Postman Collection](WebIMS.postman_collection.json)
 
-## Authentication
-To authenticate against the API, you'll need to pass a UserSession cookie or the HTTP authorization header ```Auth-Key```  with each request. The latter is the ideal for client side applications and must simply contain user sessionId.
-
-The UserSession cookie must contain a base64 value of the following JSON encoded array. This is preferred for server side rendered applications and automatically created upon login.
-
-	{
-	  "FullName": "<Name> <Surname>",
-	  "SessionId": "<sessionId>"
-	}
+## Authorization
+APIs use authorization to ensure that client requests access data securely. To authorize against this API, you'll need to pass the authorization key in the HTTP header ```Auth-Key``` with each request. ```Auth-Key``` must contain the user sessionId.
 
 ## Objects
 
@@ -20,7 +13,7 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 | **Action**           | **Method** | **Parameters**    | **Response**                                                              | **Path**                   |
 |----------------------|------------|-------------------|---------------------------------------------------------------------------|----------------------------|
-| **login**            | `POST`     | username password | status message id username firstName lastName sessionId created           | /api/user/login            |
+| **login**            | `POST`     | username password | status message id username firstName lastName *sessionId* created         | /api/user/login            |
 | **logout**           | `POST`     |                   | status message                                                            | /api/user/logout           |
 | **read**             | `GET`      |                   | id firstName lastName lastAvailable                                       | /api/user/read             |
 | **validate_session** | `GET`      |                   | status message firstName lastName canUpdate canCreate canImport canDelete | /api/user/validate_session |
@@ -29,18 +22,16 @@ The UserSession cookie must contain a base64 value of the following JSON encoded
 
 ### inventory
 
-| **Action**          | **Method** | **Body Parameters**                                                                 | **Response**                                                                                                                                                                        | **Path**                   |
-|---------------------|------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
-| **create**          | `POST`     | SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes    | status message id SKU warehouse_categoryId description qty qtyIn qtyOut supplier notes                                                                                              | /api/inventory/create      |
-| **delete**          | `POST`     | id                                                                                  | status message                                                                                                                                                                      | /api/inventory/delete      |
-| **read_single**     | `GET`      | id                                                                                  | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes importDate lastChange                                                                           | /api/inventory/read_single |
-| **read**            | `GET`      | warehouseId warehouse_categoryId                                                    | id SKU warehouse_name warehouseId warehouse_categoryId warehouse_category_name warehouse_category_importName description qty qtyIn qtyOut qty_project_allocated supplier importDate | /api/inventory/read        |
-| **search**          | `GET`      | term                                                                                | value, label                                                                                                                                                                        | /api/inventory/search      |
-| **update**          | `POST`     | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes | status message                                                                                                                                                                      | /api/inventory/update      |
-| **import**          | `POST`     | warehouseId file                                                                    | status created_count updated_count conflict_count deleted_count                                                                                                                     | /api/inventory/import      |
-| **mail_import**[^1] | `POST`     | JSON (warehouseId, file, isBase64EncodedContent)                                    | status created_count updated_count conflict_count deleted_count                                                                                                                     | /api/inventory/mail_import |
-
-[^1]: Cookie authentication is not supported here. In this case HTTP authorization header method must be used. [See Authentication](#authentication).
+| **Action**      | **Method** | **Body Parameters**                                                                 | **Response**                                                                                                                                                                        | **Path**                   |
+|-----------------|------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------|
+| **create**      | `POST`     | SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes    | status message id SKU warehouse_categoryId description qty qtyIn qtyOut supplier notes                                                                                              | /api/inventory/create      |
+| **delete**      | `POST`     | id                                                                                  | status message                                                                                                                                                                      | /api/inventory/delete      |
+| **read_single** | `GET`      | id                                                                                  | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes importDate lastChange                                                                           | /api/inventory/read_single |
+| **read**        | `GET`      | warehouseId warehouse_categoryId                                                    | id SKU warehouse_name warehouseId warehouse_categoryId warehouse_category_name warehouse_category_importName description qty qtyIn qtyOut qty_project_allocated supplier importDate | /api/inventory/read        |
+| **search**      | `GET`      | term                                                                                | value, label                                                                                                                                                                        | /api/inventory/search      |
+| **update**      | `POST`     | id SKU warehouseId warehouse_categoryId description qty qtyIn qtyOut supplier notes | status message                                                                                                                                                                      | /api/inventory/update      |
+| **import**      | `POST`     | warehouseId file                                                                    | status created_count updated_count conflict_count deleted_count                                                                                                                     | /api/inventory/import      |
+| **mail_import** | `POST`     | JSON (warehouseId, file, isBase64EncodedContent)                                    | status created_count updated_count conflict_count deleted_count                                                                                                                     | /api/inventory/mail_import |
 
 ---
 

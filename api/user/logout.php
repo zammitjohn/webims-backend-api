@@ -11,9 +11,7 @@ $db = $database->getConnection();
 $user = new user($db);
  
 // AUTH check
-if (isset($_COOKIE['UserSession'])){ // Cookie authentication
-    $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
-}
+
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
@@ -24,13 +22,6 @@ if (!$user->validAction()){
  
 // remove the user
 if($user->logout()){
-
-    // empty cookie value and old timestamp
-    if (isset($_COOKIE['UserSession'])) {
-        unset($_COOKIE['UserSession']);
-        setcookie('UserSession', '', time() - 3600, '/');
-    }
-
     $output_arr=array(
         "status" => true,
         "message" => "Log out successful!"
