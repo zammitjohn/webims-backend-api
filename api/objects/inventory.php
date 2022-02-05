@@ -2,15 +2,15 @@
 // include object files
 include_once 'base.php';
 
-class Inventory extends base{
+class inventory extends base{
  
     // database table name
     protected $table_name = "inventory";
  
     // object properties
     public $SKU;
-    public $type;
-    public $category;
+    public $warehouse_categoryId;
+    public $warehouseId;
     public $description;
     public $qty;
     public $qtyIn;
@@ -32,41 +32,41 @@ class Inventory extends base{
 
         // select query
         $query = "SELECT 
-            inventory.id, inventory.SKU, inventory_types.id AS type_id, 
-            inventory_types.name AS type_name, inventory_types.import_name AS type_altname, 
-            inventory_categories.id AS category_id, inventory_categories.name AS category_name,
+            inventory.id, inventory.SKU, warehouse_category.id AS warehouse_categoryId, 
+            warehouse_category.name AS warehouse_category_name, warehouse_category.importName AS warehouse_category_importName, 
+            warehouse.id AS warehouseId, warehouse.name AS warehouse_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
-            inventory.supplier, inventory.importDate, SUM(projects.qty) AS qty_projects_allocated
+            inventory.supplier, inventory.importDate, SUM(project_item.qty) AS qty_project_item_allocated
         FROM 
             " . $this->table_name . "
             JOIN 
-                inventory_types
+                warehouse_category
             ON 
-                inventory.type = inventory_types.id
+                inventory.warehouse_categoryId = warehouse_category.id
             JOIN 
-                inventory_categories
+                warehouse
             ON 
-                inventory.category = inventory_categories.id
+                warehouse_category.warehouseId = warehouse.id
 
             LEFT JOIN 
-                projects ON inventory.id = projects.inventoryId";
+                project_item ON inventory.id = project_item.inventoryId";
 
         // different SQL query according to API call
-        if ($this->type){
-           // concatenate select query for particular type
+        if ($this->warehouse_categoryId){
+           // concatenate select query for particular warehouse_categoryId
             $query .= "
             WHERE
-                inventory.type = '".$this->type."'
+                inventory.warehouse_categoryId = '".$this->warehouse_categoryId."'
             GROUP BY 
                 inventory.id
             ORDER BY 
                 `inventory`.`id`  DESC";            
 
-        } elseif ($this->category){
-           // concatenate select query for particular category
+        } elseif ($this->warehouseId){
+           // concatenate select query for particular warehouseId
             $query .= "
             WHERE
-                inventory.category = '".$this->category."'
+                warehouse_category.warehouseId = '".$this->warehouseId."'
             GROUP BY 
                 inventory.id                
             ORDER BY 
@@ -102,14 +102,22 @@ class Inventory extends base{
 
     // get single item data
     function read_single(){
-
         // select all query
         $query = "SELECT
-                    *
+                inventory.id, inventory.SKU, warehouse.id AS warehouseId, inventory.warehouse_categoryId, inventory.description, inventory.qty, inventory.qtyIn, 
+                inventory.qtyOut, inventory.supplier, inventory.notes, inventory.importDate, inventory.lastChange
                 FROM
                     " . $this->table_name . " 
+                    JOIN 
+                        warehouse_category
+                    ON 
+                        inventory.warehouse_categoryId = warehouse_category.id
+                    JOIN 
+                        warehouse
+                    ON 
+                        warehouse_category.warehouseId = warehouse.id
                 WHERE
-                    id= '".$this->id."'";
+                    inventory.id= '".$this->id."'";
     
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -131,9 +139,9 @@ class Inventory extends base{
         if ($fromImport) { // method called from import function
             $query = "INSERT INTO  
                         ". $this->table_name ." 
-                            (`SKU`, `type`, `category`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `importDate`)
+                            (`SKU`, `warehouse_categoryId`, `description`, `qty`, `qtyIn`, `qtyOut`, `supplier`, `importDate`)
                     VALUES
-                            ('".$this->SKU."', '".$this->type."', '".$this->category."', '".$this->description."','".$this->qty."', 
+                            ('".$this->SKU."', '".$this->warehouse_categoryId."', '".$this->description."','".$this->qty."', 
                             '".$this->qtyIn."', '".$this->qtyOut."', '".$this->supplier."', '".$this->importDate."')";
 
             // prepare query
@@ -143,7 +151,7 @@ class Inventory extends base{
             $query = "INSERT INTO
                         ". $this->table_name ." 
                     SET
-                        SKU=:SKU, type=:type, category=:category, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        SKU=:SKU, warehouse_categoryId=:warehouse_categoryId, description=:description, qty=:qty, qtyIn=:qtyIn, 
                         qtyOut=:qtyOut, supplier=:supplier, notes=:notes";
             
             // prepare and bind query
@@ -182,7 +190,7 @@ class Inventory extends base{
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        SKU=:SKU, type=:type, category=:category, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        SKU=:SKU, warehouse_categoryId=:warehouse_categoryId, description=:description, qty=:qty, qtyIn=:qtyIn, 
                         qtyOut=:qtyOut, supplier=:supplier, notes=:notes
                     WHERE
                         id='".$this->id."'";
@@ -202,7 +210,7 @@ class Inventory extends base{
     }
 
     // update item quantities
-    function updateQuantities(){  // method called from import function and transactions object 
+    function updateQuantities(){  // method called from import function and order object 
         $old_row = $this->selectRow();
         // query to update record quantities
         $query = "UPDATE 
@@ -230,7 +238,7 @@ class Inventory extends base{
             FROM
                 " . $this->table_name . " 
             WHERE
-                SKU='".$this->SKU."' AND type='".$this->type."' AND category='".$this->category."'"; 
+                SKU='".$this->SKU."' AND warehouse_categoryId='".$this->warehouse_categoryId."'"; 
 
         // prepare query statement
         $stmt = $this->conn->prepare($query);
@@ -268,15 +276,14 @@ class Inventory extends base{
         }
     }
 
-    function import($file, $inventory_types, $import_category){
+    function import($file, $categories, $warehouseId){
         $modifiedItemIDs = []; // to keep track of modified inventory item IDs
         fgetcsv($file, 10000, ","); // before beginning the while loop, just get the first line and do nothing with it
         while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
             if ($getData[0] == NULL) // skip blank lines in file
                 continue;
             
-            if (($getData[1] != NULL) && $data_type = array_search(strtoupper(trim($getData[1])), $inventory_types)) {
-    
+            if (($getData[1] != NULL) && $data_warehouse_category = array_search(strtoupper(trim($getData[1])), $categories)) {
                 // Get data from CSV and clean values
                 if (!empty($getData[0])) {               
                     $data_date = date('Y-m-d', strtotime(str_replace('/', '-', trim($getData[0]))));
@@ -322,8 +329,7 @@ class Inventory extends base{
                             
                 // prepare inventory item object
                 $this->SKU = $data_SKU;
-                $this->category = $import_category;
-                $this->type = $data_type;
+                $this->warehouse_categoryId = $data_warehouse_category;
                 $this->description = $data_description;
                 $this->qty = $data_qty;
                 $this->qtyIn = $data_qtyIn;
@@ -359,26 +365,39 @@ class Inventory extends base{
     
         }
         fclose($file);
-
         // clean-up operation
-        $this->deleted_counter = $this->inventorySweep();
+        $this->deleted_counter = $this->inventorySweep($warehouseId);
     }
 
     // clean inventory
-    private function inventorySweep(){
-        // list OLD inventory items which aren't referenced by projects, registry and reports 
-        $query = "SELECT id FROM " . $this->table_name . "  WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "') AND id IN (
-                    SELECT id FROM (
-                        SELECT inventory.id FROM inventory
-                        LEFT JOIN projects
-                            ON inventory.id = projects.inventoryId
-                        LEFT JOIN registry
-                            ON inventory.id = registry.inventoryId
-                        LEFT JOIN reports
-                            ON inventory.id = reports.inventoryId  
-                        WHERE (registry.inventoryId IS NULL) AND (projects.inventoryId IS NULL) AND (reports.inventoryId IS NULL)
-                    ) AS inventory_old
-                )";
+    private function inventorySweep($warehouseId){
+        // list OLD inventory items which aren't referenced by project_item, registry and report 
+        $query = "SELECT inventory.id, warehouse.id AS warehouseId, inventory.warehouse_categoryId
+                    FROM
+                        " . $this->table_name . " 
+                        JOIN 
+                            warehouse_category
+                        ON 
+                            inventory.warehouse_categoryId = warehouse_category.id
+                        JOIN 
+                            warehouse
+                        ON 
+                            warehouse_category.warehouseId = warehouse.id
+
+                    WHERE (importDate < '" . $this->importDate . "') AND (warehouseId = '" . $warehouseId . "') 
+        
+                        AND inventory.id IN (
+                            SELECT id FROM (
+                                SELECT inventory.id FROM inventory
+                                LEFT JOIN project_item
+                                    ON inventory.id = project_item.inventoryId
+                                LEFT JOIN registry
+                                    ON inventory.id = registry.inventoryId
+                                LEFT JOIN report
+                                    ON inventory.id = report.inventoryId  
+                                WHERE (registry.inventoryId IS NULL) AND (project_item.inventoryId IS NULL) AND (report.inventoryId IS NULL)
+                            ) AS inventory_old
+                        )";
         // prepare query
         $stmt_delete = $this->conn->prepare($query);
         // execute query
@@ -392,8 +411,20 @@ class Inventory extends base{
         }
 
         // list the rest... (referenced items)
-        $query = "SELECT id, qty, qtyIn, qtyOut FROM " . $this->table_name . " 
-                    WHERE (importDate < '" . $this->importDate . "') AND (category = '" . $this->category . "')";    
+
+        $query = "SELECT inventory.id, warehouse.id AS warehouseId, inventory.warehouse_categoryId, qty, qtyIn, qtyOut
+                    FROM 
+                    " . $this->table_name . " 
+                        JOIN 
+                            warehouse_category
+                        ON 
+                            inventory.warehouse_categoryId = warehouse_category.id
+                        JOIN 
+                            warehouse
+                        ON 
+                            warehouse_category.warehouseId = warehouse.id
+                    WHERE (importDate < '" . $this->importDate . "') AND (warehouseId = '" . $warehouseId . "')";  
+                    
         // prepare query
         $stmt_clear = $this->conn->prepare($query);
         // execute query
@@ -417,16 +448,11 @@ class Inventory extends base{
         } else {
             $stmt->bindValue(':SKU', $this->SKU);
         }
-        if ($this->type == ""){
-            $stmt->bindValue(':type', $this->type, PDO::PARAM_NULL);
+        if ($this->warehouse_categoryId == ""){
+            $stmt->bindValue(':warehouse_categoryId', $this->warehouse_categoryId, PDO::PARAM_NULL);
         } else {
-            $stmt->bindValue(':type', $this->type);
-        }
-        if ($this->category == ""){
-            $stmt->bindValue(':category', $this->category, PDO::PARAM_NULL);
-        } else {
-            $stmt->bindValue(':category', $this->category);
-        }        
+            $stmt->bindValue(':warehouse_categoryId', $this->warehouse_categoryId);
+        }   
         if ($this->description == ""){
             $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);
         } else {

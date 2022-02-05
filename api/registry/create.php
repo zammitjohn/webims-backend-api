@@ -3,14 +3,14 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/registry.php';
-include_once '../objects/users.php';
+include_once '../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
 // prepare registry item object
-$item = new Registry($db);
+$item = new registry($db);
  
 // set item property values
 $item->inventoryId = $_POST['inventoryId'];
@@ -18,7 +18,7 @@ $item->serialNumber = $_POST['serialNumber'];
 $item->datePurchased = $_POST['datePurchased'];
 
 // AUTH check
-$user = new Users($db); // prepare users object
+$user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isCreate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});

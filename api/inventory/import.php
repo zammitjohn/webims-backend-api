@@ -2,18 +2,18 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/inventory.php';
-include_once '../objects/users.php';
-include_once '../objects/inventory_types.php';
+include_once '../objects/user.php';
+include_once '../objects/warehouse_category.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-$inventory = new Inventory($db);
-$inventory_types = []; // array to hold inventory types for particular category
+$inventory = new inventory($db);
+$warehouse_category = []; // array to hold inventory types for particular warehouse
 
 // AUTH check
-$user = new Users($db); // prepare users object
+$user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isImport = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
@@ -29,27 +29,14 @@ if (!$user->validAction()){
     die();
 }
 
-// imports also saved to root
-if (!(is_dir("../../../uploads"))) {
-    mkdir("../../../uploads", 0700);
-}
-if (!(is_dir("../../../uploads/inventory"))) {
-    mkdir("../../../uploads/inventory", 0700);
-}
-
-// setting target directory
-$target_dir = "../../../uploads/inventory/";
-$target_file = $target_dir . basename($_FILES["file"]["name"]);
-
-// load types
-$inventory_types = new Inventory_Types($db);
-$inv_types = $inventory_types->loadTypes($_POST['category']);
+// load categories for warehouse
+$warehouse_category = new warehouse_category($db);
+$categories = $warehouse_category->loadCategory($_POST['warehouseId']);
 
 $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
     $file = fopen($filename, "r");
-    move_uploaded_file($filename, $target_file);
-    $inventory->import($file, $inv_types, $_POST['category']);
+    $inventory->import($file, $categories, $_POST['warehouseId']);
 }
 
 $result_arr=array(

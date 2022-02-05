@@ -2,25 +2,24 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/inventory.php';
-include_once '../objects/users.php';
+include_once '../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
 // prepare inventory item object
-$item = new Inventory($db);
+$item = new inventory($db);
 
-// set type property of inventory item type to be shown 
-if (isset($_GET['type'])) {
-    $item->type = $_GET['type'];
+if (isset($_GET['warehouse_categoryId'])) {
+    $item->warehouse_categoryId = $_GET['warehouse_categoryId'];
 }
-if (isset($_GET['category'])) {
-    $item->category = $_GET['category'];
+if (isset($_GET['warehouseId'])) {
+    $item->warehouseId = $_GET['warehouseId'];
 }
 
 // AUTH check
-$user = new Users($db); // prepare users object
+$user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication 
 	$user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
 }
@@ -42,31 +41,31 @@ if ($stmt != false){
     
         // inventory item array
         $output_arr=array();
-        $output_arr["Inventory"]=array();
+        $output_arr["inventory"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $inventory_item=array(
                 "id" => $id,
                 "SKU" => $SKU,
-                "type_id" => $type_id,
-                "type_name" => $type_name,
-                "type_altname" => $type_altname,
-                "category_id" => $category_id,
-                "category_name" => $category_name,
+                "warehouse_categoryId" => $warehouse_categoryId,
+                "warehouse_category_name" => $warehouse_category_name,
+                "warehouse_category_importName" => $warehouse_category_importName,
+                "warehouseId" => $warehouseId,
+                "warehouse_name" => $warehouse_name,
                 "description" => $description,
                 "qty" => $qty,
                 "qtyIn" => $qtyIn,
                 "qtyOut" => $qtyOut,
                 "supplier" => $supplier,
                 "importDate" => $importDate,
-                "qty_projects_allocated" => $qty_projects_allocated
+                "qty_project_item_allocated" => $qty_project_item_allocated
                 
             );
-            array_push($output_arr["Inventory"], $inventory_item);
+            array_push($output_arr["inventory"], $inventory_item);
         }
     
-        echo json_encode($output_arr["Inventory"]);
+        echo json_encode($output_arr["inventory"]);
     }
     else{
         echo json_encode(array());

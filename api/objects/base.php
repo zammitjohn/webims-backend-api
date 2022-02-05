@@ -1,6 +1,6 @@
 <?php
 // include object files
-include_once 'logs.php';
+include_once 'log.php';
 
 class base {
     // database connection and table name
@@ -22,10 +22,10 @@ class base {
 
     // object logging
     protected function logging($old_row){
-        $log = new Logs($this->conn);
+        $log = new log($this->conn);
         $log->object = get_class($this);
-        $log->properties_before = $old_row;
-        $log->properties_after = $this->selectRow();
+        $log->propertiesBefore = $old_row;
+        $log->propertiesAfter = $this->selectRow();
         $log->userId = $this->userId;
         $log->new();
     }

@@ -1,18 +1,20 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/registry.php';
+include_once '../objects/project.php';
 include_once '../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
- 
-// inventoryId of registry item to list
-$item->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
+// prepare project property object
+$property = new project($db);
+
+// set id property of project property to be shown 
+if (isset($_GET['id'])) {
+    $property->id = $_GET['id'];
+}
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,33 +28,29 @@ if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }
-
-// query registry item
-$stmt = $item->read();
-
+ 
+// query project property
+$stmt = $property->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 
     // check if more than 0 record found
     if($num>0){
     
-        // registry item array
+        // project property array
         $output_arr=array();
-        $output_arr["registry"]=array();
+        $output_arr["project"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $registry_item=array(
+            $project_item_type_property=array(
                 "id" => $id,
-                "inventoryId" => $inventoryId,
-                "serialNumber" => $serialNumber,
-                "datePurchased" => $datePurchased,
-                "state" => $state
+                "name" => $name
             );
-            array_push($output_arr["registry"], $registry_item);
+            array_push($output_arr["project"], $project_item_type_property);
         }
     
-        echo json_encode($output_arr["registry"]);
+        echo json_encode($output_arr["project"]);
     }
     else{
         echo json_encode(array());

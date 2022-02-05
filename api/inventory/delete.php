@@ -3,20 +3,20 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/inventory.php';
-include_once '../objects/users.php';
+include_once '../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
 // prepare inventory item object
-$item = new Inventory($db);
+$item = new inventory($db);
  
 // set inventory item property values
 $item->id = $_POST['id'];
 
 // AUTH check
-$user = new Users($db); // prepare users object
+$user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isDelete = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});

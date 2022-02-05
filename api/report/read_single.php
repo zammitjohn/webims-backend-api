@@ -1,17 +1,17 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/inventory.php';
+include_once '../objects/report.php';
 include_once '../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+// prepare report item object
+$item = new report($db);
 
-// set ID property of inventory item to be edited
+// set ID property of report item to be edited
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
@@ -27,7 +27,7 @@ if (!$user->validAction()){
     die();
 }
 
-// read the details of inventory item to be edited
+// read the details of report item to be edited
 $stmt = $item->read_single();
 
 if ($stmt != false){
@@ -37,17 +37,23 @@ if ($stmt != false){
         // create array
         $output_arr=array(
             "id" => $row['id'],
-            "SKU" => $row['SKU'],
-            "warehouse_categoryId" => $row['warehouse_categoryId'],
-            "warehouseId" => $row['warehouseId'],
+            "inventoryId" => $row['inventoryId'],
+            "ticketNumber" => $row['ticketNumber'],
+            "name" => $row['name'],
             "description" => $row['description'],
-            "qty" => $row['qty'],
-            "qtyIn" => $row['qtyIn'],
-            "qtyOut" => $row['qtyOut'],
-            "supplier" => $row['supplier'],
-            "notes" => $row['notes'],
-            "importDate" => $row['importDate'],
-            "lastChange" => $row['lastChange']
+            "reportNumber" => $row['reportNumber'],
+            "assignee_userId" => $row['assignee_userId'],
+            "faulty_registryId" => $row['faulty_registryId'],
+            "replacement_registryId" => $row['replacement_registryId'],
+            "dateRequested" => $row['dateRequested'],
+            "dateLeaving" => $row['dateLeaving'],
+            "dateDispatched" => $row['dateDispatched'],
+            "dateReturned" => $row['dateReturned'],
+            "AWB" => $row['AWB'],
+            "AWBreturn" => $row['AWBreturn'],
+            "RMA" => $row['RMA'],
+            "isClosed" => $row['isClosed'],
+            "isRepairable" => $row['isRepairable']
         );
     }
     // make it json format

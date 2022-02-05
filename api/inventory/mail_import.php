@@ -2,22 +2,22 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/inventory.php';
-include_once '../objects/users.php';
-include_once '../objects/inventory_types.php';
+include_once '../objects/user.php';
+include_once '../objects/warehouse_category.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-$inventory = new Inventory($db);
-$inventory_types = []; // array to hold inventory types for particular category
+$inventory = new inventory($db);
+$warehouse_category = []; // array to hold inventory types for particular warehouseId
 
 // Body Data
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON into array
 
 // AUTH check
-$user = new Users($db); // prepare users object
+$user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isImport = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
@@ -28,9 +28,9 @@ if (!$user->validAction()){
     die();
 }
 
-// load types
-$inventory_types = new Inventory_Types($db);
-$inv_types = $inventory_types->loadTypes($input['category']);
+// load categories for warehouse
+$warehouse_category = new warehouse_category($db);
+$categories = $warehouse_category->loadCategory($input['warehouseId']);
 
 // load file
 $fileContents = $input['file'];
@@ -41,7 +41,7 @@ if ($input['isBase64EncodedContent']){
 }
 
 if($file AND !feof($file)) {
-    $inventory->import($file, $inv_types, $input['category']);
+    $inventory->import($file, $categories, $input['warehouseId']);
 }
 
 $result_arr=array(

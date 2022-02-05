@@ -4,36 +4,36 @@ This page describes SQL commands which provide further functionality.
 ## List users, permissions and sessions
 	
 ```
-SELECT * FROM users
+SELECT * FROM user
 ```
 	
-## Create new Inventory category
+## Create a new Warehouse
 	
 ```
-INSERT INTO `webims_db`.`inventory_categories` (`name`) VALUES ('Storeroom');
+INSERT INTO `webims_db`.`warehouse` (`name`) VALUES ('Storeroom');
 ```
 	
-## Create new Inventory type
+## Create a new Warehouse Category
 
 ```
-INSERT INTO `webims_db`.`inventory_types` (`type_category`, `name`, `import_name`) VALUES ('1', 'General', 'generic');
+INSERT INTO `webims_db`.`warehouse_category` (`warehouseId`, `name`, `importName`) VALUES ('1', 'General', 'generic');
 ```
 
 ## View Change log
 View change log for the following objects:
-- Projects
-- Projects Types
-- Registry
-- Reports
-- Inventory
+- project
+- project_item
+- registry
+- report
+- inventory
 	
 ```
-select logs.id, logs.object, logs.properties_before, logs.properties_after, logs.time, users.username,
-	CASE WHEN (logs.properties_before IS NOT NULL) and (logs.properties_after IS NOT NULL) THEN 'UPDATE'
-		WHEN (logs.properties_before IS NULL) and (logs.properties_after IS NOT NULL) THEN 'CREATE'
-		WHEN (logs.properties_before IS NOT NULL) and (logs.properties_after IS NULL) THEN 'DELETE'
+select log.id, log.object, log.propertiesBefore, log.propertiesAfter, log.time, user.username,
+	CASE WHEN (log.propertiesBefore IS NOT NULL) and (log.propertiesAfter IS NOT NULL) THEN 'UPDATE'
+		WHEN (log.propertiesBefore IS NULL) and (log.propertiesAfter IS NOT NULL) THEN 'CREATE'
+		WHEN (log.propertiesBefore IS NOT NULL) and (log.propertiesAfter IS NULL) THEN 'DELETE'
 		ELSE 'UNKNOWN'
 	END AS action
-from logs
-JOIN users ON logs.userId = users.id
+from log
+JOIN user ON log.userId = user.id
 ```

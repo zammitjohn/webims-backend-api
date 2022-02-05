@@ -1,21 +1,16 @@
 <?php
 // include database and object files
 include_once '../config/database.php';
-include_once '../objects/registry.php';
 include_once '../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
- 
-// inventoryId of registry item to list
-$item->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
+// prepare user object
+$user = new user($db);
 
 // AUTH check
-$user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication 
 	$user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'}); 
 }
@@ -27,32 +22,31 @@ if (!$user->validAction()){
     die();
 }
 
-// query registry item
-$stmt = $item->read();
+// query user
+$stmt = $user->read();
 
 if ($stmt != false){
     $num = $stmt->rowCount();
-
+    
     // check if more than 0 record found
     if($num>0){
     
-        // registry item array
+        // user array
         $output_arr=array();
-        $output_arr["registry"]=array();
+        $output_arr["user"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $registry_item=array(
+            $user=array(
                 "id" => $id,
-                "inventoryId" => $inventoryId,
-                "serialNumber" => $serialNumber,
-                "datePurchased" => $datePurchased,
-                "state" => $state
+                "firstName" => $firstName,
+                "lastName" => $lastName,
+                "lastAvailable" => $lastAvailable
             );
-            array_push($output_arr["registry"], $registry_item);
+            array_push($output_arr["user"], $user);
         }
     
-        echo json_encode($output_arr["registry"]);
+        echo json_encode($output_arr["user"]);
     }
     else{
         echo json_encode(array());

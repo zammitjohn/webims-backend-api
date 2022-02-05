@@ -1,18 +1,20 @@
 <?php
 // include database and object files
-include_once '../config/database.php';
-include_once '../objects/registry.php';
-include_once '../objects/user.php';
+include_once '../../config/database.php';
+include_once '../../objects/project_item.php';
+include_once '../../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
+// prepare project_item item object
+$item = new project_item($db);
  
-// inventoryId of registry item to list
-$item->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
+// set inventoryId property of project_item type property to be shown 
+if (isset($_GET['inventoryId'])) {
+    $item->inventoryId = $_GET['inventoryId'];
+}
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -27,32 +29,30 @@ if (!$user->validAction()){
     die();
 }
 
-// query registry item
-$stmt = $item->read();
-
+// query project_item item
+$stmt = $item->read_allocations();
 if ($stmt != false){
     $num = $stmt->rowCount();
 
     // check if more than 0 record found
     if($num>0){
     
-        // registry item array
+        // sapres item array
         $output_arr=array();
-        $output_arr["registry"]=array();
+        $output_arr["project_item"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $registry_item=array(
-                "id" => $id,
+            $project_item_item=array(
                 "inventoryId" => $inventoryId,
-                "serialNumber" => $serialNumber,
-                "datePurchased" => $datePurchased,
-                "state" => $state
+                "projectId" => $projectId,
+                "project_name" => $project_name,
+                "total_qty" => $total_qty
             );
-            array_push($output_arr["registry"], $registry_item);
+            array_push($output_arr["project_item"], $project_item_item);
         }
     
-        echo json_encode($output_arr["registry"]);
+        echo json_encode($output_arr["project_item"]);
     }
     else{
         echo json_encode(array());

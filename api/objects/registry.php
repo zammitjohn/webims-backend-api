@@ -2,7 +2,7 @@
 // include object files
 include_once 'base.php';
 
-class Registry extends base{
+class registry extends base{
  
     // database table name
     protected $table_name = "registry";
@@ -17,16 +17,16 @@ class Registry extends base{
     
         // select query
         $query = "SELECT * FROM (SELECT registry.id, registry.inventoryId, registry.serialNumber, registry.datePurchased,
-                    CASE WHEN registry.id = reports.faultySN THEN 'Faulty'
-                        WHEN registry.id = reports.replacementSN THEN 'Replacement'
+                    CASE WHEN registry.id = report.faulty_registryId THEN 'Faulty'
+                        WHEN registry.id = report.replacement_registryId THEN 'Replacement'
                     ELSE 'New' END AS state
                     FROM ".$this->table_name."
-                    LEFT JOIN reports
-                        ON reports.faultySN = registry.id
-                        OR reports.replacementSN = registry.id
+                    LEFT JOIN report
+                        ON report.faulty_registryId = registry.id
+                        OR report.replacement_registryId = registry.id
                     WHERE registry.inventoryId = ".$this->inventoryId."
-                    ORDER BY state ASC LIMIT 1000) AS reports_registry
-                    GROUP BY reports_registry.id";                    
+                    ORDER BY state ASC LIMIT 1000) AS report_registry
+                    GROUP BY report_registry.id";                    
         //** Documented behavior: order by inside subquery ignored. MariaDB recommends LIMIT as a workaround. https://mariadb.com/kb/en/mariadb/faq/general-faq/why-is-order-by-in-a-from-subquery-ignored/**//
 
         // prepare query statement

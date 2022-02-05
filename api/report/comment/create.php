@@ -1,48 +1,51 @@
 <?php
- 
 // include database and object files
-include_once '../config/database.php';
-include_once '../objects/registry.php';
-include_once '../objects/user.php';
+include_once '../../config/database.php';
+include_once '../../objects/report_comment.php';
+include_once '../../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
+// prepare report comment property object
+$property = new report_comment($db);
  
-// set registry item property values
-$item->id = $_POST['id'];
+// set object property values
+$property->reportId = $_POST['reportId'];
+$property->text = htmlspecialchars($_POST['text']);
 
 // AUTH check
 $user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication
-    $user->action_isDelete = true;
+    $user->action_isCreate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
-    $item->userId = $user->getUserId();
+    $property->userId = $user->getUserId();
 }
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
-    $user->action_isDelete = true;
+    $user->action_isCreate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $property->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }
- 
-// remove the registry item
-if($item->delete()){
+
+// create
+if($property->create()){
     $output_arr=array(
         "status" => true,
-        "message" => "Successfully deleted!"
+        "message" => "Successfully created!",
+        "id" => $property->id,
+        "reportId" => $property->reportId,
+        "text" => $property->text
     );
 }
 else{
     $output_arr=array(
         "status" => false,
-        "message" => "Failed to delete!"
+        "message" => "Failed to create!"
     );
 }
 print_r(json_encode($output_arr));

@@ -1,18 +1,17 @@
 <?php
- 
 // include database and object files
-include_once '../config/database.php';
-include_once '../objects/registry.php';
-include_once '../objects/user.php';
+include_once '../../config/database.php';
+include_once '../../objects/project_item.php';
+include_once '../../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
+// prepare project_item item object
+$item = new project_item($db);
  
-// set registry item property values
+// set project_item item property values
 $item->id = $_POST['id'];
 
 // AUTH check
@@ -32,7 +31,7 @@ if (!$user->validAction()){
     die();
 }
  
-// remove the registry item
+// remove the project_item item
 if($item->delete()){
     $output_arr=array(
         "status" => true,

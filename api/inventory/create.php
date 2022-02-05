@@ -3,19 +3,18 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/inventory.php';
-include_once '../objects/users.php';
+include_once '../objects/user.php';
 
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
 // prepare inventory item object
-$item = new Inventory($db);
+$item = new inventory($db);
  
 // set item property values
 $item->SKU = $_POST['SKU'];
-$item->type = $_POST['type'];
-$item->category = $_POST['category'];
+$item->warehouse_categoryId = $_POST['warehouse_categoryId'];
 $item->description = $_POST['description'];
 $item->qty = $_POST['qty'];
 $item->qtyIn = $_POST['qtyIn'];
@@ -24,7 +23,7 @@ $item->supplier = $_POST['supplier'];
 $item->notes = $_POST['notes'];
 
 // AUTH check
-$user = new Users($db); // prepare users object
+$user = new user($db); // prepare user object
 if (isset($_COOKIE['UserSession'])){ // Cookie authentication
     $user->action_isCreate = true;
     $user->sessionId = htmlspecialchars(json_decode(base64_decode($_COOKIE['UserSession'])) -> {'SessionId'});
@@ -47,8 +46,7 @@ if($item->create(false)){
         "message" => "Successfully created!",
         "id" => $item->id,
         "SKU" => $item->SKU,
-        "type" => $item->type,
-        "category" => $item->category,
+        "warehouse_categoryId" => $item->warehouse_categoryId,
         "description" => $item->description,
 		"qty" => $item->qty,
         "qtyIn" => $item->qtyIn,

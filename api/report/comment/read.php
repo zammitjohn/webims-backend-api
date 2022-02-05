@@ -1,18 +1,18 @@
 <?php
 // include database and object files
-include_once '../config/database.php';
-include_once '../objects/registry.php';
-include_once '../objects/user.php';
+include_once '../../config/database.php';
+include_once '../../objects/report_comment.php';
+include_once '../../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
- 
-// inventoryId of registry item to list
-$item->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
+// prepare report comment property object
+$property = new report_comment($db);
+
+// set reportId property of report comment property to be shown 
+$property->reportId = $_GET['reportId'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,33 +26,33 @@ if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
     die();
 }
-
-// query registry item
-$stmt = $item->read();
-
+ 
+// query report comment property
+$stmt = $property->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 
     // check if more than 0 record found
     if($num>0){
     
-        // registry item array
+        // report comment property array
         $output_arr=array();
-        $output_arr["registry"]=array();
+        $output_arr["report_comment"]=array();
     
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             extract($row);
-            $registry_item=array(
+            $report_comment_property=array(
                 "id" => $id,
-                "inventoryId" => $inventoryId,
-                "serialNumber" => $serialNumber,
-                "datePurchased" => $datePurchased,
-                "state" => $state
+                "reportId" => $reportId,
+                "firstName" => $firstName,
+                "lastName" => $lastName,
+                "text" => $text,
+                "timestamp" => $timestamp
             );
-            array_push($output_arr["registry"], $registry_item);
+            array_push($output_arr["report_comment"], $report_comment_property);
         }
     
-        echo json_encode($output_arr["registry"]);
+        echo json_encode($output_arr["report_comment"]);
     }
     else{
         echo json_encode(array());

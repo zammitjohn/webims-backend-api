@@ -1,17 +1,17 @@
 <?php
 // include database and object files
-include_once '../config/database.php';
-include_once '../objects/inventory.php';
-include_once '../objects/user.php';
+include_once '../../config/database.php';
+include_once '../../objects/project_item.php';
+include_once '../../objects/user.php';
  
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+// prepare project_item item object
+$item = new project_item($db);
 
-// set ID property of inventory item to be edited
+// set ID property of project_item item to be edited
 $item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
@@ -27,7 +27,7 @@ if (!$user->validAction()){
     die();
 }
 
-// read the details of inventory item to be edited
+// read the details of project_item item to be edited
 $stmt = $item->read_single();
 
 if ($stmt != false){
@@ -37,17 +37,11 @@ if ($stmt != false){
         // create array
         $output_arr=array(
             "id" => $row['id'],
-            "SKU" => $row['SKU'],
-            "warehouse_categoryId" => $row['warehouse_categoryId'],
-            "warehouseId" => $row['warehouseId'],
+            "inventoryId" => $row['inventoryId'],
+            "projectId" => $row['projectId'],
             "description" => $row['description'],
             "qty" => $row['qty'],
-            "qtyIn" => $row['qtyIn'],
-            "qtyOut" => $row['qtyOut'],
-            "supplier" => $row['supplier'],
-            "notes" => $row['notes'],
-            "importDate" => $row['importDate'],
-            "lastChange" => $row['lastChange']
+            "notes" => $row['notes']
         );
     }
     // make it json format

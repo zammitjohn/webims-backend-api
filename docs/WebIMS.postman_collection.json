@@ -1,0 +1,1508 @@
+{
+	"info": {
+		"_postman_id": "6b4e4f14-adcd-445f-8551-34778457b51c",
+		"name": "WebIMS",
+		"description": "This is a full JSON API reference which interfaces to the extensive WebIMS database.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/login.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"login.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/logout.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"logout.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/read.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"read.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate_session",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user/validate_session.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"validate_session.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Warehouse",
+			"item": [
+				{
+					"name": "category",
+					"item": [
+						{
+							"name": "read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/warehouse/category/read.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"warehouse",
+										"category",
+										"read.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "warehouseId",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/warehouse/read.php?id=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"warehouse",
+								"read.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "transaction",
+					"item": [
+						{
+							"name": "read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/inventory/transaction/read.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"transaction",
+										"read.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "download",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/inventory/transaction/download.php?id=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"transaction",
+										"download.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"return\": true,\r\n    \"items\": [\r\n        {\r\n            \"item_id\": \"1\",\r\n            \"item_qty\": \"999\"\r\n        },\r\n                {\r\n            \"item_id\": \"2\",\r\n            \"item_qty\": \"999\"\r\n        },\r\n                {\r\n            \"item_id\": \"3\",\r\n            \"item_qty\": \"999\"\r\n        },\r\n                {\r\n            \"item_id\": \"4\",\r\n            \"item_qty\": \"999\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/inventory/transaction/create.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"inventory",
+										"transaction",
+										"create.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/read.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"read.php"
+							],
+							"query": [
+								{
+									"key": "warehouse_categoryId",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "warehouseId",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/read_single.php?id=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"read_single.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/search.php?term=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"search.php"
+							],
+							"query": [
+								{
+									"key": "term",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/delete.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "SKU",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "warehouse_categoryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "qty",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "qtyIn",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "qtyOut",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "supplier",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "notes",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/create.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "SKU",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "warehouse_categoryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "qty",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "qtyIn",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "qtyOut",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "supplier",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "notes",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/update.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"update.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mail_import",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"warehouseId\":\"1\", \"file\":\"\", \"isBase64EncodedContent\":\"1\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/mail_import.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"mail_import.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "warehouseId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/import.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"import.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Registry",
+			"item": [
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/registry/read.php?inventoryId=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"registry",
+								"read.php"
+							],
+							"query": [
+								{
+									"key": "inventoryId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/registry/delete.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"registry",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "inventoryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "serialNumber",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "datePurchased",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/registry/create.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"registry",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "comment",
+					"item": [
+						{
+							"name": "read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/report/comment/read.php?reportId=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"report",
+										"comment",
+										"read.php"
+									],
+									"query": [
+										{
+											"key": "reportId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "reportId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "text",
+											"value": "",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/report/comment/create.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"report",
+										"comment",
+										"create.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/report/read.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"read.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_myreports",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/report/read_myreports.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"read_myreports.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_single",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/report/read_single.php?id=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"read_single.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "inventoryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "ticketNumber",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "reportNumber",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "assignee_userId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "faulty_registryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "replacement_registryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateRequested",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateLeaving",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateDispatched",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateReturned",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "AWB",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "AWBreturn",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "RMA",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/report/create.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "inventoryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "ticketNumber",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "reportNumber",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "assignee_userId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "faulty_registryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "replacement_registryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateRequested",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateLeaving",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateDispatched",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "dateReturned",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "AWB",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "AWBreturn",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "RMA",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/report/update.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"update.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "toggle_repairable",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/report/toggle_repairable.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"toggle_repairable.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Project",
+			"item": [
+				{
+					"name": "item",
+					"item": [
+						{
+							"name": "read",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/project/item/read.php?projectId=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"project",
+										"item",
+										"read.php"
+									],
+									"query": [
+										{
+											"key": "projectId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read_single",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/project/item/read_single.php?id=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"project",
+										"item",
+										"read_single.php"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "read_allocations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/project/item/read_allocations.php?inventoryId=",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"project",
+										"item",
+										"read_allocations.php"
+									],
+									"query": [
+										{
+											"key": "inventoryId",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/project/item/delete.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"project",
+										"item",
+										"delete.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "inventoryId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "projectId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "qty",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "notes",
+											"value": "",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/project/item/create.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"project",
+										"item",
+										"create.php"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "id",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "inventoryId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "projectId",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "description",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "qty",
+											"value": "",
+											"type": "default"
+										},
+										{
+											"key": "notes",
+											"value": "",
+											"type": "default"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/project/item/update.php",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"project",
+										"item",
+										"update.php"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/project/read.php?id=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"project",
+								"read.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_myprojects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/project/read_myprojects.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"project",
+								"read_myprojects.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "download",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/project/download.php?id=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"project",
+								"download.php"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "id",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/project/delete.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"project",
+								"delete.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "default"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/project/create.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"project",
+								"create.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "projectId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "warehouse_categoryId",
+									"value": "",
+									"type": "default"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/project/import.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"project",
+								"import.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "test",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Auth-Key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1/",
+			"type": "string"
+		}
+	]
+}
