@@ -28,10 +28,10 @@ class report extends base{
     function read(){
 
         // filter by pending report assigned to user
-        if ($this->userId) {                        
+        if ($this->assignee_userId) {                        
             $query = "SELECT * 
                     FROM " . $this->table_name . " 
-                    WHERE assignee_userId = '".$this->userId."' AND ((replacement_registryId IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
+                    WHERE assignee_userId = '".$this->assignee_userId."' AND ((replacement_registryId IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
                     ORDER BY `id` DESC";   
 
         } else {    
