@@ -5,6 +5,7 @@ webims-backend-api is an open API built on SQL and PHP.
 - [API Reference](docs/api.md)
 - [Deployment](docs/deployment.md)
 - [SQL Commands](docs/sql.md)
+- [Database Schema](docs/db.md)
 
 ## Contribution
 Contribution is always **welcome and recommended**! Here's how:
