@@ -35,7 +35,7 @@ class inventory_transaction_item extends base{
     // read all transaction ids based on the items in the inventory_transaction 
     function read_all(){
         // select query
-        $query = "SELECT DISTINCT inventory_transaction_item.inventory_transactionId AS id, inventory_transaction.date, IF(isReturn = '1', 'Return of equipment', 'Issue of equipment') AS description, CONCAT(user.firstname, ' ', user.lastname) AS user_fullname
+        $query = "SELECT DISTINCT inventory_transaction_item.inventory_transactionId AS id, inventory_transaction.date, IF(isReturn = '1', 'Return of equipment', 'Issue of equipment') AS description, CONCAT(user.firstname, ' ', user.lastname) AS user_fullName
         FROM 
             " . $this->table_name . " 
 

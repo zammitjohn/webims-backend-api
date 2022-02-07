@@ -41,7 +41,7 @@ if ($stmt != false){
                 "id" => $id,
                 "description" => $description,
                 "date" => $date,
-                "user_fullname" => $user_fullname
+                "user_fullName" => $user_fullName
             );
             array_push($output_arr["inventory_transaction"], $inventory_transaction_item);
         }

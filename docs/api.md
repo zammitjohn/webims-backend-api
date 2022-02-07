@@ -39,7 +39,7 @@ APIs use authorization to ensure that client requests access data securely. To a
 
 | **Action**   | **Method** | **Parameters**                           | **Response**                                     | **Path**                            |
 |--------------|------------|------------------------------------------|--------------------------------------------------|-------------------------------------|
-| **read**     | `GET`      |                                          | id date user_fullname description                | /api/inventory/transaction/read     |
+| **read**     | `GET`      |                                          | id date user_fullName description                | /api/inventory/transaction/read     |
 | **create**   | `POST`     | JSON (return, items (item_id, item_qty)) | status message id returned_count requested_count | /api/inventory/transaction/create   |
 | **download** | `GET`      | id                                       | file                                             | /api/inventory/transaction/download |
 
@@ -113,7 +113,7 @@ APIs use authorization to ensure that client requests access data securely. To a
 | **create**           | `POST`     | inventoryId projectId description qty notes     | status message id inventoryId projectId description qty notes                           | /api/project/item/create           |
 | **delete**           | `POST`     | id                                              | status message                                                                          | /api/project/item/delete           |
 | **read_single**      | `GET`      | id                                              | id inventoryId projectId description qty notes                                          | /api/project/item/read_single      |
-| **read**             | `GET`      | projectId                                       | id inventoryId projectId project_name inventory_SKU description qty notes user_fullname | /api/project/item/read             |
+| **read**             | `GET`      | projectId                                       | id inventoryId projectId project_name inventory_SKU description qty notes user_fullName | /api/project/item/read             |
 | **read_allocations** | `GET`      | inventoryId                                     | inventoryId projectId project_name total_qty                                            | /api/project/item/read_allocations |
 | **update**           | `POST`     | id inventoryId projectId description qty notes  | status message                                                                          | /api/project/item/update           |
 
