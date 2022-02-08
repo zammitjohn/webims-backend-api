@@ -276,7 +276,7 @@ class inventory extends base{
         }
     }
 
-    function import($file, $categories, $warehouseId){
+    function import($file, $categories){
         $modifiedItemIDs = []; // to keep track of modified inventory item IDs
         fgetcsv($file, 10000, ","); // before beginning the while loop, just get the first line and do nothing with it
         while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
@@ -366,11 +366,11 @@ class inventory extends base{
         }
         fclose($file);
         // clean-up operation
-        $this->deleted_counter = $this->inventorySweep($warehouseId);
+        $this->deleted_counter = $this->inventorySweep();
     }
 
     // clean inventory
-    private function inventorySweep($warehouseId){
+    private function inventorySweep(){
         // list OLD inventory items which aren't referenced by project_item, registry and report 
         $query = "SELECT inventory.id, warehouse.id AS warehouseId, inventory.warehouse_categoryId
                     FROM
@@ -384,7 +384,7 @@ class inventory extends base{
                         ON 
                             warehouse_category.warehouseId = warehouse.id
 
-                    WHERE (importDate < '" . $this->importDate . "') AND (warehouseId = '" . $warehouseId . "') 
+                    WHERE (importDate < '" . $this->importDate . "') AND (warehouseId = '" . $this->warehouseId . "') 
         
                         AND inventory.id IN (
                             SELECT id FROM (
@@ -423,7 +423,7 @@ class inventory extends base{
                             warehouse
                         ON 
                             warehouse_category.warehouseId = warehouse.id
-                    WHERE (importDate < '" . $this->importDate . "') AND (warehouseId = '" . $warehouseId . "')";  
+                    WHERE (importDate < '" . $this->importDate . "') AND (warehouseId = '" . $this->warehouseId . "')";  
                     
         // prepare query
         $stmt_clear = $this->conn->prepare($query);

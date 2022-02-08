@@ -30,7 +30,10 @@ if (!$user->validAction()){
 
 // load categories for warehouse
 $warehouse_category = new warehouse_category($db);
-$categories = $warehouse_category->loadCategory($input['warehouseId']);
+$categories = $warehouse_category->loadCategories($input['warehouseId']);
+
+// set warehouseId property used by import inventorySweep function
+$inventory->warehouseId = $input['warehouseId'];
 
 // load file
 $fileContents = $input['file'];
@@ -41,7 +44,7 @@ if ($input['isBase64EncodedContent']){
 }
 
 if($file AND !feof($file)) {
-    $inventory->import($file, $categories, $input['warehouseId']);
+    $inventory->import($file, $categories);
 }
 
 $result_arr=array(

@@ -27,12 +27,16 @@ if (!$user->validAction()){
 
 // load categories for warehouse
 $warehouse_category = new warehouse_category($db);
-$categories = $warehouse_category->loadCategory($_POST['warehouseId']);
+$categories = $warehouse_category->loadCategories($_POST['warehouseId']);
 
+// set warehouseId property used by import inventorySweep function
+$inventory->warehouseId = $_POST['warehouseId'];
+
+// load file
 $filename=$_FILES["file"]["tmp_name"];
 if($_FILES["file"]["size"] > 0) {
     $file = fopen($filename, "r");
-    $inventory->import($file, $categories, $_POST['warehouseId']);
+    $inventory->import($file, $categories);
 }
 
 $result_arr=array(

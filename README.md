@@ -1,5 +1,5 @@
 # webims-backend-api
-webims-backend-api is an open API built on SQL and PHP.
+An open and extendible inventory management RESTful API built on SQL and PHP.
 
 ## Documentation
 - [API Reference](docs/api.md)

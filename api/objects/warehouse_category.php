@@ -48,7 +48,7 @@ class warehouse_category extends base{
     }
 
     // load all categories importName for particular warehouse
-    function loadCategory($warehouseId){
+    function loadCategories($warehouseId){
         $this->warehouseId = $warehouseId;
         $warehouse_category_stmt  = $this->read();
         while ($warehouse_category_row = $warehouse_category_stmt->fetch(PDO::FETCH_ASSOC)) { // ...then loop types and add to array
