@@ -5,6 +5,9 @@ include_once '../config/database.php';
 include_once '../objects/inventory.php';
 include_once '../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -13,14 +16,14 @@ $db = $database->getConnection();
 $item = new inventory($db);
  
 // set item property values
-$item->SKU = $_POST['SKU'];
-$item->warehouse_categoryId = $_POST['warehouse_categoryId'];
-$item->description = $_POST['description'];
-$item->qty = $_POST['qty'];
-$item->qtyIn = $_POST['qtyIn'];
-$item->qtyOut = $_POST['qtyOut'];
-$item->supplier = $_POST['supplier'];
-$item->notes = $_POST['notes'];
+$item->SKU = $bodyData['SKU'];
+$item->warehouse_categoryId = $bodyData['warehouse_categoryId'];
+$item->description = $bodyData['description'];
+$item->qty = $bodyData['qty'];
+$item->qtyIn = $bodyData['qtyIn'];
+$item->qtyOut = $bodyData['qtyOut'];
+$item->supplier = $bodyData['supplier'];
+$item->notes = $bodyData['notes'];
 
 // AUTH check
 $user = new user($db); // prepare user object

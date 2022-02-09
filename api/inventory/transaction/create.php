@@ -7,14 +7,15 @@ include_once '../../objects/inventory_transaction.php';
 include_once '../../objects/inventory.php';
 include_once '../../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// json data input
-$data = json_decode(file_get_contents('php://input'), true);
-isset($data['return']) ? : die();
-isset($data['items']) ? : die();
+isset($bodyData['return']) ? : die();
+isset($bodyData['items']) ? : die();
 
 // output flags
 $status = false;
@@ -44,8 +45,8 @@ if (!$user->validAction()){
 }
 
 // data from JSON
-$transaction->isReturn = $data['return']; //isReturn flag
-$transaction_items = $data['items']; // items
+$transaction->isReturn = $bodyData['return']; //isReturn flag
+$transaction_items = $bodyData['items']; // items
 
 if (sizeOf($transaction_items)){ 
     // create new transaction with items array is populated

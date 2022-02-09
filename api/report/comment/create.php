@@ -4,6 +4,9 @@ include_once '../../config/database.php';
 include_once '../../objects/report_comment.php';
 include_once '../../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -12,8 +15,8 @@ $db = $database->getConnection();
 $property = new report_comment($db);
  
 // set object property values
-$property->reportId = $_POST['reportId'];
-$property->text = htmlspecialchars($_POST['text']);
+$property->reportId = $bodyData['reportId'];
+$property->text = htmlspecialchars($bodyData['text']);
 
 // AUTH check
 $user = new user($db); // prepare user object

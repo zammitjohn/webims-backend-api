@@ -4,6 +4,9 @@ include_once '../config/database.php';
 include_once '../objects/project.php';
 include_once '../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -12,7 +15,7 @@ $db = $database->getConnection();
 $property = new project($db);
  
 // set project property values
-$property->name = htmlspecialchars($_POST['name']);
+$property->name = htmlspecialchars($bodyData['name']);
 
 // AUTH check
 $user = new user($db); // prepare user object

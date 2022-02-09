@@ -5,6 +5,9 @@ include_once '../config/database.php';
 include_once '../objects/registry.php';
 include_once '../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -13,9 +16,9 @@ $db = $database->getConnection();
 $item = new registry($db);
  
 // set item property values
-$item->inventoryId = $_POST['inventoryId'];
-$item->serialNumber = $_POST['serialNumber'];
-$item->datePurchased = $_POST['datePurchased'];
+$item->inventoryId = $bodyData['inventoryId'];
+$item->serialNumber = $bodyData['serialNumber'];
+$item->datePurchased = $bodyData['datePurchased'];
 
 // AUTH check
 $user = new user($db); // prepare user object

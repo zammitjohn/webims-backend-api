@@ -4,6 +4,9 @@ include_once '../../config/database.php';
 include_once '../../objects/project_item.php';
 include_once '../../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
@@ -12,11 +15,11 @@ $db = $database->getConnection();
 $item = new project_item($db);
  
 // set item property values
-$item->inventoryId = $_POST['inventoryId'];
-$item->projectId = $_POST['projectId'];
-$item->description = $_POST['description'];
-$item->qty = $_POST['qty'];
-$item->notes = $_POST['notes'];
+$item->inventoryId = $bodyData['inventoryId'];
+$item->projectId = $bodyData['projectId'];
+$item->description = $bodyData['description'];
+$item->qty = $bodyData['qty'];
+$item->notes = $bodyData['notes'];
 
 // AUTH check
 $user = new user($db); // prepare user object

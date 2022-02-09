@@ -5,16 +5,15 @@ include_once '../objects/inventory.php';
 include_once '../objects/user.php';
 include_once '../objects/warehouse_category.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
 
 $inventory = new inventory($db);
 $warehouse_category = []; // array to hold inventory types for particular warehouseId
-
-// Body Data
-$inputJSON = file_get_contents('php://input');
-$input = json_decode($inputJSON, TRUE); //convert JSON into array
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -30,14 +29,14 @@ if (!$user->validAction()){
 
 // load categories for warehouse
 $warehouse_category = new warehouse_category($db);
-$categories = $warehouse_category->loadCategories($input['warehouseId']);
+$categories = $warehouse_category->loadCategories($bodyData['warehouseId']);
 
 // set warehouseId property used by import inventorySweep function
-$inventory->warehouseId = $input['warehouseId'];
+$inventory->warehouseId = $bodyData['warehouseId'];
 
 // load file
-$fileContents = $input['file'];
-if ($input['isBase64EncodedContent']){
+$fileContents = $bodyData['file'];
+if ($bodyData['isBase64EncodedContent']){
     $file = fopen('data://text/plain' . base64_decode($fileContents),'r');
 } else {
     $file = fopen('data://text/plain' . ($fileContents),'r');

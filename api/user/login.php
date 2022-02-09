@@ -2,6 +2,9 @@
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/user.php';
+
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
  
 // get database connection
 $database = new Database();
@@ -11,8 +14,8 @@ $db = $database->getConnection();
 $user = new user($db);
 
 // set user property values
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = $bodyData['username'];
+$password = $bodyData['password'];
 
 // LAPD connection, modify the following as required!
 $ldap = ldap_connect('ldap://mt-wi-dc1.telco.mt:389 ldap://mt-wi-dc2.telco.mt:389');

@@ -3,6 +3,9 @@
 include_once '../config/database.php';
 include_once '../objects/report.php';
 include_once '../objects/user.php';
+
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
  
 // get database connection
 $database = new Database();
@@ -12,22 +15,22 @@ $db = $database->getConnection();
 $item = new report($db);
  
 // set report item property values
-$item->id = $_POST['id'];
-$item->inventoryId = $_POST['inventoryId'];
-$item->ticketNumber = $_POST['ticketNumber'];
-$item->name = $_POST['name'];
-$item->description = $_POST['description'];
-$item->reportNumber = $_POST['reportNumber'];
-$item->assignee_userId = $_POST['assignee_userId'];
-$item->faulty_registryId = $_POST['faulty_registryId'];
-$item->replacement_registryId = $_POST['replacement_registryId'];
-$item->dateRequested = $_POST['dateRequested'];
-$item->dateLeaving = $_POST['dateLeaving'];
-$item->dateDispatched = $_POST['dateDispatched'];
-$item->dateReturned = $_POST['dateReturned'];
-$item->AWB = $_POST['AWB'];
-$item->AWBreturn = $_POST['AWBreturn'];
-$item->RMA = $_POST['RMA'];
+$item->id = $bodyData['id'];
+$item->inventoryId = $bodyData['inventoryId'];
+$item->ticketNumber = $bodyData['ticketNumber'];
+$item->name = $bodyData['name'];
+$item->description = $bodyData['description'];
+$item->reportNumber = $bodyData['reportNumber'];
+$item->assignee_userId = $bodyData['assignee_userId'];
+$item->faulty_registryId = $bodyData['faulty_registryId'];
+$item->replacement_registryId = $bodyData['replacement_registryId'];
+$item->dateRequested = $bodyData['dateRequested'];
+$item->dateLeaving = $bodyData['dateLeaving'];
+$item->dateDispatched = $bodyData['dateDispatched'];
+$item->dateReturned = $bodyData['dateReturned'];
+$item->AWB = $bodyData['AWB'];
+$item->AWBreturn = $bodyData['AWBreturn'];
+$item->RMA = $bodyData['RMA'];
 
 // AUTH check
 $user = new user($db); // prepare user object

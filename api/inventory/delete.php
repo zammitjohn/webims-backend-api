@@ -5,15 +5,18 @@ include_once '../config/database.php';
 include_once '../objects/inventory.php';
 include_once '../objects/user.php';
 
+// JSON body data
+$bodyData = json_decode(file_get_contents('php://input'), true);
+
 // get database connection
 $database = new Database();
 $db = $database->getConnection();
  
 // prepare inventory item object
 $item = new inventory($db);
- 
+
 // set inventory item property values
-$item->id = $_POST['id'];
+$item->id = $bodyData['id'];
 
 // AUTH check
 $user = new user($db); // prepare user object
