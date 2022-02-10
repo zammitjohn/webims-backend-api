@@ -8,11 +8,11 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory_transaction item object
-$item = new inventory_transaction_item($db);
+// prepare inventory_transaction object
+$inventory_transaction_item = new inventory_transaction_item($db);
 
 // set ID property of transaction item to be dumped
-$item->inventory_transactionId = isset($_GET['id']) ? $_GET['id'] : die();
+$inventory_transaction_item->inventory_transactionId = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
 
 // query inventory_transaction item
-$stmt = $item->dumpTransactionItems();
+$stmt = $inventory_transaction_item->dumpTransactionItems();
 if ($stmt != false){
     $num = $stmt->rowCount();
     
@@ -61,7 +61,7 @@ if ($stmt != false){
     // tell the browser it's going to be a csv file
     header('Content-Type: application/csv');
     // tell the browser we want to save it instead of displaying it
-    header('Content-Disposition: attachment; filename="transaction_'. $item->inventory_transactionId . '.csv";');
+    header('Content-Disposition: attachment; filename="transaction_'. $inventory_transaction_item->inventory_transactionId . '.csv";');
     // make php send the generated csv lines to the browser
     fpassthru($file);
 }

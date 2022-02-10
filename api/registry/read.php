@@ -8,11 +8,11 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
+// prepare registry object
+$registry = new registry($db);
  
 // inventoryId of registry item to list
-$item->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
+$registry->inventoryId = isset($_GET['inventoryId']) ? $_GET['inventoryId'] : die();
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
 
 // query registry item
-$stmt = $item->read();
+$stmt = $registry->read();
 
 if ($stmt != false){
     $num = $stmt->rowCount();

@@ -9,14 +9,14 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare project property object
-$property = new project($db);
+$project = new project($db);
 
 // AUTH check
 $user = new user($db); // prepare user object
 
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $property->userId = $user->getUserId();
+    $project->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -24,7 +24,7 @@ if (!$user->validAction()){
 }
  
 // query project property
-$stmt = $property->read();
+$stmt = $project->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

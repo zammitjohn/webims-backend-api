@@ -26,9 +26,9 @@ $inventory_transactionId = NULL;
 $isInStock = true;
 
 // prepare objects
-$transaction = new inventory_transaction($db);
-$item = new inventory_transaction_item($db);
-$inventory_item = new Inventory($db);
+$inventory_transaction = new inventory_transaction($db);
+$inventory_transaction_item = new inventory_transaction_item($db);
+$inventory = new inventory($db);
  
 // AUTH check
 $user = new user($db); // prepare user object
@@ -36,8 +36,8 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isUpdate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $transaction->userId = $user->getUserId();
-    $inventory_item->userId = $user->getUserId();
+    $inventory_transaction->userId = $user->getUserId();
+    $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -45,21 +45,21 @@ if (!$user->validAction()){
 }
 
 // data from JSON
-$transaction->isReturn = $bodyData['return']; //isReturn flag
+$inventory_transaction->isReturn = $bodyData['return']; //isReturn flag
 $transaction_items = $bodyData['items']; // items
 
 if (sizeOf($transaction_items)){ 
     // create new transaction with items array is populated
-    if($transaction->create()){
-        $item->inventory_transactionId = $transaction->id; // get transaction id of newly created transaction
-        $inventory_transactionId = $transaction->id;
+    if($inventory_transaction->create()){
+        $inventory_transaction_item->inventory_transactionId = $inventory_transaction->id; // get transaction id of newly created transaction
+        $inventory_transactionId = $inventory_transaction->id;
 
         // check inventory item qtys if issuing items
-        if (!($transaction->isReturn)){
+        if (!($inventory_transaction->isReturn)){
             foreach($transaction_items as $transaction_item){
-                $inventory_item->id = $transaction_item['item_id'];
-                $inventory_item->qty = $transaction_item['item_qty'];
-                if(!($inventory_item->checkQuantities())){
+                $inventory->id = $transaction_item['item_id'];
+                $inventory->qty = $transaction_item['item_qty'];
+                if(!($inventory->checkQuantities())){
                     $status = false;
                     $message = "Not enough stock for one or more items!";
                     $isInStock = false;
@@ -69,26 +69,26 @@ if (sizeOf($transaction_items)){
 
         if ($isInStock){
             foreach($transaction_items as $transaction_item){
-                $item->inventoryId = $transaction_item['item_id'];
-                $item->qty = $transaction_item['item_qty'];
+                $inventory_transaction_item->inventoryId = $transaction_item['item_id'];
+                $inventory_transaction_item->qty = $transaction_item['item_qty'];
 
-                if ($item->create()){ // reduce qtys from stock
+                if ($inventory_transaction_item->create()){ // reduce qtys from stock
                     $status = true;
                     $message = "Transaction successful!";
                     
-                    $inventory_item->id = $item->inventoryId;
-                    if (!($transaction->isReturn)){
-                        $inventory_item->qty = -($item->qty);
-                        $inventory_item->qtyIn = 0;
-                        $inventory_item->qtyOut = ($item->qty);
+                    $inventory->id = $inventory_transaction_item->inventoryId;
+                    if (!($inventory_transaction->isReturn)){
+                        $inventory->qty = -($inventory_transaction_item->qty);
+                        $inventory->qtyIn = 0;
+                        $inventory->qtyOut = ($inventory_transaction_item->qty);
                         $requested_counter++;
                     } else {
-                        $inventory_item->qty = ($item->qty);
-                        $inventory_item->qtyIn = ($item->qty);
-                        $inventory_item->qtyOut = 0;
+                        $inventory->qty = ($inventory_transaction_item->qty);
+                        $inventory->qtyIn = ($inventory_transaction_item->qty);
+                        $inventory->qtyOut = 0;
                         $returned_counter++;
                     }
-                    $inventory_item->updateQuantities();
+                    $inventory->updateQuantities();
                 }
             }
         }

@@ -9,14 +9,14 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare warehouse category property object
-$property = new warehouse_category($db);
+$warehouse_category = new warehouse_category($db);
 
 // set type property of warehouse category property to be shown 
 if (isset($_GET['id'])) {
-    $property->id = $_GET['id'];
+    $warehouse_category->id = $_GET['id'];
 }
 if (isset($_GET['warehouseId'])) {
-    $property->warehouseId = $_GET['warehouseId'];
+    $warehouse_category->warehouseId = $_GET['warehouseId'];
 }
 
 // AUTH check
@@ -31,7 +31,7 @@ if (!$user->validAction()){
 }
  
 // query warehouse category property
-$stmt = $property->read();
+$stmt = $warehouse_category->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

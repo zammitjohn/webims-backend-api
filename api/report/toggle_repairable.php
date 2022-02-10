@@ -11,11 +11,11 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();	
 $db = $database->getConnection();	
 
-// prepare report item object	
-$item = new report($db);	
+// prepare report object	
+$report = new report($db);	
 
-// set report item property values	
-$item->id = $bodyData['id'];	
+// set report object values	
+$report->id = $bodyData['id'];	
 
 // AUTH check	
 $user = new user($db); // prepare user object	
@@ -23,7 +23,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isUpdate = true;	
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();	
+    $report->userId = $user->getUserId();	
 }
 if (!$user->validAction()){	
     header("HTTP/1.1 401 Unauthorized");	
@@ -31,7 +31,7 @@ if (!$user->validAction()){
 }	
 
 // remove the report item	
-if($item->toggle_repairable()){	
+if($report->toggle_repairable()){	
     $output_arr=array(	
         "status" => true,	
         "message" => "Successfully updated!"	

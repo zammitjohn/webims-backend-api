@@ -8,12 +8,12 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project_item item object
-$item = new project_item($db);
+// prepare project_item object
+$project_item = new project_item($db);
 
-// set property of project_item property to be shown 
+// set property of project_object to be shown 
 if (isset($_GET['id'])) {
-    $item->projectId = $_GET['id'];
+    $project_item->projectId = $_GET['id'];
 }
 
 // AUTH check
@@ -28,7 +28,7 @@ if (!$user->validAction()){
 }
 
 // query order item
-$stmt = $item->read();
+$stmt = $project_item->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
     
@@ -58,7 +58,7 @@ if ($stmt != false){
     // tell the browser it's going to be a csv file
     header('Content-Type: application/csv');
     // tell the browser we want to save it instead of displaying it
-    header('Content-Disposition: attachment; filename="project_'. $item->projectId . '.csv";');
+    header('Content-Disposition: attachment; filename="project_'. $project_item->projectId . '.csv";');
     // make php send the generated csv lines to the browser
     fpassthru($file);
 }

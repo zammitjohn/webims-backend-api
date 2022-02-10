@@ -9,10 +9,10 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare report comment property object
-$property = new report_comment($db);
+$report_comment = new report_comment($db);
 
 // set reportId property of report comment property to be shown 
-$property->reportId = $_GET['reportId'];
+$report_comment->reportId = $_GET['reportId'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
  
 // query report comment property
-$stmt = $property->read();
+$stmt = $report_comment->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

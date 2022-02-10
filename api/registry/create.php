@@ -12,13 +12,13 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
+// prepare registry object
+$registry = new registry($db);
  
-// set item property values
-$item->inventoryId = $bodyData['inventoryId'];
-$item->serialNumber = $bodyData['serialNumber'];
-$item->datePurchased = $bodyData['datePurchased'];
+// set object values
+$registry->inventoryId = $bodyData['inventoryId'];
+$registry->serialNumber = $bodyData['serialNumber'];
+$registry->datePurchased = $bodyData['datePurchased'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isCreate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $registry->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -34,14 +34,14 @@ if (!$user->validAction()){
 }
 
 // create the item
-if($item->create()){
+if($registry->create()){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully created!",
-        "id" => $item->id,
-        "inventoryId" => $item->inventoryId,
-        "serialNumber" => $item->serialNumber,
-		"datePurchased" => $item->datePurchased,
+        "id" => $registry->id,
+        "inventoryId" => $registry->inventoryId,
+        "serialNumber" => $registry->serialNumber,
+		"datePurchased" => $registry->datePurchased,
     );
 }
 else{

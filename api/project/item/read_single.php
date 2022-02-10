@@ -8,11 +8,11 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project_item item object
-$item = new project_item($db);
+// prepare project_item object
+$project_item = new project_item($db);
 
 // set ID property of project_item item to be edited
-$item->id = isset($_GET['id']) ? $_GET['id'] : die();
+$project_item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
 
 // read the details of project_item item to be edited
-$stmt = $item->read_single();
+$stmt = $project_item->read_single();
 
 if ($stmt != false){
     if($stmt->rowCount() > 0){

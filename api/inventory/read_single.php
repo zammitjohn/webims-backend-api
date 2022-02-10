@@ -8,11 +8,11 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+// prepare inventory object
+$inventory = new inventory($db);
 
 // set ID property of inventory item to be edited
-$item->id = isset($_GET['id']) ? $_GET['id'] : die();
+$inventory->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
 
 // read the details of inventory item to be edited
-$stmt = $item->read_single();
+$stmt = $inventory->read_single();
 
 if ($stmt != false){
     if($stmt->rowCount() > 0){

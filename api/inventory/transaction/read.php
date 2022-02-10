@@ -8,8 +8,8 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory_transaction item object
-$item = new inventory_transaction_item($db);
+// prepare inventory_transaction object
+$inventory_transaction_item = new inventory_transaction_item($db);
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -23,7 +23,7 @@ if (!$user->validAction()){
 }
 
 // query inventory_transaction item
-$stmt = $item->read_all();
+$stmt = $inventory_transaction_item->read_all();
 
 if ($stmt != false){
     $num = $stmt->rowCount();

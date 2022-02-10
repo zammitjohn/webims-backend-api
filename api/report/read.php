@@ -8,8 +8,8 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare report item object
-$item = new report($db);
+// prepare report object
+$report = new report($db);
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -23,7 +23,7 @@ if (!$user->validAction()){
 }
  
 // query report item
-$stmt = $item->read();
+$stmt = $report->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

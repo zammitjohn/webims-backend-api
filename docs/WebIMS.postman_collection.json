@@ -63,9 +63,6 @@
 				},
 				{
 					"name": "read",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -74,10 +71,6 @@
 								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "{{baseUrl}}/api/user/read.php",
 							"host": [
@@ -94,9 +87,6 @@
 				},
 				{
 					"name": "validate_session",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -105,10 +95,6 @@
 								"value": "application/json"
 							}
 						],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "{{baseUrl}}/api/user/validate_session.php",
 							"host": [
@@ -443,22 +429,11 @@
 				{
 					"name": "import",
 					"request": {
-						"method": "POST",
+						"method": "PUT",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "warehouseId",
-									"value": "",
-									"type": "default"
-								},
-								{
-									"key": "file",
-									"type": "file",
-									"src": []
-								}
-							],
+							"mode": "raw",
+							"raw": "{\r\n    \"warehouseId\": \"\",\r\n    \"file\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -474,34 +449,6 @@
 								"api",
 								"inventory",
 								"import.php"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "mail_import",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"warehouseId\": \"\",\r\n    \"file\": \"\",\r\n    \"isBase64EncodedContent\": \"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/inventory/mail_import.php",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"api",
-								"inventory",
-								"mail_import.php"
 							]
 						}
 					},
@@ -1026,16 +973,9 @@
 				},
 				{
 					"name": "download",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
 						"url": {
 							"raw": "{{baseUrl}}/api/project/download.php?id=",
 							"host": [
@@ -1118,27 +1058,11 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "id",
-									"value": "",
-									"type": "default"
-								},
-								{
-									"key": "warehouse_categoryId",
-									"value": "",
-									"type": "default"
-								},
-								{
-									"key": "file",
-									"type": "file",
-									"src": []
-								}
-							],
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"\",\r\n    \"warehouse_categoryId\": \"\",\r\n    \"file\": \"\"\r\n}",
 							"options": {
 								"raw": {
-									"language": "text"
+									"language": "json"
 								}
 							}
 						},
@@ -1164,7 +1088,7 @@
 		"apikey": [
 			{
 				"key": "value",
-				"value": "TEST",
+				"value": "",
 				"type": "string"
 			},
 			{

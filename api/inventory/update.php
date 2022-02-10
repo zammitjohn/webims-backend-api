@@ -11,19 +11,19 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+// prepare inventory object
+$inventory = new inventory($db);
  
-// set inventory item property values
-$item->id = $bodyData['id'];
-$item->SKU = $bodyData['SKU'];
-$item->warehouse_categoryId = $bodyData['warehouse_categoryId'];
-$item->description = $bodyData['description'];
-$item->qty = $bodyData['qty'];
-$item->qtyIn = $bodyData['qtyIn'];
-$item->qtyOut = $bodyData['qtyOut'];
-$item->supplier = $bodyData['supplier'];
-$item->notes = $bodyData['notes'];
+// set inventory object values
+$inventory->id = $bodyData['id'];
+$inventory->SKU = $bodyData['SKU'];
+$inventory->warehouse_categoryId = $bodyData['warehouse_categoryId'];
+$inventory->description = $bodyData['description'];
+$inventory->qty = $bodyData['qty'];
+$inventory->qtyIn = $bodyData['qtyIn'];
+$inventory->qtyOut = $bodyData['qtyOut'];
+$inventory->supplier = $bodyData['supplier'];
+$inventory->notes = $bodyData['notes'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -31,7 +31,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isUpdate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -39,7 +39,7 @@ if (!$user->validAction()){
 }
  
 // create the inventory item
-if($item->update(false)){
+if($inventory->update(false)){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully updated!"

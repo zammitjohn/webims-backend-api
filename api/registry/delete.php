@@ -12,11 +12,11 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare registry item object
-$item = new registry($db);
+// prepare registry object
+$registry = new registry($db);
  
-// set registry item property values
-$item->id = $bodyData['id'];
+// set registry object values
+$registry->id = $bodyData['id'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -24,7 +24,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isDelete = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $registry->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -32,7 +32,7 @@ if (!$user->validAction()){
 }
  
 // remove the registry item
-if($item->delete()){
+if($registry->delete()){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully deleted!"

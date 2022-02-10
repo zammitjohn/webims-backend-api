@@ -8,11 +8,11 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare report item object
-$item = new report($db);
+// prepare report object
+$report = new report($db);
 
 // set ID property of report item to be edited
-$item->id = isset($_GET['id']) ? $_GET['id'] : die();
+$report->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
 
 // read the details of report item to be edited
-$stmt = $item->read_single();
+$stmt = $report->read_single();
 
 if ($stmt != false){
     if($stmt->rowCount() > 0){

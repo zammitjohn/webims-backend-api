@@ -10,7 +10,6 @@ class inventory extends base{
     // object properties
     public $SKU;
     public $warehouse_categoryId;
-    public $warehouseId;
     public $description;
     public $qty;
     public $qtyIn;
@@ -18,14 +17,9 @@ class inventory extends base{
     public $supplier;
     public $notes;
     public $importDate;
-    public $search_term;
 
-    // function counters
-    public $created_counter = 0;
-    public $updated_counter = 0;
-    public $conflict_counter = 0;
-    public $deleted_counter = 0;
-    public $import_status = false;
+    public $warehouseId;
+    public $search_term;
  
     // read all inventory
     function read(){
@@ -276,101 +270,8 @@ class inventory extends base{
         }
     }
 
-    function import($file, $categories){
-        $modifiedItemIDs = []; // to keep track of modified inventory item IDs
-        fgetcsv($file, 10000, ","); // before beginning the while loop, just get the first line and do nothing with it
-        while (($getData = fgetcsv($file, 10000, ",")) !== FALSE) {
-            if ($getData[0] == NULL) // skip blank lines in file
-                continue;
-            
-            if (($getData[1] != NULL) && $data_warehouse_category = array_search(strtoupper(trim($getData[1])), $categories)) {
-                // Get data from CSV and clean values
-                if (!empty($getData[0])) {               
-                    $data_date = date('Y-m-d', strtotime(str_replace('/', '-', trim($getData[0]))));
-                } else {
-                    $data_date = "";
-                }
-    
-                if (!empty($getData[2])) {
-                    $data_SKU = trim($getData[2]); 
-                } else {
-                    $data_SKU = ""; 
-                }
-    
-                if (!empty($getData[3])) {
-                    $data_description = trim($getData[3]);  
-                } else {
-                    $data_description = ""; 
-                }
-    
-                if (!empty($getData[4])) {
-                    $data_qty = trim($getData[4]);  
-                } else {
-                    $data_qty = "0"; 
-                }
-    
-                if (!empty($getData[6])) {
-                    $data_qtyIn = trim($getData[6]);  
-                } else {
-                    $data_qtyIn = "0"; 
-                }
-    
-                if (!empty($getData[7])) {
-                    $data_qtyOut = trim($getData[7]);  
-                } else {
-                    $data_qtyOut = "0"; 
-                }
-    
-                if (!empty($getData[8])) {
-                    $data_supplier = trim($getData[8]);  
-                } else {
-                    $data_supplier = ""; 
-                }
-                            
-                // prepare inventory item object
-                $this->SKU = $data_SKU;
-                $this->warehouse_categoryId = $data_warehouse_category;
-                $this->description = $data_description;
-                $this->qty = $data_qty;
-                $this->qtyIn = $data_qtyIn;
-                $this->qtyOut = $data_qtyOut;
-                $this->supplier = $data_supplier;
-                $this->importDate = $data_date;
-    
-                // check if SKU already exists
-                if ($existingId = $this->isAlreadyExist()) { // update existing inventory item
-                    $this->id = $existingId;
-    
-                    // check if item was already modified
-                    if (in_array($this->id, $modifiedItemIDs)) {
-                        if ($this->updateQuantities()) { // update inventory item with quantities to add up
-                            $this->conflict_counter++;
-                            $this->import_status = true;
-                        }
-                    } else if ($this->update(true)) { // update inventory item
-                        $this->updated_counter++;
-                        $this->import_status = true;
-                        array_push($modifiedItemIDs, $this->id); // push ID to modifiedItemIDs
-                    }
-    
-                } else {
-                    if ($this->create(true)) { // create inventory item
-                        $this->created_counter++;
-                        $this->import_status = true;
-                        array_push($modifiedItemIDs, $this->id); // push ID to modifiedItemIDs
-                    }
-                }
-    
-            }
-    
-        }
-        fclose($file);
-        // clean-up operation
-        $this->deleted_counter = $this->inventorySweep();
-    }
-
     // clean inventory
-    private function inventorySweep(){
+    function inventorySweep(){
         // list OLD inventory items which aren't referenced by project_item, registry and report 
         $query = "SELECT inventory.id, warehouse.id AS warehouseId, inventory.warehouse_categoryId
                     FROM

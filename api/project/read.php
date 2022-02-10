@@ -9,11 +9,11 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare project property object
-$property = new project($db);
+$project = new project($db);
 
 // set id property of project property to be shown 
 if (isset($_GET['id'])) {
-    $property->id = $_GET['id'];
+    $project->id = $_GET['id'];
 }
 
 // AUTH check
@@ -28,7 +28,7 @@ if (!$user->validAction()){
 }
  
 // query project property
-$stmt = $property->read();
+$stmt = $project->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

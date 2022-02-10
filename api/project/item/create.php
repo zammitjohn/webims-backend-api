@@ -11,15 +11,15 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project_item item object
-$item = new project_item($db);
+// prepare project_item object
+$project_item = new project_item($db);
  
-// set item property values
-$item->inventoryId = $bodyData['inventoryId'];
-$item->projectId = $bodyData['projectId'];
-$item->description = $bodyData['description'];
-$item->qty = $bodyData['qty'];
-$item->notes = $bodyData['notes'];
+// set object values
+$project_item->inventoryId = $bodyData['inventoryId'];
+$project_item->projectId = $bodyData['projectId'];
+$project_item->description = $bodyData['description'];
+$project_item->qty = $bodyData['qty'];
+$project_item->notes = $bodyData['notes'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -27,7 +27,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isCreate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $project_item->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -35,16 +35,16 @@ if (!$user->validAction()){
 }
 
 // create the item
-if($item->create()){
+if($project_item->create()){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully created!",
-        "id" => $item->id,
-        "inventoryId" => $item->inventoryId,
-        "projectId" => $item->projectId,
-        "description" => $item->description,
-		"qty" => $item->qty,
-        "notes" => $item->notes	
+        "id" => $project_item->id,
+        "inventoryId" => $project_item->inventoryId,
+        "projectId" => $project_item->projectId,
+        "description" => $project_item->description,
+		"qty" => $project_item->qty,
+        "notes" => $project_item->notes	
     );
 }
 else{

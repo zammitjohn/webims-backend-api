@@ -12,10 +12,10 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare project object
-$property = new project($db);
+$project = new project($db);
  
 // set project property values
-$property->id = $bodyData['id'];
+$project->id = $bodyData['id'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -23,7 +23,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isDelete = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $property->userId = $user->getUserId();
+    $project->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -31,7 +31,7 @@ if (!$user->validAction()){
 }
  
 // remove the project
-if($property->delete()){
+if($project->delete()){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully deleted!"

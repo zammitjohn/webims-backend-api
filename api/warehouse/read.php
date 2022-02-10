@@ -9,11 +9,11 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare warehouse property object
-$property = new warehouse($db);
+$warehouse = new warehouse($db);
 
 // set type property of warehouse property to be shown 
 if (isset($_GET['id'])) {
-    $property->id = $_GET['id'];
+    $warehouse->id = $_GET['id'];
 }
 
 // AUTH check
@@ -28,7 +28,7 @@ if (!$user->validAction()){
 }
  
 // query warehouse property
-$stmt = $property->read();
+$stmt = $warehouse->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

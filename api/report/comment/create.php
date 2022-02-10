@@ -12,11 +12,11 @@ $database = new Database();
 $db = $database->getConnection();
  
 // prepare report comment property object
-$property = new report_comment($db);
+$report_comment = new report_comment($db);
  
 // set object property values
-$property->reportId = $bodyData['reportId'];
-$property->text = htmlspecialchars($bodyData['text']);
+$report_comment->reportId = $bodyData['reportId'];
+$report_comment->text = htmlspecialchars($bodyData['text']);
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -24,7 +24,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isCreate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $property->userId = $user->getUserId();
+    $report_comment->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -32,13 +32,13 @@ if (!$user->validAction()){
 }
 
 // create
-if($property->create()){
+if($report_comment->create()){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully created!",
-        "id" => $property->id,
-        "reportId" => $property->reportId,
-        "text" => $property->text
+        "id" => $report_comment->id,
+        "reportId" => $report_comment->reportId,
+        "text" => $report_comment->text
     );
 }
 else{

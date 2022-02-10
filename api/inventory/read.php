@@ -8,14 +8,14 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+// prepare inventory object
+$inventory = new inventory($db);
 
 if (isset($_GET['warehouse_categoryId'])) {
-    $item->warehouse_categoryId = $_GET['warehouse_categoryId'];
+    $inventory->warehouse_categoryId = $_GET['warehouse_categoryId'];
 }
 if (isset($_GET['warehouseId'])) {
-    $item->warehouseId = $_GET['warehouseId'];
+    $inventory->warehouseId = $_GET['warehouseId'];
 }
 
 // AUTH check
@@ -30,7 +30,7 @@ if (!$user->validAction()){
 }
  
 // query inventory item
-$stmt = $item->read();
+$stmt = $inventory->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 

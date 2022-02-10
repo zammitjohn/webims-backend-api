@@ -12,18 +12,17 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+$inventory = new inventory($db); // prepare inventory object
  
-// set item property values
-$item->SKU = $bodyData['SKU'];
-$item->warehouse_categoryId = $bodyData['warehouse_categoryId'];
-$item->description = $bodyData['description'];
-$item->qty = $bodyData['qty'];
-$item->qtyIn = $bodyData['qtyIn'];
-$item->qtyOut = $bodyData['qtyOut'];
-$item->supplier = $bodyData['supplier'];
-$item->notes = $bodyData['notes'];
+// set object values
+$inventory->SKU = $bodyData['SKU'];
+$inventory->warehouse_categoryId = $bodyData['warehouse_categoryId'];
+$inventory->description = $bodyData['description'];
+$inventory->qty = $bodyData['qty'];
+$inventory->qtyIn = $bodyData['qtyIn'];
+$inventory->qtyOut = $bodyData['qtyOut'];
+$inventory->supplier = $bodyData['supplier'];
+$inventory->notes = $bodyData['notes'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -31,7 +30,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isCreate = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $inventory->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -39,19 +38,19 @@ if (!$user->validAction()){
 }
 
 // create the item
-if($item->create(false)){
+if($inventory->create(false)){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully created!",
-        "id" => $item->id,
-        "SKU" => $item->SKU,
-        "warehouse_categoryId" => $item->warehouse_categoryId,
-        "description" => $item->description,
-		"qty" => $item->qty,
-        "qtyIn" => $item->qtyIn,
-        "qtyOut" => $item->qtyOut,
-        "supplier" => $item->supplier,
-        "notes" => $item->notes	
+        "id" => $inventory->id,
+        "SKU" => $inventory->SKU,
+        "warehouse_categoryId" => $inventory->warehouse_categoryId,
+        "description" => $inventory->description,
+		"qty" => $inventory->qty,
+        "qtyIn" => $inventory->qtyIn,
+        "qtyOut" => $inventory->qtyOut,
+        "supplier" => $inventory->supplier,
+        "notes" => $inventory->notes	
     );
 }
 else{

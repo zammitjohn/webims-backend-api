@@ -11,11 +11,11 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project_item item object
-$item = new project_item($db);
+// prepare project_item object
+$project_item = new project_item($db);
  
-// set project_item item property values
-$item->id = $bodyData['id'];
+// set project_item object values
+$project_item->id = $bodyData['id'];
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -23,7 +23,7 @@ $user = new user($db); // prepare user object
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
     $user->action_isDelete = true;
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
-    $item->userId = $user->getUserId();
+    $project_item->userId = $user->getUserId();
 }
 if (!$user->validAction()){
     header("HTTP/1.1 401 Unauthorized");
@@ -31,7 +31,7 @@ if (!$user->validAction()){
 }
  
 // remove the project_item item
-if($item->delete()){
+if($project_item->delete()){
     $output_arr=array(
         "status" => true,
         "message" => "Successfully deleted!"

@@ -8,11 +8,11 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare inventory item object
-$item = new inventory($db);
+// prepare inventory object
+$inventory = new inventory($db);
 
 // set type property of inventory item type to be shown 
-$item->search_term = isset($_GET['term']) ? $_GET['term'] : die();
+$inventory->search_term = isset($_GET['term']) ? $_GET['term'] : die();
 
 // AUTH check
 $user = new user($db); // prepare user object
@@ -26,7 +26,7 @@ if (!$user->validAction()){
 }
  
 // query inventory item
-$stmt = $item->read();
+$stmt = $inventory->read();
 if ($stmt != false){
   $num = $stmt->rowCount();
 

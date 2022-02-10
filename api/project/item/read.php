@@ -8,12 +8,12 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project_item item object
-$item = new project_item($db);
+// prepare project_item object
+$project_item = new project_item($db);
  
 // set type property of project_item type property to be shown 
 if (isset($_GET['projectId'])) {
-    $item->projectId = $_GET['projectId'];
+    $project_item->projectId = $_GET['projectId'];
 }
 
 // AUTH check
@@ -28,7 +28,7 @@ if (!$user->validAction()){
 }
 
 // query project_item item
-$stmt = $item->read();
+$stmt = $project_item->read();
 if ($stmt != false){
     $num = $stmt->rowCount();
 
