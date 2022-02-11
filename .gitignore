@@ -1,9 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # frontend files
-/css
 /images
-/js
 /static
 manifest.json
 asset-manifest.json

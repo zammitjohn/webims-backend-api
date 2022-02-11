@@ -31,15 +31,15 @@ class report extends base{
         if ($this->assignee_userId) {                        
             $query = "SELECT * 
                     FROM " . $this->table_name . " 
-                    WHERE assignee_userId = '".$this->assignee_userId."' AND ((replacement_registryId IS NULL) AND (dateReturned IS NULL) AND (isRepairable = '1'))
+                    WHERE assignee_userId = '".$this->assignee_userId."' AND ((replacement_registryId IS NULL) AND (dateReturned IS NULL) AND (isRepairable = 1))
                     ORDER BY `id` DESC";   
 
         } else {    
             // select all query
             $query = "SELECT *, 
-                    CASE WHEN replacement_registryId IS NOT NULL THEN '1'
-                        WHEN dateReturned IS NOT NULL THEN '1'
-                        ELSE '0' END AS isClosed
+                    CASE WHEN replacement_registryId IS NOT NULL THEN 1
+                        WHEN dateReturned IS NOT NULL THEN 1
+                        ELSE 0 END AS isClosed
                     FROM " . $this->table_name . " 
                     ORDER BY `id` DESC";                       
         }
