@@ -13,8 +13,8 @@ APIs use authorization to ensure that client requests access data securely. To a
 
 | **Action**           | **Method** | **Body**          | **Response**                                                              | **Path**                   |
 |----------------------|------------|-------------------|---------------------------------------------------------------------------|----------------------------|
-| **login**            | `PUT`      | username password | status message id username firstName lastName *sessionId* created         | /api/user/login            |
-| **logout**           | `PUT`      |                   | status message                                                            | /api/user/logout           |
+| **login**            | `POST`     | username password | status message id username firstName lastName *sessionId* created         | /api/user/login            |
+| **logout**           | `PATCH`    |                   | status message                                                            | /api/user/logout           |
 | **read**             | `GET`      |                   | id firstName lastName lastAvailable                                       | /api/user/read             |
 | **validate_session** | `GET`      |                   | status message firstName lastName canUpdate canCreate canImport canDelete | /api/user/validate_session |
 

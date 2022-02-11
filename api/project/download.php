@@ -11,7 +11,7 @@ $db = $database->getConnection();
 // prepare project_item object
 $project_item = new project_item($db);
 
-// set property of project_object to be shown 
+// set property of project object to be shown 
 if (isset($_GET['id'])) {
     $project_item->projectId = $_GET['id'];
 }

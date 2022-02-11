@@ -8,7 +8,7 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare warehouse property object
+// prepare warehouse object
 $warehouse = new warehouse($db);
 
 // set type property of warehouse property to be shown 

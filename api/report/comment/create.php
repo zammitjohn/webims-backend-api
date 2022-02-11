@@ -11,7 +11,7 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare report comment property object
+// prepare report_comment object
 $report_comment = new report_comment($db);
  
 // set object property values

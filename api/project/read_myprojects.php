@@ -8,7 +8,7 @@ include_once '../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project property object
+// prepare project object
 $project = new project($db);
 
 // AUTH check

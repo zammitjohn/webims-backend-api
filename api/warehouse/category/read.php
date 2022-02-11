@@ -8,7 +8,7 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare warehouse category property object
+// prepare warehouse_category object
 $warehouse_category = new warehouse_category($db);
 
 // set type property of warehouse category property to be shown 

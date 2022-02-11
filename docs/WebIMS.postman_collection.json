@@ -12,7 +12,7 @@
 				{
 					"name": "login",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -40,7 +40,7 @@
 				{
 					"name": "logout",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Content-Type",

@@ -8,7 +8,7 @@ include_once '../../objects/user.php';
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare report comment property object
+// prepare report_comment object
 $report_comment = new report_comment($db);
 
 // set reportId property of report comment property to be shown 
