@@ -80,7 +80,7 @@ if($file AND !feof($file)) {
             $project_item->qty = $data_qty;
             $project_item->notes = $data_notes;
             
-            if ($project_item->create(true)) { // create project_item item
+            if ($project_item->create(true)) { // create project_item
                 $created_counter++;
                 $status = true;
             }
@@ -95,11 +95,11 @@ if($file AND !feof($file)) {
 }
 
 
-$result_arr=array(
+$output_arr=array(
     "status" => $status,
     "created_count" => $created_counter,
     "notfound_count" => $notfound_counter,
     "additional_info" => $import_failed
 );
 
-print_r(json_encode($result_arr));
+echo json_encode($output_arr);

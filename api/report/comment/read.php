@@ -27,32 +27,25 @@ if (!$user->validAction()){
  
 // query report comment property
 $stmt = $report_comment->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // report comment property array
+    $output_arr=array();
+    $output_arr["report_comment"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // report comment property array
-        $output_arr=array();
-        $output_arr["report_comment"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $report_comment_property=array(
-                "id" => $id,
-                "reportId" => $reportId,
-                "firstName" => $firstName,
-                "lastName" => $lastName,
-                "text" => $text,
-                "timestamp" => $timestamp
-            );
-            array_push($output_arr["report_comment"], $report_comment_property);
-        }
-    
-        echo json_encode($output_arr["report_comment"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $report_comment_property=array(
+            "id" => $id,
+            "reportId" => $reportId,
+            "firstName" => $firstName,
+            "lastName" => $lastName,
+            "text" => $text,
+            "timestamp" => $timestamp
+        );
+        array_push($output_arr["report_comment"], $report_comment_property);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["report_comment"]);
+
+} else {
+    echo json_encode(array());
 }

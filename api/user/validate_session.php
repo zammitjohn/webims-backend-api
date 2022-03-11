@@ -23,27 +23,25 @@ if (!isset($_SERVER['HTTP_AUTH_KEY'])){
     // query user
     $stmt = $user->validateSession();
 
-    if ($stmt != false){
-        if($stmt->rowCount() > 0){
-            // get retrieved row
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            // create array
-            $output_arr=array(
-                "status" => true,
-                "message" => "Session valid!",
-                "firstName" => $row['firstName'],
-                "lastName" => $row['lastName'],
-                "canUpdate" => $row['canUpdate'],
-                "canCreate" => $row['canCreate'],
-                "canImport" => $row['canImport'],
-                "canDelete" => $row['canDelete']
-            );
-        } else {
-            $output_arr=array(
-                "status" => false,
-                "message" => "Session invalid!"
-            );
-        }
+    if ($stmt->rowCount()) {
+        // get retrieved row
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        // create array
+        $output_arr=array(
+            "status" => true,
+            "message" => "Session valid!",
+            "firstName" => $row['firstName'],
+            "lastName" => $row['lastName'],
+            "canUpdate" => $row['canUpdate'],
+            "canCreate" => $row['canCreate'],
+            "canImport" => $row['canImport'],
+            "canDelete" => $row['canDelete']
+        );
+    } else {
+        $output_arr=array(
+            "status" => false,
+            "message" => "Session invalid!"
+        );
     }
+    echo json_encode($output_arr);
 }
-print_r(json_encode($output_arr));

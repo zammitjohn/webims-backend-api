@@ -51,4 +51,4 @@ else{
         "message" => "Failed to update!"
     );
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

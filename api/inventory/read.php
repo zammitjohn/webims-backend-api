@@ -31,41 +31,33 @@ if (!$user->validAction()){
  
 // query inventory item
 $stmt = $inventory->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // inventory item array
+    $output_arr=array();
+    $output_arr["inventory"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // inventory item array
-        $output_arr=array();
-        $output_arr["inventory"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $inventory_item=array(
-                "id" => $id,
-                "SKU" => $SKU,
-                "warehouse_categoryId" => $warehouse_categoryId,
-                "warehouse_category_name" => $warehouse_category_name,
-                "warehouse_category_importName" => $warehouse_category_importName,
-                "warehouseId" => $warehouseId,
-                "warehouse_name" => $warehouse_name,
-                "description" => $description,
-                "qty" => $qty,
-                "qtyIn" => $qtyIn,
-                "qtyOut" => $qtyOut,
-                "supplier" => $supplier,
-                "importDate" => $importDate,
-                "qty_project_item_allocated" => $qty_project_item_allocated
-                
-            );
-            array_push($output_arr["inventory"], $inventory_item);
-        }
-    
-        echo json_encode($output_arr["inventory"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $inventory_item=array(
+            "id" => $id,
+            "SKU" => $SKU,
+            "warehouse_categoryId" => $warehouse_categoryId,
+            "warehouse_category_name" => $warehouse_category_name,
+            "warehouse_category_importName" => $warehouse_category_importName,
+            "warehouseId" => $warehouseId,
+            "warehouse_name" => $warehouse_name,
+            "description" => $description,
+            "qty" => $qty,
+            "qtyIn" => $qtyIn,
+            "qtyOut" => $qtyOut,
+            "supplier" => $supplier,
+            "importDate" => $importDate,
+            "qty_project_item_allocated" => $qty_project_item_allocated
+            
+        );
+        array_push($output_arr["inventory"], $inventory_item);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["inventory"]);
+} else {
+    echo json_encode(array());
 }

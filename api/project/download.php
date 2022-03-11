@@ -29,9 +29,7 @@ if (!$user->validAction()){
 
 // query order item
 $stmt = $project_item->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
-    
+if ($stmt->rowCount()) {
     // open the file for writing
     $file = fopen('php://memory', 'w'); 
 
@@ -61,4 +59,6 @@ if ($stmt != false){
     header('Content-Disposition: attachment; filename="project_'. $project_item->projectId . '.csv";');
     // make php send the generated csv lines to the browser
     fpassthru($file);
+} else {
+    header("HTTP/1.0 404 Not Found");
 }

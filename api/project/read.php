@@ -29,28 +29,21 @@ if (!$user->validAction()){
  
 // query project property
 $stmt = $project->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {    
+    // project property array
+    $output_arr=array();
+    $output_arr["project"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // project property array
-        $output_arr=array();
-        $output_arr["project"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $project_item_type_property=array(
-                "id" => $id,
-                "name" => $name
-            );
-            array_push($output_arr["project"], $project_item_type_property);
-        }
-    
-        echo json_encode($output_arr["project"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $project_item_type_property=array(
+            "id" => $id,
+            "name" => $name
+        );
+        array_push($output_arr["project"], $project_item_type_property);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["project"]);
+
+} else {
+    echo json_encode(array());
 }

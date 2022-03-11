@@ -98,11 +98,11 @@ if (sizeOf($transaction_items)){
     $message = "No items transacted!";
 }
 
-$result_arr=array(
+$output_arr=array(
     "status" => $status,
     "message" => $message,
     "id" => $inventory_transactionId,
     "requested_count" => $requested_counter,
     "returned_count" => $returned_counter
 );
-print_r(json_encode($result_arr));
+echo json_encode($output_arr);

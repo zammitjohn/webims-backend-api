@@ -29,29 +29,22 @@ if (!$user->validAction()){
  
 // query warehouse property
 $stmt = $warehouse->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // warehouse property array
+    $output_arr=array();
+    $output_arr["warehouse"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // warehouse property array
-        $output_arr=array();
-        $output_arr["warehouse"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $warehouse_property=array(
-                "id" => $id,
-                "name" => $name,
-                "supportImport" => $supportImport
-            );
-            array_push($output_arr["warehouse"], $warehouse_property);
-        }
-    
-        echo json_encode($output_arr["warehouse"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $warehouse_property=array(
+            "id" => $id,
+            "name" => $name,
+            "supportImport" => $supportImport
+        );
+        array_push($output_arr["warehouse"], $warehouse_property);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["warehouse"]);
+
+} else {
+    echo json_encode(array());
 }

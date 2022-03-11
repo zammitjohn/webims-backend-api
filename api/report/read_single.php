@@ -11,7 +11,7 @@ $db = $database->getConnection();
 // prepare report object
 $report = new report($db);
 
-// set ID property of report item to be edited
+// set ID property of report to be edited
 $report->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
@@ -25,35 +25,36 @@ if (!$user->validAction()){
     die();
 }
 
-// read the details of report item to be edited
+// read the details of report to be edited
 $stmt = $report->read_single();
 
-if ($stmt != false){
-    if($stmt->rowCount() > 0){
-        // get retrieved row
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // create array
-        $output_arr=array(
-            "id" => $row['id'],
-            "inventoryId" => $row['inventoryId'],
-            "ticketNumber" => $row['ticketNumber'],
-            "name" => $row['name'],
-            "description" => $row['description'],
-            "reportNumber" => $row['reportNumber'],
-            "assignee_userId" => $row['assignee_userId'],
-            "faulty_registryId" => $row['faulty_registryId'],
-            "replacement_registryId" => $row['replacement_registryId'],
-            "dateRequested" => $row['dateRequested'],
-            "dateLeaving" => $row['dateLeaving'],
-            "dateDispatched" => $row['dateDispatched'],
-            "dateReturned" => $row['dateReturned'],
-            "AWB" => $row['AWB'],
-            "AWBreturn" => $row['AWBreturn'],
-            "RMA" => $row['RMA'],
-            "isClosed" => $row['isClosed'],
-            "isRepairable" => $row['isRepairable']
-        );
-    }
+if ($stmt->rowCount()) {
+    // get retrieved row
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    // create array
+    $output_arr=array(
+        "id" => $row['id'],
+        "inventoryId" => $row['inventoryId'],
+        "ticketNumber" => $row['ticketNumber'],
+        "name" => $row['name'],
+        "description" => $row['description'],
+        "reportNumber" => $row['reportNumber'],
+        "assignee_userId" => $row['assignee_userId'],
+        "faulty_registryId" => $row['faulty_registryId'],
+        "replacement_registryId" => $row['replacement_registryId'],
+        "dateRequested" => $row['dateRequested'],
+        "dateLeaving" => $row['dateLeaving'],
+        "dateDispatched" => $row['dateDispatched'],
+        "dateReturned" => $row['dateReturned'],
+        "AWB" => $row['AWB'],
+        "AWBreturn" => $row['AWBreturn'],
+        "RMA" => $row['RMA'],
+        "isClosed" => $row['isClosed'],
+        "isRepairable" => $row['isRepairable']
+    );
     // make it json format
-    print_r(json_encode($output_arr));
+    echo json_encode($output_arr);
+
+} else {
+    header("HTTP/1.0 404 Not Found");
 }

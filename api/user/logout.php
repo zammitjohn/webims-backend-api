@@ -11,7 +11,6 @@ $db = $database->getConnection();
 $user = new user($db);
  
 // AUTH check
-
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
@@ -33,4 +32,4 @@ else{
         "message" => "Log out failed!"
     );
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

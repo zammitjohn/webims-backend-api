@@ -25,30 +25,22 @@ if (!$user->validAction()){
 // query inventory_transaction item
 $stmt = $inventory_transaction_item->read_all();
 
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // inventory_transaction item array
+    $output_arr=array();
+    $output_arr["inventory_transaction"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // inventory_transaction item array
-        $output_arr=array();
-        $output_arr["inventory_transaction"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $inventory_transaction_item=array(
-                "id" => $id,
-                "description" => $description,
-                "date" => $date,
-                "user_fullName" => $user_fullName
-            );
-            array_push($output_arr["inventory_transaction"], $inventory_transaction_item);
-        }
-    
-        echo json_encode($output_arr["inventory_transaction"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $inventory_transaction_item=array(
+            "id" => $id,
+            "description" => $description,
+            "date" => $date,
+            "user_fullName" => $user_fullName
+        );
+        array_push($output_arr["inventory_transaction"], $inventory_transaction_item);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["inventory_transaction"]);
+} else {
+    echo json_encode(array());
 }

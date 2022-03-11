@@ -11,7 +11,7 @@ $db = $database->getConnection();
 // prepare project_item object
 $project_item = new project_item($db);
 
-// set ID property of project_item item to be edited
+// set ID property of project_item to be edited
 $project_item->id = isset($_GET['id']) ? $_GET['id'] : die();
 
 // AUTH check
@@ -25,23 +25,24 @@ if (!$user->validAction()){
     die();
 }
 
-// read the details of project_item item to be edited
+// read the details of project_item to be edited
 $stmt = $project_item->read_single();
 
-if ($stmt != false){
-    if($stmt->rowCount() > 0){
-        // get retrieved row
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        // create array
-        $output_arr=array(
-            "id" => $row['id'],
-            "inventoryId" => $row['inventoryId'],
-            "projectId" => $row['projectId'],
-            "description" => $row['description'],
-            "qty" => $row['qty'],
-            "notes" => $row['notes']
-        );
-    }
+if ($stmt->rowCount()) {
+    // get retrieved row
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    // create array
+    $output_arr=array(
+        "id" => $row['id'],
+        "inventoryId" => $row['inventoryId'],
+        "projectId" => $row['projectId'],
+        "description" => $row['description'],
+        "qty" => $row['qty'],
+        "notes" => $row['notes']
+    );
     // make it json format
-    print_r(json_encode($output_arr));
+    echo json_encode($output_arr);
+    
+} else {
+    header("HTTP/1.0 404 Not Found");
 }

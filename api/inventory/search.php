@@ -27,23 +27,21 @@ if (!$user->validAction()){
  
 // query inventory item
 $stmt = $inventory->read();
-if ($stmt != false){
-  $num = $stmt->rowCount();
-
+if ($stmt->rowCount()) {
   // inventory item  array
   $output_arr=array();
   $output_arr["inventory"]=array();
 
-  // check if more than 0 record found
-  if($num>0){
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-        extract($row);
-        $inventory_item=array(
-            "value" => $id,
-            "label" => $SKU . ' ('  . $warehouse_name . ' ' . $warehouse_category_name . ') ' . $description
-        );
-        array_push($output_arr["inventory"], $inventory_item);
-    }
-  }
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+      extract($row);
+      $inventory_item=array(
+          "value" => $id,
+          "label" => $SKU . ' ('  . $warehouse_name . ' ' . $warehouse_category_name . ') ' . $description
+      );
+      array_push($output_arr["inventory"], $inventory_item);
+  }  
   echo json_encode(array('results' => $output_arr["inventory"])); 
+
+} else {
+  echo json_encode(array('results' => []));
 }

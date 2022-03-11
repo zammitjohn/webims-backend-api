@@ -27,32 +27,25 @@ if (!$user->validAction()){
     die();
 }
 
-// query project_item item
+// query project_item
 $stmt = $project_item->read_allocations();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // project_item array
+    $output_arr=array();
+    $output_arr["project_item"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // sapres item array
-        $output_arr=array();
-        $output_arr["project_item"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $project_item_item=array(
-                "inventoryId" => $inventoryId,
-                "projectId" => $projectId,
-                "project_name" => $project_name,
-                "total_qty" => $total_qty
-            );
-            array_push($output_arr["project_item"], $project_item_item);
-        }
-    
-        echo json_encode($output_arr["project_item"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $project_item_item=array(
+            "inventoryId" => $inventoryId,
+            "projectId" => $projectId,
+            "project_name" => $project_name,
+            "total_qty" => $total_qty
+        );
+        array_push($output_arr["project_item"], $project_item_item);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["project_item"]);
+
+} else {
+    echo json_encode(array());
 }

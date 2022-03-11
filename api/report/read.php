@@ -22,71 +22,64 @@ if (!$user->validAction()){
     die();
 }
  
-// query report item
+// query report
 $stmt = $report->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // report array
+    $output_arr=array();
+    $output_arr["report"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
- 
-        // report item array
-        $output_arr=array();
-        $output_arr["report"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
 
-            // different output depending on the params passed
-            if (isset($isClosed)){
-                $report_item=array(
-                    "id" => $id,
-                    "inventoryId" => $inventoryId,
-                    "ticketNumber" => $ticketNumber,
-                    "name" => $name,
-                    "description" => $description,
-                    "reportNumber" => $reportNumber,
-                    "assignee_userId" => $assignee_userId,
-                    "faulty_registryId" => $faulty_registryId,
-                    "replacement_registryId" => $replacement_registryId,
-                    "dateRequested" => $dateRequested,
-                    "dateLeaving" => $dateLeaving,
-                    "dateDispatched" => $dateDispatched,
-                    "dateReturned" => $dateReturned,
-                    "AWB" => $AWB,
-                    "AWBreturn" => $AWBreturn,
-                    "RMA" => $RMA,
-                    "isClosed" => $isClosed,
-                    "isRepairable" => $isRepairable
-                );
+        // different output depending on the params passed
+        if (isset($isClosed)){
+            $report_item=array(
+                "id" => $id,
+                "inventoryId" => $inventoryId,
+                "ticketNumber" => $ticketNumber,
+                "name" => $name,
+                "description" => $description,
+                "reportNumber" => $reportNumber,
+                "assignee_userId" => $assignee_userId,
+                "faulty_registryId" => $faulty_registryId,
+                "replacement_registryId" => $replacement_registryId,
+                "dateRequested" => $dateRequested,
+                "dateLeaving" => $dateLeaving,
+                "dateDispatched" => $dateDispatched,
+                "dateReturned" => $dateReturned,
+                "AWB" => $AWB,
+                "AWBreturn" => $AWBreturn,
+                "RMA" => $RMA,
+                "isClosed" => $isClosed,
+                "isRepairable" => $isRepairable
+            );
 
-            } else {
-                $report_item=array(
-                    "id" => $id,
-                    "inventoryId" => $inventoryId,
-                    "ticketNumber" => $ticketNumber,
-                    "name" => $name,
-                    "description" => $description,
-                    "reportNumber" => $reportNumber,
-                    "assignee_userId" => $assignee_userId,
-                    "faulty_registryId" => $faulty_registryId,
-                    "replacement_registryId" => $replacement_registryId,
-                    "dateRequested" => $dateRequested,
-                    "dateLeaving" => $dateLeaving,
-                    "dateDispatched" => $dateDispatched,
-                    "dateReturned" => $dateReturned,
-                    "AWB" => $AWB,
-                    "AWBreturn" => $AWBreturn,
-                    "RMA" => $RMA,
-                    "isRepairable" => $isRepairable
-                );
-            }
-            array_push($output_arr["report"], $report_item);
+        } else {
+            $report_item=array(
+                "id" => $id,
+                "inventoryId" => $inventoryId,
+                "ticketNumber" => $ticketNumber,
+                "name" => $name,
+                "description" => $description,
+                "reportNumber" => $reportNumber,
+                "assignee_userId" => $assignee_userId,
+                "faulty_registryId" => $faulty_registryId,
+                "replacement_registryId" => $replacement_registryId,
+                "dateRequested" => $dateRequested,
+                "dateLeaving" => $dateLeaving,
+                "dateDispatched" => $dateDispatched,
+                "dateReturned" => $dateReturned,
+                "AWB" => $AWB,
+                "AWBreturn" => $AWBreturn,
+                "RMA" => $RMA,
+                "isRepairable" => $isRepairable
+            );
         }
-    
-        echo json_encode($output_arr["report"]);
+        array_push($output_arr["report"], $report_item);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["report"]);
+
+} else {
+    echo json_encode(array());
 }

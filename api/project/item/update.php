@@ -35,7 +35,7 @@ if (!$user->validAction()){
     die();
 }
  
-// create the project_item item
+// update the project_item
 if($project_item->update()){
     $output_arr=array(
         "status" => true,
@@ -48,4 +48,4 @@ else{
         "message" => "Failed to update!"
     );
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

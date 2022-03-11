@@ -43,4 +43,4 @@ else{
         "message" => "Failed to delete!"
     );
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

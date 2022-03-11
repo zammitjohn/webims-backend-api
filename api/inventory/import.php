@@ -133,7 +133,7 @@ if($file AND !feof($file)) {
     $deleted_counter = $inventory->inventorySweep(); // clean-up operation
 }
 
-$result_arr=array(
+$output_arr=array(
     "status" => $import_status,
     "created_count" => $created_counter,
     "updated_count" => $updated_counter,
@@ -141,4 +141,4 @@ $result_arr=array(
     "deleted_count" => $deleted_counter
 );
 
-print_r(json_encode($result_arr));
+echo json_encode($output_arr);

@@ -27,14 +27,7 @@ if (!$user->validAction()){
 
 // query inventory_transaction item
 $stmt = $inventory_transaction_item->dumpTransactionItems();
-if ($stmt != false){
-    $num = $stmt->rowCount();
-    
-    if (!$num){
-        header("HTTP/1.0 404 Not Found");
-        die();
-    }
-
+if ($stmt->rowCount()) {
     // open the file "transaction.csv" for writing
     $file = fopen('php://memory', 'w'); 
 
@@ -64,4 +57,6 @@ if ($stmt != false){
     header('Content-Disposition: attachment; filename="transaction_'. $inventory_transaction_item->inventory_transactionId . '.csv";');
     // make php send the generated csv lines to the browser
     fpassthru($file);
+} else {
+    header("HTTP/1.0 404 Not Found");
 }

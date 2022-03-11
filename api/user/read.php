@@ -11,7 +11,6 @@ $db = $database->getConnection();
 $user = new user($db);
 
 // AUTH check
-
 if (isset($_SERVER['HTTP_AUTH_KEY'])){ // Header authentication
 	$user->sessionId = $_SERVER['HTTP_AUTH_KEY'];
 }
@@ -23,30 +22,23 @@ if (!$user->validAction()){
 // query user
 $stmt = $user->read();
 
-if ($stmt != false){
-    $num = $stmt->rowCount();
-    
-    // check if more than 0 record found
-    if($num>0){
-    
-        // user array
-        $output_arr=array();
-        $output_arr["user"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $user=array(
-                "id" => $id,
-                "firstName" => $firstName,
-                "lastName" => $lastName,
-                "lastAvailable" => $lastAvailable
-            );
-            array_push($output_arr["user"], $user);
-        }
-    
-        echo json_encode($output_arr["user"]);
+if ($stmt->rowCount()) {
+    // user array
+    $output_arr=array();
+    $output_arr["user"]=array();
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $user=array(
+            "id" => $id,
+            "firstName" => $firstName,
+            "lastName" => $lastName,
+            "lastAvailable" => $lastAvailable
+        );
+        array_push($output_arr["user"], $user);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["user"]);
+
+} else {
+    echo json_encode(array());
 }

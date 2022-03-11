@@ -30,7 +30,7 @@ if (!$user->validAction()){
     die();
 }
  
-// remove the project_item item
+// remove the project_item
 if($project_item->delete()){
     $output_arr=array(
         "status" => true,
@@ -43,4 +43,4 @@ else{
         "message" => "Failed to delete!"
     );
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

@@ -11,7 +11,7 @@ $bodyData = json_decode(file_get_contents('php://input'), true);
 $database = new Database();
 $db = $database->getConnection();
  
-// prepare project proprty object
+// prepare project object
 $project = new project($db);
  
 // set project property values
@@ -45,4 +45,4 @@ else{
         "message" => "Failed to create!"
     );
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

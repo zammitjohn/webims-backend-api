@@ -30,7 +30,6 @@ if (!$user->validAction()){
     die();	
 }	
 
-// remove the report item	
 if($report->toggle_repairable()){	
     $output_arr=array(	
         "status" => true,	
@@ -43,4 +42,4 @@ else{
         "message" => "Failed to update!"	
     );	
 }	
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

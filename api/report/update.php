@@ -52,7 +52,7 @@ if (($report->replacement_registryId AND $report->faulty_registryId) AND ($repor
     );
 
 } else {
-    // update the report item
+    // update the report
     if($report->update()){
         $output_arr=array(
             "status" => true,
@@ -66,4 +66,4 @@ if (($report->replacement_registryId AND $report->faulty_registryId) AND ($repor
         );
     }
 }
-print_r(json_encode($output_arr));
+echo json_encode($output_arr);

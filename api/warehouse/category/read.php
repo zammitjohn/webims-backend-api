@@ -32,31 +32,24 @@ if (!$user->validAction()){
  
 // query warehouse category property
 $stmt = $warehouse_category->read();
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // warehouse category property array
+    $output_arr=array();
+    $output_arr["warehouse_category"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // warehouse category property array
-        $output_arr=array();
-        $output_arr["warehouse_category"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $warehouse_category_property=array(
-                "id" => $id,
-                "name" => $name,
-                "importName" => $importName,
-                "warehouseId" => $warehouseId,
-                "warehouse_name" => $warehouse_name
-            );
-            array_push($output_arr["warehouse_category"], $warehouse_category_property);
-        }
-    
-        echo json_encode($output_arr["warehouse_category"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $warehouse_category_property=array(
+            "id" => $id,
+            "name" => $name,
+            "importName" => $importName,
+            "warehouseId" => $warehouseId,
+            "warehouse_name" => $warehouse_name
+        );
+        array_push($output_arr["warehouse_category"], $warehouse_category_property);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["warehouse_category"]);
+
+} else {
+    echo json_encode(array());
 }

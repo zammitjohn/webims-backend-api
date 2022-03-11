@@ -28,31 +28,24 @@ if (!$user->validAction()){
 // query registry item
 $stmt = $registry->read();
 
-if ($stmt != false){
-    $num = $stmt->rowCount();
+if ($stmt->rowCount()) {
+    // registry item array
+    $output_arr=array();
+    $output_arr["registry"]=array();
 
-    // check if more than 0 record found
-    if($num>0){
-    
-        // registry item array
-        $output_arr=array();
-        $output_arr["registry"]=array();
-    
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-            extract($row);
-            $registry_item=array(
-                "id" => $id,
-                "inventoryId" => $inventoryId,
-                "serialNumber" => $serialNumber,
-                "datePurchased" => $datePurchased,
-                "state" => $state
-            );
-            array_push($output_arr["registry"], $registry_item);
-        }
-    
-        echo json_encode($output_arr["registry"]);
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+        extract($row);
+        $registry_item=array(
+            "id" => $id,
+            "inventoryId" => $inventoryId,
+            "serialNumber" => $serialNumber,
+            "datePurchased" => $datePurchased,
+            "state" => $state
+        );
+        array_push($output_arr["registry"], $registry_item);
     }
-    else{
-        echo json_encode(array());
-    }
+    echo json_encode($output_arr["registry"]);
+
+} else {
+    echo json_encode(array());
 }
