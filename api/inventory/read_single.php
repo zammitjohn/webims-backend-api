@@ -36,6 +36,7 @@ if ($stmt->rowCount()) {
         "id" => $row['id'],
         "SKU" => $row['SKU'],
         "warehouse_categoryId" => $row['warehouse_categoryId'],
+        "tag" => $row['tag'],
         "warehouseId" => $row['warehouseId'],
         "description" => $row['description'],
         "qty" => $row['qty'],

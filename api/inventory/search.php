@@ -34,10 +34,17 @@ if ($stmt->rowCount()) {
 
   while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
       extract($row);
-      $inventory_item=array(
+      if ($tag) {
+        $inventory_item=array(
+          "value" => $id,
+          "label" => $SKU . ' ('  . $warehouse_name . ' ' . $warehouse_category_name . ') ' . $description . ' #' . $tag
+        );
+      } else {
+        $inventory_item=array(
           "value" => $id,
           "label" => $SKU . ' ('  . $warehouse_name . ' ' . $warehouse_category_name . ') ' . $description
-      );
+        );
+      }
       array_push($output_arr["inventory"], $inventory_item);
   }  
   echo json_encode(array('results' => $output_arr["inventory"])); 

@@ -18,6 +18,7 @@ $inventory = new inventory($db);
 $inventory->id = $bodyData['id'];
 $inventory->SKU = $bodyData['SKU'];
 $inventory->warehouse_categoryId = $bodyData['warehouse_categoryId'];
+$inventory->tag = preg_replace('/[^a-zA-Z0-9_ -]/s',' ', $bodyData['tag']); // don't accept special characters for tag 
 $inventory->description = $bodyData['description'];
 $inventory->qty = $bodyData['qty'];
 $inventory->qtyIn = $bodyData['qtyIn'];

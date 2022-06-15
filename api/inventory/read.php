@@ -14,6 +14,9 @@ $inventory = new inventory($db);
 if (isset($_GET['warehouse_categoryId'])) {
     $inventory->warehouse_categoryId = $_GET['warehouse_categoryId'];
 }
+if (isset($_GET['tag'])) {
+    $inventory->tag = $_GET['tag'];
+}
 if (isset($_GET['warehouseId'])) {
     $inventory->warehouseId = $_GET['warehouseId'];
 }
@@ -44,6 +47,7 @@ if ($stmt->rowCount()) {
             "warehouse_categoryId" => $warehouse_categoryId,
             "warehouse_category_name" => $warehouse_category_name,
             "warehouse_category_importName" => $warehouse_category_importName,
+            "tag" => $tag,
             "warehouseId" => $warehouseId,
             "warehouse_name" => $warehouse_name,
             "description" => $description,

@@ -10,6 +10,7 @@ class inventory extends base{
     // object properties
     public $SKU;
     public $warehouse_categoryId;
+    public $tag;
     public $description;
     public $qty;
     public $qtyIn;
@@ -26,7 +27,7 @@ class inventory extends base{
 
         // select query
         $query = "SELECT 
-            inventory.id, inventory.SKU, warehouse_category.id AS warehouse_categoryId, 
+            inventory.id, inventory.SKU, warehouse_category.id AS warehouse_categoryId, inventory.tag, 
             warehouse_category.name AS warehouse_category_name, warehouse_category.importName AS warehouse_category_importName, 
             warehouse.id AS warehouseId, warehouse.name AS warehouse_name,
             inventory.description, inventory.qty, inventory.qtyIn, inventory.qtyOut,
@@ -54,7 +55,17 @@ class inventory extends base{
             GROUP BY 
                 inventory.id
             ORDER BY 
-                `inventory`.`id`  DESC";            
+                `inventory`.`id`  DESC";
+        
+        } elseif ($this->tag){
+            // concatenate select query for particular tag
+            $query .= "
+            WHERE
+                inventory.tag = '".$this->tag."'
+            GROUP BY 
+                inventory.id                
+            ORDER BY 
+                `inventory`.`id`  DESC"; 
 
         } elseif ($this->warehouseId){
            // concatenate select query for particular warehouseId
@@ -94,11 +105,27 @@ class inventory extends base{
         return $stmt;
     }
 
+    // get unique tags
+    function read_tags(){
+        $query = "SELECT DISTINCT tag AS name
+            FROM
+                " . $this->table_name . "
+            WHERE 
+                tag IS NOT NULL";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query);
+    
+        // execute query
+        $stmt->execute();
+        return $stmt;
+    }
+
     // get single item data
     function read_single(){
         // select all query
         $query = "SELECT
-                inventory.id, inventory.SKU, warehouse.id AS warehouseId, inventory.warehouse_categoryId, inventory.description, inventory.qty, inventory.qtyIn, 
+                inventory.id, inventory.SKU, warehouse.id AS warehouseId, inventory.warehouse_categoryId, inventory.tag, inventory.description, inventory.qty, inventory.qtyIn, 
                 inventory.qtyOut, inventory.supplier, inventory.notes, inventory.importDate, inventory.lastChange
                 FROM
                     " . $this->table_name . " 
@@ -145,7 +172,7 @@ class inventory extends base{
             $query = "INSERT INTO
                         ". $this->table_name ." 
                     SET
-                        SKU=:SKU, warehouse_categoryId=:warehouse_categoryId, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        SKU=:SKU, warehouse_categoryId=:warehouse_categoryId, tag=:tag, description=:description, qty=:qty, qtyIn=:qtyIn, 
                         qtyOut=:qtyOut, supplier=:supplier, notes=:notes";
             
             // prepare and bind query
@@ -184,7 +211,7 @@ class inventory extends base{
             $query = "UPDATE
                         " . $this->table_name . "
                     SET
-                        SKU=:SKU, warehouse_categoryId=:warehouse_categoryId, description=:description, qty=:qty, qtyIn=:qtyIn, 
+                        SKU=:SKU, warehouse_categoryId=:warehouse_categoryId, tag=:tag, description=:description, qty=:qty, qtyIn=:qtyIn, 
                         qtyOut=:qtyOut, supplier=:supplier, notes=:notes
                     WHERE
                         id='".$this->id."'";
@@ -353,6 +380,11 @@ class inventory extends base{
             $stmt->bindValue(':warehouse_categoryId', $this->warehouse_categoryId, PDO::PARAM_NULL);
         } else {
             $stmt->bindValue(':warehouse_categoryId', $this->warehouse_categoryId);
+        }   
+        if ($this->tag == ""){
+            $stmt->bindValue(':tag', $this->tag, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(':tag', $this->tag);
         }   
         if ($this->description == ""){
             $stmt->bindValue(':description', $this->description, PDO::PARAM_NULL);

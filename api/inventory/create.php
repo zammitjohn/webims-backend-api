@@ -17,6 +17,7 @@ $inventory = new inventory($db); // prepare inventory object
 // set object values
 $inventory->SKU = $bodyData['SKU'];
 $inventory->warehouse_categoryId = $bodyData['warehouse_categoryId'];
+$inventory->tag = $bodyData['tag'];
 $inventory->description = $bodyData['description'];
 $inventory->qty = $bodyData['qty'];
 $inventory->qtyIn = $bodyData['qtyIn'];
@@ -45,6 +46,7 @@ if($inventory->create(false)){
         "id" => $inventory->id,
         "SKU" => $inventory->SKU,
         "warehouse_categoryId" => $inventory->warehouse_categoryId,
+        "tag" => preg_replace('/[^a-zA-Z0-9_ -]/s',' ', $inventory->tag), // don't accept special characters for tag
         "description" => $inventory->description,
 		"qty" => $inventory->qty,
         "qtyIn" => $inventory->qtyIn,

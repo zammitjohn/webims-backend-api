@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8e41f937-584b-44cc-adab-8ac887670de4",
+		"_postman_id": "1c9dbc1c-f1f5-48eb-8994-c595504b7d79",
 		"name": "WebIMS",
 		"description": "This is a full JSON API reference which interfaces to the extensive WebIMS database.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -286,7 +286,31 @@
 									"key": "warehouseId",
 									"value": "",
 									"disabled": true
+								},
+								{
+									"key": "tag",
+									"value": "",
+									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read_tags",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/inventory/read_tags.php",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"inventory",
+								"read_tags.php"
 							]
 						}
 					},
@@ -377,7 +401,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"SKU\": \"\",\r\n    \"warehouse_categoryId\": \"\",\r\n    \"description\": \"\",\r\n    \"qty\": \"\",\r\n    \"qtyIn\": \"\",\r\n    \"qtyOut\": \"\",\r\n    \"supplier\": \"\",\r\n    \"notes\": \"\"\r\n}",
+							"raw": "{\r\n    \"SKU\": \"\",\r\n    \"warehouse_categoryId\": \"\",\r\n    \"tag\": \"\",\r\n    \"description\": \"\",\r\n    \"qty\": \"\",\r\n    \"qtyIn\": \"\",\r\n    \"qtyOut\": \"\",\r\n    \"supplier\": \"\",\r\n    \"notes\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -405,7 +429,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": \"\",\r\n    \"SKU\": \"\",\r\n    \"warehouse_categoryId\": \"\",\r\n    \"description\": \"\",\r\n    \"qty\": \"\",\r\n    \"qtyIn\": \"\",\r\n    \"qtyOut\": \"\",\r\n    \"supplier\": \"\",\r\n    \"notes\": \"\"\r\n}",
+							"raw": "{\r\n    \"id\": \"\",\r\n    \"SKU\": \"\",\r\n    \"warehouse_categoryId\": \"\",\r\n    \"tag\": \"\",\r\n    \"description\": \"\",\r\n    \"qty\": \"\",\r\n    \"qtyIn\": \"\",\r\n    \"qtyOut\": \"\",\r\n    \"supplier\": \"\",\r\n    \"notes\": \"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
